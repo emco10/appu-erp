@@ -1,0 +1,4471 @@
+{
+  "static_controls": [
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-new",
+      "label": "Nuevo",
+      "line": 17,
+      "module": "clientes",
+      "screen": "views/clientes/registro-cliente.php",
+      "script": "ajax/registro-cliente.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/eliminar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/ubigeo/consultar-ubigeo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-find",
+      "label": "Buscar",
+      "line": 17,
+      "module": "clientes",
+      "screen": "views/clientes/registro-cliente.php",
+      "script": "ajax/registro-cliente.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/eliminar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/ubigeo/consultar-ubigeo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-first",
+      "label": "Primero",
+      "line": 17,
+      "module": "clientes",
+      "screen": "views/clientes/registro-cliente.php",
+      "script": "ajax/registro-cliente.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/eliminar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/ubigeo/consultar-ubigeo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-prev",
+      "label": "Anterior",
+      "line": 17,
+      "module": "clientes",
+      "screen": "views/clientes/registro-cliente.php",
+      "script": "ajax/registro-cliente.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/eliminar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/ubigeo/consultar-ubigeo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-next",
+      "label": "Siguiente",
+      "line": 17,
+      "module": "clientes",
+      "screen": "views/clientes/registro-cliente.php",
+      "script": "ajax/registro-cliente.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/eliminar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/ubigeo/consultar-ubigeo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-last",
+      "label": "Último",
+      "line": 17,
+      "module": "clientes",
+      "screen": "views/clientes/registro-cliente.php",
+      "script": "ajax/registro-cliente.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/eliminar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/ubigeo/consultar-ubigeo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-primary appu-master-save",
+      "label": "Guardar",
+      "line": 17,
+      "module": "clientes",
+      "screen": "views/clientes/registro-cliente.php",
+      "script": "ajax/registro-cliente.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/eliminar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/ubigeo/consultar-ubigeo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-save-client",
+      "class": "btn btn-success btn-block",
+      "label": "Guardar cliente",
+      "line": 250,
+      "module": "clientes",
+      "screen": "views/clientes/registro-cliente.php",
+      "script": "ajax/registro-cliente.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/eliminar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/ubigeo/consultar-ubigeo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-delete-client",
+      "class": "btn btn-outline-danger btn-block",
+      "label": "Desactivar cliente",
+      "line": 253,
+      "module": "clientes",
+      "screen": "views/clientes/registro-cliente.php",
+      "script": "ajax/registro-cliente.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/eliminar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/ubigeo/consultar-ubigeo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-select-orden",
+      "class": "btn btn-primary",
+      "label": "Seleccionar",
+      "line": 24,
+      "module": "compras",
+      "screen": "views/compras/compra-interna.php",
+      "script": "ajax/compra-interna.js",
+      "endpoint_candidates": [
+        "../../modules/compras/consultar-compra.php",
+        "../../modules/compras/consultar-detalle-compra.php",
+        "../../modules/compras/eliminar-compra.php",
+        "../../modules/compras/listar-compras.php",
+        "../../modules/cotizaciones/obtener-cotizaciones.php",
+        "../../modules/ordenes/consultar-detalle-orden.php",
+        "../../modules/ordenes/consultar-orden.php",
+        "../../modules/ordenes/listar-ordenes-disponibles.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/productos/obtener-productos.php",
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/listar-direcciones.php",
+        "../../modules/proveedores/listar-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-nuevacompra",
+      "class": "btn btn-primary btn-block",
+      "label": "Nueva factura de proveedor",
+      "line": 29,
+      "module": "compras",
+      "screen": "views/compras/compra-interna.php",
+      "script": "ajax/compra-interna.js",
+      "endpoint_candidates": [
+        "../../modules/compras/consultar-compra.php",
+        "../../modules/compras/consultar-detalle-compra.php",
+        "../../modules/compras/eliminar-compra.php",
+        "../../modules/compras/listar-compras.php",
+        "../../modules/cotizaciones/obtener-cotizaciones.php",
+        "../../modules/ordenes/consultar-detalle-orden.php",
+        "../../modules/ordenes/consultar-orden.php",
+        "../../modules/ordenes/listar-ordenes-disponibles.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/productos/obtener-productos.php",
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/listar-direcciones.php",
+        "../../modules/proveedores/listar-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-add-prodtporden",
+      "class": "btn btn-primary btn-block",
+      "label": "Añadir Artículo",
+      "line": 371,
+      "module": "compras",
+      "screen": "views/compras/compra-interna.php",
+      "script": "ajax/compra-interna.js",
+      "endpoint_candidates": [
+        "../../modules/compras/consultar-compra.php",
+        "../../modules/compras/consultar-detalle-compra.php",
+        "../../modules/compras/eliminar-compra.php",
+        "../../modules/compras/listar-compras.php",
+        "../../modules/cotizaciones/obtener-cotizaciones.php",
+        "../../modules/ordenes/consultar-detalle-orden.php",
+        "../../modules/ordenes/consultar-orden.php",
+        "../../modules/ordenes/listar-ordenes-disponibles.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/productos/obtener-productos.php",
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/listar-direcciones.php",
+        "../../modules/proveedores/listar-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-save-orden",
+      "class": "btn btn-success btn-block",
+      "label": "Registrar Compra",
+      "line": 439,
+      "module": "compras",
+      "screen": "views/compras/compra-interna.php",
+      "script": "ajax/compra-interna.js",
+      "endpoint_candidates": [
+        "../../modules/compras/consultar-compra.php",
+        "../../modules/compras/consultar-detalle-compra.php",
+        "../../modules/compras/eliminar-compra.php",
+        "../../modules/compras/listar-compras.php",
+        "../../modules/cotizaciones/obtener-cotizaciones.php",
+        "../../modules/ordenes/consultar-detalle-orden.php",
+        "../../modules/ordenes/consultar-orden.php",
+        "../../modules/ordenes/listar-ordenes-disponibles.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/productos/obtener-productos.php",
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/listar-direcciones.php",
+        "../../modules/proveedores/listar-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-delete-orden",
+      "class": "btn btn-danger btn-block",
+      "label": "Eliminar Compra",
+      "line": 442,
+      "module": "compras",
+      "screen": "views/compras/compra-interna.php",
+      "script": "ajax/compra-interna.js",
+      "endpoint_candidates": [
+        "../../modules/compras/consultar-compra.php",
+        "../../modules/compras/consultar-detalle-compra.php",
+        "../../modules/compras/eliminar-compra.php",
+        "../../modules/compras/listar-compras.php",
+        "../../modules/cotizaciones/obtener-cotizaciones.php",
+        "../../modules/ordenes/consultar-detalle-orden.php",
+        "../../modules/ordenes/consultar-orden.php",
+        "../../modules/ordenes/listar-ordenes-disponibles.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/productos/obtener-productos.php",
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/listar-direcciones.php",
+        "../../modules/proveedores/listar-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-primary",
+      "label": "Registrar costo",
+      "line": 9,
+      "module": "compras",
+      "screen": "views/compras/costos-entrega.php",
+      "script": "ajax/costos-entrega.js",
+      "endpoint_candidates": [
+        "../../modules/compras/costos-entrega.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "landed-cost-refresh",
+      "class": "btn btn-sm btn-outline-secondary float-right",
+      "label": "Actualizar",
+      "line": 10,
+      "module": "compras",
+      "screen": "views/compras/costos-entrega.php",
+      "script": "ajax/costos-entrega.js",
+      "endpoint_candidates": [
+        "../../modules/compras/costos-entrega.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-select-goods-receipt",
+      "class": "btn btn-secondary",
+      "label": "Seleccionar",
+      "line": 5,
+      "module": "compras",
+      "screen": "views/compras/recepciones.php",
+      "script": "ajax/recepciones.js",
+      "endpoint_candidates": [
+        "../../modules/compras/goods-receipts.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-save-goods-receipt",
+      "class": "btn btn-primary",
+      "label": "Crear entrada de mercancías",
+      "line": 13,
+      "module": "compras",
+      "screen": "views/compras/recepciones.php",
+      "script": "ajax/recepciones.js",
+      "endpoint_candidates": [
+        "../../modules/compras/goods-receipts.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-anular-goods-receipt",
+      "class": "btn btn-outline-danger d-none",
+      "label": "Anular",
+      "line": 13,
+      "module": "compras",
+      "screen": "views/compras/recepciones.php",
+      "script": "ajax/recepciones.js",
+      "endpoint_candidates": [
+        "../../modules/compras/goods-receipts.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-nuevo",
+      "class": "btn btn-success btn-block",
+      "label": "Nueva Compra",
+      "line": 39,
+      "module": "compras",
+      "screen": "views/compras/resumen-compras.php",
+      "script": "ajax/resumen-compras.js",
+      "endpoint_candidates": [
+        "../../modules/compras/anular-compra.php",
+        "../../modules/compras/filtrar-compras.php",
+        "../../modules/compras/recepciones.php",
+        "../../modules/ordenes/consultar-compra.php",
+        "../../modules/ordenes/obtener-ordenes.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-reset",
+      "class": "btn btn-primary btn-block",
+      "label": "Limpiar filtros",
+      "line": 72,
+      "module": "compras",
+      "screen": "views/compras/resumen-compras.php",
+      "script": "ajax/resumen-compras.js",
+      "endpoint_candidates": [
+        "../../modules/compras/anular-compra.php",
+        "../../modules/compras/filtrar-compras.php",
+        "../../modules/compras/recepciones.php",
+        "../../modules/ordenes/consultar-compra.php",
+        "../../modules/ordenes/obtener-ordenes.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-buscar",
+      "class": "btn btn-success btn-block",
+      "label": "Buscar Compras",
+      "line": 77,
+      "module": "compras",
+      "screen": "views/compras/resumen-compras.php",
+      "script": "ajax/resumen-compras.js",
+      "endpoint_candidates": [
+        "../../modules/compras/anular-compra.php",
+        "../../modules/compras/filtrar-compras.php",
+        "../../modules/compras/recepciones.php",
+        "../../modules/ordenes/consultar-compra.php",
+        "../../modules/ordenes/obtener-ordenes.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "close",
+      "label": "Cerrar ×",
+      "line": 121,
+      "module": "compras",
+      "screen": "views/compras/resumen-compras.php",
+      "script": "ajax/resumen-compras.js",
+      "endpoint_candidates": [
+        "../../modules/compras/anular-compra.php",
+        "../../modules/compras/filtrar-compras.php",
+        "../../modules/compras/recepciones.php",
+        "../../modules/ordenes/consultar-compra.php",
+        "../../modules/ordenes/obtener-ordenes.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-secondary",
+      "label": "Cancelar",
+      "line": 162,
+      "module": "compras",
+      "screen": "views/compras/resumen-compras.php",
+      "script": "ajax/resumen-compras.js",
+      "endpoint_candidates": [
+        "../../modules/compras/anular-compra.php",
+        "../../modules/compras/filtrar-compras.php",
+        "../../modules/compras/recepciones.php",
+        "../../modules/ordenes/consultar-compra.php",
+        "../../modules/ordenes/obtener-ordenes.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-save-goods-receipt",
+      "class": "btn btn-primary",
+      "label": "Registrar recepción",
+      "line": 163,
+      "module": "compras",
+      "screen": "views/compras/resumen-compras.php",
+      "script": "ajax/resumen-compras.js",
+      "endpoint_candidates": [
+        "../../modules/compras/anular-compra.php",
+        "../../modules/compras/filtrar-compras.php",
+        "../../modules/compras/recepciones.php",
+        "../../modules/ordenes/consultar-compra.php",
+        "../../modules/ordenes/obtener-ordenes.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "purchase-request-add",
+      "class": "btn btn-primary btn-block",
+      "label": "Agregar artículo",
+      "line": 28,
+      "module": "compras",
+      "screen": "views/compras/solicitudes.php",
+      "script": "ajax/solicitudes.js",
+      "endpoint_candidates": [
+        "../../modules/compras/solicitudes.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-save-purchase-request",
+      "class": "btn btn-success btn-block",
+      "label": "Guardar solicitud",
+      "line": 34,
+      "module": "compras",
+      "screen": "views/compras/solicitudes.php",
+      "script": "ajax/solicitudes.js",
+      "endpoint_candidates": [
+        "../../modules/compras/solicitudes.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "purchase-request-refresh",
+      "class": "btn btn-sm btn-outline-secondary",
+      "label": "Actualizar",
+      "line": 38,
+      "module": "compras",
+      "screen": "views/compras/solicitudes.php",
+      "script": "ajax/solicitudes.js",
+      "endpoint_candidates": [
+        "../../modules/compras/solicitudes.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-select-cotizacion",
+      "class": "form-control btn btn-primary",
+      "label": "Seleccionar",
+      "line": 33,
+      "module": "cotizacion",
+      "screen": "views/cotizacion/registro-cotizacion.php",
+      "script": "ajax/registro-cotizacion.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/anular-cotizacion.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-search-cotizacion",
+      "class": "btn btn-outline-primary",
+      "label": "Buscar",
+      "line": 38,
+      "module": "cotizacion",
+      "screen": "views/cotizacion/registro-cotizacion.php",
+      "script": "ajax/registro-cotizacion.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/anular-cotizacion.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-prev-cotizacion",
+      "class": "btn btn-outline-primary",
+      "label": "Documento anterior",
+      "line": 38,
+      "module": "cotizacion",
+      "screen": "views/cotizacion/registro-cotizacion.php",
+      "script": "ajax/registro-cotizacion.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/anular-cotizacion.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-next-cotizacion",
+      "class": "btn btn-outline-primary",
+      "label": "Documento siguiente",
+      "line": 38,
+      "module": "cotizacion",
+      "screen": "views/cotizacion/registro-cotizacion.php",
+      "script": "ajax/registro-cotizacion.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/anular-cotizacion.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-nuevo",
+      "class": "btn btn-primary",
+      "label": "Nuevo",
+      "line": 38,
+      "module": "cotizacion",
+      "screen": "views/cotizacion/registro-cotizacion.php",
+      "script": "ajax/registro-cotizacion.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/anular-cotizacion.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-choose-customer",
+      "class": "btn btn-outline-primary",
+      "label": "Elegir cliente de la lista",
+      "line": 96,
+      "module": "cotizacion",
+      "screen": "views/cotizacion/registro-cotizacion.php",
+      "script": "ajax/registro-cotizacion.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/anular-cotizacion.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-new-customer",
+      "class": "btn btn-outline-primary",
+      "label": "Registrar nuevo cliente",
+      "line": 96,
+      "module": "cotizacion",
+      "screen": "views/cotizacion/registro-cotizacion.php",
+      "script": "ajax/registro-cotizacion.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/anular-cotizacion.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-new-product",
+      "class": "btn btn-outline-primary",
+      "label": "Registrar nuevo artículo",
+      "line": 195,
+      "module": "cotizacion",
+      "screen": "views/cotizacion/registro-cotizacion.php",
+      "script": "ajax/registro-cotizacion.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/anular-cotizacion.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-add-prodtocotiz",
+      "class": "btn btn-primary btn-block",
+      "label": "Agregar artículo",
+      "line": 218,
+      "module": "cotizacion",
+      "screen": "views/cotizacion/registro-cotizacion.php",
+      "script": "ajax/registro-cotizacion.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/anular-cotizacion.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-save-cotizprod",
+      "class": "btn btn-success btn-block",
+      "label": "Grabar cotización",
+      "line": 294,
+      "module": "cotizacion",
+      "screen": "views/cotizacion/registro-cotizacion.php",
+      "script": "ajax/registro-cotizacion.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/anular-cotizacion.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-anular-cotizprod",
+      "class": "btn btn-danger btn-block",
+      "label": "Anular cotización",
+      "line": 297,
+      "module": "cotizacion",
+      "screen": "views/cotizacion/registro-cotizacion.php",
+      "script": "ajax/registro-cotizacion.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/anular-cotizacion.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "close",
+      "label": "×",
+      "line": 309,
+      "module": "cotizacion",
+      "screen": "views/cotizacion/registro-cotizacion.php",
+      "script": "ajax/registro-cotizacion.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/anular-cotizacion.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-secondary",
+      "label": "Cancelar",
+      "line": 309,
+      "module": "cotizacion",
+      "screen": "views/cotizacion/registro-cotizacion.php",
+      "script": "ajax/registro-cotizacion.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/anular-cotizacion.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-use-customer",
+      "class": "btn btn-primary",
+      "label": "Usar cliente",
+      "line": 309,
+      "module": "cotizacion",
+      "screen": "views/cotizacion/registro-cotizacion.php",
+      "script": "ajax/registro-cotizacion.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/anular-cotizacion.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-reset",
+      "class": "btn btn-primary btn-block",
+      "label": "Limpiar filtros",
+      "line": 54,
+      "module": "cotizacion",
+      "screen": "views/cotizacion/resumen-cotizaciones.php",
+      "script": "ajax/resumen-cotizaciones.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/anular-cotizacion.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/filtrar-cotizaciones.php",
+        "../../modules/cotizaciones/obtener-cotizaciones.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-buscar",
+      "class": "btn btn-success btn-block",
+      "label": "Buscar Cotizaciones",
+      "line": 59,
+      "module": "cotizacion",
+      "screen": "views/cotizacion/resumen-cotizaciones.php",
+      "script": "ajax/resumen-cotizaciones.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/anular-cotizacion.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/filtrar-cotizaciones.php",
+        "../../modules/cotizaciones/obtener-cotizaciones.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-new",
+      "label": "Nuevo",
+      "line": 17,
+      "module": "empleados",
+      "screen": "views/empleados/registro-empleado.php",
+      "script": "ajax/registro-empleado.js",
+      "endpoint_candidates": [
+        "../../modules/empleados/consultar-empleado.php",
+        "../../modules/empleados/eliminar-empleado.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-find",
+      "label": "Buscar",
+      "line": 17,
+      "module": "empleados",
+      "screen": "views/empleados/registro-empleado.php",
+      "script": "ajax/registro-empleado.js",
+      "endpoint_candidates": [
+        "../../modules/empleados/consultar-empleado.php",
+        "../../modules/empleados/eliminar-empleado.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-first",
+      "label": "Primero",
+      "line": 17,
+      "module": "empleados",
+      "screen": "views/empleados/registro-empleado.php",
+      "script": "ajax/registro-empleado.js",
+      "endpoint_candidates": [
+        "../../modules/empleados/consultar-empleado.php",
+        "../../modules/empleados/eliminar-empleado.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-prev",
+      "label": "Anterior",
+      "line": 17,
+      "module": "empleados",
+      "screen": "views/empleados/registro-empleado.php",
+      "script": "ajax/registro-empleado.js",
+      "endpoint_candidates": [
+        "../../modules/empleados/consultar-empleado.php",
+        "../../modules/empleados/eliminar-empleado.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-next",
+      "label": "Siguiente",
+      "line": 17,
+      "module": "empleados",
+      "screen": "views/empleados/registro-empleado.php",
+      "script": "ajax/registro-empleado.js",
+      "endpoint_candidates": [
+        "../../modules/empleados/consultar-empleado.php",
+        "../../modules/empleados/eliminar-empleado.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-last",
+      "label": "Último",
+      "line": 17,
+      "module": "empleados",
+      "screen": "views/empleados/registro-empleado.php",
+      "script": "ajax/registro-empleado.js",
+      "endpoint_candidates": [
+        "../../modules/empleados/consultar-empleado.php",
+        "../../modules/empleados/eliminar-empleado.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-primary appu-master-save",
+      "label": "Guardar",
+      "line": 17,
+      "module": "empleados",
+      "screen": "views/empleados/registro-empleado.php",
+      "script": "ajax/registro-empleado.js",
+      "endpoint_candidates": [
+        "../../modules/empleados/consultar-empleado.php",
+        "../../modules/empleados/eliminar-empleado.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-save-employee",
+      "class": "btn btn-success btn-block",
+      "label": "Guardar empleado",
+      "line": 216,
+      "module": "empleados",
+      "screen": "views/empleados/registro-empleado.php",
+      "script": "ajax/registro-empleado.js",
+      "endpoint_candidates": [
+        "../../modules/empleados/consultar-empleado.php",
+        "../../modules/empleados/eliminar-empleado.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-delete-employee",
+      "class": "btn btn-outline-danger btn-block",
+      "label": "Desactivar empleado",
+      "line": 219,
+      "module": "empleados",
+      "screen": "views/empleados/registro-empleado.php",
+      "script": "ajax/registro-empleado.js",
+      "endpoint_candidates": [
+        "../../modules/empleados/consultar-empleado.php",
+        "../../modules/empleados/eliminar-empleado.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-select-factura",
+      "class": "form-control btn btn-primary",
+      "label": "Seleccionar boleta",
+      "line": 28,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-boleta.php",
+      "script": "ajax/registro-boleta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-boleta.php",
+        "../../modules/facturacion/consultar-detalle-boleta.php",
+        "../../modules/facturacion/listar-boletas.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-nuevafac",
+      "class": "btn btn-primary btn-block",
+      "label": "Nueva boleta",
+      "line": 33,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-boleta.php",
+      "script": "ajax/registro-boleta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-boleta.php",
+        "../../modules/facturacion/consultar-detalle-boleta.php",
+        "../../modules/facturacion/listar-boletas.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-select-cotizacion",
+      "class": "form-control btn btn-primary",
+      "label": "Seleccionar cotización",
+      "line": 84,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-boleta.php",
+      "script": "ajax/registro-boleta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-boleta.php",
+        "../../modules/facturacion/consultar-detalle-boleta.php",
+        "../../modules/facturacion/listar-boletas.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-select-orden-venta",
+      "class": "form-control btn btn-secondary",
+      "label": "Seleccionar orden",
+      "line": 95,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-boleta.php",
+      "script": "ajax/registro-boleta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-boleta.php",
+        "../../modules/facturacion/consultar-detalle-boleta.php",
+        "../../modules/facturacion/listar-boletas.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-add-prodtofactura",
+      "class": "btn btn-primary btn-block",
+      "label": "Agregar artículo",
+      "line": 257,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-boleta.php",
+      "script": "ajax/registro-boleta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-boleta.php",
+        "../../modules/facturacion/consultar-detalle-boleta.php",
+        "../../modules/facturacion/listar-boletas.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-save-facturaprod",
+      "class": "btn btn-success btn-block",
+      "label": "Grabar boleta",
+      "line": 335,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-boleta.php",
+      "script": "ajax/registro-boleta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-boleta.php",
+        "../../modules/facturacion/consultar-detalle-boleta.php",
+        "../../modules/facturacion/listar-boletas.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-anular-factura",
+      "class": "btn btn-danger btn-block",
+      "label": "Anular boleta",
+      "line": 338,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-boleta.php",
+      "script": "ajax/registro-boleta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-boleta.php",
+        "../../modules/facturacion/consultar-detalle-boleta.php",
+        "../../modules/facturacion/listar-boletas.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-pendiente-factura",
+      "class": "btn btn-warning btn-block",
+      "label": "Marcar como Pendiente de Pago",
+      "line": 341,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-boleta.php",
+      "script": "ajax/registro-boleta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-boleta.php",
+        "../../modules/facturacion/consultar-detalle-boleta.php",
+        "../../modules/facturacion/listar-boletas.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-cancelar-factura",
+      "class": "btn btn-success btn-block",
+      "label": "Marcar como Cancelada",
+      "line": 344,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-boleta.php",
+      "script": "ajax/registro-boleta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-boleta.php",
+        "../../modules/facturacion/consultar-detalle-boleta.php",
+        "../../modules/facturacion/listar-boletas.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-select-factura",
+      "class": "form-control btn btn-primary",
+      "label": "Seleccionar factura",
+      "line": 28,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-factura.php",
+      "script": "ajax/registro-factura.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-detalle-factura.php",
+        "../../modules/facturacion/consultar-factura.php",
+        "../../modules/facturacion/listar-facturas.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-nuevafac",
+      "class": "btn btn-primary btn-block",
+      "label": "Nueva factura",
+      "line": 33,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-factura.php",
+      "script": "ajax/registro-factura.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-detalle-factura.php",
+        "../../modules/facturacion/consultar-factura.php",
+        "../../modules/facturacion/listar-facturas.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-select-cotizacion",
+      "class": "form-control btn btn-primary",
+      "label": "Seleccionar cotización",
+      "line": 84,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-factura.php",
+      "script": "ajax/registro-factura.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-detalle-factura.php",
+        "../../modules/facturacion/consultar-factura.php",
+        "../../modules/facturacion/listar-facturas.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-select-orden-venta",
+      "class": "form-control btn btn-secondary",
+      "label": "Seleccionar orden",
+      "line": 95,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-factura.php",
+      "script": "ajax/registro-factura.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-detalle-factura.php",
+        "../../modules/facturacion/consultar-factura.php",
+        "../../modules/facturacion/listar-facturas.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-add-prodtofactura",
+      "class": "btn btn-primary btn-block",
+      "label": "Agregar artículo",
+      "line": 274,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-factura.php",
+      "script": "ajax/registro-factura.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-detalle-factura.php",
+        "../../modules/facturacion/consultar-factura.php",
+        "../../modules/facturacion/listar-facturas.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-save-facturaprod",
+      "class": "btn btn-success btn-block",
+      "label": "Grabar factura",
+      "line": 352,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-factura.php",
+      "script": "ajax/registro-factura.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-detalle-factura.php",
+        "../../modules/facturacion/consultar-factura.php",
+        "../../modules/facturacion/listar-facturas.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-anular-factura",
+      "class": "btn btn-danger btn-block",
+      "label": "Anular Factura",
+      "line": 355,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-factura.php",
+      "script": "ajax/registro-factura.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-detalle-factura.php",
+        "../../modules/facturacion/consultar-factura.php",
+        "../../modules/facturacion/listar-facturas.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-pendiente-factura",
+      "class": "btn btn-warning btn-block",
+      "label": "Marcar como Pendiente de Pago",
+      "line": 358,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-factura.php",
+      "script": "ajax/registro-factura.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-detalle-factura.php",
+        "../../modules/facturacion/consultar-factura.php",
+        "../../modules/facturacion/listar-facturas.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-cancelar-factura",
+      "class": "btn btn-success btn-block",
+      "label": "Marcar como Cancelada",
+      "line": 361,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-factura.php",
+      "script": "ajax/registro-factura.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/cotizaciones/consultar-cotizacion.php",
+        "../../modules/cotizaciones/consultar-detalle-cotizacion.php",
+        "../../modules/cotizaciones/listar-cotizaciones.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-detalle-factura.php",
+        "../../modules/facturacion/consultar-factura.php",
+        "../../modules/facturacion/listar-facturas.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-select-factura",
+      "class": "form-control btn btn-primary",
+      "label": "Seleccionar NC",
+      "line": 28,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-nota-credito.php",
+      "script": "ajax/registro-nota-credito.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-boleta.php",
+        "../../modules/facturacion/consultar-detalle-boleta.php",
+        "../../modules/facturacion/consultar-detalle-factura.php",
+        "../../modules/facturacion/consultar-detalle-nota-credito.php",
+        "../../modules/facturacion/consultar-factura.php",
+        "../../modules/facturacion/consultar-nota-credito.php",
+        "../../modules/facturacion/listar-factura-boleta.php",
+        "../../modules/facturacion/listar-notas-credito.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-nuevafac",
+      "class": "btn btn-primary btn-block",
+      "label": "Nueva nota de crédito",
+      "line": 33,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-nota-credito.php",
+      "script": "ajax/registro-nota-credito.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-boleta.php",
+        "../../modules/facturacion/consultar-detalle-boleta.php",
+        "../../modules/facturacion/consultar-detalle-factura.php",
+        "../../modules/facturacion/consultar-detalle-nota-credito.php",
+        "../../modules/facturacion/consultar-factura.php",
+        "../../modules/facturacion/consultar-nota-credito.php",
+        "../../modules/facturacion/listar-factura-boleta.php",
+        "../../modules/facturacion/listar-notas-credito.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-select-cotizacion",
+      "class": "form-control btn btn-primary",
+      "label": "Seleccionar Factura",
+      "line": 83,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-nota-credito.php",
+      "script": "ajax/registro-nota-credito.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-boleta.php",
+        "../../modules/facturacion/consultar-detalle-boleta.php",
+        "../../modules/facturacion/consultar-detalle-factura.php",
+        "../../modules/facturacion/consultar-detalle-nota-credito.php",
+        "../../modules/facturacion/consultar-factura.php",
+        "../../modules/facturacion/consultar-nota-credito.php",
+        "../../modules/facturacion/listar-factura-boleta.php",
+        "../../modules/facturacion/listar-notas-credito.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-add-prodtofactura",
+      "class": "btn btn-primary btn-block",
+      "label": "Agregar artículo",
+      "line": 263,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-nota-credito.php",
+      "script": "ajax/registro-nota-credito.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-boleta.php",
+        "../../modules/facturacion/consultar-detalle-boleta.php",
+        "../../modules/facturacion/consultar-detalle-factura.php",
+        "../../modules/facturacion/consultar-detalle-nota-credito.php",
+        "../../modules/facturacion/consultar-factura.php",
+        "../../modules/facturacion/consultar-nota-credito.php",
+        "../../modules/facturacion/listar-factura-boleta.php",
+        "../../modules/facturacion/listar-notas-credito.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-save-facturaprod",
+      "class": "btn btn-success btn-block",
+      "label": "Grabar nota de crédito",
+      "line": 340,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-nota-credito.php",
+      "script": "ajax/registro-nota-credito.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-boleta.php",
+        "../../modules/facturacion/consultar-detalle-boleta.php",
+        "../../modules/facturacion/consultar-detalle-factura.php",
+        "../../modules/facturacion/consultar-detalle-nota-credito.php",
+        "../../modules/facturacion/consultar-factura.php",
+        "../../modules/facturacion/consultar-nota-credito.php",
+        "../../modules/facturacion/listar-factura-boleta.php",
+        "../../modules/facturacion/listar-notas-credito.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-anular-factura",
+      "class": "btn btn-danger btn-block",
+      "label": "Anular Nota de Crédito",
+      "line": 343,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-nota-credito.php",
+      "script": "ajax/registro-nota-credito.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-boleta.php",
+        "../../modules/facturacion/consultar-detalle-boleta.php",
+        "../../modules/facturacion/consultar-detalle-factura.php",
+        "../../modules/facturacion/consultar-detalle-nota-credito.php",
+        "../../modules/facturacion/consultar-factura.php",
+        "../../modules/facturacion/consultar-nota-credito.php",
+        "../../modules/facturacion/listar-factura-boleta.php",
+        "../../modules/facturacion/listar-notas-credito.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-pendiente-factura",
+      "class": "btn btn-warning btn-block",
+      "label": "Marcar como Pendiente de Pago",
+      "line": 346,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-nota-credito.php",
+      "script": "ajax/registro-nota-credito.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-boleta.php",
+        "../../modules/facturacion/consultar-detalle-boleta.php",
+        "../../modules/facturacion/consultar-detalle-factura.php",
+        "../../modules/facturacion/consultar-detalle-nota-credito.php",
+        "../../modules/facturacion/consultar-factura.php",
+        "../../modules/facturacion/consultar-nota-credito.php",
+        "../../modules/facturacion/listar-factura-boleta.php",
+        "../../modules/facturacion/listar-notas-credito.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-cancelar-factura",
+      "class": "btn btn-success btn-block",
+      "label": "Marcar como Cancelada",
+      "line": 349,
+      "module": "facturacion",
+      "screen": "views/facturacion/registro-nota-credito.php",
+      "script": "ajax/registro-nota-credito.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/consultar-cliente.php",
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/consultar-boleta.php",
+        "../../modules/facturacion/consultar-detalle-boleta.php",
+        "../../modules/facturacion/consultar-detalle-factura.php",
+        "../../modules/facturacion/consultar-detalle-nota-credito.php",
+        "../../modules/facturacion/consultar-factura.php",
+        "../../modules/facturacion/consultar-nota-credito.php",
+        "../../modules/facturacion/listar-factura-boleta.php",
+        "../../modules/facturacion/listar-notas-credito.php",
+        "../../modules/facturacion/obtener-correlativo-doc.php",
+        "../../modules/facturacion/series.php",
+        "../../modules/inventory/warehouses.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/usuarios/listar-usuarios-xtipo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-reset",
+      "class": "btn btn-primary btn-block",
+      "label": "Limpiar filtros",
+      "line": 78,
+      "module": "facturacion",
+      "screen": "views/facturacion/resumen-boletas.php",
+      "script": "ajax/resumen-boletas.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/filtrar-doc.php",
+        "../../modules/facturacion/obtener-boletas.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-buscar",
+      "class": "btn btn-success btn-block",
+      "label": "Buscar Boletas",
+      "line": 83,
+      "module": "facturacion",
+      "screen": "views/facturacion/resumen-boletas.php",
+      "script": "ajax/resumen-boletas.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/filtrar-doc.php",
+        "../../modules/facturacion/obtener-boletas.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-reset",
+      "class": "btn btn-primary btn-block",
+      "label": "Limpiar filtros",
+      "line": 78,
+      "module": "facturacion",
+      "screen": "views/facturacion/resumen-facturas.php",
+      "script": "ajax/resumen-facturas.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/filtrar-doc.php",
+        "../../modules/facturacion/obtener-facturas.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-buscar",
+      "class": "btn btn-success btn-block",
+      "label": "Buscar Facturas",
+      "line": 83,
+      "module": "facturacion",
+      "screen": "views/facturacion/resumen-facturas.php",
+      "script": "ajax/resumen-facturas.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/filtrar-doc.php",
+        "../../modules/facturacion/obtener-facturas.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-reset",
+      "class": "btn btn-primary btn-block",
+      "label": "Limpiar filtros",
+      "line": 78,
+      "module": "facturacion",
+      "screen": "views/facturacion/resumen-notas-credito.php",
+      "script": "ajax/resumen-notas-credito.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/filtrar-doc.php",
+        "../../modules/facturacion/obtener-notas-credito.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-buscar",
+      "class": "btn btn-success btn-block",
+      "label": "Buscar Notas de Crédito",
+      "line": 83,
+      "module": "facturacion",
+      "screen": "views/facturacion/resumen-notas-credito.php",
+      "script": "ajax/resumen-notas-credito.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/obtener-clientes.php",
+        "../../modules/facturacion/cambiar-estado-doc.php",
+        "../../modules/facturacion/filtrar-doc.php",
+        "../../modules/facturacion/obtener-notas-credito.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "finance-refresh",
+      "class": "btn btn-sm btn-outline-secondary",
+      "label": "Actualizar",
+      "line": 1,
+      "module": "finanzas",
+      "screen": "views/finanzas/cuentas-por-cobrar.php",
+      "script": "ajax/cuentas-por-cobrar.js",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "close",
+      "label": "×",
+      "line": 2,
+      "module": "finanzas",
+      "screen": "views/finanzas/cuentas-por-cobrar.php",
+      "script": "ajax/cuentas-por-cobrar.js",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-secondary",
+      "label": "Cancelar",
+      "line": 2,
+      "module": "finanzas",
+      "screen": "views/finanzas/cuentas-por-cobrar.php",
+      "script": "ajax/cuentas-por-cobrar.js",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-primary",
+      "label": "Registrar cobro",
+      "line": 2,
+      "module": "finanzas",
+      "screen": "views/finanzas/cuentas-por-cobrar.php",
+      "script": "ajax/cuentas-por-cobrar.js",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "close",
+      "label": "×",
+      "line": 3,
+      "module": "finanzas",
+      "screen": "views/finanzas/cuentas-por-cobrar.php",
+      "script": "ajax/cuentas-por-cobrar.js",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "finance-refresh",
+      "class": "btn btn-sm btn-outline-secondary",
+      "label": "Actualizar",
+      "line": 1,
+      "module": "finanzas",
+      "screen": "views/finanzas/cuentas-por-pagar.php",
+      "script": "ajax/cuentas-por-pagar.js",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "close",
+      "label": "×",
+      "line": 2,
+      "module": "finanzas",
+      "screen": "views/finanzas/cuentas-por-pagar.php",
+      "script": "ajax/cuentas-por-pagar.js",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-secondary",
+      "label": "Cancelar",
+      "line": 2,
+      "module": "finanzas",
+      "screen": "views/finanzas/cuentas-por-pagar.php",
+      "script": "ajax/cuentas-por-pagar.js",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-primary",
+      "label": "Registrar pago",
+      "line": 2,
+      "module": "finanzas",
+      "screen": "views/finanzas/cuentas-por-pagar.php",
+      "script": "ajax/cuentas-por-pagar.js",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "close",
+      "label": "×",
+      "line": 3,
+      "module": "finanzas",
+      "screen": "views/finanzas/cuentas-por-pagar.php",
+      "script": "ajax/cuentas-por-pagar.js",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "finance-bulk-payment",
+      "class": "btn btn-sm btn-primary mr-2",
+      "label": "Aplicar a seleccionadas",
+      "line": 1,
+      "module": "finanzas",
+      "screen": "views/finanzas/cuentas.php",
+      "script": "ajax/cuentas.js",
+      "endpoint_candidates": [
+        "../../modules/finanzas/cuentas.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "finance-refresh",
+      "class": "btn btn-sm btn-outline-secondary",
+      "label": "Actualizar",
+      "line": 1,
+      "module": "finanzas",
+      "screen": "views/finanzas/cuentas.php",
+      "script": "ajax/cuentas.js",
+      "endpoint_candidates": [
+        "../../modules/finanzas/cuentas.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "close",
+      "label": "×",
+      "line": 2,
+      "module": "finanzas",
+      "screen": "views/finanzas/cuentas.php",
+      "script": "ajax/cuentas.js",
+      "endpoint_candidates": [
+        "../../modules/finanzas/cuentas.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-secondary",
+      "label": "Cancelar",
+      "line": 2,
+      "module": "finanzas",
+      "screen": "views/finanzas/cuentas.php",
+      "script": "ajax/cuentas.js",
+      "endpoint_candidates": [
+        "../../modules/finanzas/cuentas.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-primary",
+      "label": "Guardar pago",
+      "line": 2,
+      "module": "finanzas",
+      "screen": "views/finanzas/cuentas.php",
+      "script": "ajax/cuentas.js",
+      "endpoint_candidates": [
+        "../../modules/finanzas/cuentas.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "close",
+      "label": "×",
+      "line": 3,
+      "module": "finanzas",
+      "screen": "views/finanzas/cuentas.php",
+      "script": "ajax/cuentas.js",
+      "endpoint_candidates": [
+        "../../modules/finanzas/cuentas.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-primary",
+      "label": "Guardar datos de empresa",
+      "line": 5,
+      "module": "gestion",
+      "screen": "views/gestion/index.php",
+      "script": "ajax/index.js",
+      "endpoint_candidates": [
+        "../../modules/gestion/configuracion.php",
+        "../../modules/gestion/integraciones.php",
+        "../../modules/gestion/series.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-info",
+      "label": "Crear lista",
+      "line": 6,
+      "module": "gestion",
+      "screen": "views/gestion/index.php",
+      "script": "ajax/index.js",
+      "endpoint_candidates": [
+        "../../modules/gestion/configuracion.php",
+        "../../modules/gestion/integraciones.php",
+        "../../modules/gestion/series.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-outline-primary",
+      "label": "Agregar opción",
+      "line": 6,
+      "module": "gestion",
+      "screen": "views/gestion/index.php",
+      "script": "ajax/index.js",
+      "endpoint_candidates": [
+        "../../modules/gestion/configuracion.php",
+        "../../modules/gestion/integraciones.php",
+        "../../modules/gestion/series.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-success",
+      "label": "Guardar campo",
+      "line": 7,
+      "module": "gestion",
+      "screen": "views/gestion/index.php",
+      "script": "ajax/index.js",
+      "endpoint_candidates": [
+        "../../modules/gestion/configuracion.php",
+        "../../modules/gestion/integraciones.php",
+        "../../modules/gestion/series.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-primary btn-block",
+      "label": "Crear",
+      "line": 9,
+      "module": "gestion",
+      "screen": "views/gestion/index.php",
+      "script": "ajax/index.js",
+      "endpoint_candidates": [
+        "../../modules/gestion/configuracion.php",
+        "../../modules/gestion/integraciones.php",
+        "../../modules/gestion/series.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-info",
+      "label": "Guardar",
+      "line": 10,
+      "module": "gestion",
+      "screen": "views/gestion/index.php",
+      "script": "ajax/index.js",
+      "endpoint_candidates": [
+        "../../modules/gestion/configuracion.php",
+        "../../modules/gestion/integraciones.php",
+        "../../modules/gestion/series.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-secondary btn-block",
+      "label": "Guardar",
+      "line": 11,
+      "module": "gestion",
+      "screen": "views/gestion/index.php",
+      "script": "ajax/index.js",
+      "endpoint_candidates": [
+        "../../modules/gestion/configuracion.php",
+        "../../modules/gestion/integraciones.php",
+        "../../modules/gestion/series.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-dark",
+      "label": "Guardar",
+      "line": 12,
+      "module": "gestion",
+      "screen": "views/gestion/index.php",
+      "script": "ajax/index.js",
+      "endpoint_candidates": [
+        "../../modules/gestion/configuracion.php",
+        "../../modules/gestion/integraciones.php",
+        "../../modules/gestion/series.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "bd-theme",
+      "class": "btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center",
+      "label": "Toggle theme (auto) Cambiar tema",
+      "line": 63,
+      "module": "views",
+      "screen": "views/login.php",
+      "script": "ajax/login.js",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "dropdown-item d-flex align-items-center",
+      "label": "Claro",
+      "line": 71,
+      "module": "views",
+      "screen": "views/login.php",
+      "script": "ajax/login.js",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "dropdown-item d-flex align-items-center",
+      "label": "Oscuro",
+      "line": 82,
+      "module": "views",
+      "screen": "views/login.php",
+      "script": "ajax/login.js",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "dropdown-item d-flex align-items-center active",
+      "label": "Auto",
+      "line": 93,
+      "module": "views",
+      "screen": "views/login.php",
+      "script": "ajax/login.js",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btnLogin",
+      "class": "btn btn-primary w-100 py-2",
+      "label": "Ingresar",
+      "line": 129,
+      "module": "views",
+      "screen": "views/login.php",
+      "script": "ajax/login.js",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-primary btn-block",
+      "label": "Buscar documentos",
+      "line": 24,
+      "module": "logistica",
+      "screen": "views/logistica/documentos.php",
+      "script": "ajax/documentos.js",
+      "endpoint_candidates": [
+        "../../modules/logistica/documentos.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "close",
+      "label": "Cerrar ×",
+      "line": 46,
+      "module": "logistica",
+      "screen": "views/logistica/documentos.php",
+      "script": "ajax/documentos.js",
+      "endpoint_candidates": [
+        "../../modules/logistica/documentos.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-secondary",
+      "label": "Cancelar",
+      "line": 80,
+      "module": "logistica",
+      "screen": "views/logistica/documentos.php",
+      "script": "ajax/documentos.js",
+      "endpoint_candidates": [
+        "../../modules/logistica/documentos.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-primary",
+      "label": "Registrar despacho",
+      "line": 81,
+      "module": "logistica",
+      "screen": "views/logistica/documentos.php",
+      "script": "ajax/documentos.js",
+      "endpoint_candidates": [
+        "../../modules/logistica/documentos.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-new-remission-guide",
+      "class": "btn btn-light",
+      "label": "Nueva entrega / guía",
+      "line": 16,
+      "module": "logistica",
+      "screen": "views/logistica/guias.php",
+      "script": "ajax/guias.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/warehouses.php",
+        "../../modules/logistica/guias.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "close",
+      "label": "Cerrar ×",
+      "line": 34,
+      "module": "logistica",
+      "screen": "views/logistica/guias.php",
+      "script": "ajax/guias.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/warehouses.php",
+        "../../modules/logistica/guias.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-secondary",
+      "label": "Cancelar",
+      "line": 101,
+      "module": "logistica",
+      "screen": "views/logistica/guias.php",
+      "script": "ajax/guias.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/warehouses.php",
+        "../../modules/logistica/guias.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-primary",
+      "label": "Registrar guia",
+      "line": 101,
+      "module": "logistica",
+      "screen": "views/logistica/guias.php",
+      "script": "ajax/guias.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/warehouses.php",
+        "../../modules/logistica/guias.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "close",
+      "label": "Cerrar ×",
+      "line": 110,
+      "module": "logistica",
+      "screen": "views/logistica/guias.php",
+      "script": "ajax/guias.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/warehouses.php",
+        "../../modules/logistica/guias.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-secondary",
+      "label": "Cerrar",
+      "line": 124,
+      "module": "logistica",
+      "screen": "views/logistica/guias.php",
+      "script": "ajax/guias.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/warehouses.php",
+        "../../modules/logistica/guias.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-primary",
+      "label": "Crear factura",
+      "line": 124,
+      "module": "logistica",
+      "screen": "views/logistica/guias.php",
+      "script": "ajax/guias.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/warehouses.php",
+        "../../modules/logistica/guias.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "close",
+      "label": "Cerrar ×",
+      "line": 131,
+      "module": "logistica",
+      "screen": "views/logistica/guias.php",
+      "script": "ajax/guias.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/warehouses.php",
+        "../../modules/logistica/guias.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-secondary",
+      "label": "Cerrar",
+      "line": 133,
+      "module": "logistica",
+      "screen": "views/logistica/guias.php",
+      "script": "ajax/guias.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/warehouses.php",
+        "../../modules/logistica/guias.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "guide-preview-print",
+      "class": "btn btn-primary",
+      "label": "Imprimir",
+      "line": 133,
+      "module": "logistica",
+      "screen": "views/logistica/guias.php",
+      "script": "ajax/guias.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/warehouses.php",
+        "../../modules/logistica/guias.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-select-orden",
+      "class": "btn btn-primary",
+      "label": "Seleccionar",
+      "line": 26,
+      "module": "ordenes",
+      "screen": "views/ordenes/orden-de-compra.php",
+      "script": "ajax/orden-de-compra.js",
+      "endpoint_candidates": [
+        "../../modules/compras/solicitudes.php",
+        "../../modules/cotizaciones/obtener-cotizaciones.php",
+        "../../modules/ordenes/consultar-detalle-orden.php",
+        "../../modules/ordenes/consultar-orden.php",
+        "../../modules/ordenes/eliminar-orden.php",
+        "../../modules/ordenes/listar-ordenes.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/productos/obtener-productos.php",
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/listar-direcciones.php",
+        "../../modules/proveedores/listar-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-add-prodtporden",
+      "class": "btn btn-primary btn-block",
+      "label": "Añadir Artículo",
+      "line": 359,
+      "module": "ordenes",
+      "screen": "views/ordenes/orden-de-compra.php",
+      "script": "ajax/orden-de-compra.js",
+      "endpoint_candidates": [
+        "../../modules/compras/solicitudes.php",
+        "../../modules/cotizaciones/obtener-cotizaciones.php",
+        "../../modules/ordenes/consultar-detalle-orden.php",
+        "../../modules/ordenes/consultar-orden.php",
+        "../../modules/ordenes/eliminar-orden.php",
+        "../../modules/ordenes/listar-ordenes.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/productos/obtener-productos.php",
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/listar-direcciones.php",
+        "../../modules/proveedores/listar-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-save-orden",
+      "class": "btn btn-success btn-block",
+      "label": "Registrar Orden",
+      "line": 428,
+      "module": "ordenes",
+      "screen": "views/ordenes/orden-de-compra.php",
+      "script": "ajax/orden-de-compra.js",
+      "endpoint_candidates": [
+        "../../modules/compras/solicitudes.php",
+        "../../modules/cotizaciones/obtener-cotizaciones.php",
+        "../../modules/ordenes/consultar-detalle-orden.php",
+        "../../modules/ordenes/consultar-orden.php",
+        "../../modules/ordenes/eliminar-orden.php",
+        "../../modules/ordenes/listar-ordenes.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/productos/obtener-productos.php",
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/listar-direcciones.php",
+        "../../modules/proveedores/listar-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-delete-orden",
+      "class": "btn btn-danger btn-block",
+      "label": "Eliminar Orden",
+      "line": 431,
+      "module": "ordenes",
+      "screen": "views/ordenes/orden-de-compra.php",
+      "script": "ajax/orden-de-compra.js",
+      "endpoint_candidates": [
+        "../../modules/compras/solicitudes.php",
+        "../../modules/cotizaciones/obtener-cotizaciones.php",
+        "../../modules/ordenes/consultar-detalle-orden.php",
+        "../../modules/ordenes/consultar-orden.php",
+        "../../modules/ordenes/eliminar-orden.php",
+        "../../modules/ordenes/listar-ordenes.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/productos/obtener-productos.php",
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/listar-direcciones.php",
+        "../../modules/proveedores/listar-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-select-orden",
+      "class": "btn btn-primary",
+      "label": "Seleccionar",
+      "line": 26,
+      "module": "ordenes",
+      "screen": "views/ordenes/orden-de-servicio.php",
+      "script": "ajax/orden-de-servicio.js",
+      "endpoint_candidates": [
+        "../../modules/cotizaciones/obtener-cotizaciones.php",
+        "../../modules/ordenes/consultar-detalle-orden.php",
+        "../../modules/ordenes/consultar-orden.php",
+        "../../modules/ordenes/eliminar-orden.php",
+        "../../modules/ordenes/listar-ordenes.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/productos/obtener-productos.php",
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/listar-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-add-prodtporden",
+      "class": "btn btn-primary btn-block",
+      "label": "Añadir Artículo",
+      "line": 354,
+      "module": "ordenes",
+      "screen": "views/ordenes/orden-de-servicio.php",
+      "script": "ajax/orden-de-servicio.js",
+      "endpoint_candidates": [
+        "../../modules/cotizaciones/obtener-cotizaciones.php",
+        "../../modules/ordenes/consultar-detalle-orden.php",
+        "../../modules/ordenes/consultar-orden.php",
+        "../../modules/ordenes/eliminar-orden.php",
+        "../../modules/ordenes/listar-ordenes.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/productos/obtener-productos.php",
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/listar-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-save-orden",
+      "class": "btn btn-success btn-block",
+      "label": "Registrar Orden",
+      "line": 420,
+      "module": "ordenes",
+      "screen": "views/ordenes/orden-de-servicio.php",
+      "script": "ajax/orden-de-servicio.js",
+      "endpoint_candidates": [
+        "../../modules/cotizaciones/obtener-cotizaciones.php",
+        "../../modules/ordenes/consultar-detalle-orden.php",
+        "../../modules/ordenes/consultar-orden.php",
+        "../../modules/ordenes/eliminar-orden.php",
+        "../../modules/ordenes/listar-ordenes.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/productos/obtener-productos.php",
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/listar-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-delete-orden",
+      "class": "btn btn-danger btn-block",
+      "label": "Eliminar Orden",
+      "line": 423,
+      "module": "ordenes",
+      "screen": "views/ordenes/orden-de-servicio.php",
+      "script": "ajax/orden-de-servicio.js",
+      "endpoint_candidates": [
+        "../../modules/cotizaciones/obtener-cotizaciones.php",
+        "../../modules/ordenes/consultar-detalle-orden.php",
+        "../../modules/ordenes/consultar-orden.php",
+        "../../modules/ordenes/eliminar-orden.php",
+        "../../modules/ordenes/listar-ordenes.php",
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/productos/obtener-productos.php",
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/listar-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-nuevo",
+      "class": "btn btn-success btn-block",
+      "label": "Nueva Orden",
+      "line": 35,
+      "module": "ordenes",
+      "screen": "views/ordenes/resumen-ordenes.php",
+      "script": "ajax/resumen-ordenes.js",
+      "endpoint_candidates": [
+        "../../modules/ordenes/anular-orden.php",
+        "../../modules/ordenes/consultar-orden.php",
+        "../../modules/ordenes/filtrar-ordenes.php",
+        "../../modules/ordenes/obtener-ordenes.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-reset",
+      "class": "btn btn-primary btn-block",
+      "label": "Limpiar filtros",
+      "line": 68,
+      "module": "ordenes",
+      "screen": "views/ordenes/resumen-ordenes.php",
+      "script": "ajax/resumen-ordenes.js",
+      "endpoint_candidates": [
+        "../../modules/ordenes/anular-orden.php",
+        "../../modules/ordenes/consultar-orden.php",
+        "../../modules/ordenes/filtrar-ordenes.php",
+        "../../modules/ordenes/obtener-ordenes.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-buscar",
+      "class": "btn btn-success btn-block",
+      "label": "Buscar Órdenes",
+      "line": 73,
+      "module": "ordenes",
+      "screen": "views/ordenes/resumen-ordenes.php",
+      "script": "ajax/resumen-ordenes.js",
+      "endpoint_candidates": [
+        "../../modules/ordenes/anular-orden.php",
+        "../../modules/ordenes/consultar-orden.php",
+        "../../modules/ordenes/filtrar-ordenes.php",
+        "../../modules/ordenes/obtener-ordenes.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "inventory-document-new",
+      "class": "btn btn-outline-secondary mr-1",
+      "label": "Nuevo",
+      "line": 6,
+      "module": "productos",
+      "screen": "views/productos/actualizar-stock.php",
+      "script": "ajax/actualizar-stock.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/documents.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "inventory-document-search",
+      "class": "btn btn-outline-secondary mr-1",
+      "label": "Buscar",
+      "line": 7,
+      "module": "productos",
+      "screen": "views/productos/actualizar-stock.php",
+      "script": "ajax/actualizar-stock.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/documents.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "inventory-document-cancel",
+      "class": "btn btn-outline-danger mr-1 d-none",
+      "label": "Anular",
+      "line": 8,
+      "module": "productos",
+      "screen": "views/productos/actualizar-stock.php",
+      "script": "ajax/actualizar-stock.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/documents.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "inventory-document-save",
+      "class": "btn btn-primary",
+      "label": "Registrar",
+      "line": 9,
+      "module": "productos",
+      "screen": "views/productos/actualizar-stock.php",
+      "script": "ajax/actualizar-stock.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/documents.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "inventory-add-line",
+      "class": "btn btn-sm btn-outline-primary float-right",
+      "label": "Agregar línea",
+      "line": 24,
+      "module": "productos",
+      "screen": "views/productos/actualizar-stock.php",
+      "script": "ajax/actualizar-stock.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/documents.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "inventory-search-run",
+      "class": "btn btn-outline-primary btn-block",
+      "label": "Control de icono / cierre",
+      "line": 27,
+      "module": "productos",
+      "screen": "views/productos/actualizar-stock.php",
+      "script": "ajax/actualizar-stock.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/documents.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-primary flex-grow-1",
+      "label": "Crear almacén",
+      "line": 1,
+      "module": "productos",
+      "screen": "views/productos/almacenes.php",
+      "script": "ajax/almacenes.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/warehouses.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "warehouse-form-cancel",
+      "class": "btn btn-outline-secondary ml-2 d-none",
+      "label": "Cancelar",
+      "line": 1,
+      "module": "productos",
+      "screen": "views/productos/almacenes.php",
+      "script": "ajax/almacenes.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/warehouses.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-primary btn-block",
+      "label": "Filtrar",
+      "line": 26,
+      "module": "productos",
+      "screen": "views/productos/historial-movimiento.php",
+      "script": "ajax/historial-movimiento.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/transfers.php",
+        "../../modules/productos/consultar-movimientos.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-new",
+      "class": "btn btn-primary",
+      "label": "Limpiar campos",
+      "line": 136,
+      "module": "productos",
+      "screen": "views/productos/ingreso-almacen.php",
+      "script": "js/footer-functions.js o control nativo",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-product-list",
+      "class": "btn btn-secondary",
+      "label": "Listado de Productos",
+      "line": 139,
+      "module": "productos",
+      "screen": "views/productos/ingreso-almacen.php",
+      "script": "js/footer-functions.js o control nativo",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-save-product",
+      "class": "btn btn-success btn-md",
+      "label": "Guardar producto",
+      "line": 143,
+      "module": "productos",
+      "screen": "views/productos/ingreso-almacen.php",
+      "script": "js/footer-functions.js o control nativo",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-new",
+      "class": "btn btn-primary",
+      "label": "Nuevo",
+      "line": 129,
+      "module": "productos",
+      "screen": "views/productos/mantenimiento-producto.php",
+      "script": "ajax/mantenimiento-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/eliminar-producto.php",
+        "../../modules/proveedores/listar-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-save-product",
+      "class": "btn btn-success btn-md",
+      "label": "Guardar producto",
+      "line": 131,
+      "module": "productos",
+      "screen": "views/productos/mantenimiento-producto.php",
+      "script": "ajax/mantenimiento-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/eliminar-producto.php",
+        "../../modules/proveedores/listar-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-delete-product",
+      "class": "btn btn-danger",
+      "label": "Eliminar producto",
+      "line": 132,
+      "module": "productos",
+      "screen": "views/productos/mantenimiento-producto.php",
+      "script": "ajax/mantenimiento-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-productos.php",
+        "../../modules/productos/eliminar-producto.php",
+        "../../modules/proveedores/listar-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-product-new",
+      "label": "Nuevo",
+      "line": 16,
+      "module": "productos",
+      "screen": "views/productos/registro-producto.php",
+      "script": "ajax/registro-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-maestro.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-product-find",
+      "label": "Buscar",
+      "line": 17,
+      "module": "productos",
+      "screen": "views/productos/registro-producto.php",
+      "script": "ajax/registro-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-maestro.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-product-first",
+      "label": "Primero",
+      "line": 18,
+      "module": "productos",
+      "screen": "views/productos/registro-producto.php",
+      "script": "ajax/registro-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-maestro.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-product-prev",
+      "label": "Anterior",
+      "line": 19,
+      "module": "productos",
+      "screen": "views/productos/registro-producto.php",
+      "script": "ajax/registro-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-maestro.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-product-next",
+      "label": "Siguiente",
+      "line": 21,
+      "module": "productos",
+      "screen": "views/productos/registro-producto.php",
+      "script": "ajax/registro-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-maestro.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-product-last",
+      "label": "Último",
+      "line": 22,
+      "module": "productos",
+      "screen": "views/productos/registro-producto.php",
+      "script": "ajax/registro-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-maestro.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-product-edit",
+      "label": "Editar",
+      "line": 23,
+      "module": "productos",
+      "screen": "views/productos/registro-producto.php",
+      "script": "ajax/registro-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-maestro.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-product-cancel",
+      "label": "Cancelar",
+      "line": 24,
+      "module": "productos",
+      "screen": "views/productos/registro-producto.php",
+      "script": "ajax/registro-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-maestro.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-primary appu-product-save",
+      "label": "Guardar y consultar",
+      "line": 25,
+      "module": "productos",
+      "screen": "views/productos/registro-producto.php",
+      "script": "ajax/registro-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-maestro.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-product-save-new",
+      "label": "Guardar y nuevo",
+      "line": 26,
+      "module": "productos",
+      "screen": "views/productos/registro-producto.php",
+      "script": "ajax/registro-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-maestro.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn-close",
+      "label": "Cerrar",
+      "line": 31,
+      "module": "productos",
+      "screen": "views/productos/registro-producto.php",
+      "script": "ajax/registro-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-maestro.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-primary",
+      "label": "Buscar",
+      "line": 36,
+      "module": "productos",
+      "screen": "views/productos/registro-producto.php",
+      "script": "ajax/registro-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-maestro.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-light",
+      "label": "Página anterior",
+      "line": 42,
+      "module": "productos",
+      "screen": "views/productos/registro-producto.php",
+      "script": "ajax/registro-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-maestro.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-light",
+      "label": "Página siguiente",
+      "line": 42,
+      "module": "productos",
+      "screen": "views/productos/registro-producto.php",
+      "script": "ajax/registro-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-maestro.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-secondary",
+      "label": "Cerrar",
+      "line": 44,
+      "module": "productos",
+      "screen": "views/productos/registro-producto.php",
+      "script": "ajax/registro-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-maestro.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-new",
+      "class": "btn btn-primary",
+      "label": "Limpiar campos",
+      "line": 156,
+      "module": "productos",
+      "screen": "views/productos/registro-producto.php",
+      "script": "ajax/registro-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-maestro.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-product-list",
+      "class": "btn btn-secondary",
+      "label": "Listado de Productos",
+      "line": 159,
+      "module": "productos",
+      "screen": "views/productos/registro-producto.php",
+      "script": "ajax/registro-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-maestro.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-save-product",
+      "class": "btn btn-success btn-md",
+      "label": "Guardar y consultar",
+      "line": 163,
+      "module": "productos",
+      "screen": "views/productos/registro-producto.php",
+      "script": "ajax/registro-producto.js",
+      "endpoint_candidates": [
+        "../../modules/productos/consultar-maestro.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-primary btn-block",
+      "label": "Consultar",
+      "line": 1,
+      "module": "productos",
+      "screen": "views/productos/stock-por-almacen.php",
+      "script": "ajax/stock-por-almacen.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/stock-query.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-primary btn-block",
+      "label": "Registrar transferencia",
+      "line": 11,
+      "module": "productos",
+      "screen": "views/productos/transferencias.php",
+      "script": "ajax/transferencias.js",
+      "endpoint_candidates": [
+        "../../modules/inventory/transfers.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-new",
+      "label": "Nuevo",
+      "line": 17,
+      "module": "proveedores",
+      "screen": "views/proveedores/registro-proveedor.php",
+      "script": "ajax/registro-proveedor.js",
+      "endpoint_candidates": [
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/eliminar-proveedor.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-find",
+      "label": "Buscar",
+      "line": 17,
+      "module": "proveedores",
+      "screen": "views/proveedores/registro-proveedor.php",
+      "script": "ajax/registro-proveedor.js",
+      "endpoint_candidates": [
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/eliminar-proveedor.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-first",
+      "label": "Primero",
+      "line": 17,
+      "module": "proveedores",
+      "screen": "views/proveedores/registro-proveedor.php",
+      "script": "ajax/registro-proveedor.js",
+      "endpoint_candidates": [
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/eliminar-proveedor.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-prev",
+      "label": "Anterior",
+      "line": 17,
+      "module": "proveedores",
+      "screen": "views/proveedores/registro-proveedor.php",
+      "script": "ajax/registro-proveedor.js",
+      "endpoint_candidates": [
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/eliminar-proveedor.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-next",
+      "label": "Siguiente",
+      "line": 17,
+      "module": "proveedores",
+      "screen": "views/proveedores/registro-proveedor.php",
+      "script": "ajax/registro-proveedor.js",
+      "endpoint_candidates": [
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/eliminar-proveedor.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-last",
+      "label": "Último",
+      "line": 17,
+      "module": "proveedores",
+      "screen": "views/proveedores/registro-proveedor.php",
+      "script": "ajax/registro-proveedor.js",
+      "endpoint_candidates": [
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/eliminar-proveedor.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-primary appu-master-save",
+      "label": "Guardar",
+      "line": 17,
+      "module": "proveedores",
+      "screen": "views/proveedores/registro-proveedor.php",
+      "script": "ajax/registro-proveedor.js",
+      "endpoint_candidates": [
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/eliminar-proveedor.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-tool",
+      "label": "Colapsar",
+      "line": 32,
+      "module": "proveedores",
+      "screen": "views/proveedores/registro-proveedor.php",
+      "script": "ajax/registro-proveedor.js",
+      "endpoint_candidates": [
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/eliminar-proveedor.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-tool",
+      "label": "Colapsar",
+      "line": 120,
+      "module": "proveedores",
+      "screen": "views/proveedores/registro-proveedor.php",
+      "script": "ajax/registro-proveedor.js",
+      "endpoint_candidates": [
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/eliminar-proveedor.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-tool",
+      "label": "Colapsar",
+      "line": 155,
+      "module": "proveedores",
+      "screen": "views/proveedores/registro-proveedor.php",
+      "script": "ajax/registro-proveedor.js",
+      "endpoint_candidates": [
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/eliminar-proveedor.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-tool",
+      "label": "Colapsar",
+      "line": 193,
+      "module": "proveedores",
+      "screen": "views/proveedores/registro-proveedor.php",
+      "script": "ajax/registro-proveedor.js",
+      "endpoint_candidates": [
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/eliminar-proveedor.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-tool",
+      "label": "Colapsar",
+      "line": 223,
+      "module": "proveedores",
+      "screen": "views/proveedores/registro-proveedor.php",
+      "script": "ajax/registro-proveedor.js",
+      "endpoint_candidates": [
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/eliminar-proveedor.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-save-proveedor",
+      "class": "btn btn-success btn-block",
+      "label": "Guardar proveedor",
+      "line": 265,
+      "module": "proveedores",
+      "screen": "views/proveedores/registro-proveedor.php",
+      "script": "ajax/registro-proveedor.js",
+      "endpoint_candidates": [
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/eliminar-proveedor.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-delete-proveedor",
+      "class": "btn btn-outline-danger btn-block",
+      "label": "Desactivar proveedor",
+      "line": 268,
+      "module": "proveedores",
+      "screen": "views/proveedores/registro-proveedor.php",
+      "script": "ajax/registro-proveedor.js",
+      "endpoint_candidates": [
+        "../../modules/proveedores/consultar-proveedor.php",
+        "../../modules/proveedores/eliminar-proveedor.php",
+        "../../modules/proveedores/obtener-proveedores.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-rpt-ventas-por-cliente",
+      "class": "btn btn-block btn-success",
+      "label": "Ver reporte",
+      "line": 46,
+      "module": "reportes",
+      "screen": "views/reportes/clientes.php",
+      "script": "ajax/clientes.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-clientes-facturacion.php",
+        "../../modules/reportes/ventas-por-cliente.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-primary btn-block",
+      "label": "Aplicar filtros",
+      "line": 10,
+      "module": "reportes",
+      "screen": "views/reportes/finanzas.php",
+      "script": "ajax/finanzas.js",
+      "endpoint_candidates": [
+        "../../modules/reportes/finanzas.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "finance-report-export",
+      "class": "btn btn-sm btn-outline-success",
+      "label": "Exportar detalle",
+      "line": 11,
+      "module": "reportes",
+      "screen": "views/reportes/finanzas.php",
+      "script": "ajax/finanzas.js",
+      "endpoint_candidates": [
+        "../../modules/reportes/finanzas.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-secondary",
+      "label": "Intervalo de actualización (ms)",
+      "line": 33,
+      "module": "reportes",
+      "screen": "views/reportes/gastos-compras.php",
+      "script": "ajax/gastos-compras.js",
+      "endpoint_candidates": [
+        "../../modules/reportes/cargar-reporte-gastos-compras.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-product-list",
+      "class": "btn btn-sm btn-outline-primary",
+      "label": "Catálogo",
+      "line": 26,
+      "module": "reportes",
+      "screen": "views/reportes/productos.php",
+      "script": "ajax/productos.js",
+      "endpoint_candidates": [
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/reportes/inventario.php",
+        "../../modules/reportes/top-productos.php",
+        "../../modules/reportes/unidades-vendidas-por-cliente.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-tool",
+      "label": "Mostrar u ocultar reportes",
+      "line": 52,
+      "module": "reportes",
+      "screen": "views/reportes/productos.php",
+      "script": "ajax/productos.js",
+      "endpoint_candidates": [
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/reportes/inventario.php",
+        "../../modules/reportes/top-productos.php",
+        "../../modules/reportes/unidades-vendidas-por-cliente.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-rpt-unidades-vendidas-cliente",
+      "class": "btn btn-success btn-block mt-3",
+      "label": "Ver reporte PDF",
+      "line": 75,
+      "module": "reportes",
+      "screen": "views/reportes/productos.php",
+      "script": "ajax/productos.js",
+      "endpoint_candidates": [
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/reportes/inventario.php",
+        "../../modules/reportes/top-productos.php",
+        "../../modules/reportes/unidades-vendidas-por-cliente.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-rpt-top-mas-vendido",
+      "class": "btn btn-outline-success btn-block",
+      "label": "Top 20 más vendidos",
+      "line": 82,
+      "module": "reportes",
+      "screen": "views/reportes/productos.php",
+      "script": "ajax/productos.js",
+      "endpoint_candidates": [
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/reportes/inventario.php",
+        "../../modules/reportes/top-productos.php",
+        "../../modules/reportes/unidades-vendidas-por-cliente.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-rpt-top-menos-vendido",
+      "class": "btn btn-outline-danger btn-block",
+      "label": "Top 20 menos vendidos",
+      "line": 85,
+      "module": "reportes",
+      "screen": "views/reportes/productos.php",
+      "script": "ajax/productos.js",
+      "endpoint_candidates": [
+        "../../modules/productos/listar-productos-xprov.php",
+        "../../modules/reportes/inventario.php",
+        "../../modules/reportes/top-productos.php",
+        "../../modules/reportes/unidades-vendidas-por-cliente.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-export-sales-report",
+      "class": "btn btn-outline-primary mt-2 mt-sm-0",
+      "label": "Exportar CSV",
+      "line": 9,
+      "module": "reportes",
+      "screen": "views/reportes/ventas-periodo.php",
+      "script": "ajax/ventas-periodo.js",
+      "endpoint_candidates": [
+        "../../modules/reportes/cargar-reporte-ventas-x-periodo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-filter-sales-report",
+      "class": "btn btn-primary btn-block",
+      "label": "Aplicar filtros",
+      "line": 34,
+      "module": "reportes",
+      "screen": "views/reportes/ventas-periodo.php",
+      "script": "ajax/ventas-periodo.js",
+      "endpoint_candidates": [
+        "../../modules/reportes/cargar-reporte-ventas-x-periodo.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-outline-primary appu-address-new",
+      "label": "Nueva dirección",
+      "line": 6,
+      "module": "template",
+      "screen": "views/template/business-partner-details.php",
+      "script": "ajax/business-partner-details.js",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-outline-primary appu-contact-new",
+      "label": "Nuevo contacto",
+      "line": 8,
+      "module": "template",
+      "screen": "views/template/business-partner-details.php",
+      "script": "ajax/business-partner-details.js",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "a",
+      "id": "",
+      "class": "nav-link",
+      "label": "Control de icono / cierre",
+      "line": 70,
+      "module": "template",
+      "screen": "views/template/header.php",
+      "script": "js/footer-functions.js o control nativo",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "nav-link dropdown-toggle border-0 bg-transparent",
+      "label": "Crear",
+      "line": 80,
+      "module": "template",
+      "screen": "views/template/header.php",
+      "script": "js/footer-functions.js o control nativo",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "nav-link dropdown-toggle border-0 bg-transparent",
+      "label": "Buscar",
+      "line": 106,
+      "module": "template",
+      "screen": "views/template/header.php",
+      "script": "js/footer-functions.js o control nativo",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "nav-link dropdown-toggle border-0 bg-transparent",
+      "label": "Navegar",
+      "line": 120,
+      "module": "template",
+      "screen": "views/template/header.php",
+      "script": "js/footer-functions.js o control nativo",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "a",
+      "id": "",
+      "class": "nav-link",
+      "label": "Control de icono / cierre",
+      "line": 164,
+      "module": "template",
+      "screen": "views/template/header.php",
+      "script": "js/footer-functions.js o control nativo",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sidebar",
+      "label": "Control de icono / cierre",
+      "line": 17,
+      "module": "template",
+      "screen": "views/template/sidebar.php",
+      "script": "js/footer-functions.js o control nativo",
+      "endpoint_candidates": [],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-new",
+      "label": "Nuevo",
+      "line": 17,
+      "module": "usuarios",
+      "screen": "views/usuarios/registro-usuario.php",
+      "script": "ajax/registro-usuario.js",
+      "endpoint_candidates": [
+        "../../modules/empleados/consultar-empleado.php",
+        "../../modules/usuarios/consultar-usuario.php",
+        "../../modules/usuarios/eliminar-usuario.php",
+        "../../modules/usuarios/listar-roles.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-find",
+      "label": "Buscar",
+      "line": 17,
+      "module": "usuarios",
+      "screen": "views/usuarios/registro-usuario.php",
+      "script": "ajax/registro-usuario.js",
+      "endpoint_candidates": [
+        "../../modules/empleados/consultar-empleado.php",
+        "../../modules/usuarios/consultar-usuario.php",
+        "../../modules/usuarios/eliminar-usuario.php",
+        "../../modules/usuarios/listar-roles.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-first",
+      "label": "Primero",
+      "line": 17,
+      "module": "usuarios",
+      "screen": "views/usuarios/registro-usuario.php",
+      "script": "ajax/registro-usuario.js",
+      "endpoint_candidates": [
+        "../../modules/empleados/consultar-empleado.php",
+        "../../modules/usuarios/consultar-usuario.php",
+        "../../modules/usuarios/eliminar-usuario.php",
+        "../../modules/usuarios/listar-roles.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-prev",
+      "label": "Anterior",
+      "line": 17,
+      "module": "usuarios",
+      "screen": "views/usuarios/registro-usuario.php",
+      "script": "ajax/registro-usuario.js",
+      "endpoint_candidates": [
+        "../../modules/empleados/consultar-empleado.php",
+        "../../modules/usuarios/consultar-usuario.php",
+        "../../modules/usuarios/eliminar-usuario.php",
+        "../../modules/usuarios/listar-roles.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-next",
+      "label": "Siguiente",
+      "line": 17,
+      "module": "usuarios",
+      "screen": "views/usuarios/registro-usuario.php",
+      "script": "ajax/registro-usuario.js",
+      "endpoint_candidates": [
+        "../../modules/empleados/consultar-empleado.php",
+        "../../modules/usuarios/consultar-usuario.php",
+        "../../modules/usuarios/eliminar-usuario.php",
+        "../../modules/usuarios/listar-roles.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-light appu-master-last",
+      "label": "Último",
+      "line": 17,
+      "module": "usuarios",
+      "screen": "views/usuarios/registro-usuario.php",
+      "script": "ajax/registro-usuario.js",
+      "endpoint_candidates": [
+        "../../modules/empleados/consultar-empleado.php",
+        "../../modules/usuarios/consultar-usuario.php",
+        "../../modules/usuarios/eliminar-usuario.php",
+        "../../modules/usuarios/listar-roles.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-sm btn-primary appu-master-save",
+      "label": "Guardar",
+      "line": 17,
+      "module": "usuarios",
+      "screen": "views/usuarios/registro-usuario.php",
+      "script": "ajax/registro-usuario.js",
+      "endpoint_candidates": [
+        "../../modules/empleados/consultar-empleado.php",
+        "../../modules/usuarios/consultar-usuario.php",
+        "../../modules/usuarios/eliminar-usuario.php",
+        "../../modules/usuarios/listar-roles.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-save-user",
+      "class": "btn btn-success btn-block",
+      "label": "Crear Usuario",
+      "line": 134,
+      "module": "usuarios",
+      "screen": "views/usuarios/registro-usuario.php",
+      "script": "ajax/registro-usuario.js",
+      "endpoint_candidates": [
+        "../../modules/empleados/consultar-empleado.php",
+        "../../modules/usuarios/consultar-usuario.php",
+        "../../modules/usuarios/eliminar-usuario.php",
+        "../../modules/usuarios/listar-roles.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-delete-user",
+      "class": "btn btn-outline-danger btn-block",
+      "label": "Desactivar usuario",
+      "line": 137,
+      "module": "usuarios",
+      "screen": "views/usuarios/registro-usuario.php",
+      "script": "ajax/registro-usuario.js",
+      "endpoint_candidates": [
+        "../../modules/empleados/consultar-empleado.php",
+        "../../modules/usuarios/consultar-usuario.php",
+        "../../modules/usuarios/eliminar-usuario.php",
+        "../../modules/usuarios/listar-roles.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "commercial-flow-refresh",
+      "class": "btn btn-sm btn-outline-primary float-right",
+      "label": "Actualizar",
+      "line": 5,
+      "module": "ventas",
+      "screen": "views/ventas/flujo-comercial.php",
+      "script": "ajax/flujo-comercial.js",
+      "endpoint_candidates": [
+        "../../modules/ventas/documentos.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-new-sales-order",
+      "class": "btn btn-primary btn-sm mr-2",
+      "label": "Nueva orden",
+      "line": 19,
+      "module": "ventas",
+      "screen": "views/ventas/resumen-ordenes-venta.php",
+      "script": "ajax/resumen-ordenes-venta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "btn-refresh-sales-orders",
+      "class": "btn btn-light",
+      "label": "Actualizar listado",
+      "line": 28,
+      "module": "ventas",
+      "screen": "views/ventas/resumen-ordenes-venta.php",
+      "script": "ajax/resumen-ordenes-venta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-primary mr-2",
+      "label": "Buscar",
+      "line": 46,
+      "module": "ventas",
+      "screen": "views/ventas/resumen-ordenes-venta.php",
+      "script": "ajax/resumen-ordenes-venta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "sales-order-search-clear",
+      "class": "btn btn-light",
+      "label": "Limpiar filtros",
+      "line": 46,
+      "module": "ventas",
+      "screen": "views/ventas/resumen-ordenes-venta.php",
+      "script": "ajax/resumen-ordenes-venta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "sales-order-page-prev",
+      "class": "btn btn-sm btn-light",
+      "label": "Página anterior",
+      "line": 52,
+      "module": "ventas",
+      "screen": "views/ventas/resumen-ordenes-venta.php",
+      "script": "ajax/resumen-ordenes-venta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "sales-order-page-next",
+      "class": "btn btn-sm btn-light",
+      "label": "Página siguiente",
+      "line": 52,
+      "module": "ventas",
+      "screen": "views/ventas/resumen-ordenes-venta.php",
+      "script": "ajax/resumen-ordenes-venta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "close",
+      "label": "×",
+      "line": 81,
+      "module": "ventas",
+      "screen": "views/ventas/resumen-ordenes-venta.php",
+      "script": "ajax/resumen-ordenes-venta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "sales-order-add-line",
+      "class": "btn btn-sm btn-outline-primary",
+      "label": "Agregar articulo",
+      "line": 86,
+      "module": "ventas",
+      "screen": "views/ventas/resumen-ordenes-venta.php",
+      "script": "ajax/resumen-ordenes-venta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "sales-order-new",
+      "class": "btn btn-outline-primary",
+      "label": "Nuevo",
+      "line": 91,
+      "module": "ventas",
+      "screen": "views/ventas/resumen-ordenes-venta.php",
+      "script": "ajax/resumen-ordenes-venta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "sales-order-edit",
+      "class": "btn btn-outline-primary",
+      "label": "Editar",
+      "line": 94,
+      "module": "ventas",
+      "screen": "views/ventas/resumen-ordenes-venta.php",
+      "script": "ajax/resumen-ordenes-venta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "sales-order-cancel-edit",
+      "class": "btn btn-secondary",
+      "label": "Cancelar edición",
+      "line": 95,
+      "module": "ventas",
+      "screen": "views/ventas/resumen-ordenes-venta.php",
+      "script": "ajax/resumen-ordenes-venta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-secondary",
+      "label": "Cerrar",
+      "line": 96,
+      "module": "ventas",
+      "screen": "views/ventas/resumen-ordenes-venta.php",
+      "script": "ajax/resumen-ordenes-venta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-outline-primary",
+      "label": "new Guardar y nuevo",
+      "line": 97,
+      "module": "ventas",
+      "screen": "views/ventas/resumen-ordenes-venta.php",
+      "script": "ajax/resumen-ordenes-venta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    },
+    {
+      "tag": "button",
+      "id": "",
+      "class": "btn btn-primary",
+      "label": "view Guardar y visualizar",
+      "line": 98,
+      "module": "ventas",
+      "screen": "views/ventas/resumen-ordenes-venta.php",
+      "script": "ajax/resumen-ordenes-venta.js",
+      "endpoint_candidates": [
+        "../../modules/clientes/listar-direcciones.php",
+        "../../modules/ventas/ordenes.php"
+      ],
+      "evidence": "Pendiente de prueba individual"
+    }
+  ],
+  "dynamic_patterns": [
+    {
+      "script": "ajax/actualizar-stock.js",
+      "line": 35,
+      "pattern": "<button type='button' class='btn btn-sm btn-outline-danger inventory-remove-line'><i class='fas fa-times'></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/almacenes.js",
+      "line": 21,
+      "pattern": "<button type='button' class='btn btn-outline-primary'><i class='fas fa-edit'></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/almacenes.js",
+      "line": 31,
+      "pattern": "<button type='button' class='btn'></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/business-partner-details.js",
+      "line": 12,
+      "pattern": "<button type=\"button\" class=\"btn btn-xs btn-outline-primary appu-address-edit\" data-index=\"' + index + '\"><i class=\"fas fa-edit\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/business-partner-details.js",
+      "line": 13,
+      "pattern": "<button type=\"button\" class=\"btn btn-xs btn-outline-primary appu-contact-edit\" data-index=\"' + index + '\"><i class=\"fas fa-edit\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/costos-entrega.js",
+      "line": 8,
+      "pattern": "<button class=\"btn btn-sm btn-outline-danger js-cancel-cost\" data-id=\"'+x.id+'\"><i class=\"fas fa-ban\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/cuentas.js",
+      "line": 49,
+      "pattern": "<button class='btn btn-sm btn-outline-secondary mr-1 finance-history'>Historial</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/cuentas.js",
+      "line": 50,
+      "pattern": "<button class='btn btn-sm btn-primary finance-pay'>Pagar</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/cuentas.js",
+      "line": 80,
+      "pattern": "<button type='button' class='btn btn-sm btn-outline-danger ml-1 finance-reverse-payment'>Anular</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/cuentas.js",
+      "line": 81,
+      "pattern": "<button type='button' class='btn btn-sm btn-outline-secondary ml-1 finance-audit-payment'>Trazabilidad</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/guias.js",
+      "line": 65,
+      "pattern": "<button type=\"button\" class=\"btn btn-outline-primary js-guide-view\" data-id=\"' + guide.id + '\" title=\"Ver / imprimir\">Ver</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/guias.js",
+      "line": 67,
+      "pattern": "<button type=\"button\" class=\"btn btn-outline-success js-guide-invoice\" data-id=\"' + guide.id + '\">Copiar a factura</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/index.js",
+      "line": 41,
+      "pattern": "<button type='button' class='btn btn-sm js-toggle-value-option'></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/index.js",
+      "line": 48,
+      "pattern": "<button type='button' class='btn btn-sm \" + (active ? \"btn-outline-danger\" : \"btn-outline-success\") + \" js-toggle-custom-field' data-id='\" + Number(f.id) + \"' data-active='\" + (active ? 0 : 1) + \"'>\" + (active ? \"Desactivar\" : \"Activar\") + \"</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/index.js",
+      "line": 54,
+      "pattern": "<button type=\"button\" class=\"btn btn-sm btn-outline-primary mr-1 js-edit-custom-field\">Editar</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/index.js",
+      "line": 59,
+      "pattern": "<button class='btn btn-sm btn-primary' type='submit'>Guardar perfil y permisos</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/index.js",
+      "line": 62,
+      "pattern": "<button type='button' class='btn btn-sm btn-outline-primary financial-account-edit' data-account='\" + esc(JSON.stringify(a)) + \"'>Editar</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/index.js",
+      "line": 63,
+      "pattern": "<button type='button' class='btn btn-sm btn-outline-primary price-list-edit' data-list='\"+esc(JSON.stringify(a))+\"'>Editar</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/index.js",
+      "line": 67,
+      "pattern": "<button type='button' class='btn btn-sm btn-primary series-save' data-id='\" + Number(s.id) + \"'>Guardar</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/index.js",
+      "line": 69,
+      "pattern": "<button type='button' class='btn btn-sm mt-1 js-toggle-integration \" + (active ? \"btn-outline-danger\" : \"btn-outline-success\") + \"' data-integration='\" + esc(JSON.stringify(i)) + \"' data-active='\" + (active ? 0 : 1) + \"'>\" + (active ? \"Desactivar\" : \"Activar\") + \"</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/index.js",
+      "line": 69,
+      "pattern": "<button type='button' class='btn btn-sm btn-outline-primary mt-1 js-test-integration' data-code='\" + esc(i.code) + \"'>Probar</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/recepciones.js",
+      "line": 9,
+      "pattern": "<button type=\"button\" class=\"btn btn-xs btn-outline-danger js-cancel-receipt\" data-id=\"'+x.id+'\" title=\"Anular\"><i class=\"fas fa-ban\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/registro-cliente.js",
+      "line": 57,
+      "pattern": "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Cerrar\"><span aria-hidden=\"true\">&times;</span></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/registro-cliente.js",
+      "line": 57,
+      "pattern": "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Cerrar</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/registro-proveedor.js",
+      "line": 72,
+      "pattern": "<button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span>&times;</span></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/registro-proveedor.js",
+      "line": 72,
+      "pattern": "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Cerrar</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/registro-proveedor.js",
+      "line": 96,
+      "pattern": "<button type=\"button\" class=\"btn btn-sm btn-primary\">Seleccionar</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/resumen-compras.js",
+      "line": 102,
+      "pattern": "<button type=\"button\" class=\"btn btn-outline-secondary js-purchase-history\" data-id=\"' + row.ID + '\" title=\"Historial\"><i class=\"fas fa-history\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/resumen-compras.js",
+      "line": 103,
+      "pattern": "<button type=\"button\" class=\"btn btn-outline-success js-purchase-approve\" data-id=\"' + row.ID + '\" title=\"Aprobar\"><i class=\"fas fa-check\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/resumen-compras.js",
+      "line": 103,
+      "pattern": "<button type=\"button\" class=\"btn btn-outline-warning js-purchase-reject\" data-id=\"' + row.ID + '\" title=\"Rechazar\"><i class=\"fas fa-times\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/resumen-compras.js",
+      "line": 104,
+      "pattern": "<button type=\"button\" class=\"btn btn-outline-primary js-purchase-receive\" data-id=\"' + row.ID + '\" title=\"Recibir mercancía\"><i class=\"fas fa-boxes\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/resumen-compras.js",
+      "line": 105,
+      "pattern": "<button type=\"button\" class=\"btn btn-outline-danger js-purchase-cancel\" data-id=\"' + row.ID + '\" title=\"Anular\"><i class=\"fas fa-ban\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/resumen-compras.js",
+      "line": 395,
+      "pattern": "<button type='button' class='btn btn-sm btn-outline-danger js-cancel-receipt'>Anular</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/resumen-ordenes-venta.js",
+      "line": 59,
+      "pattern": "<button type=\"button\" class=\"btn btn-outline-danger sales-order-remove\" title=\"Quitar línea\"><i class=\"fas fa-times\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/resumen-ordenes-venta.js",
+      "line": 214,
+      "pattern": "<button type=\"button\" class=\"btn btn-outline-primary js-order-view\" data-id=\"' + order.id + '\" title=\"Ver orden\"><i class=\"fas fa-eye\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/resumen-ordenes-venta.js",
+      "line": 215,
+      "pattern": "<button type=\"button\" class=\"btn btn-outline-secondary js-order-history\" data-id=\"' + order.id + '\" title=\"Historial\"><i class=\"fas fa-history\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/resumen-ordenes-venta.js",
+      "line": 216,
+      "pattern": "<button type=\"button\" class=\"btn btn-outline-success js-order-confirm\" data-id=\"' + order.id + '\" title=\"Confirmar\"><i class=\"fas fa-check\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/resumen-ordenes-venta.js",
+      "line": 217,
+      "pattern": "<button type=\"button\" class=\"btn btn-outline-danger js-order-cancel\" data-id=\"' + order.id + '\" data-number=\"' + appuEscapeHtml(order.number) + '\" title=\"Anular\"><i class=\"fas fa-ban\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/solicitudes.js",
+      "line": 26,
+      "pattern": "<button type='button' class='btn btn-sm btn-outline-danger btn-remove-line'><i class='fas fa-times'></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/solicitudes.js",
+      "line": 91,
+      "pattern": "<button type='button' class='btn btn-sm btn-outline-primary mr-1'><i class='fas fa-folder-open'></i> Abrir</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/solicitudes.js",
+      "line": 93,
+      "pattern": "<button type='button' class='btn btn-sm btn-outline-success mr-1'>Aprobar</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/solicitudes.js",
+      "line": 94,
+      "pattern": "<button type='button' class='btn btn-sm btn-outline-warning mr-1'>Rechazar</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/solicitudes.js",
+      "line": 96,
+      "pattern": "<button type='button' class='btn btn-sm btn-outline-danger'>Cancelar</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "ajax/transferencias.js",
+      "line": 31,
+      "pattern": "<button type='button' class='btn btn-sm btn-outline-danger js-cancel-transfer ml-2'>Anular</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 128,
+      "pattern": "<button type=\"button\" class=\"btn btn-outline-primary appu-bp-choose\" title=\"Elegir cliente registrado\"><i class=\"fas fa-list\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 128,
+      "pattern": "<button type=\"button\" class=\"btn btn-outline-primary appu-bp-new\" title=\"Registrar nuevo cliente\"><i class=\"fas fa-user-plus\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 129,
+      "pattern": "<button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span>&times;</span></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 129,
+      "pattern": "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Cancelar</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 129,
+      "pattern": "<button type=\"button\" id=\"appu-bp-use\" class=\"btn btn-primary\">Usar cliente</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 160,
+      "pattern": "<button type=\"button\" class=\"btn btn-sm btn-outline-primary mt-2 appu-product-new\"><i class=\"fas fa-plus mr-1\"></i>Nuevo artículo</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 167,
+      "pattern": "<button type=\"button\" class=\"btn btn-sm btn-outline-primary mt-2 appu-provider-new\"><i class=\"fas fa-plus mr-1\"></i>Nuevo proveedor</button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 471,
+      "pattern": "<button type=\"button\" class=\"btn btn-sm btn-primary appu-list-new\"><i class=\"fas fa-plus\"></i><span>Nuevo</span></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 471,
+      "pattern": "<button type=\"button\" class=\"btn btn-sm btn-light appu-list-find\"><i class=\"fas fa-search\"></i><span>Buscar</span></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 471,
+      "pattern": "<button type=\"button\" class=\"btn btn-sm btn-light appu-list-refresh\"><i class=\"fas fa-sync-alt\"></i><span>Actualizar</span></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 511,
+      "pattern": "<button type=\"button\" class=\"btn btn-sm btn-light appu-doc-new\" title=\"Nuevo documento\"><i class=\"fas fa-file\"></i><span>Nuevo</span></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 512,
+      "pattern": "<button type=\"button\" class=\"btn btn-sm btn-light appu-doc-search\" title=\"Buscar documento\"><i class=\"fas fa-search\"></i><span>Buscar</span></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 514,
+      "pattern": "<button type=\"button\" class=\"btn btn-sm btn-light appu-doc-first\" title=\"Primer documento\"><i class=\"fas fa-angle-double-left\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 515,
+      "pattern": "<button type=\"button\" class=\"btn btn-sm btn-light appu-doc-prev\" title=\"Documento anterior\"><i class=\"fas fa-angle-left\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 516,
+      "pattern": "<button type=\"button\" class=\"btn btn-sm btn-light appu-doc-next\" title=\"Documento siguiente\"><i class=\"fas fa-angle-right\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 517,
+      "pattern": "<button type=\"button\" class=\"btn btn-sm btn-light appu-doc-last\" title=\"Último documento\"><i class=\"fas fa-angle-double-right\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 519,
+      "pattern": "<button type=\"button\" class=\"btn btn-sm btn-primary appu-doc-save\" title=\"Guardar documento\"><i class=\"fas fa-save\"></i><span>Guardar</span></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 521,
+      "pattern": "<button type=\"button\" class=\"btn btn-sm btn-outline-secondary appu-doc-history\" title=\"Ver historial\"><i class=\"fas fa-history\"></i></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 522,
+      "pattern": "<button type=\"button\" class=\"btn btn-sm btn-outline-danger appu-doc-void\" title=\"Anular documento: revierte stock y saldos cuando corresponda\"><i class=\"fas fa-ban\"></i><span>Anular</span></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    },
+    {
+      "script": "js/footer-functions.js",
+      "line": 523,
+      "pattern": "<button type=\"button\" class=\"btn btn-sm btn-outline-secondary appu-doc-close\" title=\"Cancelar documento: revierte movimientos y conserva la trazabilidad\"><i class=\"fas fa-times-circle\"></i><span>Cancelar</span></button>",
+      "evidence": "Patrón dinámico; inventario de instancias y prueba runtime pendientes"
+    }
+  ]
+}

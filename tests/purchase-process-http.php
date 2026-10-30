@@ -1,0 +1,56 @@
+<?php
+if(PHP_SAPI!=='cli'){http_response_code(404);exit;}
+require __DIR__.'/../global/connection.php';require_once __DIR__.'/qa-http-client.php';
+if(!str_ends_with(DB,'_qa'))throw new RuntimeException('Use una base _qa.');
+$http=new AppQaHttpClient(getenv('APPU_QA_URL')?:'http://127.0.0.1:8765',DB);$key='QA-PC-'.bin2hex(random_bytes(4));$provider=$product=null;$requests=[];$orders=[];$purchases=[];$receipts=[];$failed=false;
+function purchaseHttpAssert(bool $valid,string $message):void{if(!$valid)throw new RuntimeException($message);}
+function purchaseHttpRequest(AppQaHttpClient $http,string $path,array $data,int $expected=200):array{[$status,$json,$body]=$http->request($path,$data);purchaseHttpAssert($status===$expected,$path.' HTTP '.$status.': '.$body);return [$json,$body];}
+try{
+ $employee=(int)$pdo->query('SELECT id FROM tbl_employee WHERE active_status=1 ORDER BY id LIMIT 1')->fetchColumn();$warehouse=(int)$pdo->query('SELECT id FROM tbl_warehouse WHERE active_status=1 ORDER BY id LIMIT 1')->fetchColumn();purchaseHttpAssert($employee>0&&$warehouse>0,'Faltan empleado o almacén QA.');
+ $pdo->prepare("INSERT INTO tbl_provider(code,business_name,address,country,city,district,contact1_name,contact1_phone,contact2_name,contact2_phone,bank1_name,bank1_currency,bank1_account_number,bank1_account_holder,bank2_name,bank2_currency,bank2_account_number,bank2_account_holder)VALUES(?,?,'Dirección QA','Perú','Lima','Lima','','','','','','','','','','','','')")->execute([$key,'Proveedor proceso HTTP']);$provider=(int)$pdo->lastInsertId();
+ $pdo->prepare("INSERT INTO tbl_product(code,brand,name,description,stock_quantity,unit_price,unit_value,active_status)VALUES(?,'QA','Artículo proceso compras HTTP','Temporal',0,10,'UND',1)")->execute([$key]);$product=(int)$pdo->lastInsertId();$today=date('Y-m-d');
+ foreach(['STANDARD','RESERVE'] as $subtype){
+  [$created]=purchaseHttpRequest($http,'/modules/compras/solicitudes.php',['requester_id'=>$employee,'issue_date'=>$today,'required_date'=>$today,'currency'=>'PEN','details'=>json_encode([['product_id'=>$product,'item_name'=>'Nombre proporcionado por UI','quantity'=>10,'estimated_unit_price'=>10]])]);$request=(int)$created['id'];$requests[]=$request;
+  purchaseHttpRequest($http,'/modules/aprobaciones/procesar.php',['document_type'=>'purchase_request','document_id'=>$request,'approval_action'=>'approve']);
+  $common=['orden_tipo'=>'COMPRA','orden_id'=>'','orden_tccompra'=>0,'orden_tcventa'=>0,'orden_nrocuenta'=>'','orden_autorizador'=>'','orden_tipomoneda'=>'PEN','orden_fecemision'=>$today,'orden_fecentrega'=>$today,'orden_observ'=>$key.'-'.$subtype,'orden_tipopago'=>15,'orden_proveedor'=>$provider,'orden_cotizacion'=>'','orden_solicitante'=>'QA HTTP','orden_totneto'=>118,'orden_totcompra'=>100,'orden_igv'=>18];
+  $orderPayload=$common+['orden_solicitud_compra'=>$request,'orden_lstprods'=>json_encode([[1,$key,'Artículo proceso compras HTTP','','UND',10,10,0,100,$product]])];
+  $invalid=$orderPayload;$invalid['orden_totneto']=1;purchaseHttpRequest($http,'/modules/ordenes/insert-update-orden.php',$invalid,422);
+  $invalid=$orderPayload;$invalid['orden_fecemision']='2026-02-30';purchaseHttpRequest($http,'/modules/ordenes/insert-update-orden.php',$invalid,422);
+  [, $body]=purchaseHttpRequest($http,'/modules/ordenes/insert-update-orden.php',$orderPayload);purchaseHttpAssert($body==='OK_INSERT','No creó la OC.');$query=$pdo->prepare('SELECT id FROM tbl_order WHERE purchase_request_id=?');$query->execute([$request]);$order=(int)$query->fetchColumn();$orders[]=$order;purchaseHttpAssert($order>0,'No persistió OC.');
+  purchaseHttpRequest($http,'/modules/aprobaciones/procesar.php',['document_type'=>'order','document_id'=>$order,'approval_action'=>'approve']);$orderLine=(int)$pdo->query('SELECT id FROM tbl_order_detail WHERE order_id='.$order)->fetchColumn();
+  if($subtype==='STANDARD'){
+   [$result]=purchaseHttpRequest($http,'/modules/compras/goods-receipts.php',['base_type'=>'ORDER','base_id'=>$order,'warehouse_id'=>$warehouse,'receipt_date'=>$today,'items'=>json_encode([['base_line_id'=>$orderLine,'quantity'=>10]])],201);$orderReceipt=(int)$result['receipt_id'];$receipts[]=$orderReceipt;
+  }
+  $purchasePayload=$common+['orden_nro'=>$key.'-'.$subtype,'orden_compra_id'=>$order,'orden_tipo_documento'=>$subtype,'orden_lstprods'=>json_encode([[$product,$key,'Artículo proceso compras HTTP','','UND',10,10,0,100]])];
+  [, $body]=purchaseHttpRequest($http,'/modules/compras/insert-update-compra.php',$purchasePayload);purchaseHttpAssert($body==='OK_INSERT','No creó factura de proveedor.');$query=$pdo->prepare('SELECT id FROM tbl_purchase WHERE purchase_order_id=?');$query->execute([$order]);$purchase=(int)$query->fetchColumn();$purchases[]=$purchase;
+  purchaseHttpRequest($http,'/modules/aprobaciones/procesar.php',['document_type'=>'purchase','document_id'=>$purchase,'approval_action'=>'approve']);$purchaseLine=(int)$pdo->query('SELECT id FROM tbl_purchase_detail WHERE purchase_id='.$purchase)->fetchColumn();
+  [$status,$legacy]=$http->request('/modules/compras/recepciones.php?purchase_id='.$purchase);purchaseHttpAssert($status===200&&(int)$legacy['purchase']['id']===$purchase&&isset($legacy['base']),'El adaptador no conserva el contrato de la pantalla de compras.');
+  $payable=$pdo->prepare("SELECT balance_amount,status FROM tbl_accounts_payable WHERE document_type='purchase' AND document_id=?");$payable->execute([$purchase]);$account=$payable->fetch();purchaseHttpAssert($account&&(float)$account['balance_amount']===118.0,'No creó la cuenta por pagar correcta.');
+  if($subtype==='STANDARD'){
+   purchaseHttpAssert((int)$legacy['details'][0]['pending_quantity']===0&&$legacy['purchase']['status']==='Atendido','La factura estándar volvió a abrir mercancía ya recibida desde la OC.');
+   purchaseHttpRequest($http,'/modules/compras/recepciones.php',['purchase_id'=>$purchase,'warehouse_id'=>$warehouse,'receipt_date'=>$today,'items'=>json_encode([['purchase_detail_id'=>$purchaseLine,'quantity'=>1]])],422);
+   purchaseHttpRequest($http,'/modules/compras/goods-receipts.php',['action'=>'cancel','receipt_id'=>$orderReceipt,'reason'=>'QA intento antes de factura'],422);
+   purchaseHttpRequest($http,'/modules/compras/anular-compra.php',['ID_ORDEN'=>$purchase,'reason'=>'QA anulación factura estándar']);
+   $http->request('/modules/finanzas/cuentas.php?type=payable');$payable->execute([$purchase]);$account=$payable->fetch();purchaseHttpAssert($account['status']==='Anulada'&&(float)$account['balance_amount']===0.0,'Finanzas reabrió una factura de proveedor anulada.');
+   purchaseHttpRequest($http,'/modules/compras/goods-receipts.php',['action'=>'cancel','receipt_id'=>$orderReceipt,'reason'=>'QA reversión entrada orden']);
+  }else{
+   purchaseHttpAssert((int)$legacy['details'][0]['pending_quantity']===10,'Reserva sin recepción perdió saldo logístico.');
+   purchaseHttpRequest($http,'/modules/compras/recepciones.php',['purchase_id'=>$purchase,'warehouse_id'=>$warehouse,'receipt_date'=>$today,'items'=>json_encode([['purchase_detail_id'=>$purchaseLine,'quantity'=>1.5]])],422);
+   purchaseHttpRequest($http,'/modules/compras/goods-receipts.php',['base_type'=>'ORDER','base_id'=>$order,'warehouse_id'=>$warehouse,'receipt_date'=>$today,'items'=>json_encode([['base_line_id'=>$orderLine,'quantity'=>1]])],422);
+   foreach([4,6] as $quantity){[$result]=purchaseHttpRequest($http,'/modules/compras/recepciones.php',['purchase_id'=>$purchase,'warehouse_id'=>$warehouse,'receipt_date'=>$today,'items'=>json_encode([['purchase_detail_id'=>$purchaseLine,'quantity'=>$quantity]])],201);$receipts[]=(int)$result['receipt_id'];}
+   purchaseHttpAssert($pdo->query('SELECT status FROM tbl_order WHERE id='.$order)->fetchColumn()==='Atendido','La recepción de reserva no cerró logísticamente la OC.');
+   foreach(array_reverse(array_slice($receipts,-2)) as $receipt)purchaseHttpRequest($http,'/modules/compras/recepciones.php',['action'=>'cancel','receipt_id'=>$receipt,'reason'=>'QA reversión entrada reserva']);
+   $payable->execute([$purchase]);purchaseHttpAssert((float)$payable->fetch()['balance_amount']===118.0,'Anular recepción de reserva eliminó indebidamente CxP.');
+   purchaseHttpRequest($http,'/modules/compras/anular-compra.php',['ID_ORDEN'=>$purchase,'reason'=>'QA anulación factura reserva']);
+  }
+ }
+ echo "PASS HTTP request approval order receipt standard invoice and reserve invoice receipt with physical balance and reversals\n";
+}catch(Throwable $error){fwrite(STDERR,'FAIL purchase process HTTP: '.$error->getMessage().PHP_EOL);$failed=true;}
+finally{
+ if($pdo->inTransaction())$pdo->rollBack();$pdo->beginTransaction();
+ foreach($receipts as $id){$pdo->prepare("DELETE FROM tbl_document_status_history WHERE document_type='goods_receipt' AND document_id=?")->execute([$id]);$pdo->prepare("DELETE FROM tbl_document_flow WHERE target_type='goods_receipt' AND target_id=?")->execute([$id]);$pdo->prepare("DELETE FROM tbl_document_line_application WHERE target_type='goods_receipt' AND target_id=?")->execute([$id]);$pdo->prepare("DELETE FROM tbl_warehouse_movement WHERE source_type='goods_receipt' AND source_id=?")->execute([$id]);$pdo->prepare('DELETE FROM tbl_goods_receipt_detail WHERE goods_receipt_id=?')->execute([$id]);$pdo->prepare('DELETE FROM tbl_goods_receipt WHERE id=?')->execute([$id]);}
+ foreach($purchases as $id){$pdo->prepare("DELETE FROM tbl_accounts_payable WHERE document_type='purchase' AND document_id=?")->execute([$id]);$pdo->prepare("DELETE FROM tbl_document_flow WHERE target_type='purchase' AND target_id=?")->execute([$id]);$pdo->prepare("DELETE FROM tbl_document_status_history WHERE document_type='purchase' AND document_id=?")->execute([$id]);$pdo->prepare("DELETE FROM tbl_approval_history WHERE document_type='purchase' AND document_id=?")->execute([$id]);$pdo->prepare('DELETE FROM tbl_purchase_detail WHERE purchase_id=?')->execute([$id]);$pdo->prepare('DELETE FROM tbl_purchase WHERE id=?')->execute([$id]);}
+ foreach($orders as $id){$pdo->prepare("DELETE FROM tbl_document_flow WHERE target_type='order' AND target_id=?")->execute([$id]);$pdo->prepare("DELETE FROM tbl_document_status_history WHERE document_type='order' AND document_id=?")->execute([$id]);$pdo->prepare("DELETE FROM tbl_approval_history WHERE document_type='order' AND document_id=?")->execute([$id]);$pdo->prepare('DELETE FROM tbl_order_detail WHERE order_id=?')->execute([$id]);$pdo->prepare('DELETE FROM tbl_order WHERE id=?')->execute([$id]);}
+ foreach($requests as $id){$pdo->prepare("DELETE FROM tbl_document_status_history WHERE document_type='purchase_request' AND document_id=?")->execute([$id]);$pdo->prepare("DELETE FROM tbl_approval_history WHERE document_type='purchase_request' AND document_id=?")->execute([$id]);$pdo->prepare('DELETE FROM tbl_purchase_request_detail WHERE request_id=?')->execute([$id]);$pdo->prepare('DELETE FROM tbl_purchase_request WHERE id=?')->execute([$id]);}
+ if($product){$pdo->prepare('DELETE FROM tbl_product_lot WHERE product_id=?')->execute([$product]);$pdo->prepare('DELETE FROM tbl_warehouse_stock WHERE product_id=?')->execute([$product]);$pdo->prepare('DELETE FROM tbl_product WHERE id=?')->execute([$product]);}if($provider)$pdo->prepare('DELETE FROM tbl_provider WHERE id=?')->execute([$provider]);$pdo->commit();
+}exit($failed?1:0);

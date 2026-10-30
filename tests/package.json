@@ -1,0 +1,7 @@
+{
+  "name": "appu-erp-ui-tests",
+  "private": true,
+  "type": "commonjs",
+  "scripts": { "test": "node --test *.test.cjs" },
+  "devDependencies": { "jquery": "3.7.1", "jsdom": "26.1.0" }
+}

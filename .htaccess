@@ -1,0 +1,14 @@
+Options All -Indexes
+
+RewriteEngine On
+
+# Prevent source data and local configuration artifacts from being downloaded.
+RewriteRule ^(?:db|global|tests|\.git|\.github)/ - [F,L,NC]
+<FilesMatch "\.(?:sql|psd|ya?ml)$">
+    Require all denied
+</FilesMatch>
+
+# La gestion es una carpeta de vistas; enviar su ruta corta a una vista concreta.
+RewriteRule ^views/gestion/?$ index.php?url=views/gestion/index [L,QSA,NC]
+
+RewriteRule ^([-a-zA-Z0-9/]+)$ index.php?url=$1

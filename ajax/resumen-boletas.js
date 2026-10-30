@@ -1,0 +1,1 @@
+window.appuBoletasList=appuSalesDocumentList({table:'#table-boletas',type:'RECEIPT',historyType:'receipt',label:'boleta',title:'Resumen de boletas',route:'registro-boleta',menu:'#m_resumen_boleta',parent:'#m_boleta'});

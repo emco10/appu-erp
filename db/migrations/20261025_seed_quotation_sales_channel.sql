@@ -1,0 +1,1 @@
+INSERT INTO `tbl_custom_field_definition` (`entity`,`field_key`,`label`,`field_type`,`value_list_code`,`required_status`,`active_status`) VALUES ('quotation','canal_venta','Canal de ventas','select','CANAL_VENTA',0,1) ON DUPLICATE KEY UPDATE label=VALUES(label),field_type=VALUES(field_type),value_list_code=VALUES(value_list_code),active_status=1;

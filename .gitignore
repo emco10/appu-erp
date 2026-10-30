@@ -1,0 +1,5 @@
+tests/node_modules/
+tests/artifacts/sessions/
+tests/artifacts/edge-profile*/
+db/backups/
+/db/db_appu.sql

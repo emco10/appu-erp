@@ -1,0 +1,15 @@
+<?php
+require '../../global/connection.php';require_once '../inventory/stock.php';require_once '../../global/document-numbering.php';require_once '../../global/document-history.php';require_once '../../global/landed-cost.php';
+header('Content-Type: application/json; charset=utf-8');$method=$_SERVER['REQUEST_METHOD']??'GET';$json=static function(int $status,array $data):void{http_response_code($status);echo json_encode($data,JSON_UNESCAPED_UNICODE);exit;};
+if($method==='GET'){
+ app_require_permission('purchases.view');$action=strtolower(trim((string)($_GET['action']??'list')));
+ if($action==='receipts'){$rows=$pdo->query("SELECT receipt.id,receipt.number,receipt.receipt_date,CASE WHEN receipt.base_document_type='ORDER' THEN purchase_order.number ELSE purchase.number END AS purchase_number,COALESCE(NULLIF(receipt.provider_name,''),provider.business_name) AS provider_name,receipt.currency FROM tbl_goods_receipt receipt LEFT JOIN tbl_purchase purchase ON purchase.id=receipt.purchase_id LEFT JOIN tbl_order purchase_order ON purchase_order.id=receipt.purchase_order_id JOIN tbl_provider provider ON provider.id=receipt.provider_id WHERE receipt.status='Registrado' ORDER BY receipt.id DESC LIMIT 200")->fetchAll();$json(200,['receipts'=>$rows]);}
+ if($action==='receipt'){$id=filter_var($_GET['receipt_id']??null,FILTER_VALIDATE_INT);if($id===false||$id<1)$json(422,['error'=>'Recepción inválida.']);try{$json(200,app_landed_cost_receipt($pdo,(int)$id));}catch(Throwable $e){$json(422,['error'=>$e->getMessage()]);}}
+ $rows=$pdo->query("SELECT cost.id,cost.number,cost.cost_date,cost.concept,cost.allocation_method,cost.currency,cost.total_cost,cost.status,receipt.number AS receipt_number,provider.business_name AS provider_name FROM tbl_landed_cost cost JOIN tbl_goods_receipt receipt ON receipt.id=cost.goods_receipt_id JOIN tbl_provider provider ON provider.id=cost.provider_id ORDER BY cost.id DESC")->fetchAll();$json(200,['costs'=>$rows]);
+}
+app_require_permission('purchases.manage');$action=strtolower(trim((string)($_POST['action']??'create')));
+try{$pdo->beginTransaction();
+ if($action==='create'){$result=app_create_landed_cost($pdo,(int)($_POST['goods_receipt_id']??0),(string)($_POST['concept']??''),(string)($_POST['allocation_method']??''),(float)($_POST['total_cost']??0),(string)($_POST['cost_date']??''),(string)($_POST['notes']??''),(int)$_SESSION['loggedInUser']['USERID']);$pdo->commit();$json(201,['message'=>'Costo de entrega distribuido correctamente.','cost'=>$result]);}
+ if($action==='cancel'){$result=app_cancel_landed_cost($pdo,(int)($_POST['landed_cost_id']??0),(string)($_POST['reason']??''),(int)$_SESSION['loggedInUser']['USERID']);$pdo->commit();$json(200,['message'=>$result['already_cancelled']?'El costo ya estaba anulado.':'Costo de entrega anulado y valoración revertida.']);}
+ throw new InvalidArgumentException('Acción de costo de entrega inválida.');
+}catch(Throwable $e){if($pdo->inTransaction())$pdo->rollBack();$json(422,['error'=>$e->getMessage()]);}

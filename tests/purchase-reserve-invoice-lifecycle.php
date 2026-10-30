@@ -1,0 +1,16 @@
+<?php
+if(PHP_SAPI!=='cli'){http_response_code(404);exit;}
+$root=dirname(__DIR__);require $root.'/global/config.php';session_set_save_handler(fn()=>true,fn()=>true,fn($id)=>'',fn($id,$data)=>true,fn($id)=>true,fn($max)=>0);app_start_session();require $root.'/global/connection.php';require_once $root.'/modules/finanzas/sync.php';
+$pdo->beginTransaction();
+try{
+ $userId=(int)$pdo->query('SELECT id FROM tbl_user ORDER BY id LIMIT 1')->fetchColumn();$providerId=(int)$pdo->query('SELECT id FROM tbl_provider ORDER BY id LIMIT 1')->fetchColumn();if(!$userId||!$providerId)throw new RuntimeException('Faltan datos base.');$suffix=substr(uniqid(),-8);$today=date('Y-m-d');
+ $insert=$pdo->prepare("INSERT INTO tbl_purchase(type,number,supplier_reference,status,document_subtype,currency,issue_date,delivery_date,provider_id,payment_days,created_by,observation,total_purchase,total_tax,total_net,exchange_rate_sale,exchange_rate_purchase) VALUES(1,?,?,?,?,'PEN',?,?,?,?,?,'QA',100,18,118,0,0)");
+ $insert->execute(['QA-STD-'.$suffix,'REF-STD-'.$suffix,'Aprobado','STANDARD',$today,$today,$providerId,15,$userId]);$standardId=(int)$pdo->lastInsertId();
+ $account=$pdo->prepare("SELECT COUNT(*) FROM tbl_accounts_payable WHERE document_type='purchase' AND document_id=?");$account->execute([$standardId]);if((int)$account->fetchColumn()!==0)throw new RuntimeException('La factura estándar generó CxP antes de completar la recepción.');
+ $pdo->prepare("UPDATE tbl_purchase SET status='Atendido' WHERE id=?")->execute([$standardId]);finance_sync_payable($pdo,$standardId);$account->execute([$standardId]);if((int)$account->fetchColumn()!==1)throw new RuntimeException('La factura estándar no generó CxP al completar la recepción.');
+ $insert->execute(['QA-RES-'.$suffix,'REF-RES-'.$suffix,'Aprobado','RESERVE',$today,$today,$providerId,15,$userId]);$reserveId=(int)$pdo->lastInsertId();finance_sync_payable($pdo,$reserveId);$account->execute([$reserveId]);if((int)$account->fetchColumn()!==1)throw new RuntimeException('La factura de reserva no generó CxP al aprobarse.');
+ $reserveAccount=$pdo->prepare("SELECT total_amount,balance_amount,status FROM tbl_accounts_payable WHERE document_type='purchase' AND document_id=?");$reserveAccount->execute([$reserveId]);$row=$reserveAccount->fetch();if(!$row||abs((float)$row['total_amount']-118)>0.01||abs((float)$row['balance_amount']-118)>0.01||$row['status']!=='Pendiente')throw new RuntimeException('La CxP de reserva es inconsistente.');
+ $approval=file_get_contents($root.'/modules/aprobaciones/procesar.php');$receipts=file_get_contents($root.'/modules/compras/goods-receipts.php');$adapter=file_get_contents($root.'/modules/compras/recepciones.php');$finance=file_get_contents($root.'/modules/finanzas/cuentas.php');
+ if(!str_contains($approval,"fetchColumn()==='RESERVE'")||!str_contains($receipts,'$status===\'Atendido\'')||!str_contains($receipts,'document_subtype')||!str_contains($adapter,'goods-receipts.php')||!str_contains($finance,"document_subtype='RESERVE' OR status='Atendido'"))throw new RuntimeException('Los endpoints no conservan la separación estándar/reserva.');
+ echo 'PASS purchase standard and reserve invoice payable lifecycle'.PHP_EOL;$pdo->rollBack();
+}catch(Throwable $e){if($pdo->inTransaction())$pdo->rollBack();fwrite(STDERR,'FAIL purchase reserve lifecycle: '.$e->getMessage().PHP_EOL);exit(1);}

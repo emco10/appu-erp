@@ -1,0 +1,1 @@
+window.appuFacturasList=appuSalesDocumentList({table:'#table-facturas',type:'INVOICE',historyType:'invoice',label:'factura',title:'Resumen de facturas',route:'registro-factura',menu:'#m_resumen_factura',parent:'#m_facturacion'});

@@ -1,0 +1,312 @@
+/* Identidad visual APPU: grafito, cian tecnológico y naranja energético del logo. */
+:root {
+    --appu-primary: #263942;
+    --appu-primary-dark: #17252c;
+    --appu-primary-soft: #edf1f2;
+    --appu-accent: #c86b32;
+    --appu-accent-dark: #a65325;
+    --appu-cyan: #5e8992;
+    --appu-success: #54756d;
+    --appu-info: #557783;
+    --appu-warning: #a97954;
+    --appu-danger: #8f5a59;
+    --appu-ink: #29363d;
+    --appu-surface: #f5f6f6;
+}
+
+body { background-color: var(--appu-surface); color: var(--appu-ink); font-size: 14px; }
+.main-header.navbar { background-color: var(--appu-primary-dark) !important; border-bottom: 1px solid #34454d !important; }
+.main-sidebar { background: linear-gradient(180deg, var(--appu-primary-dark), #102d3d) !important; }
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active,
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link:hover { background-color: rgba(255,255,255,.06) !important; }
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active { background-color: rgba(255,255,255,.11) !important; color: #fff !important; font-weight: 600; }
+.brand-link.appu-brand-link { border-bottom: 1px solid #d8dee0; }
+.content-header h1 { color: var(--appu-primary-dark); font-weight: 600; }
+.card-title { color: var(--appu-primary-dark); }
+.card-primary > .card-header .card-title, .card-info > .card-header .card-title, .card-danger > .card-header .card-title, .card-success > .card-header .card-title,
+.card-primary > .card-header h1, .card-primary > .card-header h2, .card-primary > .card-header h3, .card-primary > .card-header h4, .card-primary > .card-header h5,
+.card-info > .card-header h1, .card-info > .card-header h2, .card-info > .card-header h3, .card-info > .card-header h4, .card-info > .card-header h5,
+.card-danger > .card-header h1, .card-danger > .card-header h2, .card-danger > .card-header h3, .card-danger > .card-header h4, .card-danger > .card-header h5,
+.card-success > .card-header h1, .card-success > .card-header h2, .card-success > .card-header h3, .card-success > .card-header h4, .card-success > .card-header h5 { color: #fff !important; }
+.card { border: 1px solid #dfe4e5; border-radius: .35rem; box-shadow: 0 .08rem .35rem rgba(23,37,44,.045); }
+.card-header { border-bottom: 1px solid rgba(255,255,255,.14); font-weight: 600; }
+.card-primary:not(.card-outline) > .card-header, .card-primary.card-outline { border-top-color: var(--appu-primary) !important; }
+.appu-welcome-card > .card-header { background: linear-gradient(100deg, #edf1f2, #fff) !important; }
+.card-primary.card-outline.appu-welcome-card > .card-header h5.appu-welcome-title { color: var(--appu-primary-dark) !important; }
+.appu-welcome-card .appu-welcome-title i { color: var(--appu-accent-dark); }
+.appu-welcome-card .appu-welcome-title strong { color: var(--appu-accent-dark); }
+.card-primary:not(.card-outline) > .card-header, .bg-primary { background-color: var(--appu-primary) !important; }
+.card-info:not(.card-outline) > .card-header, .bg-info { background-color: var(--appu-cyan) !important; }
+.card-danger:not(.card-outline) > .card-header, .bg-danger { background-color: var(--appu-accent-dark) !important; }
+.card-success:not(.card-outline) > .card-header, .bg-success { background-color: var(--appu-success) !important; }
+.card-primary:not(.card-outline) > .card-header label,
+.card-info:not(.card-outline) > .card-header label,
+.card-danger:not(.card-outline) > .card-header label,
+.card-success:not(.card-outline) > .card-header label { color: #fff !important; }
+.btn-primary { background-color: var(--appu-primary) !important; border-color: var(--appu-primary) !important; }
+.btn-primary:hover, .btn-primary:focus { background-color: var(--appu-primary-dark) !important; border-color: var(--appu-primary-dark) !important; }
+.btn-success { background-color: var(--appu-success) !important; border-color: var(--appu-success) !important; }
+.btn-danger, #logout-btn { background-color: var(--appu-accent-dark) !important; border-color: var(--appu-accent-dark) !important; }
+.btn-info { background-color: var(--appu-cyan) !important; border-color: var(--appu-cyan) !important; color: var(--appu-primary-dark) !important; }
+.btn-warning { background-color: var(--appu-warning) !important; border-color: var(--appu-warning) !important; color: #fff !important; }
+.btn-outline-primary { color: var(--appu-primary) !important; border-color: var(--appu-primary) !important; }
+.btn-outline-primary:hover { color: #fff !important; background-color: var(--appu-primary) !important; }
+.form-control:focus, .custom-select:focus { border-color: var(--appu-cyan) !important; box-shadow: 0 0 0 .12rem rgba(94,137,146,.14) !important; }
+.form-control, .custom-select { color: #24333b; }
+.form-control::placeholder { color: #66747b; opacity: 1; }
+label, .control-label { color: #25343c; font-weight: 600; }
+.text-muted { color: #5d6b72 !important; }
+.small, small { color: #5d6b72; }
+.table { color: #26363e; }
+.table thead th { font-weight: 600; }
+.nav-sidebar .nav-link { color: #e4ebed; }
+.nav-sidebar .nav-treeview > .nav-item > .nav-link { color: #cbd8dc; }
+.nav-sidebar .nav-treeview .nav-icon { color: #9eb1b8 !important; }
+#m_gestion p::after { content: "\f105"; font-family: "Font Awesome 6 Free"; font-weight: 900; float: right; margin-right: .15rem; }
+#m_gestion_general p { font-size: 0; }
+#m_gestion_general p::after { content: "Configuracion general"; font-size: .875rem; }
+.navbar-dark .navbar-nav .nav-link { color: #eef3f4; }
+.appu-quick-nav .dropdown-menu { min-width: 245px; border: 1px solid #d9e0e2; box-shadow: 0 .25rem .8rem rgba(23,37,44,.14); }
+.appu-quick-nav .dropdown-item { color: var(--appu-primary-dark); padding: .5rem .85rem; }
+.appu-quick-nav .dropdown-item:hover { color: #fff; background: var(--appu-primary); }
+.appu-quick-nav .dropdown-header { color: var(--appu-accent-dark); font-weight: 700; letter-spacing: .04em; }
+.appu-work-nav .dropdown-menu { min-width: 250px; border: 1px solid #d9e0e2; box-shadow: 0 .25rem .8rem rgba(23,37,44,.14); }
+.appu-work-nav .dropdown-item { color: #24333b; padding: .5rem .85rem; }
+.appu-work-nav .dropdown-item:hover { color: #fff; background: var(--appu-primary); }
+.appu-work-nav .dropdown-header { color: var(--appu-accent-dark); font-weight: 700; letter-spacing: .04em; }
+.table thead th { background-color: var(--appu-primary-soft); color: var(--appu-primary-dark); border-bottom-color: var(--appu-primary) !important; }
+.progress-bar.bg-info, .progress-bar.bg-success { background-color: var(--appu-primary) !important; }
+.badge-primary { background-color: var(--appu-primary) !important; }
+.badge-info { background-color: var(--appu-cyan) !important; color: var(--appu-primary-dark) !important; }
+.badge-success { background-color: var(--appu-success) !important; }
+.badge-danger { background-color: var(--appu-accent-dark) !important; }
+.alert-info { color: var(--appu-primary-dark); background-color: var(--appu-primary-soft); border-color: #d5dfe1; }
+.alert-warning { color: #654d3d; background-color: #f3eee9; border-color: #dfd2c8; }
+.alert-danger { color: #7f2345; background-color: #fbe9f0; border-color: #efbfd1; }
+.text-primary { color: var(--appu-primary) !important; }
+.text-info { color: var(--appu-info) !important; }
+.text-danger { color: var(--appu-accent-dark) !important; }
+
+/* KPI sobrios: una sola superficie y acentos discretos, sin colores estridentes. */
+.small-box {
+    background: #fff !important;
+    color: var(--appu-primary-dark) !important;
+    border: 1px solid #d9e0e2;
+    border-top: 3px solid var(--appu-primary);
+    border-radius: .35rem;
+    box-shadow: 0 .08rem .35rem rgba(23,37,44,.045);
+}
+.small-box .inner h3, .small-box .inner p { color: var(--appu-primary-dark) !important; }
+.small-box .icon { color: #9aabb0 !important; }
+.small-box .small-box-footer { color: var(--appu-primary) !important; background: #f4f6f6 !important; }
+.small-box.bg-info, .small-box.bg-success, .small-box.bg-warning, .small-box.bg-danger { border-top-color: var(--appu-primary) !important; }
+
+/* Barra de herramientas documental, inspirada en el patrón de SAP B1. */
+.appu-document-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: .35rem .75rem .75rem;
+    padding: .55rem .7rem;
+    background: #fff;
+    border: 1px solid #d9e0e2;
+    border-left: 3px solid #8b9aa0;
+    border-radius: .3rem;
+    box-shadow: 0 .08rem .3rem rgba(23,37,44,.04);
+}
+.appu-document-toolbar__context {
+    display: flex;
+    align-items: baseline;
+    gap: .65rem;
+    min-width: 0;
+}
+.appu-document-toolbar__eyebrow {
+    color: var(--appu-accent-dark);
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+}
+.appu-document-toolbar__title {
+    color: var(--appu-primary-dark);
+    font-size: .95rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.appu-document-toolbar__hint {
+    color: #66747b;
+    font-size: .72rem;
+    white-space: nowrap;
+}
+.appu-document-toolbar__actions {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+.appu-document-toolbar .btn {
+    min-height: 30px;
+    border-color: #d1dadd;
+}
+.appu-document-toolbar .btn i { margin-right: .25rem; }
+.appu-document-toolbar .appu-doc-void { color: var(--appu-accent-dark); border-color: #cfa69b; }
+.appu-document-toolbar .appu-doc-void:hover { color: #fff; background: var(--appu-accent-dark); }
+.appu-document-toolbar .appu-doc-close { color: #53646b; border-color: #bfc9cc; }
+.appu-document-toolbar .appu-doc-close:hover { color: #fff; background: #53646b; }
+.appu-document-toolbar__separator {
+    width: 1px;
+    height: 24px;
+    margin: 0 .25rem;
+    background: #d9e0e2;
+}
+body.appu-has-unsaved-changes .appu-document-toolbar { border-left-color: var(--appu-accent-dark); }
+body.appu-has-unsaved-changes .appu-document-toolbar__eyebrow { color: var(--appu-accent-dark); }
+@media (max-width: 991.98px) {
+    html, body, .wrapper, .content-wrapper { max-width: 100vw; }
+    .content-wrapper { width: 100% !important; margin-left: 0 !important; overflow-x: hidden; }
+    .content-wrapper .container-fluid { padding-left: .5rem; padding-right: .5rem; }
+    .content-wrapper .row > [class*="col-"] { min-width: 0; }
+    .content-wrapper .row > [class*="col-md-"] { flex: 0 0 100%; max-width: 100%; }
+    .card, .card-body, .card-header, .form-group, .input-group { min-width: 0; }
+    .card-header.d-flex { flex-wrap: wrap; gap: .5rem; }
+    .card-header [style*="height: 2.2rem"] { height: auto !important; }
+    .card-header .row { row-gap: .5rem; }
+    .card-header .text-right { text-align: left !important; }
+    .appu-document-toolbar { align-items: flex-start; flex-direction: column; width: calc(100% - 1rem); margin-left: .5rem; margin-right: .5rem; box-sizing: border-box; }
+    .appu-document-toolbar__context { align-items: flex-start; flex-wrap: wrap; width: 100%; }
+    .appu-document-toolbar__title { white-space: normal; }
+    .appu-document-toolbar__actions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); justify-content: stretch; width: 100%; min-width: 0; }
+    .appu-document-toolbar__actions .btn { min-width: 0; white-space: normal; }
+    .appu-document-toolbar__actions .appu-master-position { align-self: center; justify-self: center; }
+    .appu-document-toolbar__separator { display: none; }
+    .appu-document-toolbar__hint { display: none; }
+}
+
+@media (max-width: 575.98px) {
+    .dashboard-kpis > .col-6 { flex: 0 0 100%; max-width: 100%; }
+    .small-box .inner { padding-right: 4.75rem; }
+    .small-box .inner p { white-space: normal; }
+    .btn-group.d-flex { flex-wrap: wrap; }
+    .btn-group.d-flex > .btn { flex: 1 1 25%; }
+    .input-group > .form-control,
+    .input-group > .custom-select { min-width: 0; }
+}
+
+table.dataTable tr:hover {
+    cursor: pointer;
+}
+
+.select2 {
+    width: 100% !important;
+}
+
+#logout-btn {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+#logout-btn:hover {
+    background-color: #bd2130;
+    border-color: #b21f2d;
+}
+
+.brand-link.appu-brand-link {
+    display: flex;
+    min-height: 57px;
+    align-items: center;
+    justify-content: center;
+    padding: .35rem .5rem;
+    background-color: #fff;
+}
+
+.appu-sidebar-logo {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: 46px;
+    object-fit: contain;
+}
+
+.appu-home-logo {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+}
+
+.dashboard-kpi-value {
+    font-size: clamp(1.35rem, 2vw, 2.2rem);
+    overflow-wrap: anywhere;
+}
+.appu-management-shortcuts { border-left: 3px solid var(--appu-accent); }
+.appu-management-shortcuts h5 { color: var(--appu-primary-dark); font-weight: 600; }
+
+.dashboard-sales-row {
+    display: grid;
+    grid-template-columns: minmax(130px, 1fr) minmax(100px, 3fr) minmax(110px, 1fr);
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: .8rem;
+}
+
+.dashboard-sales-label,
+.dashboard-sales-amount {
+    font-size: .9rem;
+}
+
+.dashboard-sales-amount {
+    text-align: right;
+    font-weight: 600;
+}
+
+.dashboard-sales-progress {
+    height: .65rem;
+}
+
+@media (max-width: 575.98px) {
+    .dashboard-sales-row {
+        grid-template-columns: minmax(95px, 1fr) minmax(65px, 1.5fr) minmax(90px, 1fr);
+        gap: .5rem;
+    }
+
+    .dashboard-sales-label,
+    .dashboard-sales-amount {
+        font-size: .75rem;
+    }
+}
+
+.sales-monthly-row {
+    display: grid;
+    grid-template-columns: minmax(115px, 1fr) minmax(80px, 2fr) minmax(105px, 1fr);
+    align-items: center;
+    gap: .75rem;
+    margin-bottom: .85rem;
+}
+
+.sales-month-label,
+.sales-month-amount {
+    font-size: .85rem;
+}
+
+.sales-month-amount {
+    text-align: right;
+}
+
+.sales-month-progress {
+    height: .7rem;
+}
+
+@media (max-width: 575.98px) {
+    .sales-monthly-row {
+        grid-template-columns: minmax(90px, 1fr) minmax(55px, 1.3fr) minmax(95px, 1fr);
+        gap: .4rem;
+    }
+
+    .sales-month-label,
+    .sales-month-amount {
+        font-size: .72rem;
+    }
+}

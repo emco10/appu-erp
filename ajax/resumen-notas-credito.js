@@ -1,0 +1,1 @@
+window.appuNotasCreditoList=appuSalesDocumentList({table:'#table-facturas',type:'CREDIT_NOTE',historyType:'credit_note',label:'nota de crédito',title:'Resumen de notas de crédito',route:'registro-nota-credito',menu:'#m_resumen_nota_credito',parent:'#m_nota_credito'});

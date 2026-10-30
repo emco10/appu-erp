@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS `tbl_delivery` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `source_type` enum('invoice','receipt') NOT NULL,
+  `source_id` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `planned_date` date NOT NULL,
+  `recipient_name` varchar(200) NOT NULL,
+  `delivery_address` varchar(300) NOT NULL,
+  `carrier` varchar(150) NOT NULL DEFAULT '',
+  `tracking_number` varchar(100) NOT NULL DEFAULT '',
+  `notes` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `dispatched_at` datetime DEFAULT NULL,
+  `delivered_at` datetime DEFAULT NULL,
+  `registration_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `last_update` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_delivery_source` (`source_type`, `source_id`),
+  KEY `idx_delivery_status_date` (`status`, `planned_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
