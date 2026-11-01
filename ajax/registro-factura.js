@@ -1,4 +1,8 @@
 $("#col-btn-anular-factura").hide();
+$("#col-btn-pdf-factura").hide();
+function appuAbrirPdfFactura(id){if(!id){toastr.warning('Primero selecciona o guarda una factura.');return;}window.open('../../modules/facturacion/pdf-documento.php?type=invoice&id='+encodeURIComponent(id),'_blank','noopener');}
+$("#btn-pdf-factura").on('click',function(){appuAbrirPdfFactura($(this).attr('data-id'));});
+function appuValidarFacturaParaGuardar(){var f=[];if(!$('select[name="facturacion_series"]').val())f.push('Serie de la factura');if(!(($('input[name="facturacion_cliruc"]').val()||'').match(/^\d{11}$/)))f.push('RUC del cliente (11 dígitos)');if(!$('input[name="facturacion_valcliente"]').val().trim())f.push('Razón social del cliente');if(!$('input[name="facturacion_fecha"]').val())f.push('Fecha de emisión');if(!$('select[name="facturacion_formpagotext"]').val())f.push('Forma de pago');if(!$('select[name="facturacion_tipmon"]').val())f.push('Moneda');if(!tbl_prodfactura||tbl_prodfactura.rows().count()===0)f.push('Al menos un artículo');if(f.length){Swal.fire({icon:'warning',title:'Completa los datos necesarios',html:'<div class="text-left">Falta completar:<ul><li>'+f.join('</li><li>')+'</li></ul></div>'});return false;}return true;}
 function appuAplicarClienteFactura(c) { if (!c) return; $('input[name="facturacion_cliente"]').val(c.client_id || ''); $('input[name="facturacion_cliruc"]').val(c.ruc || ''); $('input[name="facturacion_valcliente"]').val(c.business_name || c.trade_name || ''); $('input[name="facturacion_clidirecc"]').val(c.address || ''); $('input[name="facturacion_cliemail"], input[name="facturacion_email"]').val(c.email || ''); $('input[name="facturacion_clitelefono"], input[name="facturacion_telefono"]').val(c.phone || c.cellphone || ''); $('input[name="facturacion_clicelular"], input[name="facturacion_celular"]').val(c.cellphone || ''); }
 $.getJSON("../../modules/facturacion/series.php", { document_type: "INVOICE" }).done(function (data) { var $select = $('select[name="facturacion_series"]'); $select.empty(); (data.series || []).forEach(function (series) { $select.append($('<option>').val(series.series).text(series.series)); }); $select.trigger("change"); });
 $.getJSON("../../modules/inventory/warehouses.php").done(function (data) { var $select = $('select[name="facturacion_almacen_id"]'); var selectedWarehouse = $select.data("pending-warehouse") || $select.val() || '1'; $select.empty(); (data.warehouses || []).filter(function (warehouse) { return Number(warehouse.active_status) === 1; }).forEach(function (warehouse) { $select.append($('<option>').val(warehouse.id).text(warehouse.code + ' - ' + warehouse.name)); }); $select.val(String(selectedWarehouse)); });
@@ -423,6 +427,8 @@ $("#btn-select-factura").click(function() {
           $("#btn-anular-factura").attr("js-id",id_factura);
           $("#btn-pendiente-factura").attr("js-id",id_factura);
           $("#btn-cancelar-factura").attr("js-id",id_factura);
+          $("#btn-pdf-factura").attr("data-id",id_factura);
+          $("#col-btn-pdf-factura").show("fast");
 
           $('select[name="facturacion_series"]').val(data_json[0]["SERIE"]);
           $('select[name="facturacion_series"]').trigger("change");
@@ -733,6 +739,7 @@ $('input[name="facturacion_porcdesc"]').on("change", function() {
 
 $("#FRM_INSERT_FACTURA").submit(function(e) {
   e.preventDefault();
+  if(!appuValidarFacturaParaGuardar())return;
   var form = $(this);
   var idform = form.attr("id");
   var url = form.attr("action");

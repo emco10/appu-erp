@@ -173,7 +173,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Dirección</label>
-                                        <input type="text" class="form-control" name="facturacion_clidirecc" placeholder="Dirección" required>
+                                        <input type="text" class="form-control" name="facturacion_clidirecc" placeholder="Dirección fiscal (opcional)">
+                                        <small class="form-text text-muted">Recomendado para que la representación impresa quede completa.</small>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -350,6 +351,10 @@
                                 <?php $invoiceCustomFields = $pdo->query("SELECT id,label,field_type,value_list_code,required_status FROM tbl_custom_field_definition WHERE entity='invoice' AND active_status=1 ORDER BY id")->fetchAll(); if ($invoiceCustomFields): ?><div class="card card-outline card-secondary mb-3"><div class="card-header"><h3 class="card-title"><i class="fas fa-tags mr-1"></i>Campos adicionales</h3></div><div class="card-body"><div class="row"><?php foreach ($invoiceCustomFields as $customField): ?><div class="col-md-4 form-group"><label><?php echo e($customField['label']); ?></label><?php if ($customField['field_type'] === 'select'): ?><select class="form-control" name="custom_field[<?php echo (int) $customField['id']; ?>]" <?php echo $customField['required_status'] ? 'required' : ''; ?>><option value="">Seleccione</option><?php $options=$pdo->prepare('SELECT label,value_code FROM tbl_app_value_option WHERE list_id=(SELECT id FROM tbl_app_value_list WHERE code=?) AND active_status=1 ORDER BY sort_order,label'); $options->execute([$customField['value_list_code']]); foreach($options->fetchAll() as $option): ?><option value="<?php echo e($option['value_code']); ?>"><?php echo e($option['label']); ?></option><?php endforeach; ?></select><?php elseif($customField['field_type']==='checkbox'): ?><input type="checkbox" value="1" name="custom_field[<?php echo (int) $customField['id']; ?>]"> Sí / No<?php else: ?><input class="form-control" type="<?php echo $customField['field_type']==='number'?'number':($customField['field_type']==='date'?'date':'text'); ?>" name="custom_field[<?php echo (int) $customField['id']; ?>]" <?php echo $customField['required_status']?'required':''; ?>><?php endif; ?></div><?php endforeach; ?></div></div></div><?php endif; ?>
                                 <div id="col-btn-save-facturaprod" class="col-md-12">
                                     <button type="submit" id="btn-save-facturaprod" class="btn btn-success btn-block"><i class="fa fa-save fa-1x"></i>&nbsp;&nbsp;<font>Grabar factura</font></button>
+                                </div>
+                                <div id="col-btn-pdf-factura" class="col-md-12 mt-2" style="display:none">
+                                    <button type="button" id="btn-pdf-factura" class="btn btn-outline-primary btn-block"><i class="fas fa-file-pdf"></i>&nbsp;&nbsp;Ver PDF del documento</button>
+                                    <small class="form-text text-muted text-center">Muestra el estado real del envío a SUNAT.</small>
                                 </div>
                                 <div id="col-btn-anular-factura" class="col-md-4">
                                     <button type="button" id="btn-anular-factura" class="btn btn-danger btn-block"><i class="fa fa-minus-circle fa-1x"></i>&nbsp;&nbsp;<font><b>Anular</b> Factura</font></button>
