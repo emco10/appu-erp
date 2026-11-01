@@ -7,8 +7,10 @@ CREATE TABLE IF NOT EXISTS `tbl_inventory_transfer` (
   `lot_id` int(11) DEFAULT NULL,
   `quantity` decimal(14,3) NOT NULL,
   `transfer_date` date NOT NULL,
+  `document_date` date DEFAULT NULL,
   `status` varchar(30) NOT NULL DEFAULT 'Registrada',
   `observation` varchar(250) NOT NULL DEFAULT '',
+  `comments` varchar(500) NOT NULL DEFAULT '',
   `created_by` int(11) NOT NULL,
   `registration_date` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
@@ -18,6 +20,22 @@ CREATE TABLE IF NOT EXISTS `tbl_inventory_transfer` (
   CONSTRAINT `fk_inventory_transfer_to_warehouse` FOREIGN KEY (`to_warehouse_id`) REFERENCES `tbl_warehouse` (`id`),
   CONSTRAINT `fk_inventory_transfer_product` FOREIGN KEY (`product_id`) REFERENCES `tbl_product` (`id`),
   CONSTRAINT `fk_inventory_transfer_lot` FOREIGN KEY (`lot_id`) REFERENCES `tbl_product_lot` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `tbl_inventory_transfer_detail` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `transfer_id` int(11) NOT NULL,
+  `line_number` int unsigned NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `from_warehouse_id` int(11) NOT NULL,
+  `to_warehouse_id` int(11) NOT NULL,
+  `lot_id` int(11) DEFAULT NULL,
+  `quantity` decimal(14,3) NOT NULL,
+  `unit_cost` decimal(16,6) NOT NULL DEFAULT 0,
+  `inventory_value` decimal(16,4) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_inventory_transfer_line` (`transfer_id`,`line_number`),
+  CONSTRAINT `fk_transfer_detail_header` FOREIGN KEY (`transfer_id`) REFERENCES `tbl_inventory_transfer` (`id`) ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 ALTER TABLE tbl_document_series

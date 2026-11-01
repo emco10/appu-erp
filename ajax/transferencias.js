@@ -1,55 +1,16 @@
-$(function () {
-  $("#m_transferencias").addClass("active");
-
-  if (!$("#transfer-lot").length) {
-    $("<div class='form-group' id='transfer-lot-group'><label>Lote de origen</label><select id='transfer-lot' name='lot_id' class='form-control'><option value=''>Sin lote / no aplica</option></select><small class='form-text text-muted'>Si el artículo tiene lotes en el almacén, selecciona uno.</small></div>").insertBefore($("#transfer-to").closest(".form-group"));
-  }
-
-  var lots = [];
-  function fill(selector, rows, label) {
-    var $select = $(selector).empty().append("<option value=''>Seleccione</option>");
-    (rows || []).forEach(function (row) { $("<option>").val(row.id).text(label(row)).appendTo($select); });
-  }
-  function refreshLots() {
-    var productId = Number($("#transfer-product").val() || 0);
-    var warehouseId = Number($("#transfer-from").val() || 0);
-    var $lot = $("#transfer-lot").empty().append("<option value=''>Sin lote / no aplica</option>");
-    lots.filter(function (lot) { return Number(lot.product_id) === productId && Number(lot.warehouse_id) === warehouseId && Number(lot.quantity) - Number(lot.reserved_quantity) > 0; }).forEach(function (lot) {
-      var expiry = lot.expiration_date ? " · vence " + lot.expiration_date : "";
-      $("<option>").val(lot.id).text(lot.lot_number + " · disponible " + (Number(lot.quantity) - Number(lot.reserved_quantity)) + expiry).appendTo($lot);
-    });
-  }
-  function load() {
-    $.getJSON("../../modules/inventory/transfers.php").done(function (response) {
-      lots = response.lots || [];
-      fill("#transfer-product", response.products, function (row) { return row.code + " - " + row.name; });
-      fill("#transfer-from, #transfer-to", response.warehouses, function (row) { return row.code + " - " + row.name; });
-      refreshLots();
-      var $body = $("#transfer-table tbody").empty();
-      (response.transfers || []).filter(function (row) { return Number(row.quantity) < 0 || row.type == 7; }).forEach(function (row) {
-        var $actions = $("<td class='text-right'>");
-        if (appuCan("inventory.manage") && Number(row.type) === 6 && Number(row.transfer_id) > 0 && row.transfer_status !== "Anulada") $("<button type='button' class='btn btn-sm btn-outline-danger js-cancel-transfer ml-2'>Anular</button>").data("transfer-id", row.transfer_id).appendTo($actions);
-        var $quantity = $("<td class='text-right'>").text(Math.abs(Number(row.quantity)));
-        $quantity.append($actions.children());
-        $("<tr>").append($("<td>").text(row.doc_reference)).append($("<td>").text(row.registration_date)).append($("<td>").text(row.product_code + " - " + row.product_name)).append($("<td>").text(row.warehouse_name)).append($("<td>").text(row.type == 6 ? "Salida" : "Ingreso")).append($quantity).appendTo($body);
-      });
-    }).fail(function (xhr) { toastr.error((xhr.responseJSON || {}).error || "No se pudieron cargar las transferencias. Reintenta la consulta."); });
-  }
-  $("#transfer-product, #transfer-from").on("change", refreshLots);
-  $("#transfer-form").on("submit", function (event) {
-    event.preventDefault();
-    var $form = $(this); if ($form.data("submitting")) return;
-    var data = $form.serialize(); $form.data("submitting", true).find("button[type=submit]").prop("disabled", true);
-    $.post("../../modules/inventory/transfers.php", data).done(function (response) {
-      toastr.success(response.message); event.target.reset(); refreshLots(); load();
-    }).fail(function (xhr) { toastr.error(xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : "No se pudo registrar la transferencia."); }).always(function () { $form.data("submitting", false).find("button[type=submit]").prop("disabled", false); });
-  });
-  $("#transfer-table").on("click", ".js-cancel-transfer", function () {
-    var transferId = $(this).data("transfer-id");
-    if (!window.confirm("¿Anular esta transferencia y revertir el stock?")) return;
-    var cancellationReason = window.prompt("Motivo de anulacion de la transferencia (obligatorio):", "");
-    if (cancellationReason === null || cancellationReason.trim().length < 5) { toastr.warning("Indica un motivo de al menos 5 caracteres."); return; }
-    $.post("../../modules/inventory/transfers.php", { action: "cancel", transfer_id: transferId, cancellation_reason: cancellationReason.trim() }).done(function (response) { toastr.success(response.message); load(); }).fail(function (xhr) { toastr.error(xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : "No se pudo anular la transferencia."); });
-  });
-  load();
+$(function(){
+ "use strict";$("#m_transferencias").addClass("active");var catalog={warehouses:[],products:[],lots:[]};
+ function esc(v){return appuEscapeHtml(String(v==null?"":v));}
+ function options(rows,label){return '<option value="">Seleccione</option>'+rows.map(function(row){return '<option value="'+row.id+'">'+esc(label(row))+'</option>';}).join("");}
+ function warehouseOptions(){return options(catalog.warehouses,function(row){return row.code+" - "+row.name;});}
+ function productOptions(){return options(catalog.products,function(row){return row.code+" - "+row.name;});}
+ function refreshSummary(){var rows=$("#transfer-lines tbody tr");var quantity=0;rows.each(function(){quantity+=Number($(this).find(".js-quantity").val()||0);});$("#transfer-summary").text(rows.length+" línea(s) · "+quantity.toFixed(3)+" unidades");}
+ function refreshLots($row){var product=Number($row.find(".js-product").val()||0),warehouse=Number($row.find(".js-from").val()||0),$lot=$row.find(".js-lot").empty().append('<option value="">Sin lote / no aplica</option>'),available=0;catalog.lots.filter(function(lot){return Number(lot.product_id)===product&&Number(lot.warehouse_id)===warehouse&&Number(lot.quantity)-Number(lot.reserved_quantity)>0;}).forEach(function(lot){var free=Number(lot.quantity)-Number(lot.reserved_quantity);available+=free;$('<option>').val(lot.id).text(lot.lot_number+' · disponible '+free+(lot.expiration_date?' · vence '+lot.expiration_date:'')).appendTo($lot);});if(!available){var stock=catalog.stocks||[];var found=stock.find(function(row){return Number(row.product_id)===product&&Number(row.warehouse_id)===warehouse;});available=found?Number(found.quantity)-Number(found.reserved_quantity):0;}$row.find(".js-available").text(available.toFixed(3));}
+ function addLine(values){values=values||{};var html='<tr><td><select class="form-control js-product" required>'+productOptions()+'</select></td><td><select class="form-control js-from" required>'+warehouseOptions()+'</select></td><td><select class="form-control js-to" required>'+warehouseOptions()+'</select></td><td><select class="form-control js-lot"><option value="">Sin lote / no aplica</option></select></td><td class="text-right js-available">0.000</td><td><input type="number" class="form-control js-quantity" min="0.001" step="0.001" required></td><td><button type="button" class="btn btn-sm btn-outline-danger js-remove"><i class="fas fa-times"></i></button></td></tr>';var $row=$(html).appendTo("#transfer-lines tbody");$row.find(".js-product").val(values.product_id||"");$row.find(".js-from").val(values.from_warehouse_id||$("#transfer-default-from").val()||"");$row.find(".js-to").val(values.to_warehouse_id||$("#transfer-default-to").val()||"");$row.find(".js-quantity").val(values.quantity||"");refreshLots($row);refreshSummary();}
+ function renderTransfers(rows){var $body=$("#transfer-table tbody").empty();(rows||[]).forEach(function(row){var $actions=$("<td class='text-right'>");if(appuCan("inventory.manage")&&row.status!=="Anulada")$("<button type='button' class='btn btn-sm btn-outline-danger js-cancel'>Anular</button>").data("id",row.transfer_id).appendTo($actions);$("<tr>").append($("<td>").text(row.number)).append($("<td>").text(row.transfer_date)).append($("<td>").text(row.document_date||row.transfer_date)).append($("<td>").text(row.from_warehouse+" → "+row.to_warehouse)).append($("<td class='text-right'>").text(row.line_count)).append($("<td class='text-right'>").text(Number(row.total_quantity||0).toFixed(3))).append($("<td>").text(row.status)).append($actions).appendTo($body);});}
+ function load(){return $.getJSON("../../modules/inventory/transfers.php").done(function(response){catalog=response;var wh=warehouseOptions();$("#transfer-default-from,#transfer-default-to").html(wh);renderTransfers(response.transfers);if(!$("#transfer-lines tbody tr").length)addLine();}).fail(function(xhr){toastr.error((xhr.responseJSON||{}).error||"No se pudieron cargar las transferencias.");});}
+ $("#transfer-add-line").on("click",function(){addLine();});$("#transfer-lines").on("change",".js-product,.js-from",function(){refreshLots($(this).closest("tr"));}).on("input",".js-quantity",refreshSummary).on("click",".js-remove",function(){if($("#transfer-lines tbody tr").length>1)$(this).closest("tr").remove();refreshSummary();});
+ $("#transfer-default-from").on("change",function(){var value=this.value;$("#transfer-lines .js-from").each(function(){if(!this.value)$(this).val(value).trigger("change");});});$("#transfer-default-to").on("change",function(){var value=this.value;$("#transfer-lines .js-to").each(function(){if(!this.value)$(this).val(value);});});
+ $("#transfer-form").on("submit",function(event){event.preventDefault();var lines=[];$("#transfer-lines tbody tr").each(function(){var $row=$(this);lines.push({product_id:$row.find(".js-product").val(),from_warehouse_id:$row.find(".js-from").val(),to_warehouse_id:$row.find(".js-to").val(),lot_id:$row.find(".js-lot").val(),quantity:$row.find(".js-quantity").val()});});$("#transfer-lines-json").val(JSON.stringify(lines));var $form=$(this);if($form.data("submitting"))return;$form.data("submitting",true).find("button[type=submit]").prop("disabled",true);$.post("../../modules/inventory/transfers.php",$form.serialize()).done(function(response){toastr.success(response.message+" "+response.reference);event.target.reset();$("#transfer-lines tbody").empty();load();}).fail(function(xhr){toastr.error((xhr.responseJSON||{}).error||"No se pudo registrar la transferencia.");}).always(function(){$form.data("submitting",false).find("button[type=submit]").prop("disabled",false);});});
+ $("#transfer-table").on("click",".js-cancel",function(){var id=$(this).data("id");if(!confirm("¿Anular la transferencia completa y revertir todas sus líneas?"))return;var reason=prompt("Motivo de anulación (mínimo 5 caracteres):","");if(reason===null||reason.trim().length<5){toastr.warning("Indica un motivo válido.");return;}$.post("../../modules/inventory/transfers.php",{action:"cancel",transfer_id:id,cancellation_reason:reason.trim()}).done(function(response){toastr.success(response.message);load();}).fail(function(xhr){toastr.error((xhr.responseJSON||{}).error||"No se pudo anular.");});});load();
 });

@@ -1,118 +1,32 @@
 <?php
 require '../../global/connection.php';
-require_once __DIR__ . '/stock.php';
+require_once __DIR__.'/stock.php';
 require_once '../../global/document-numbering.php';
 require_once '../../global/document-history.php';
 header('Content-Type: application/json; charset=utf-8');
-$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
-if ($method === 'GET') {
-    app_require_permission('inventory.view');
-    $warehouses = $pdo->query("SELECT id, code, name FROM tbl_warehouse WHERE active_status = 1 ORDER BY name")->fetchAll();
-    $products = $pdo->query("SELECT id, code, name FROM tbl_product WHERE active_status = 1 ORDER BY name")->fetchAll();
-    $lots = $pdo->query("SELECT id, warehouse_id, product_id, lot_number, expiration_date, quantity, reserved_quantity FROM tbl_product_lot WHERE quantity > 0 ORDER BY expiration_date IS NULL, expiration_date, lot_number")->fetchAll();
-    $transfers = $pdo->query("SELECT movement.id, movement.source_id AS transfer_id, movement.registration_date, movement.doc_reference, movement.observation, movement.quantity, product.code AS product_code, product.name AS product_name, warehouse.name AS warehouse_name, movement.type, COALESCE(header.status, 'Registrada') AS transfer_status FROM tbl_warehouse_movement movement JOIN tbl_product product ON product.id=movement.product_id JOIN tbl_warehouse warehouse ON warehouse.id=movement.warehouse_id LEFT JOIN tbl_inventory_transfer header ON header.id = movement.source_id AND movement.source_type = 'warehouse_transfer' WHERE movement.type IN (6,7) ORDER BY movement.id DESC LIMIT 100")->fetchAll();
-    echo json_encode(['warehouses' => $warehouses, 'products' => $products, 'lots' => $lots, 'transfers' => $transfers], JSON_UNESCAPED_UNICODE); exit;
+function tr_error(string $message):never{http_response_code(422);echo json_encode(['error'=>$message],JSON_UNESCAPED_UNICODE);exit;}
+function tr_date(mixed $value,string $label):string{$text=trim((string)$value);$date=DateTimeImmutable::createFromFormat('!Y-m-d',$text);if(!$date||$date->format('Y-m-d')!==$text)throw new DomainException($label.' no es valida.');return $text;}
+function tr_reverse_line(PDO $pdo,array $line,array $header,int $userId):void{
+ $product=(int)$line['product_id'];$from=(int)$line['from_warehouse_id'];$to=(int)$line['to_warehouse_id'];$quantity=(float)$line['quantity'];$detail=$line['id']??null;
+ $q=$pdo->prepare("SELECT COALESCE(-SUM(inventory_value_delta),0) FROM tbl_warehouse_movement WHERE source_type='warehouse_transfer' AND source_id=? AND product_id=? AND type=? AND (? IS NULL OR document_line_id=?)");$q->execute([$header['id'],$product,STOCK_MOVEMENT_TRANSFER_OUT,$detail,$detail]);$value=round((float)$q->fetchColumn(),4);
+ $take=$pdo->prepare('UPDATE tbl_warehouse_stock SET quantity=quantity-?,inventory_value=inventory_value-? WHERE warehouse_id=? AND product_id=? AND quantity-reserved_quantity>=? AND inventory_value-?>=-0.01');$take->execute([$quantity,$value,$to,$product,$quantity,$value]);if($take->rowCount()!==1)throw new DomainException('El destino ya no tiene saldo suficiente para anular la linea '.($line['line_number']??1).'.');
+ $pdo->prepare('UPDATE tbl_warehouse_stock SET quantity=quantity+?,inventory_value=inventory_value+? WHERE warehouse_id=? AND product_id=?')->execute([$quantity,$value,$from,$product]);
+ $pdo->prepare('UPDATE tbl_warehouse_stock SET inventory_value=GREATEST(0,inventory_value),average_unit_cost=IF(quantity>0,GREATEST(0,inventory_value)/quantity,0) WHERE product_id=? AND warehouse_id IN (?,?)')->execute([$product,$from,$to]);
+ if($line['lot_id']!==null){$q=$pdo->prepare('SELECT lot_number,expiration_date FROM tbl_product_lot WHERE id=?');$q->execute([(int)$line['lot_id']]);$lot=$q->fetch();if(!$lot)throw new DomainException('El lote de una linea no existe.');warehouse_apply_lot_delta($pdo,$product,$from,$lot['lot_number'],$lot['expiration_date'],$quantity);warehouse_apply_lot_delta($pdo,$product,$to,$lot['lot_number'],$lot['expiration_date'],-$quantity);}
+ $pdo->prepare('UPDATE tbl_product SET stock_quantity=(SELECT COALESCE(SUM(quantity),0) FROM tbl_warehouse_stock WHERE product_id=?) WHERE id=?')->execute([$product,$product]);$movement=$pdo->prepare('INSERT INTO tbl_warehouse_movement(type,product_id,warehouse_id,quantity,inventory_value_delta,observation,doc_reference,source_type,source_id,user_id,document_line_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)');$observation='Anulacion de transferencia '.$header['number'];$movement->execute([STOCK_MOVEMENT_DOCUMENT_REVERSAL,$product,$from,$quantity,$value,$observation,$header['number'],'warehouse_transfer',$header['id'],$userId,$detail]);$movement->execute([STOCK_MOVEMENT_DOCUMENT_REVERSAL,$product,$to,-$quantity,-$value,$observation,$header['number'],'warehouse_transfer',$header['id'],$userId,$detail]);
 }
-app_require_permission('inventory.manage');
-$action = strtolower(trim((string) ($_POST['action'] ?? 'create')));
-if(!in_array($action,['create','cancel'],true)){http_response_code(422);echo json_encode(['error'=>'Acción de transferencia inválida.'],JSON_UNESCAPED_UNICODE);exit;}
-if ($action === 'cancel') {
-    $transferId = filter_var($_POST['transfer_id'] ?? null, FILTER_VALIDATE_INT);
-    if ($transferId === false || $transferId < 1) { http_response_code(422); echo json_encode(['error' => 'Transferencia invalida.'], JSON_UNESCAPED_UNICODE); exit; }
-    $cancellationReason = trim((string) ($_POST['cancellation_reason'] ?? ''));
-    if (mb_strlen($cancellationReason) < 5) { http_response_code(422); echo json_encode(['error' => 'Indica un motivo de anulacion de al menos 5 caracteres.'], JSON_UNESCAPED_UNICODE); exit; }
-    try {
-        $pdo->beginTransaction();
-        $headerStatement = $pdo->prepare('SELECT * FROM tbl_inventory_transfer WHERE id = ? FOR UPDATE');
-        $headerStatement->execute([$transferId]);
-        $header = $headerStatement->fetch();
-        if (!$header) throw new DomainException('La transferencia no existe.');
-        if ($header['status'] === 'Anulada') throw new DomainException('La transferencia ya esta anulada.');
-        $quantity = (float) $header['quantity']; $fromId = (int) $header['from_warehouse_id']; $toId = (int) $header['to_warehouse_id']; $productId = (int) $header['product_id'];
-        $valueStatement=$pdo->prepare("SELECT COALESCE(-SUM(inventory_value_delta),0) FROM tbl_warehouse_movement WHERE source_type='warehouse_transfer' AND source_id=? AND product_id=? AND type=?");$valueStatement->execute([$transferId,$productId,STOCK_MOVEMENT_TRANSFER_OUT]);$transferValue=round((float)$valueStatement->fetchColumn(),4);
-        $out = $pdo->prepare('UPDATE tbl_warehouse_stock SET quantity = quantity + ?, inventory_value = inventory_value + ? WHERE warehouse_id = ? AND product_id = ?');
-        $out->execute([$quantity, $transferValue, $fromId, $productId]);
-        $back = $pdo->prepare('UPDATE tbl_warehouse_stock SET quantity = quantity - ?, inventory_value = inventory_value - ? WHERE warehouse_id = ? AND product_id = ? AND quantity - reserved_quantity >= ? AND inventory_value - ? >= -0.01');
-        $back->execute([$quantity, $transferValue, $toId, $productId, $quantity, $transferValue]);
-        if ($back->rowCount() !== 1) throw new DomainException('No hay stock disponible en el almacen destino para revertir la transferencia.');
-        $pdo->prepare('UPDATE tbl_warehouse_stock SET inventory_value=GREATEST(0,inventory_value),average_unit_cost=IF(quantity>0,GREATEST(0,inventory_value)/quantity,0) WHERE product_id=? AND warehouse_id IN (?,?)')->execute([$productId,$fromId,$toId]);
-        if ($header['lot_id'] !== null) {
-            $lotStatement = $pdo->prepare('SELECT lot_number, expiration_date FROM tbl_product_lot WHERE id = ?');
-            $lotStatement->execute([(int) $header['lot_id']]); $lot = $lotStatement->fetch();
-            if (!$lot) throw new DomainException('El lote de la transferencia no existe.');
-            warehouse_apply_lot_delta($pdo, $productId, $fromId, (string) $lot['lot_number'], $lot['expiration_date'], $quantity);
-            warehouse_apply_lot_delta($pdo, $productId, $toId, (string) $lot['lot_number'], $lot['expiration_date'], -$quantity);
-        }
-        $pdo->prepare('UPDATE tbl_product SET stock_quantity = (SELECT COALESCE(SUM(quantity), 0) FROM tbl_warehouse_stock WHERE product_id = ?) WHERE id = ?')->execute([$productId, $productId]);
-        $userId = (int) $_SESSION['loggedInUser']['USERID'];
-        $movement = $pdo->prepare('INSERT INTO tbl_warehouse_movement (type, product_id, warehouse_id, quantity, inventory_value_delta, observation, doc_reference, source_type, source_id, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-        $observation = 'Anulacion de transferencia ' . $header['number'];
-        $movement->execute([STOCK_MOVEMENT_DOCUMENT_REVERSAL, $productId, $fromId, $quantity, $transferValue, $observation, $header['number'], 'warehouse_transfer', $transferId, $userId]);
-        $movement->execute([STOCK_MOVEMENT_DOCUMENT_REVERSAL, $productId, $toId, -$quantity, -$transferValue, $observation, $header['number'], 'warehouse_transfer', $transferId, $userId]);
-        $pdo->prepare("UPDATE tbl_inventory_transfer SET status = 'Anulada' WHERE id = ?")->execute([$transferId]);
-        app_record_document_status($pdo, 'stock_transfer', $transferId, (string) $header['number'], 'Registrada', 'Anulada', 'Anulacion', $userId, $cancellationReason);
-        $pdo->commit(); echo json_encode(['message' => 'Transferencia anulada y stock revertido correctamente.'], JSON_UNESCAPED_UNICODE); exit;
-    } catch (Throwable $exception) { if ($pdo->inTransaction()) $pdo->rollBack(); http_response_code(422); echo json_encode(['error' => $exception->getMessage()], JSON_UNESCAPED_UNICODE); exit; }
+$method=$_SERVER['REQUEST_METHOD']??'GET';
+if($method==='GET'){
+ app_require_permission('inventory.view');$warehouses=$pdo->query("SELECT id,code,name FROM tbl_warehouse WHERE active_status=1 ORDER BY name")->fetchAll();$products=$pdo->query("SELECT id,code,name FROM tbl_product WHERE active_status=1 ORDER BY name")->fetchAll();$lots=$pdo->query("SELECT id,warehouse_id,product_id,lot_number,expiration_date,quantity,reserved_quantity FROM tbl_product_lot WHERE quantity>0 ORDER BY expiration_date IS NULL,expiration_date,lot_number")->fetchAll();$stocks=$pdo->query("SELECT warehouse_id,product_id,quantity,reserved_quantity FROM tbl_warehouse_stock WHERE quantity<>0 OR reserved_quantity<>0")->fetchAll();$transfers=$pdo->query("SELECT h.id transfer_id,h.number,h.transfer_date,h.document_date,h.status,h.comments,COUNT(d.id) line_count,SUM(d.quantity) total_quantity,w1.name from_warehouse,w2.name to_warehouse FROM tbl_inventory_transfer h LEFT JOIN tbl_inventory_transfer_detail d ON d.transfer_id=h.id LEFT JOIN tbl_warehouse w1 ON w1.id=h.from_warehouse_id LEFT JOIN tbl_warehouse w2 ON w2.id=h.to_warehouse_id GROUP BY h.id ORDER BY h.id DESC LIMIT 100")->fetchAll();echo json_encode(compact('warehouses','products','lots','stocks','transfers'),JSON_UNESCAPED_UNICODE);exit;
 }
-$productId = filter_var($_POST['product_id'] ?? null, FILTER_VALIDATE_INT);
-$fromId = filter_var($_POST['from_warehouse_id'] ?? null, FILTER_VALIDATE_INT);
-$toId = filter_var($_POST['to_warehouse_id'] ?? null, FILTER_VALIDATE_INT);
-$quantity = filter_var($_POST['quantity'] ?? null, FILTER_VALIDATE_FLOAT);
-$lotId = filter_var($_POST['lot_id'] ?? null, FILTER_VALIDATE_INT);
-$lotId = $lotId !== false && $lotId !== null && $lotId > 0 ? (int) $lotId : null;
-if ($productId === false || $fromId === false || $toId === false || $quantity === false || !is_finite((float)$quantity) || $productId < 1 || $fromId < 1 || $toId < 1 || $fromId === $toId || $quantity < 0.001 || abs((float)$quantity-round((float)$quantity,3))>0.0000001) {
-    http_response_code(422); echo json_encode(['error' => 'Completa un traslado válido.'], JSON_UNESCAPED_UNICODE); exit;
-}
-try {
-    $pdo->beginTransaction();
-    $warehouseCheck = $pdo->prepare('SELECT COUNT(*) FROM tbl_warehouse WHERE id IN (?, ?) AND active_status=1'); $warehouseCheck->execute([$fromId, $toId]);
-    if ((int) $warehouseCheck->fetchColumn() !== 2) throw new DomainException('El almacén de origen o destino no existe.');
-    $productStatement = $pdo->prepare('SELECT id, stock_quantity FROM tbl_product WHERE id = ? AND active_status=1 FOR UPDATE');
-    $productStatement->execute([$productId]);
-    $product = $productStatement->fetch();
-    if (!$product) throw new DomainException('El articulo seleccionado no existe.');
-    $warehouseCount = $pdo->prepare('SELECT COUNT(*) FROM tbl_warehouse_stock WHERE product_id = ?');
-    $warehouseCount->execute([$productId]);
-    if ((int) $warehouseCount->fetchColumn() === 0 && $fromId === 1) {
-        $pdo->prepare('INSERT IGNORE INTO tbl_warehouse_stock (warehouse_id, product_id, quantity) VALUES (1, ?, ?)')->execute([$productId, (float) $product['stock_quantity']]);
-    }
-    $pdo->prepare('INSERT IGNORE INTO tbl_warehouse_stock (warehouse_id, product_id, quantity) VALUES (?, ?, 0)')->execute([$fromId, $productId]);
-    $pdo->prepare('INSERT IGNORE INTO tbl_warehouse_stock (warehouse_id, product_id, quantity) VALUES (?, ?, 0)')->execute([$toId, $productId]);
-    $lot = null;
-    $lotCount = $pdo->prepare('SELECT COUNT(*) FROM tbl_product_lot WHERE warehouse_id = ? AND product_id = ? AND quantity > 0');
-    $lotCount->execute([$fromId, $productId]);
-    if ((int) $lotCount->fetchColumn() > 0 && $lotId === null) {
-        throw new DomainException('Selecciona el lote de origen para conservar la trazabilidad.');
-    }
-    if ($lotId !== null) {
-        $lotStatement = $pdo->prepare('SELECT id, lot_number, expiration_date, quantity, reserved_quantity FROM tbl_product_lot WHERE id = ? AND warehouse_id = ? AND product_id = ? FOR UPDATE');
-        $lotStatement->execute([$lotId, $fromId, $productId]);
-        $lot = $lotStatement->fetch();
-        if (!$lot || ((float) $lot['quantity'] - (float) $lot['reserved_quantity']) < $quantity) {
-            throw new DomainException('El lote seleccionado no tiene cantidad disponible suficiente.');
-        }
-    }
-    $sourceValue=$pdo->prepare('SELECT quantity,reserved_quantity,inventory_value,average_unit_cost FROM tbl_warehouse_stock WHERE warehouse_id=? AND product_id=? FOR UPDATE');$sourceValue->execute([$fromId,$productId]);$sourceStock=$sourceValue->fetch();if(!$sourceStock)throw new DomainException('No existe stock del artículo en el almacén de origen.');$transferValue=round($quantity*(float)$sourceStock['average_unit_cost'],4);
-    $out = $pdo->prepare('UPDATE tbl_warehouse_stock SET quantity=quantity-?,inventory_value=inventory_value-? WHERE warehouse_id=? AND product_id=? AND quantity-reserved_quantity>=? AND inventory_value-?>=-0.01'); $out->execute([$quantity,$transferValue,$fromId,$productId,$quantity,$transferValue]);
-    if ($out->rowCount() !== 1) throw new DomainException('Stock disponible insuficiente en el almacén de origen.');
-    $pdo->prepare('UPDATE tbl_warehouse_stock SET quantity=quantity+?,inventory_value=inventory_value+? WHERE warehouse_id=? AND product_id=?')->execute([$quantity,$transferValue,$toId,$productId]);
-    $pdo->prepare('UPDATE tbl_warehouse_stock SET inventory_value=GREATEST(0,inventory_value),average_unit_cost=IF(quantity>0,GREATEST(0,inventory_value)/quantity,0) WHERE product_id=? AND warehouse_id IN (?,?)')->execute([$productId,$fromId,$toId]);
-    $pdo->prepare('UPDATE tbl_product SET stock_quantity = (SELECT COALESCE(SUM(quantity), 0) FROM tbl_warehouse_stock WHERE product_id = ?) WHERE id = ?')->execute([$productId, $productId]);
-    if ($lot !== null) {
-        warehouse_apply_lot_delta($pdo, $productId, $fromId, (string) $lot['lot_number'], $lot['expiration_date'], -$quantity);
-        warehouse_apply_lot_delta($pdo, $productId, $toId, (string) $lot['lot_number'], $lot['expiration_date'], $quantity);
-    }
-    $userId = (int) $_SESSION['loggedInUser']['USERID'];
-    $reference = app_next_document_number($pdo, 'STOCK_TRANSFER', 'TR');
-    $observation = 'Transferencia interna ' . $fromId . ' -> ' . $toId;
-    $headerInsert = $pdo->prepare('INSERT INTO tbl_inventory_transfer (number, from_warehouse_id, to_warehouse_id, product_id, lot_id, quantity, transfer_date, observation, created_by) VALUES (?,?,?,?,?,?,CURDATE(),?,?)');
-    $headerInsert->execute([$reference, $fromId, $toId, $productId, $lotId, $quantity, $observation, $userId]);
-    $transferId = (int) $pdo->lastInsertId();
-    $customFields = is_array($_POST['custom_field'] ?? null) ? $_POST['custom_field'] : [];
-    app_save_custom_fields($pdo, 'stock_transfer', $transferId, $customFields);
-    $insert = $pdo->prepare('INSERT INTO tbl_warehouse_movement (type, product_id, warehouse_id, quantity, inventory_value_delta, observation, doc_reference, source_type, source_id, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-    $insert->execute([STOCK_MOVEMENT_TRANSFER_OUT, $productId, $fromId, -$quantity, -$transferValue, $observation, $reference, 'warehouse_transfer', $transferId, $userId]);
-    $insert->execute([STOCK_MOVEMENT_TRANSFER_IN, $productId, $toId, $quantity, $transferValue, $observation, $reference, 'warehouse_transfer', $transferId, $userId]);
-    app_record_document_status($pdo, 'stock_transfer', $transferId, $reference, '', 'Registrada', 'Creacion', $userId, $observation);
-    $pdo->commit(); echo json_encode(['message' => 'Transferencia registrada correctamente.', 'reference' => $reference], JSON_UNESCAPED_UNICODE);
-} catch (Throwable $exception) { if ($pdo->inTransaction()) $pdo->rollBack(); http_response_code(422); echo json_encode(['error' => $exception->getMessage()], JSON_UNESCAPED_UNICODE); }
+app_require_permission('inventory.manage');$action=strtolower(trim((string)($_POST['action']??'create')));if(!in_array($action,['create','cancel'],true))tr_error('Accion de transferencia invalida.');$userId=(int)($_SESSION['loggedInUser']['USERID']??0);
+try{
+ if($action==='cancel'){
+  $id=filter_var($_POST['transfer_id']??null,FILTER_VALIDATE_INT);$reason=trim((string)($_POST['cancellation_reason']??''));if($id===false||$id<1)throw new DomainException('Transferencia invalida.');if(mb_strlen($reason)<5)throw new DomainException('Indica un motivo de anulacion de al menos 5 caracteres.');$pdo->beginTransaction();$q=$pdo->prepare('SELECT * FROM tbl_inventory_transfer WHERE id=? FOR UPDATE');$q->execute([$id]);$header=$q->fetch();if(!$header)throw new DomainException('La transferencia no existe.');if($header['status']==='Anulada')throw new DomainException('La transferencia ya esta anulada.');$q=$pdo->prepare('SELECT * FROM tbl_inventory_transfer_detail WHERE transfer_id=? ORDER BY line_number FOR UPDATE');$q->execute([$id]);$lines=$q->fetchAll();if(!$lines)$lines=[['id'=>null,'line_number'=>1,'product_id'=>$header['product_id'],'from_warehouse_id'=>$header['from_warehouse_id'],'to_warehouse_id'=>$header['to_warehouse_id'],'lot_id'=>$header['lot_id'],'quantity'=>$header['quantity']]];foreach($lines as $line)tr_reverse_line($pdo,$line,$header,$userId);$pdo->prepare("UPDATE tbl_inventory_transfer SET status='Anulada' WHERE id=?")->execute([$id]);app_record_document_status($pdo,'stock_transfer',$id,$header['number'],'Registrada','Anulada','Anulacion',$userId,$reason);$pdo->commit();echo json_encode(['message'=>'Transferencia anulada y stock revertido correctamente.'],JSON_UNESCAPED_UNICODE);exit;
+ }
+ $raw=$_POST['lines']??null;$lines=is_string($raw)?json_decode($raw,true):$raw;if(!is_array($lines)||!array_is_list($lines)||!$lines)$lines=[['product_id'=>$_POST['product_id']??null,'from_warehouse_id'=>$_POST['from_warehouse_id']??null,'to_warehouse_id'=>$_POST['to_warehouse_id']??null,'lot_id'=>$_POST['lot_id']??null,'quantity'=>$_POST['quantity']??null]];if(count($lines)>200)throw new DomainException('Una transferencia admite hasta 200 lineas.');$posting=tr_date($_POST['transfer_date']??date('Y-m-d'),'La fecha de contabilizacion');$document=tr_date($_POST['document_date']??$posting,'La fecha del documento');$comments=trim((string)($_POST['comments']??''));if(mb_strlen($comments)>500)throw new DomainException('Los comentarios superan 500 caracteres.');$normalized=[];
+ foreach($lines as $i=>$line){$product=filter_var($line['product_id']??null,FILTER_VALIDATE_INT);$from=filter_var($line['from_warehouse_id']??null,FILTER_VALIDATE_INT);$to=filter_var($line['to_warehouse_id']??null,FILTER_VALIDATE_INT);$quantity=filter_var($line['quantity']??null,FILTER_VALIDATE_FLOAT);$lot=filter_var($line['lot_id']??null,FILTER_VALIDATE_INT);$lot=$lot!==false&&$lot!==null&&$lot>0?(int)$lot:null;if($product===false||$from===false||$to===false||$quantity===false||!is_finite((float)$quantity)||$product<1||$from<1||$to<1||$from===$to||$quantity<.001||abs((float)$quantity-round((float)$quantity,3))>1e-7)throw new DomainException('La linea '.($i+1).' no es valida.');$normalized[]=['product_id'=>(int)$product,'from_warehouse_id'=>(int)$from,'to_warehouse_id'=>(int)$to,'lot_id'=>$lot,'quantity'=>(float)$quantity];}
+ $pdo->beginTransaction();$products=array_values(array_unique(array_column($normalized,'product_id')));sort($products);$lock=$pdo->prepare('SELECT id FROM tbl_product WHERE id=? AND active_status=1 FOR UPDATE');foreach($products as $product){$lock->execute([$product]);if(!$lock->fetchColumn())throw new DomainException('Un articulo no existe o esta inactivo.');}$first=$normalized[0];$reference=app_next_document_number($pdo,'STOCK_TRANSFER','TR');$observation='Transferencia interna';$q=$pdo->prepare('INSERT INTO tbl_inventory_transfer(number,from_warehouse_id,to_warehouse_id,product_id,lot_id,quantity,transfer_date,document_date,observation,comments,created_by) VALUES(?,?,?,?,?,?,?,?,?,?,?)');$q->execute([$reference,$first['from_warehouse_id'],$first['to_warehouse_id'],$first['product_id'],$first['lot_id'],$first['quantity'],$posting,$document,$observation,$comments,$userId]);$transfer=(int)$pdo->lastInsertId();$detail=$pdo->prepare('INSERT INTO tbl_inventory_transfer_detail(transfer_id,line_number,product_id,from_warehouse_id,to_warehouse_id,lot_id,quantity,unit_cost,inventory_value) VALUES(?,?,?,?,?,?,?,?,?)');
+ foreach($normalized as $i=>$line){$product=$line['product_id'];$from=$line['from_warehouse_id'];$to=$line['to_warehouse_id'];$quantity=$line['quantity'];$q=$pdo->prepare('SELECT COUNT(*) FROM tbl_warehouse WHERE id IN (?,?) AND active_status=1');$q->execute([$from,$to]);if((int)$q->fetchColumn()!==2)throw new DomainException('Un almacen no existe o esta inactivo.');foreach([$from,$to] as $warehouse)$pdo->prepare('INSERT IGNORE INTO tbl_warehouse_stock(warehouse_id,product_id,quantity) VALUES(?,?,0)')->execute([$warehouse,$product]);$lot=null;$q=$pdo->prepare('SELECT COUNT(*) FROM tbl_product_lot WHERE warehouse_id=? AND product_id=? AND quantity>0');$q->execute([$from,$product]);if((int)$q->fetchColumn()>0&&$line['lot_id']===null)throw new DomainException('Selecciona el lote de la linea '.($i+1).'.');if($line['lot_id']!==null){$q=$pdo->prepare('SELECT id,lot_number,expiration_date,quantity,reserved_quantity FROM tbl_product_lot WHERE id=? AND warehouse_id=? AND product_id=? FOR UPDATE');$q->execute([$line['lot_id'],$from,$product]);$lot=$q->fetch();if(!$lot||(float)$lot['quantity']-(float)$lot['reserved_quantity']<$quantity)throw new DomainException('El lote de la linea '.($i+1).' no tiene saldo suficiente.');}$q=$pdo->prepare('SELECT quantity,reserved_quantity,inventory_value,average_unit_cost FROM tbl_warehouse_stock WHERE warehouse_id=? AND product_id=? FOR UPDATE');$q->execute([$from,$product]);$stock=$q->fetch();$unitCost=(float)$stock['average_unit_cost'];$value=round($quantity*$unitCost,4);$out=$pdo->prepare('UPDATE tbl_warehouse_stock SET quantity=quantity-?,inventory_value=inventory_value-? WHERE warehouse_id=? AND product_id=? AND quantity-reserved_quantity>=? AND inventory_value-?>=-0.01');$out->execute([$quantity,$value,$from,$product,$quantity,$value]);if($out->rowCount()!==1)throw new DomainException('Stock insuficiente en la linea '.($i+1).'.');$pdo->prepare('UPDATE tbl_warehouse_stock SET quantity=quantity+?,inventory_value=inventory_value+? WHERE warehouse_id=? AND product_id=?')->execute([$quantity,$value,$to,$product]);$pdo->prepare('UPDATE tbl_warehouse_stock SET inventory_value=GREATEST(0,inventory_value),average_unit_cost=IF(quantity>0,GREATEST(0,inventory_value)/quantity,0) WHERE product_id=? AND warehouse_id IN (?,?)')->execute([$product,$from,$to]);if($lot){warehouse_apply_lot_delta($pdo,$product,$from,$lot['lot_number'],$lot['expiration_date'],-$quantity);warehouse_apply_lot_delta($pdo,$product,$to,$lot['lot_number'],$lot['expiration_date'],$quantity);}$pdo->prepare('UPDATE tbl_product SET stock_quantity=(SELECT COALESCE(SUM(quantity),0) FROM tbl_warehouse_stock WHERE product_id=?) WHERE id=?')->execute([$product,$product]);$detail->execute([$transfer,$i+1,$product,$from,$to,$line['lot_id'],$quantity,$unitCost,$value]);$detailId=(int)$pdo->lastInsertId();$movement=$pdo->prepare('INSERT INTO tbl_warehouse_movement(type,product_id,warehouse_id,quantity,inventory_value_delta,observation,doc_reference,source_type,source_id,user_id,document_line_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)');$movement->execute([STOCK_MOVEMENT_TRANSFER_OUT,$product,$from,-$quantity,-$value,$observation,$reference,'warehouse_transfer',$transfer,$userId,$detailId]);$movement->execute([STOCK_MOVEMENT_TRANSFER_IN,$product,$to,$quantity,$value,$observation,$reference,'warehouse_transfer',$transfer,$userId,$detailId]);}
+ app_save_custom_fields($pdo,'stock_transfer',$transfer,is_array($_POST['custom_field']??null)?$_POST['custom_field']:[]);app_record_document_status($pdo,'stock_transfer',$transfer,$reference,'','Registrada','Creacion',$userId,$comments?:$observation);$pdo->commit();echo json_encode(['message'=>'Transferencia registrada correctamente.','reference'=>$reference,'transfer_id'=>$transfer],JSON_UNESCAPED_UNICODE);
+}catch(Throwable $exception){if($pdo->inTransaction())$pdo->rollBack();tr_error($exception->getMessage());}
