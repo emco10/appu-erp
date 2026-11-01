@@ -703,6 +703,8 @@ $('input[name="facturacion_porcdesc"]').on("change", function() {
 
 $("#FRM_INSERT_FACTURA").submit(function(e) {
   e.preventDefault();
+  var buyerDocument = ($('input[name="facturacion_cliruc"]').val() || '').replace(/\D/g, '');
+  if (buyerDocument.length === 11 && !window.confirm('El cliente tiene RUC. La boleta no otorga credito fiscal ni sustenta costo o gasto empresarial, salvo excepciones legales. Si la compra es para la empresa, normalmente corresponde una factura. Deseas continuar como consumidor final?')) return;
   var form = $(this);
   var idform = form.attr("id");
   var url = form.attr("action");

@@ -19,6 +19,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     $ord_id = $_POST['orden_id'];
     $purchaseOrderId = filter_var($_POST['orden_compra_id'] ?? null, FILTER_VALIDATE_INT);
     $purchaseOrderId = $purchaseOrderId === false || $purchaseOrderId < 1 ? null : (int) $purchaseOrderId;
+    $importReceiptId = filter_var($_POST['orden_import_receipt_id'] ?? null, FILTER_VALIDATE_INT);
+    $importReceiptId = $importReceiptId === false || $importReceiptId < 1 ? null : (int) $importReceiptId;
 
     //$ord_rcompra = $_POST['orden_tccompra'];
     //$ord_rventa = $_POST['orden_tcventa'];
@@ -53,12 +55,15 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     switch ($ord_tipo) {
         case 'COMPRA':
             $ord_tipo = 1;
+            $importReceiptId = null;
             //$ord_code = "CI-";
             $ord_lstprods = $_POST['orden_lstprods'];
             $ord_lstprods = json_decode($ord_lstprods, true);
             break;
         case 'SERVICIO':
             $ord_tipo = 2;
+            // Los servicios no tienen recepcion fisica; generan la cuenta por pagar al aprobarse.
+            $documentSubtype = 'RESERVE';
             //$ord_code = "CS-";
             $ord_lstservicios = $_POST['orden_lstservicios'];
             $ord_lstservicios = json_decode($ord_lstservicios,true);
@@ -77,6 +82,11 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         }
         $pdo->beginTransaction();
         $providerAddress = app_provider_address_snapshot($pdo, (int) $ord_provider, filter_var($_POST['orden_direccion_proveedor_id'] ?? null, FILTER_VALIDATE_INT) ?: null);
+        if ($importReceiptId !== null) {
+            $importReceipt = $pdo->prepare("SELECT id FROM tbl_goods_receipt WHERE id=? AND status='Registrado' FOR UPDATE");
+            $importReceipt->execute([$importReceiptId]);
+            if (!$importReceipt->fetchColumn()) throw new DomainException('La recepcion de importacion seleccionada no existe o fue anulada.');
+        }
         $duplicateReference = $pdo->prepare("SELECT id FROM tbl_purchase WHERE provider_id=? AND supplier_reference=? AND id<>? AND status NOT IN ('Anulado','Anulada','Cancelada') LIMIT 1 FOR UPDATE");
         $duplicateReference->execute([(int)$ord_provider,$supplierReference,$ord_id===''?0:(int)$ord_id]);
         if ($duplicateReference->fetchColumn()) throw new DomainException('La referencia del proveedor ya fue registrada para otra compra activa.');
@@ -131,15 +141,15 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 
         if ($ord_id == "" || $ord_id == null) {
             $ord_code = app_next_document_number($pdo, 'PURCHASE', 'OC');
-            $sqlStatement = $pdo->prepare("INSERT INTO tbl_purchase (type,number,supplier_reference,status,document_subtype,currency,issue_date,delivery_date,provider_id,provider_address_id,provider_address,purchase_order_id,payment_days,account_number,quotation,requester,approver,created_by,submitted_at,observation,total_purchase,total_tax,total_net,exchange_rate_sale,exchange_rate_purchase) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),?,?,?,?,?,?)");
-            $sqlStatement->execute([$ord_tipo, $ord_code, $supplierReference, $ord_estado, $documentSubtype, $ord_tipomon, $ord_emidate, $ord_deldate, $ord_provider, $providerAddress['id'], $providerAddress['address_line'], $purchaseOrderId, $ord_daypay, $ord_nrocuenta, $ord_cotiz, $ord_request, '', $user_id, $ord_observ, $ord_totcompra, $ord_totigv, $ord_totneto, $ord_rventa, $ord_rcompra]);
+            $sqlStatement = $pdo->prepare("INSERT INTO tbl_purchase (type,number,supplier_reference,status,document_subtype,currency,issue_date,delivery_date,provider_id,provider_address_id,provider_address,purchase_order_id,import_goods_receipt_id,payment_days,account_number,quotation,requester,approver,created_by,submitted_at,observation,total_purchase,total_tax,total_net,exchange_rate_sale,exchange_rate_purchase) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),?,?,?,?,?,?)");
+            $sqlStatement->execute([$ord_tipo, $ord_code, $supplierReference, $ord_estado, $documentSubtype, $ord_tipomon, $ord_emidate, $ord_deldate, $ord_provider, $providerAddress['id'], $providerAddress['address_line'], $purchaseOrderId, $importReceiptId, $ord_daypay, $ord_nrocuenta, $ord_cotiz, $ord_request, '', $user_id, $ord_observ, $ord_totcompra, $ord_totigv, $ord_totneto, $ord_rventa, $ord_rcompra]);
 
             $ord_id = (int) $pdo->lastInsertId();
             app_record_document_status($pdo, 'purchase', $ord_id, $ord_code, '', 'Pendiente', 'Creacion', $user_id);
             $response = 'OK_INSERT';
         } else {
-            $sqlStatement = $pdo->prepare("UPDATE tbl_purchase SET type=?,supplier_reference=?,status=?,document_subtype=?,currency=?,issue_date=?,delivery_date=?,provider_id=?,provider_address_id=?,provider_address=?,purchase_order_id=?,payment_days=?,account_number=?,quotation=?,requester=?,approver='',submitted_at=NOW(),approved_by=NULL,approved_at=NULL,rejected_by=NULL,rejected_at=NULL,approval_comment='',observation=?,total_purchase=?,total_tax=?,total_net=?,exchange_rate_sale=?,exchange_rate_purchase=? WHERE id=?");
-            $sqlStatement->execute([$ord_tipo, $supplierReference, $ord_estado, $documentSubtype, $ord_tipomon, $ord_emidate, $ord_deldate, $ord_provider, $providerAddress['id'], $providerAddress['address_line'], $purchaseOrderId, $ord_daypay, $ord_nrocuenta, $ord_cotiz, $ord_request, $ord_observ, $ord_totcompra, $ord_totigv, $ord_totneto, $ord_rventa, $ord_rcompra, $ord_id]);
+            $sqlStatement = $pdo->prepare("UPDATE tbl_purchase SET type=?,supplier_reference=?,status=?,document_subtype=?,currency=?,issue_date=?,delivery_date=?,provider_id=?,provider_address_id=?,provider_address=?,purchase_order_id=?,import_goods_receipt_id=?,payment_days=?,account_number=?,quotation=?,requester=?,approver='',submitted_at=NOW(),approved_by=NULL,approved_at=NULL,rejected_by=NULL,rejected_at=NULL,approval_comment='',observation=?,total_purchase=?,total_tax=?,total_net=?,exchange_rate_sale=?,exchange_rate_purchase=? WHERE id=?");
+            $sqlStatement->execute([$ord_tipo, $supplierReference, $ord_estado, $documentSubtype, $ord_tipomon, $ord_emidate, $ord_deldate, $ord_provider, $providerAddress['id'], $providerAddress['address_line'], $purchaseOrderId, $importReceiptId, $ord_daypay, $ord_nrocuenta, $ord_cotiz, $ord_request, $ord_observ, $ord_totcompra, $ord_totigv, $ord_totneto, $ord_rventa, $ord_rcompra, $ord_id]);
             $response = 'OK_UPDATE';
         $sqlStatement = $pdo->prepare("DELETE FROM tbl_purchase_detail WHERE purchase_id=:IDORDER");
         $sqlStatement->bindParam("IDORDER", $ord_id, PDO::PARAM_INT);

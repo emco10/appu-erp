@@ -121,7 +121,16 @@
 	                                    <small class="form-text text-muted">La reserva genera la CxP al aprobarse; la estándar la genera al completar la recepción.</small>
 	                                </div>
 	                         	</div>
-	                            <div class="col-md-4"></div>
+	                            <div class="col-md-4">
+	                                <div class="form-group">
+	                                    <label>Naturaleza de la compra</label>
+	                                    <select name="orden_naturaleza" class="form-control" required>
+	                                        <option value="COMPRA" selected>Bienes / mercaderia</option>
+	                                        <option value="SERVICIO">Servicio o gasto</option>
+	                                    </select>
+	                                    <small class="form-text text-muted">Los servicios pueden registrarse directamente, sin orden de compra ni entrada de mercaderia.</small>
+	                                </div>
+	                            </div>
                     		</div>
 	                        
 	                        <div class="row">
@@ -237,6 +246,13 @@
                                             </div>
                                             <input type="text" name="orden_autorizador" class="form-control" placeholder="Nombre de quien autoriza" required>
                                         </div>
+	                                </div>
+	                            </div>
+	                            <div id="purchase-import-association" class="col-md-12 d-none">
+	                                <div class="form-group">
+	                                    <label>Asociar a una importacion / recepcion (opcional)</label>
+	                                    <select name="orden_import_receipt_id" class="form-control select2"><option value="">No asociar</option></select>
+	                                    <small class="form-text text-muted">Identifica flete, seguro, aduana u otro servicio relacionado. La distribucion al inventario se realiza desde Costos de entrega.</small>
 	                                </div>
 	                            </div>
 	                            <div class="col-md-12">

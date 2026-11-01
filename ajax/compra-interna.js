@@ -14,6 +14,23 @@ $(document).ready(function(){
   $(document).prop('title', 'Factura de proveedor - APPU');
 });
 
+function aplicarNaturalezaCompra() {
+  var servicio = $('select[name="orden_naturaleza"]').val() === 'SERVICIO';
+  $('#purchase-import-association').toggleClass('d-none', !servicio);
+  $('select[name="orden_producto_select"]').prop('disabled', servicio);
+  $('input[name="orden_codprod"]').prop('readonly', servicio).val(servicio ? 'SERV' : $('input[name="orden_codprod"]').val());
+  $('select[name="orden_tipo_documento"]').val(servicio ? 'RESERVE' : 'STANDARD').prop('disabled', servicio);
+  if (servicio) $('#btn-add-prodtporden').prop('disabled', false);
+}
+$('select[name="orden_naturaleza"]').on('change', aplicarNaturalezaCompra);
+aplicarNaturalezaCompra();
+$.getJSON('../../modules/compras/costos-entrega.php', { action: 'receipts' }).done(function (response) {
+  var $select = $('select[name="orden_import_receipt_id"]');
+  (response.receipts || []).forEach(function (receipt) {
+    $('<option>').val(receipt.id).text(receipt.number + ' - ' + receipt.provider_name + (receipt.purchase_number ? ' / ' + receipt.purchase_number : '')).appendTo($select);
+  });
+});
+
 var porc_igv = 0.18;
 
 $('select[name="orden_tipopagotext"]').on("change", function() {
@@ -330,7 +347,8 @@ $("#btn-add-prodtporden").click(function(e) {
   discount_rate = parseFloat($('input[name="orden_porcdscto"]').val());
   discounted_total = parseFloat($('input[name="orden_valordscto"]').val());
 
-  if (code != "" && description != "" && gloss != "" && unit_price >= 0 && quantity > 0) {
+  var servicePurchase = $('select[name="orden_naturaleza"]').val() === 'SERVICIO';
+  if ((servicePurchase || code != "") && description != "" && gloss != "" && unit_price >= 0 && quantity > 0) {
     $("#btn-add-prodtporden").prop("disabled", true);
 
     tbl_prodordcompra
@@ -639,8 +657,14 @@ $("#FRM_INSERT_DETA_ORDCOMPRA").submit(function (e) {
   tbl_data = tbl_prodordcompra.rows().data().toArray();
 
   var formData_rec = new FormData(formElement);
-  formData_rec.append("orden_tipo","COMPRA");
-  formData_rec.append("orden_lstprods", JSON.stringify(tbl_data));
+  var purchaseNature = $('select[name="orden_naturaleza"]').val() || 'COMPRA';
+  formData_rec.append("orden_tipo", purchaseNature);
+  if (purchaseNature === 'SERVICIO') {
+    var serviceRows = tbl_data.map(function (row) { return {0: row[0], 1: row[2], 2: row[3], 3: row[5], 4: row[6], 5: row[7], 6: row[8]}; });
+    formData_rec.append("orden_lstservicios", JSON.stringify(serviceRows));
+  } else {
+    formData_rec.append("orden_lstprods", JSON.stringify(tbl_data));
+  }
   var id_ordcompra = $('input[name="orden_id"]').val();
 
   $.ajax({

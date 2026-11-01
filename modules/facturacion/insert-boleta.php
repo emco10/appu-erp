@@ -71,6 +71,10 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         $f_faccod=app_validate_legacy_sales_number($pdo,'RECEIPT',(string)$f_series,(string)$f_faccod);
         $customerStatement=$pdo->prepare('SELECT ruc,business_name FROM tbl_customer WHERE client_id=? AND active_status=1');$customerStatement->execute([$f_cliid]);$customer=$customerStatement->fetch();
         $f_cli_ruc=(string)$customer['ruc'];$f_clinom=(string)$customer['business_name'];
+        $buyerDocument=preg_replace('/\D+/', '', $f_cli_ruc);
+        if ((float)$f_totalneto > 700 && (!in_array(strlen($buyerDocument), [8,11], true) || trim($f_clinom)==='')) {
+            throw new DomainException('Para una boleta mayor a S/ 700 debes identificar al cliente con DNI o RUC y nombre o razon social.');
+        }
         $salesOrder = null;
         $salesOrderWarehouseId = $f_warehouse_id;
         $billingAddress = app_customer_address_snapshot($pdo, (int) $f_cliid, null, 'billing');

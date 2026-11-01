@@ -128,7 +128,8 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label>Doc. Identidad</label>
-                                        <input type="text" maxlength="11" class="form-control" name="facturacion_cliruc" placeholder="DNI" required>
+                                        <input type="text" maxlength="11" class="form-control" name="facturacion_cliruc" placeholder="DNI o RUC" required>
+                                        <small class="form-text text-muted">La boleta es para consumidor final. Si el cliente necesita credito fiscal o sustentar costo/gasto, emita una factura.</small>
                                     </div>
                                 </div>
                                 <div class="col-md-7">
