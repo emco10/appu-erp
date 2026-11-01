@@ -337,6 +337,11 @@ function procesarAprobacion(documentType, documentId, action, onSuccess) {
     }).done(function (response) {
       toastr.success(response.message || "Estado actualizado.");
       if (typeof onSuccess === "function") onSuccess(response);
+    }).fail(function (xhr) {
+      var response = xhr && xhr.responseJSON || {};
+      var message = response.message || "No se pudo actualizar la aprobación.";
+      if (!xhr || xhr.status === 0) message = "No hubo conexión con el servidor. Vuelve a intentarlo.";
+      toastr.error(message);
     });
   });
 }

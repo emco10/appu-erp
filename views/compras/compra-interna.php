@@ -32,11 +32,11 @@
 	            <form id="FRM_INSERT_DETA_ORDCOMPRA" method="post" action="<?php echo $functions->direct_sistema(); ?>/modules/compras/insert-update-compra.php" enctype="multipart/form-data">
 	                <input type="hidden" name="orden_id">
 	                <div class="form-group mb-3">
-	                    <label for="purchase-order-source"><i class="fas fa-link mr-1"></i>Orden de compra origen</label>
+	                    <label for="purchase-order-source"><i class="fas fa-copy mr-1"></i>Copiar de orden de compra aprobada</label>
 	                    <select id="purchase-order-source" name="orden_compra_id" class="form-control select2">
 	                        <option value="">Sin orden de compra</option>
 	                    </select>
-	                    <small class="form-text text-muted">Vincula esta compra con una orden aprobada para mantener la trazabilidad y evitar duplicidades.</small>
+	                    <small class="form-text text-muted">Copia el detalle pendiente y conserva la relación con la orden para controlar cantidades y evitar registrar una compra duplicada.</small>
 	                </div>
 	                <div class="card card-primary">
 	                    <div class="card-header">
@@ -237,15 +237,16 @@
 	                            </div>
 	                            <div class="col-md-4">
 	                                <div class="form-group">
-	                                    <label>Autorizado por</label>
+	                                    <label>Aprobado por</label>
 	                                    <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
                                                     <i class="fas fa-user-check"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" name="orden_autorizador" class="form-control" placeholder="Nombre de quien autoriza" required>
+                                            <input type="text" name="orden_autorizador" class="form-control" placeholder="Se asignará al aprobar" readonly>
                                         </div>
+                                        <small class="form-text text-muted">La aprobación se realiza desde el resumen de compras y registra automáticamente al usuario que la confirma.</small>
 	                                </div>
 	                            </div>
 	                            <div id="purchase-import-association" class="col-md-12 d-none">

@@ -16,6 +16,8 @@ Los almacenes se administran como maestros de configuración desde Gestión; Inv
 
 Los maestros y documentos se conservan para auditoría. Las bajas operativas se manejan como estados inactivos o anulados; no se eliminan físicamente documentos históricos.
 
+El **Mapa de relaciones** concentra el resumen de vínculos recientes y la exploración interactiva de documentos con sus aplicaciones por línea. La ruta anterior **Flujo documental** se conserva como acceso compatible al mismo mapa. **Seguimiento de despachos** queda reservado para consultar y actualizar entregas operativas, no para navegar relaciones generales.
+
 La guía de remisión y los despachos son documentos operativos internos. No se envían a SUNAT ni constituyen una GRE electrónica. La integración con SUNAT queda fuera del alcance actual.
 
 ## Requisitos
@@ -32,11 +34,13 @@ La guía de remisión y los despachos son documentos operativos internos. No se 
 4. Habilita `mod_rewrite` y permite que Apache lea `.htaccess`.
 5. Abre la URL del proyecto e inicia sesión con un usuario activo.
 
-Si la base ya existía, aplica en orden los scripts de `db/migrations/`, incluyendo los más recientes de almacenes, lotes, series, pagos, compras, campos personalizados, integraciones y estados activos de clientes, proveedores, empleados y usuarios.
+Si la base ya existía, aplica en orden los scripts de `db/migrations/`, incluyendo los más recientes de almacenes, lotes, seguimiento de artículos por serie/lote/ninguno, series documentales, pagos, compras, campos personalizados, integraciones y estados activos de clientes, proveedores, empleados y usuarios. La migración `20261101_add_product_tracking_type.sql` conserva el valor predeterminado `NONE` y marca como `LOT` los artículos con historial de lotes; `tests/schema-readiness.php` comprueba que la columna esté instalada.
 
 La migración `20261026_custom_field_metadata.sql` añade búsqueda, copia optativa, defaults y restricciones a las definiciones de campos. Se aplica una sola vez después de las migraciones anteriores. El 29-10-2026 se completaron los metadatos y protecciones de operaciones pendientes de la base operativa, con respaldo previo y comparación de conteos/saldos. El comprobador CLI `tests/schema-readiness.php` informa si el esquema está listo.
 
 Después se aplican, una sola vez, `20261026_document_line_flow.sql` y `20261027_document_operation_guards.sql`. Añaden relaciones por línea, origen físico de la factura, trazabilidad de movimientos, índices, reintentos y redondeo explícito. El nuevo flujo Orden → Entrega → Factura requiere estas migraciones. Las guías históricas solo se marcan como salidas físicas si existe evidencia en el ledger; no se descuenta stock retrospectivamente.
+
+Las altas desde los formularios de facturas y boletas usan una clave idempotente por operación dentro de la misma transacción del documento. Los reintentos de una solicitud con la misma clave y datos devuelven el resultado anterior sin reservar otro correlativo; la unicidad serie/número de la base sigue siendo la última barrera contra colisiones.
 
 ## Pruebas de la migración funcional
 
@@ -69,6 +73,8 @@ El maestro de artículos comparte los modos de consulta/edición y el render de 
 ## Seguridad y operación
 
 La aplicación centraliza autenticación, permisos por endpoint, CSRF, sesiones y validaciones de maestros. Antes de publicar el sistema deben reemplazarse las credenciales de desarrollo, anonimizarse los datos de ejemplo, usar HTTPS y configurar copias de seguridad de la base de datos.
+
+La prueba de disponibilidad de integraciones solo conecta por HTTP(S) a direcciones públicas y fija la IP validada para evitar cambios DNS entre validación y conexión. Para integraciones internas aprobadas, configura `APPU_INTEGRATION_PRIVATE_HOST_ALLOWLIST` con los hosts exactos separados por comas; no admite comodines y queda vacía por defecto.
 
 La versión visible de recursos se controla en `global/config.php` mediante `SCRIPT_VER`, para que Apache y el navegador carguen siempre los cambios del proyecto.
 

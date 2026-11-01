@@ -1,6 +1,12 @@
 $('#m_usuarios').addClass('active');
 $(document).prop('title','Usuarios - APPU');
 (function(){
+  var $userForm=$('#FRM_INSERT_USUARIO');
+  $('<div class="alert alert-info appu-user-profile-notice" role="note"><strong>Administración de accesos</strong><br>Asocia cada cuenta a un empleado y a un perfil. El perfil determina qué módulos y acciones podrá utilizar.</div>').insertAfter('.content-header');
+  var $customFields=$userForm.find('.card-outline').first();
+  var $accountFields=$userForm.find('[name="usuario_active_status"]').closest('.row');
+  if($customFields.length&&$accountFields.length)$customFields.insertAfter($accountFields);
+  $userForm.find('[name="usuario_rol_id"]').after('<small class="form-text text-muted">Los permisos del perfil se administran en Gestión → Perfiles de usuario.</small>');
   function catalog(url,data,$field){return $.ajax({url:url,type:data?'POST':'GET',data:data,dataType:'json'}).then(function(rows){var selected=$field.val();$field.empty().append($('<option>').val('').text('Seleccione'));(rows||[]).forEach(function(row){$field.append($('<option>').val(row.id).text(row.text));});$field.val(selected).trigger('change.select2');});}
   var $employees=$('[name="usuario_empleado_id"]'),$roles=$('[name="usuario_rol_id"]');
   catalog('../../modules/empleados/consultar-empleado.php',{FILTER:'SELECT_LIST'},$employees);

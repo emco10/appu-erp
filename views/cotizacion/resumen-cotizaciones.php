@@ -67,9 +67,7 @@
                 <div class="card mt-3">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <div>
-                                <label>Haga clic derecho sobre un ítem para ver opciones disponibles.</label>
-                            </div>
+                            <div class="alert alert-info py-2" role="note">Desde las acciones de cada cotización vigente puedes <strong>copiarla a una orden de venta</strong>. El sistema conserva la relación y evita convertirla dos veces.</div>
                             <table id="table-cotizaciones" class="table table-bordered table-hover" style="width: 100%">
                                 <thead>
                                     <tr>
@@ -79,6 +77,7 @@
                                         <th>Cliente</th>
                                         <th>Monto</th>
                                         <th>Estado</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>

@@ -80,8 +80,8 @@
 
                 <div class="card mt-3">
                     <div class="card-body">
-                        <div>
-                            <label>Haga clic derecho sobre un ítem para ver opciones disponibles.</label>
+                        <div class="alert alert-info" role="note">
+                            Las órdenes nuevas quedan <strong>Pendientes</strong>. Quien tenga permiso de aprobación puede aprobarlas o rechazarlas desde la columna <strong>Acciones</strong>; al aprobar, el sistema registra automáticamente su usuario y la fecha. El rechazo requiere un motivo.
                         </div>
                         <div class="table-responsive">
                             <table id="table-ordenes" class="table table-bordered table-hover" style="width: 100%">
@@ -94,6 +94,7 @@
                                         <th>Total Neto</th>
                                         <th>Estado</th>
                                         <th>TIPO</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>

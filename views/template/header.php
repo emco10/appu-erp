@@ -114,7 +114,7 @@
           <?php if (app_can('users.view')): ?><a class="dropdown-item" href="<?php echo $functions->direct_paginas()."usuarios/registro-usuario" ?>"><i class="fas fa-user-cog mr-2"></i>Usuarios y perfiles</a><?php endif; ?>
           <?php if (app_can('sales.view')): ?><a class="dropdown-item" href="<?php echo $functions->direct_paginas()."ventas/resumen-ordenes-venta" ?>"><i class="fas fa-clipboard-list mr-2"></i>Órdenes de venta</a><?php endif; ?>
           <?php if (app_can('purchases.view')): ?><a class="dropdown-item" href="<?php echo $functions->direct_paginas()."ordenes/resumen-ordenes" ?>"><i class="fas fa-list-check mr-2"></i>Órdenes de compra</a><?php endif; ?>
-          <?php if (app_can('reports.view')): ?><a class="dropdown-item" href="<?php echo $functions->direct_paginas()."reportes/flujo-documental" ?>"><i class="fas fa-diagram-project mr-2"></i>Flujo documental</a><?php endif; ?>
+          <?php if (app_can('reports.view')): ?><a class="dropdown-item" href="<?php echo $functions->direct_paginas()."trazabilidad/flujo" ?>"><i class="fas fa-diagram-project mr-2"></i>Mapa de relaciones</a><?php endif; ?>
         </div>
       </li>
 
@@ -140,7 +140,7 @@
           <?php endif; ?>
           <?php if (app_can('logistics.view')): ?>
           <a class="dropdown-item" href="<?php echo $functions->direct_paginas()."logistica/guias" ?>"><i class="fas fa-truck-loading mr-2"></i>Guias de remision</a>
-          <a class="dropdown-item" href="<?php echo $functions->direct_paginas()."logistica/documentos" ?>"><i class="fas fa-project-diagram mr-2"></i>Mapa de documentos</a>
+          <a class="dropdown-item" href="<?php echo $functions->direct_paginas()."logistica/documentos" ?>"><i class="fas fa-truck mr-2"></i>Seguimiento de despachos</a>
           <?php endif; ?>
           <?php if (app_can('reports.view')): ?>
           <a class="dropdown-item" href="<?php echo $functions->direct_paginas()."reportes/ventas-periodo" ?>"><i class="fas fa-chart-line mr-2"></i>Reportes de gestion</a>

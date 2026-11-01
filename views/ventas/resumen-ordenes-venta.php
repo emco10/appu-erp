@@ -90,7 +90,7 @@
       <span id="sales-order-identity" class="mr-auto small"></span>
       <button type="button" id="sales-order-new" class="btn btn-outline-primary">Nuevo</button>
       <a id="sales-order-relations" class="btn btn-outline-secondary" target="_blank" rel="noopener">Ver relaciones</a>
-      <a id="sales-order-copy-delivery" class="btn btn-outline-success">Copiar a entrega</a>
+      <a id="sales-order-copy-delivery" class="btn btn-outline-success"><i class="fas fa-copy mr-1"></i>Copiar a guía de remisión</a>
       <button type="button" id="sales-order-edit" class="btn btn-outline-primary">Editar</button>
       <button type="button" id="sales-order-cancel-edit" class="btn btn-secondary">Cancelar edición</button>
       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

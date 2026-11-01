@@ -1,4 +1,6 @@
 window.appuSunatDocumentType="receipt";
+function appuReceiptRequestKey(){var bytes=new Uint8Array(16);if(window.crypto&&window.crypto.getRandomValues)window.crypto.getRandomValues(bytes);else for(var i=0;i<bytes.length;i++)bytes[i]=Math.floor(Math.random()*256);return "receipt_"+Array.from(bytes,function(value){return value.toString(16).padStart(2,"0");}).join("");}
+var appuReceiptRequestKeyValue=appuReceiptRequestKey();
 $("#col-btn-anular-factura").hide();
 function appuAplicarClienteBoleta(c) { if (!c) return; $('input[name="facturacion_cliente"]').val(c.client_id || ''); $('input[name="facturacion_cliruc"]').val(c.ruc || ''); $('input[name="facturacion_valcliente"]').val(c.business_name || c.trade_name || ''); $('input[name="facturacion_clidirecc"]').val(c.address || ''); $('input[name="facturacion_cliemail"], input[name="facturacion_email"]').val(c.email || ''); $('input[name="facturacion_clitelefono"], input[name="facturacion_telefono"]').val(c.phone || c.cellphone || ''); $('input[name="facturacion_clicelular"], input[name="facturacion_celular"]').val(c.cellphone || ''); }
 $.getJSON("../../modules/facturacion/series.php", { document_type: "RECEIPT" }).done(function (data) { var $select = $('select[name="facturacion_series"]'); $select.empty(); (data.series || []).forEach(function (series) { $select.append($('<option>').val(series.series).attr('data-sunat',Number(series.sunat_enabled)).text(series.series+(Number(series.sunat_enabled)===1?' · SUNAT':' · INTERNA'))); }); $select.trigger("change"); });
@@ -712,6 +714,7 @@ $("#FRM_INSERT_FACTURA").submit(function(e) {
   var formElement = document.getElementById(idform);
   var formData_rec = new FormData(formElement);
   formData_rec.append("facturacion_prods", JSON.stringify(tbl_data));
+  formData_rec.set("request_key", appuReceiptRequestKeyValue);
   $.ajax({
     type: "POST",
     url: url,
@@ -719,7 +722,7 @@ $("#FRM_INSERT_FACTURA").submit(function(e) {
     contentType: false,
     cache: false,
     processData: false,
-    error: function(xhr) { Swal.close(); var response=xhr.responseJSON || {}; toastr.error(response.message || response.error || 'No se pudo guardar. Revisa los datos e inténtalo nuevamente.'); },
+    error: function(xhr) { Swal.close(); if (typeof window.appuShowRequestError === 'function') window.appuShowRequestError(form,xhr,'No se pudo guardar la boleta. Revisa los datos e inténtalo nuevamente.'); else toastr.error(xhr.responseJSON && xhr.responseJSON.message || 'No se pudo guardar la boleta. Revisa los datos e inténtalo nuevamente.'); },
     beforeSend: function() {
       Swal.fire({
         html: "<h4>Guardando boleta</h4>",
@@ -751,6 +754,7 @@ $("#FRM_INSERT_FACTURA").submit(function(e) {
         );
 
         postCambioEstado();
+        appuReceiptRequestKeyValue=appuReceiptRequestKey();
 
         $.post("../../modules/facturacion/listar-boletas.php", function(data) {
         $('select[name="facturas_listado"]').empty();

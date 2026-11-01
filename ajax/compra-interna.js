@@ -57,8 +57,18 @@ $.post("../../modules/compras/listar-compras.php", {orden_tipo:"COMPRA"}, functi
   });
 });
 
-$.getJSON("../../modules/ordenes/listar-ordenes-disponibles.php", function(data) {
-  $('#purchase-order-source').empty().select2({ data: data, language: "es", placeholder: "Sin orden de compra", allowClear: true });
+$.getJSON("../../modules/ordenes/listar-ordenes-disponibles.php").done(function(data) {
+  var $source = $('#purchase-order-source').empty().select2({ data: data, language: "es", placeholder: "Sin orden de compra", allowClear: true });
+  var query = new URLSearchParams(window.location.search);
+  if (query.get('copy_from') !== 'order' || !query.get('source_id')) return;
+  var sourceId = String(query.get('source_id'));
+  if (!$source.find('option').toArray().some(function(option) { return option.value === sourceId; })) {
+    toastr.warning('La orden ya tiene una factura activa o no está disponible para copiar.');
+    return;
+  }
+  $source.val(sourceId).trigger('change');
+}).fail(function() {
+  toastr.error('No se pudieron cargar las órdenes de compra disponibles.');
 });
 
 $.post("../../modules/proveedores/listar-proveedores.php", function(data) {
@@ -683,9 +693,14 @@ $("#FRM_INSERT_DETA_ORDCOMPRA").submit(function (e) {
               }
           })
       },
+      error: function (xhr) {
+          Swal.close();
+          if (typeof window.appuShowRequestError === "function") window.appuShowRequestError(form, xhr, "No se pudo guardar la compra. Revisa los datos e inténtalo nuevamente.");
+          else toastr.error(xhr.responseJSON && xhr.responseJSON.message || "No se pudo guardar la compra. Revisa los datos e inténtalo nuevamente.");
+      },
       success: function (data) {
           if (data == "ERROR") {
-            $.Notification.notify("error", "bottom-right", "Error de guardado", "No se pudo guardar datos de Compra");
+            toastr.error("El servidor rechazó la compra, pero no indicó el motivo. Verifica los datos e inténtalo nuevamente.");
             Swal.close();
           } else if (data == "OK_INSERT") {
             $('input[name="orden_nro"]').focus();

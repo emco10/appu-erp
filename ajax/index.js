@@ -1,12 +1,41 @@
 $(function () {
   "use strict";
   $("#m_gestion").addClass("active");
+  var $rolesCard = $("#roles-list").closest(".card");
+  var $settingsGrid = $("#custom-field-form").closest(".col-lg-7").parent(".row");
+  if ($rolesCard.length && $settingsGrid.length) $rolesCard.detach().insertAfter($settingsGrid);
+
+  var managementSections = [
+    { selector: "#company-form", id: "management-company", label: "Empresa", icon: "fa-building" },
+    { selector: "#value-list-form", id: "management-values", label: "Valores", icon: "fa-list" },
+    { selector: "#custom-field-form", id: "management-fields", label: "Campos", icon: "fa-tags" },
+    { selector: "#roles-list", id: "management-profiles", label: "Perfiles", icon: "fa-user-shield" },
+    { selector: "#document-series-form", id: "management-series", label: "Series", icon: "fa-hashtag" },
+    { selector: "#financial-account-form", id: "management-accounts", label: "Cajas y bancos", icon: "fa-university" },
+    { selector: "#price-list-form", id: "management-prices", label: "Precios", icon: "fa-tags" },
+    { selector: "#external-integration-form", id: "management-integrations", label: "Integraciones", icon: "fa-plug" }
+  ];
+  var $managementNav = $('<nav class="appu-management-nav" aria-label="Secciones de gestión"><div class="container-fluid"><div class="nav nav-pills" role="navigation"></div></div></nav>');
+  managementSections.forEach(function (section) {
+    var $target = $(section.selector).closest(".card").first();
+    if (!$target.length) return;
+    $target.attr("id", section.id).addClass("appu-management-section");
+    $('<a class="nav-link" role="link">').attr("href", "#" + section.id)
+      .append($("<i>").addClass("fas " + section.icon + " mr-1"))
+      .append(document.createTextNode(section.label))
+      .appendTo($managementNav.find(".nav"));
+  });
+  $(".content-header").after($managementNav);
+  if ($rolesCard.length) {
+    $('<div class="alert alert-info appu-profile-help" role="note">Cada perfil reúne permisos por módulo. Asigna solo los accesos necesarios; los cambios de permisos se aplican en la siguiente solicitud del usuario.</div>')
+      .prependTo($rolesCard.find(".card-body"));
+  }
   $('<div class="form-row"><div class="form-group col-md-3"><label>Ubigeo SUNAT</label><input name="ubigeo" class="form-control" maxlength="6" pattern="[0-9]{6}" required></div><div class="form-group col-md-3"><label>Departamento</label><input name="department" class="form-control" maxlength="100" required></div><div class="form-group col-md-3"><label>Provincia</label><input name="province" class="form-control" maxlength="100" required></div><div class="form-group col-md-3"><label>Distrito</label><input name="district" class="form-control" maxlength="100" required></div></div>').insertBefore('#company-form button[type="submit"]');
   function esc(v) { return appuEscapeHtml(String(v == null ? "" : v)); }
   function fail(x, message) { var response = x.responseJSON || {}; toastr.error(response.message || (typeof response.error === 'string' ? response.error : message)); }
   function post(form, url, done) { var $form=$(form); if($form.data('submitting'))return; appuClearValidation(form); var data=$form.serialize();$form.data('submitting',true).find('[type=submit]').prop('disabled',true);$.post(url, data).done(function (r) { $form.data('management-dirty',false);toastr.success(r.message || "Configuración guardada."); if (done) done(r); }).fail(function (x) { if (x.responseJSON && x.responseJSON.errors) appuShowValidation(form, x.responseJSON); else fail(x, "No se pudo guardar la configuración."); }).always(function(){$form.data('submitting',false).find('[type=submit]').prop('disabled',false);}); }
   $(document).on('input change','.content-wrapper form :input',function(){$(this).closest('form').data('management-dirty',true);});
-  $('<form id="role-create-form" class="border rounded p-3 mb-3"><input type="hidden" name="action" value="role_create"><div class="form-row"><div class="form-group col-md-3"><label>Código del nuevo perfil</label><input name="code" class="form-control" maxlength="50" pattern="[a-z][a-z0-9_]{1,49}" placeholder="ventas_corporativas" required></div><div class="form-group col-md-4"><label>Nombre</label><input name="name" class="form-control" maxlength="100" required></div><div class="form-group col-md-5"><label>Descripción</label><input name="description" class="form-control" maxlength="255"></div></div><button class="btn btn-primary" type="submit">Crear perfil</button><small class="form-text text-muted">El perfil nuevo inicia sin permisos. Asigna y guarda sus autorizaciones debajo.</small></form>').insertBefore('#roles-list');
+  $('<details class="appu-management-advanced mb-3"><summary><i class="fas fa-plus-circle mr-1"></i>Crear un perfil nuevo</summary><form id="role-create-form" class="border rounded p-3 mt-2"><input type="hidden" name="action" value="role_create"><div class="form-row"><div class="form-group col-md-3"><label>Código del nuevo perfil</label><input name="code" class="form-control" maxlength="50" pattern="[a-z][a-z0-9_]{1,49}" placeholder="ventas_corporativas" required></div><div class="form-group col-md-4"><label>Nombre</label><input name="name" class="form-control" maxlength="100" required></div><div class="form-group col-md-5"><label>Descripción</label><input name="description" class="form-control" maxlength="255"></div></div><button class="btn btn-primary" type="submit">Crear perfil</button><small class="form-text text-muted">El perfil nuevo inicia sin permisos. Asígnalos en la tarjeta del perfil y guarda.</small></form></details>').insertBefore('#roles-list');
   $('<input type="hidden" name="option_id">').appendTo('#value-option-form');
   $('<button type="button" class="btn btn-outline-secondary ml-2" id="value-option-new">Nueva opción</button>').appendTo('#value-option-form');
   [['LANDED_COST','Costos de entrega'],['INVENTORY_ENTRY','Entrada de inventario'],['INVENTORY_ISSUE','Salida de inventario']].forEach(function(option){$('<option>').val(option[0]).text(option[1]).appendTo('#document-series-form [name=document_type]');});
@@ -28,7 +57,9 @@ $(function () {
     $('<label>').attr('for', 'custom-config-' + entry[0]).text(entry[1]).appendTo($group);
     $('<select class="form-control"><option value="0">No</option><option value="1">Sí</option></select>').attr({ id: 'custom-config-' + entry[0], name: entry[0] }).val(entry[2]).appendTo($group);
   });
-  $customConfig.find('[type=submit]').before($metadata);
+  var $advancedFields = $('<details class="appu-management-advanced mb-3"><summary><i class="fas fa-sliders-h mr-1"></i>Opciones avanzadas del campo</summary><div class="row pt-3"></div></details>');
+  $advancedFields.find('.row').append($metadata.children());
+  $customConfig.find('[type=submit]').before($advancedFields);
   $customConfig.find('[name=visible] option[value="1"]').prop('defaultSelected', true);
   $customConfig.attr('novalidate', 'novalidate');
   $(document).on('click', '.js-edit-custom-field', function () {
@@ -63,9 +94,47 @@ $(function () {
     });
   }
 
-  function renderRoles(roles, permissions) {
-    $("#roles-list").html(roles.map(function (r) { var selected = (r.permission_ids || []).map(Number); var checks = permissions.map(function (p) { return "<div class='col-md-4'><label class='small mb-2'><input type='checkbox' class='mr-1' name='permission_ids[]' value='" + Number(p.id) + "'" + (selected.indexOf(Number(p.id)) !== -1 ? " checked" : "") + "> " + esc(p.name) + " <span class='text-muted'>(" + esc(p.code) + ")</span></label></div>"; }).join(""); return "<form class='role-form border rounded p-3 mb-3'><input type='hidden' name='action' value='role'><input type='hidden' name='role_id' value='" + Number(r.id) + "'><div class='form-row'><div class='form-group col-md-3'><label>Código</label><input class='form-control form-control-sm' value='" + esc(r.code) + "' readonly></div><div class='form-group col-md-4'><label>Nombre</label><input name='name' class='form-control form-control-sm' value='" + esc(r.name) + "' required></div><div class='form-group col-md-5'><label>Descripción</label><input name='description' class='form-control form-control-sm' value='" + esc(r.description) + "'></div></div><label>Permisos del perfil</label><div class='row'>" + checks + "</div><button class='btn btn-sm btn-primary' type='submit'>Guardar perfil y permisos</button></form>"; }).join("") || "<span class='text-muted'>No hay perfiles configurados.</span>");
+  function permissionGroupName(code) {
+    var labels = { dashboard: "Inicio", customers: "Clientes", providers: "Proveedores", employees: "Empleados", users: "Usuarios", sales: "Ventas", purchases: "Compras", inventory: "Inventario", logistics: "Logística", finance: "Finanzas", management: "Gestión", reports: "Reportes" };
+    var key = String(code || "").split(".")[0];
+    return { key: key || "other", label: labels[key] || "Otros permisos" };
   }
+  function syncPermissionGroup($group) {
+    var $checks = $group.find(".js-role-permission");
+    var checked = $checks.filter(":checked").length;
+    $group.find(".js-role-category-all").prop("checked", checked === $checks.length && checked > 0).prop("indeterminate", checked > 0 && checked < $checks.length);
+    var $form = $group.closest(".role-form");
+    $form.find(".appu-role-card__header .badge").text($form.find(".js-role-permission:checked").length + " permisos");
+  }
+  function renderRoles(roles, permissions) {
+    var markup = roles.map(function (r) {
+      var selected = (r.permission_ids || []).map(Number);
+      var groups = {};
+      permissions.forEach(function (p) {
+        var category = permissionGroupName(p.code);
+        if (!groups[category.key]) groups[category.key] = { label: category.label, permissions: [] };
+        groups[category.key].permissions.push(p);
+      });
+      var groupMarkup = Object.keys(groups).sort(function (a, b) { return groups[a].label.localeCompare(groups[b].label, "es"); }).map(function (key) {
+        var group = groups[key];
+        var checks = group.permissions.map(function (p) {
+          var checked = selected.indexOf(Number(p.id)) !== -1;
+          return "<div class='col-sm-6 col-lg-4'><label class='appu-permission-option'><input type='checkbox' class='js-role-permission' data-category='" + esc(key) + "' name='permission_ids[]' value='" + Number(p.id) + "'" + (checked ? " checked" : "") + "> <span>" + esc(p.name) + "</span><small>" + esc(p.code) + "</small></label></div>";
+        }).join("");
+        return "<fieldset class='appu-permission-group'><legend><span>" + esc(group.label) + "</span><label class='appu-permission-select-all'><input type='checkbox' class='js-role-category-all'> Seleccionar todos</label></legend><div class='row'>" + checks + "</div></fieldset>";
+      }).join("");
+      return "<form class='role-form appu-role-card mb-3'><input type='hidden' name='action' value='role'><input type='hidden' name='role_id' value='" + Number(r.id) + "'><div class='appu-role-card__header'><div><h4>" + esc(r.name) + "</h4><span class='text-muted'>" + esc(r.description || "Sin descripción") + " · Código: " + esc(r.code) + "</span></div><span class='badge badge-secondary'>" + selected.length + " permisos</span></div><div class='form-row'><div class='form-group col-md-6'><label>Nombre del perfil</label><input name='name' class='form-control' value='" + esc(r.name) + "' required></div><div class='form-group col-md-6'><label>Descripción</label><input name='description' class='form-control' maxlength='255' value='" + esc(r.description) + "'></div></div><fieldset><legend class='appu-permissions-heading'>Accesos por módulo</legend><div class='row'>" + groupMarkup + "</div></fieldset><button class='btn btn-primary' type='submit'><i class='fas fa-save mr-1'></i>Guardar perfil y permisos</button></form>";
+    }).join("");
+    $("#roles-list").html(markup || "<div class='alert alert-light border mb-0'>No hay perfiles configurados.</div>");
+    $("#roles-list .appu-permission-group").each(function () { syncPermissionGroup($(this)); });
+  }
+
+  $(document).on("change", ".js-role-category-all", function () {
+    var $group = $(this).closest(".appu-permission-group");
+    $group.find(".js-role-permission").prop("checked", this.checked);
+    syncPermissionGroup($group);
+  });
+  $(document).on("change", ".js-role-permission", function () { syncPermissionGroup($(this).closest(".appu-permission-group")); });
 
   function renderAccounts(accounts) { $("#financial-accounts-table tbody").html(accounts.map(function (a) { return "<tr><td>" + esc(a.code) + "</td><td>" + esc(a.name) + "</td><td>" + esc(a.account_type) + "</td><td>" + esc(a.currency) + "</td><td>" + esc(a.account_number || "-") + "</td><td>" + (Number(a.active_status) === 1 ? "Activo" : "Inactivo") + "</td><td><button type='button' class='btn btn-sm btn-outline-primary financial-account-edit' data-account='" + esc(JSON.stringify(a)) + "'>Editar</button></td></tr>"; }).join("")); }
   function renderPriceLists(lists) { $("#price-lists-table tbody").html(lists.map(function (a) { return "<tr><td>"+esc(a.code)+"</td><td>"+esc(a.name)+"</td><td>"+esc(a.currency)+"</td><td>"+Number(a.factor).toFixed(4)+"</td><td>"+(Number(a.active_status)===1?"Activo":"Inactivo")+"</td><td><button type='button' class='btn btn-sm btn-outline-primary price-list-edit' data-list='"+esc(JSON.stringify(a))+"'>Editar</button></td></tr>"; }).join("")); }

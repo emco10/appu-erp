@@ -6,7 +6,7 @@ const list = { records: [{ id: 1, code: 'UNO', name: 'Primero', brand: 'APPU', a
 function record(id = 1, custom = { 9: 'TIENDA' }) {
   return { id, version: 'version-' + id, definitions: structuredClone(definitions), custom_fields: custom, values: {
     producto_id: String(id), producto_codigo: 'PROD-' + id, producto_code: 'CODE-' + id, producto_nombre: 'Artículo ' + id,
-    producto_marca: 'Marca', producto_precio: '15.50', producto_unitvalue: 'und', producto_estado: false
+    producto_marca: 'Marca', producto_precio: '15.50', producto_unitvalue: 'und', producto_tracking_type: 'SERIAL', producto_estado: false
   } };
 }
 async function start(query = '') {
@@ -31,7 +31,22 @@ test('Nuevo invalida fichas y catálogos anteriores y limpia todos los campos', 
     assert.equal($('#FRM_INSERT_PRODUCTO').attr('data-mode'), 'CREATE');
     assert.equal($('[name=producto_id]').val(), ''); assert.equal($('[name=producto_code]').val(), '');
     assert.equal($('[name="custom_field[9]"]').val(), 'WEB'); assert.equal($('#prod_estado').prop('checked'), false);
+    assert.equal($('[name=producto_tracking_type]').val(), 'NONE');
     assert.equal($('[data-master-action=save]').prop('disabled'), false);
+  } finally { t.dom.window.close(); }
+});
+
+test('El seguimiento por artículo ofrece Ninguno, Serie y Lote y conserva la selección', async () => {
+  const t = await start(); const { $ } = t;
+  try {
+    const $tracking = $('[name=producto_tracking_type]');
+    assert.deepEqual($tracking.find('option').map((_, option) => option.value).get(), ['NONE', 'SERIAL', 'LOT']);
+    await t.open();
+    assert.equal($tracking.val(), 'SERIAL');
+    $('[data-master-action=edit]').trigger('click');
+    $tracking.val('LOT').trigger('change');
+    $('#FRM_INSERT_PRODUCTO').trigger('submit');
+    assert.equal(t.saveRequests()[0].data.get('producto_tracking_type'), 'LOT');
   } finally { t.dom.window.close(); }
 });
 

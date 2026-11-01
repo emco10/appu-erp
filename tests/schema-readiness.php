@@ -3,6 +3,7 @@
 if(PHP_SAPI!=='cli'){http_response_code(404);exit;}
 require __DIR__.'/../global/connection.php';
 $required=[
+ 'tbl_product'=>['tracking_type'],
  'tbl_custom_field_definition'=>['searchable','copy_to_target','visible','display_order','default_value','max_length','min_value','max_value','validation_pattern','section'],
  'tbl_document_line_application'=>['source_type','source_id','source_line_id','target_type','target_id','target_line_id','stage','quantity','status'],
  'tbl_document_request'=>['operation','request_key','payload_hash'],

@@ -1,5 +1,6 @@
 <?php
 require '../../global/connection.php';
+require_once '../../global/integration-network-policy.php';
 header('Content-Type: application/json; charset=utf-8');
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 app_require_permission($method === 'GET' ? 'management.view' : 'management.manage');
@@ -27,28 +28,61 @@ if (strtolower(trim((string) ($_POST['action'] ?? ''))) === 'test') {
     }
     if(!(int)$integration['active_status']){http_response_code(422);echo json_encode(['error'=>'Activa la integración antes de probar su disponibilidad.'],JSON_UNESCAPED_UNICODE);exit;}
     $url = trim((string) $integration['base_url']);
-    if (!filter_var($url, FILTER_VALIDATE_URL) || !in_array(strtolower((string) parse_url($url, PHP_URL_SCHEME)), ['http', 'https'], true)) {
+    if (!filter_var($url, FILTER_VALIDATE_URL)) {
         http_response_code(422);
         echo json_encode(['error' => 'La URL base no es válida.'], JSON_UNESCAPED_UNICODE);
         exit;
     }
+    try {
+        $privateHostAllowlist = array_values(array_filter(array_map(
+            'trim',
+            explode(',', (string) (getenv('APPU_INTEGRATION_PRIVATE_HOST_ALLOWLIST') ?: ''))
+        )));
+        $destination = app_integration_public_destination($url, $privateHostAllowlist);
+    } catch (InvalidArgumentException $exception) {
+        http_response_code(422);
+        echo json_encode(['error' => $exception->getMessage()], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+    if (!function_exists('curl_init')) {
+        http_response_code(503);
+        echo json_encode(['error' => 'La verificación segura de integraciones no está disponible en este servidor.'], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
     $started = microtime(true);
     $statusCode = 0;
-    $error = '';
-    if (function_exists('curl_init')) {
-        $curl = curl_init($url);
-        curl_setopt_array($curl, [CURLOPT_NOBODY => true, CURLOPT_RETURNTRANSFER => true, CURLOPT_FOLLOWLOCATION => false, CURLOPT_CONNECTTIMEOUT => 3, CURLOPT_TIMEOUT => 5, CURLOPT_USERAGENT => 'APPU-ERP-Integration-Check/1.0']);
-        curl_exec($curl);
-        $statusCode = (int) curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        $error = (string) curl_error($curl);
-        curl_close($curl);
-    } else {
-        $headers = @get_headers($url, true);
-        $statusCode = is_array($headers) && isset($headers[0]) && preg_match('/\s(\d{3})\s/', (string) $headers[0], $match) ? (int) $match[1] : 0;
+    $curl = curl_init($url);
+    if ($curl === false) {
+        http_response_code(503);
+        echo json_encode(['error' => 'No se pudo iniciar la verificación segura de la integración.'], JSON_UNESCAPED_UNICODE);
+        exit;
     }
+    $resolve = app_integration_curl_resolution($destination);
+    $options = [
+        CURLOPT_NOBODY => true,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FOLLOWLOCATION => false,
+        CURLOPT_CONNECTTIMEOUT => 3,
+        CURLOPT_TIMEOUT => 5,
+        CURLOPT_USERAGENT => 'APPU-ERP-Integration-Check/1.0',
+        CURLOPT_PROXY => '',
+        CURLOPT_PROTOCOLS => CURLPROTO_HTTP | CURLPROTO_HTTPS,
+        CURLOPT_SSL_VERIFYPEER => true,
+        CURLOPT_SSL_VERIFYHOST => 2,
+    ];
+    if ($resolve !== null) $options[CURLOPT_RESOLVE] = [$resolve];
+    if (!curl_setopt_array($curl, $options)) {
+        curl_close($curl);
+        http_response_code(503);
+        echo json_encode(['error' => 'No se pudo configurar la verificación segura de la integración.'], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+    curl_exec($curl);
+    $statusCode = (int) curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    curl_close($curl);
     $available = $statusCode >= 200 && $statusCode < 500;
     $elapsedMs = (int) round((microtime(true) - $started) * 1000);
-    $message = $available ? 'La URL respondió correctamente.' : ($error !== '' ? $error : 'No se obtuvo una respuesta HTTP válida.');
+    $message = $available ? 'La URL respondió correctamente.' : 'No se obtuvo una respuesta HTTP válida.';
     $pdo->prepare('INSERT INTO tbl_external_integration_log (integration_id,available_status,http_status,elapsed_ms,message,checked_by) VALUES (?,?,?,?,?,?)')
         ->execute([(int) $integration['id'], $available ? 1 : 0, $statusCode, $elapsedMs, $message, (int) $_SESSION['loggedInUser']['USERID']]);
     echo json_encode(['available' => $available, 'http_status' => $statusCode, 'elapsed_ms' => $elapsedMs, 'message' => $message], JSON_UNESCAPED_UNICODE);

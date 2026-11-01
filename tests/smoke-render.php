@@ -22,7 +22,7 @@ ob_start();
 include $root . '/views/template/main.php';
 $html = ob_get_clean();
 $page = basename($_GET['url']);
-$scriptAliases = ['entrada-inventario' => 'actualizar-stock', 'salida-inventario' => 'actualizar-stock', 'flujo'=>'flujo-comercial'];
+$scriptAliases = ['entrada-inventario' => 'actualizar-stock', 'salida-inventario' => 'actualizar-stock', 'flujo'=>'flujo-comercial', 'flujo-documental'=>'flujo-comercial'];
 $pageScript = $scriptAliases[$page] ?? $page;
 foreach (['</html>', '>Navegar</button>', 'js/footer-functions.js?v=' . SCRIPT_VER, '/ajax/' . $pageScript . '.js?v=' . SCRIPT_VER] as $marker) {
     if (!str_contains($html, $marker)) throw new RuntimeException('Render incompleto; falta: ' . $marker);

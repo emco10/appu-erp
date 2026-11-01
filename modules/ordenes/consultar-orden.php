@@ -40,7 +40,7 @@ if ($FILTER_COTIZ == "ALL") {
             $query_tipo = " WHERE ord.type = $TIPO_ORDEN ";
         }
     }
-    $sqlStatement = $pdo->prepare("SELECT ord.type AS TIPOORDEN, ord.id AS IDORDEN, ord.number AS ORDNUMBER, ord.status AS ORDESTADO, ord.currency AS TIPOMON, ord.issue_date AS FECEMIS, ord.delivery_date AS FECDEL, ord.provider_id AS PROVID, ord.purchase_request_id AS REQUESTID, prov.business_name AS NOMPROV, ord.payment_days AS PAYDAYS, ord.account_number AS ACCNUM, ord.quotation AS COTIZ, ord.requester AS REQUES, ord.approver AS APROV, ord.observation AS OBSERV, ord.total_purchase AS TOTCOMP, ord.total_tax AS TOTIGV, ord.total_net AS TOTNET, ord.exchange_rate_sale AS EXCVENTA, ord.exchange_rate_purchase AS EXCCOMP FROM tbl_order ord INNER JOIN tbl_provider prov ON ord.provider_id=prov.id $query_estado $query_tipo ORDER BY ord.id DESC");
+    $sqlStatement = $pdo->prepare("SELECT ord.type AS TIPOORDEN, ord.id AS IDORDEN, ord.number AS ORDNUMBER, ord.status AS ORDESTADO, ord.currency AS TIPOMON, ord.issue_date AS FECEMIS, ord.delivery_date AS FECDEL, ord.provider_id AS PROVID, ord.purchase_request_id AS REQUESTID, prov.business_name AS NOMPROV, ord.payment_days AS PAYDAYS, ord.account_number AS ACCNUM, ord.quotation AS COTIZ, ord.requester AS REQUES, ord.approver AS APROV, ord.observation AS OBSERV, ord.total_purchase AS TOTCOMP, ord.total_tax AS TOTIGV, ord.total_net AS TOTNET, ord.exchange_rate_sale AS EXCVENTA, ord.exchange_rate_purchase AS EXCCOMP, (SELECT COUNT(*) FROM tbl_purchase linked_purchase WHERE linked_purchase.purchase_order_id=ord.id AND linked_purchase.status NOT IN ('Anulado','Anulada','Cancelada')) AS LINKED_PURCHASE_COUNT FROM tbl_order ord INNER JOIN tbl_provider prov ON ord.provider_id=prov.id $query_estado $query_tipo ORDER BY ord.id DESC");
     $sqlStatement->execute();
     $rowsNumber = $sqlStatement->rowCount();
     $json_data = array();
@@ -48,6 +48,7 @@ if ($FILTER_COTIZ == "ALL") {
         foreach ($sqlStatement as $ROW) {
             $ROWDATA['TIPOORDEN'] = $ROW["TIPOORDEN"];
             $ROWDATA['IDORDEN'] = $ROW["IDORDEN"];
+            $ROWDATA['LINKED_PURCHASE_COUNT'] = (int) $ROW["LINKED_PURCHASE_COUNT"];
             $ROWDATA['ORDNUMBER'] = $ROW["ORDNUMBER"];
             $ROWDATA['ORDESTADO'] = $ROW["ORDESTADO"];
             $ROWDATA['TIPOMON'] = $ROW["TIPOMON"];

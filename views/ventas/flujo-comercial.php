@@ -1,11 +1,31 @@
+<?php
+$flowVisibleTypes = [];
+if (app_can('sales.view')) $flowVisibleTypes += array_fill_keys(['quotation', 'sales_order', 'invoice', 'receipt', 'credit_note'], true);
+if (app_can('logistics.view')) $flowVisibleTypes['remission_guide'] = true;
+if (app_can('purchases.view')) $flowVisibleTypes += array_fill_keys(['purchase_request', 'order', 'purchase_order', 'goods_receipt', 'purchase', 'landed_cost'], true);
+if (app_can('finance.view')) $flowVisibleTypes += array_fill_keys(['incoming_payment', 'outgoing_payment'], true);
+?>
 <div class="content-wrapper">
-  <div class="content-header"><div class="container-fluid"><h1 class="m-0 text-dark">Mapa de relaciones</h1><p class="text-muted">Documentos de ventas, compras, inventario y pagos relacionados, con sus aplicaciones por línea.</p></div></div>
-  <div class="content"><div class="container-fluid">
+  <div class="content-header"><div class="container-fluid"><h1 class="m-0 text-dark">Mapa de relaciones</h1><p class="text-muted">Busca una relación reciente o abre un documento para explorar su recorrido, aplicaciones por línea y estados.</p></div></div>
+  <div class="content"><div class="container-fluid" id="commercial-flow" data-types="<?php echo htmlspecialchars(json_encode($flowVisibleTypes), ENT_QUOTES, 'UTF-8'); ?>">
+    <?php if (app_can('reports.view')): ?>
+    <div class="card">
+      <div class="card-header"><strong>Relaciones recientes</strong><button type="button" id="flow-report-refresh" class="btn btn-sm btn-outline-primary float-right">Actualizar lista</button></div>
+      <div class="card-body">
+        <div id="flow-report-error" class="alert alert-danger d-none" role="alert"></div>
+        <div class="row mb-3" id="flow-summary"></div>
+        <div class="table-responsive"><table id="flow-table" class="table table-sm table-hover">
+          <thead><tr><th>Origen</th><th>Destino</th><th>Relación</th><th>Cantidad aplicada</th><th>Fecha</th><th>Acción</th></tr></thead>
+          <tbody><tr><td colspan="6" class="text-muted">Cargando relaciones…</td></tr></tbody>
+        </table></div>
+      </div>
+    </div>
+    <?php endif; ?>
     <div id="commercial-flow-error" class="alert alert-danger d-none" role="alert"></div>
-    <div class="card"><div class="card-header"><strong id="commercial-flow-title">Relaciones del documento</strong><button type="button" id="commercial-flow-refresh" class="btn btn-sm btn-outline-primary float-right">Actualizar</button></div><div class="card-body">
+    <div class="card"><div class="card-header"><strong id="commercial-flow-title">Mapa interactivo</strong><button type="button" id="commercial-flow-refresh" class="btn btn-sm btn-outline-primary float-right">Actualizar mapa</button></div><div class="card-body">
       <p id="commercial-flow-status" role="status"></p>
       <div class="commercial-flow-scroll"><div id="commercial-flow-canvas"></div></div>
-      <p class="small text-muted mt-2">Selecciona un documento para consultar sus aplicaciones. Las relaciones anuladas se conservan para auditoría. Las entregas no tienen un importe financiero propio.</p>
+      <p class="small text-muted mt-2">Selecciona un documento de la lista para ver sus relaciones y aplicaciones por línea. Las relaciones anuladas se conservan para auditoría; las entregas no tienen un importe financiero propio.</p>
     </div></div>
     <div class="card"><div class="card-header">Aplicaciones por línea del documento seleccionado</div><div class="card-body table-responsive"><table class="table table-sm table-bordered"><thead><tr><th>Origen</th><th>Línea origen</th><th>Destino</th><th>Línea destino</th><th>Etapa</th><th>Cantidad</th><th>Estado</th></tr></thead><tbody id="commercial-flow-lines"></tbody></table></div></div>
   </div></div>

@@ -1,6 +1,6 @@
 $("#col-btn-delete-orden").hide();
 var serviceSaving=false,serviceProductEpoch=0,serviceCatalogEpoch=0,serviceProviderEpoch=0,serviceOpenEpoch=0,serviceStatus='Pendiente';
-function serviceError(xhr,fallback){var response=xhr.responseJSON||{};toastr.error(response.message||response.error||fallback);Swal.close();}
+function serviceError(xhr,fallback){if(typeof window.appuShowRequestError==='function')window.appuShowRequestError($('#FRM_INSERT_DETA_ORDSERV'),xhr,fallback);else{var response=xhr.responseJSON||{};toastr.error(response.message||response.error||fallback);}Swal.close();}
 function serviceCanEdit(){return appuCan('purchases.manage')&&['Pendiente','Rechazado'].indexOf(serviceStatus)!==-1;}
 $("#btn-save-orden").prop("disabled", true);
 $("#btn-add-prodtporden").prop("disabled", true);

@@ -89,13 +89,13 @@
                                 <div class="col-md-4"><div class="form-group"><label>Modelo</label><input type="text" class="form-control" name="producto_model" maxlength="100"></div></div>
                             </div>
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Descripción</label>
                                         <input type="text" class="form-control" placeholder="Ingrese descripción de producto" name="producto_description">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Valor de Medida</label>
                                         <select class="form-control select2" name="producto_unitvalue">
@@ -106,6 +106,16 @@
                                             <option value="ml">ml (Mililitros)</option>
                                             <option value="gl">gl (Galones)</option>
                                             <option value="und">und (Unidad)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="producto_tracking_type">Gestionar artículo por</label>
+                                        <select class="form-control" id="producto_tracking_type" name="producto_tracking_type" data-master-default="NONE" required>
+                                            <option value="NONE">Ninguno</option>
+                                            <option value="SERIAL">Serie</option>
+                                            <option value="LOT">Lote</option>
                                         </select>
                                     </div>
                                 </div>

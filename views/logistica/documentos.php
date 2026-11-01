@@ -1,8 +1,8 @@
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
-            <h1 class="m-0 text-dark">Mapa de documentos</h1>
-            <p class="text-muted mb-0">Consulta el documento origen, sus documentos destino, entregas y pagos relacionados.</p>
+            <h1 class="m-0 text-dark">Seguimiento de despachos</h1>
+            <p class="text-muted mb-0">Consulta documentos comerciales y gestiona sus entregas operativas internas.</p>
         </div>
     </div>
     <div class="content">
@@ -13,7 +13,7 @@
             </div>
 
             <div class="card card-outline card-primary">
-                <div class="card-header"><h3 class="card-title"><i class="fas fa-project-diagram mr-1"></i> Mapa de relaciones</h3></div>
+                <div class="card-header"><h3 class="card-title"><i class="fas fa-truck mr-1"></i> Documentos y despachos vinculados</h3></div>
                 <div class="card-body">
                     <form id="document-search-form" class="row">
                         <div class="col-md-9">

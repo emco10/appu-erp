@@ -8,6 +8,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     require_once '../../global/business-partner-details.php';
     require_once '../../global/purchase-request-validation.php';
     require_once '../../global/purchase-document-validation.php';
+    require_once '../../global/validation.php';
 
     $ord_code = "";
     $ord_tipo = $_POST['orden_tipo'];
@@ -58,7 +59,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             break;
         default:
             http_response_code(422);
-            echo 'ERROR';
+            app_api_error(new InvalidArgumentException('Selecciona si vas a registrar una orden de compra o de servicio.'),'No se pudo identificar el tipo de orden.');
             exit;
     }
 
@@ -169,7 +170,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                 if (filter_var($item_cant, FILTER_VALIDATE_INT) === false || (int) $item_cant <= 0
                     || !is_numeric($item_prec) || (float) $item_prec < 0
                     || !is_numeric($item_descpor) || !is_numeric($item_descval)) {
-                    throw new UnexpectedValueException('Detalle de producto invalido.');
+                    throw new InvalidArgumentException('El detalle de un artículo tiene cantidad, precio o descuento inválido. Revisa las líneas de la orden.');
                 }
 
                 $sqlStatement = $pdo->prepare("INSERT INTO tbl_order_detail(order_id,item_id,item_code,item_description,item_gloss,item_unit_value,item_unit_price,item_quantity,item_discount_rate,item_discounted_total) VALUES(?,?,?,?,?,?,?,?,?,?)");
@@ -212,7 +213,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                 if (filter_var($item_cant, FILTER_VALIDATE_INT) === false || (int) $item_cant <= 0
                     || !is_numeric($item_prec) || (float) $item_prec < 0
                     || !is_numeric($item_descpor) || !is_numeric($item_descval)) {
-                    throw new UnexpectedValueException('Detalle de servicio invalido.');
+                    throw new InvalidArgumentException('El detalle de un servicio tiene cantidad, precio o descuento inválido. Revisa las líneas de la orden.');
                 }
 
                 $sqlStatement = $pdo->prepare("INSERT INTO tbl_order_detail(order_id,item_description,item_gloss,item_unit_price,item_quantity,item_discount_rate,item_discounted_total) VALUES(?,?,?,?,?,?,?)");
@@ -240,8 +241,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             $pdo->rollBack();
         }
         error_log('APPU order save error: ' . $exception->getMessage());
-        http_response_code(422);
-        echo 'ERROR';
+        app_api_error($exception,'No se pudo guardar la orden. Revisa los datos e inténtalo nuevamente.');
     }
 
 } else {

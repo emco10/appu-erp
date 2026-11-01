@@ -1,4 +1,6 @@
 window.appuSunatDocumentType="invoice";
+function appuInvoiceRequestKey(){var bytes=new Uint8Array(16);if(window.crypto&&window.crypto.getRandomValues)window.crypto.getRandomValues(bytes);else for(var i=0;i<bytes.length;i++)bytes[i]=Math.floor(Math.random()*256);return "invoice_"+Array.from(bytes,function(value){return value.toString(16).padStart(2,"0");}).join("");}
+var appuInvoiceRequestKeyValue=appuInvoiceRequestKey();
 $("#col-btn-anular-factura").hide();
 $("#col-btn-pdf-factura").hide();
 function appuAbrirPdfFactura(id){if(!id){toastr.warning('Primero selecciona o guarda una factura.');return;}window.open('../../modules/facturacion/pdf-documento.php?type=invoice&id='+encodeURIComponent(id),'_blank','noopener');}
@@ -748,6 +750,7 @@ $("#FRM_INSERT_FACTURA").submit(function(e) {
   var formElement = document.getElementById(idform);
   var formData_rec = new FormData(formElement);
   formData_rec.append("facturacion_prods", JSON.stringify(tbl_data));
+  formData_rec.set("request_key", appuInvoiceRequestKeyValue);
   $.ajax({
     type: "POST",
     url: url,
@@ -755,7 +758,7 @@ $("#FRM_INSERT_FACTURA").submit(function(e) {
     contentType: false,
     cache: false,
     processData: false,
-    error: function(xhr) { Swal.close(); var response=xhr.responseJSON || {}; toastr.error(response.message || response.error || 'No se pudo guardar. Revisa los datos e inténtalo nuevamente.'); },
+    error: function(xhr) { Swal.close(); if (typeof window.appuShowRequestError === 'function') window.appuShowRequestError(form,xhr,'No se pudo guardar la factura. Revisa los datos e inténtalo nuevamente.'); else toastr.error(xhr.responseJSON && xhr.responseJSON.message || 'No se pudo guardar la factura. Revisa los datos e inténtalo nuevamente.'); },
     beforeSend: function() {
       Swal.fire({
         html: "<h4>Guardando factura</h4>",
@@ -787,6 +790,7 @@ $("#FRM_INSERT_FACTURA").submit(function(e) {
         );
 
         postCambioEstado();
+        appuInvoiceRequestKeyValue=appuInvoiceRequestKey();
         
         $.post("../../modules/facturacion/listar-facturas.php", function(data) {
         $('select[name="facturas_listado"]').empty();

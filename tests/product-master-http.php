@@ -26,10 +26,17 @@ try {
     $custom[$requiredId]='CORPORATIVO'; $custom[$optionalId]='BORRAR';
     $key='master-'.bin2hex(random_bytes(12)); $keys[]=$key;
     $input=['response_format'=>'json','request_key'=>$key,'producto_code'=>$prefix,'producto_nombre'=>$prefix.' artículo',
-        'producto_marca'=>'APPU','producto_unitvalue'=>'und','producto_precio'=>'19.9','producto_tax_code'=>'10','custom_field'=>$custom];
+        'producto_marca'=>'APPU','producto_unitvalue'=>'und','producto_precio'=>'19.9','producto_tax_code'=>'10',
+        'producto_tracking_type'=>'SERIAL','custom_field'=>$custom];
     [$status,$created]=$client->request($save,$input);
     productAssert($status===200 && ($created['success']??false),'No se creó el artículo: '.json_encode($created));
     $id=(int)$created['id']; $productIds[]=$id;
+    productAssert($created['snapshot']['values']['producto_tracking_type']==='SERIAL','No se guardó el seguimiento por serie.');
+    $invalidTracking=array_replace($input,['request_key'=>'master-'.bin2hex(random_bytes(12)),
+        'producto_code'=>$prefix.'-INVALID','producto_nombre'=>$prefix.' inválido','producto_tracking_type'=>'INVALID']);
+    $keys[]=$invalidTracking['request_key'];
+    [$status,$error]=$client->request($save,$invalidTracking);
+    productAssert($status===422 && in_array('producto_tracking_type',array_column($error['errors']??[],'path')),'Se aceptó un tipo de seguimiento inválido.');
     [$status,$replay]=$client->request($save,$input);
     productAssert($status===200 && $replay===$created,'El reintento no devolvió exactamente el mismo resultado.');
     $count=$pdo->prepare('SELECT COUNT(*) FROM tbl_product WHERE code=?'); $count->execute([$prefix]); productAssert((int)$count->fetchColumn()===1,'El reintento duplicó el artículo.');
@@ -40,10 +47,12 @@ try {
     $version=$snapshot['version'];
     // A movement changes stock but does not change the version of editable master attributes.
     $pdo->prepare('UPDATE tbl_product SET stock_quantity=7 WHERE id=?')->execute([$id]);
-    $update=array_replace($input,['producto_id'=>$id,'version'=>$version,'producto_nombre'=>$prefix.' editado','producto_precio'=>'25.5','request_key'=>'master-'.bin2hex(random_bytes(12))]);
+    $update=array_replace($input,['producto_id'=>$id,'version'=>$version,'producto_nombre'=>$prefix.' editado','producto_precio'=>'25.5',
+        'producto_tracking_type'=>'LOT','request_key'=>'master-'.bin2hex(random_bytes(12))]);
     $keys[]=$update['request_key']; $update['custom_field'][$optionalId]='';
     [$status,$updated]=$client->request($save,$update);
     productAssert($status===200 && $updated['snapshot']['custom_fields'][$optionalId]==='' && $updated['snapshot']['custom_fields'][$hiddenId]==='PRIVATE','La edición no limpia el UDF o altera el valor oculto: '.json_encode($updated));
+    productAssert($updated['snapshot']['values']['producto_tracking_type']==='LOT','No se actualizó el seguimiento por lote.');
     $stock=$pdo->prepare('SELECT stock_quantity FROM tbl_product WHERE id=?'); $stock->execute([$id]); productAssert((int)$stock->fetchColumn()===7,'Editar el maestro modificó el stock.');
     $stale=array_replace($update,['producto_nombre'=>$prefix.' sobrescrito','request_key'=>'master-'.bin2hex(random_bytes(12))]); $keys[]=$stale['request_key'];
     [$status,$error]=$client->request($save,$stale); productAssert($status===409 && $error['code']==='CONFLICT','Se aceptó una edición con versión obsoleta.');

@@ -78,6 +78,12 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         $f_cliid = app_validate_customer_reference($pdo, $f_cliid);
         app_validate_product_rows($pdo, $f_lst_prods);
         $pdo->beginTransaction();
+        $requestResult=app_document_request_start($pdo,'invoice_create',$_POST,(int)$f_user_id);
+        if($requestResult!==null){
+            $pdo->commit();
+            echo 'OK_INSERT';
+            exit;
+        }
         $f_faccod=app_validate_legacy_sales_number($pdo,'INVOICE',(string)$f_series,(string)$f_faccod);
         $customerStatement=$pdo->prepare('SELECT ruc,business_name FROM tbl_customer WHERE client_id=? AND active_status=1');$customerStatement->execute([$f_cliid]);$customer=$customerStatement->fetch();
         $f_cli_ruc=(string)$customer['ruc'];$f_clinom=(string)$customer['business_name'];
@@ -187,6 +193,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         finance_sync_receivable($pdo, $id_facturacion);
         if (in_array($f_document_subtype, ['STANDARD','RESERVE'], true)) finance_apply_available_sales_advances($pdo, $id_facturacion, (int)$f_user_id);
 
+        app_document_request_finish($pdo,'invoice_create',$_POST,(int)$f_user_id,'invoice',(int)$id_facturacion,['response'=>'OK_INSERT']);
         $pdo->commit();
         echo 'OK_INSERT';
     } catch (Throwable $exception) {

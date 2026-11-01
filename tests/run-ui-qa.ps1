@@ -9,7 +9,7 @@ try{
         if(Test-Path -LiteralPath (Join-Path $temporaryModules 'jsdom\package.json')){$env:NODE_PATH=$temporaryModules}
     }
     $testFiles=Get-ChildItem -LiteralPath $PSScriptRoot -Filter '*.test.cjs' | ForEach-Object FullName
-    & $nodeBinary --test $testFiles
+    & $nodeBinary --test --test-concurrency=1 $testFiles
     if($LASTEXITCODE -ne 0){throw 'Fallaron las pruebas de interfaz.'}
 }
 finally{$env:NODE_PATH=$previousNodePath}

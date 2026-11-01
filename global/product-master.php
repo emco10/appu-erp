@@ -9,7 +9,8 @@ function app_product_master_fields(): array
         'producto_description'=>'description','producto_unitvalue'=>'unit_value','producto_precio'=>'unit_price',
         'producto_barcode'=>'barcode','producto_sunat_code'=>'sunat_item_code','producto_sunat_unit'=>'sunat_unit_code',
         'producto_tax_code'=>'tax_affectation_code','producto_osce_code'=>'osce_catalog_code',
-        'producto_manufacturer_code'=>'manufacturer_code','producto_model'=>'model'];
+        'producto_manufacturer_code'=>'manufacturer_code','producto_model'=>'model',
+        'producto_tracking_type'=>'tracking_type'];
 }
 
 function app_product_master_snapshot(PDO $pdo, int $id, bool $lock = false): array
@@ -37,11 +38,15 @@ function app_product_master_errors(PDO $pdo, array $input): array
         $schema[$name]=['label'=>$rule[0],'maxLength'=>$rule[1],
             'required'=>in_array($name,['producto_code','producto_nombre','producto_marca','producto_unitvalue'],true)];
     }
+    $schema['producto_tracking_type']=['label'=>'Gestión de inventario','required'=>true,
+        'validValues'=>['NONE','SERIAL','LOT']];
     $schema['producto_precio']=['label'=>'Precio','required'=>true,'min'=>0,'max'=>999999999,
         'messages'=>['min'=>'El precio debe ser un número mayor o igual que cero.','max'=>'El precio excede el máximo permitido.']];
     $schema['producto_tax_code']=['label'=>'Afectacion tributaria','required'=>true,'validValues'=>['10','20','30','40']];
     $schema['producto_estado']=['label'=>'Estado','validValues'=>['on','']];
-    $errors=app_validate_fields($input,$schema);
+    $validatedInput=$input;
+    if (!array_key_exists('producto_tracking_type',$validatedInput)) $validatedInput['producto_tracking_type']='NONE';
+    $errors=app_validate_fields($validatedInput,$schema);
     if (isset($input['producto_id']) && $input['producto_id']!=='' && !(filter_var($input['producto_id'],FILTER_VALIDATE_INT)>0))
         $errors[]=app_field_error('producto_id','INVALID_ID','Identificador de artículo inválido.');
     if (isset($input['custom_field']) && !is_array($input['custom_field']))

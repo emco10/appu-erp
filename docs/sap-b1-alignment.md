@@ -11,7 +11,7 @@ APPU toma de SAP Business One patrones de organización y control, sin copiar m�
 - **Pagos:** cobros y pagos usan cabecera (`tbl_incoming_payment`, `tbl_outgoing_payment`) y detalle de aplicaciones (`*_detail`).
 - Los pagos se pueden aplicar a uno o varios documentos, consultar por operación y anular con reversión de saldos e historial de estados.
 - **Flujo documental:** `tbl_document_flow` registra relaciones entre cotización, orden, factura/boleta, compra, recepción, guía y nota de crédito.
-- **Inventario:** cantidades por almacén, reservas, lotes, vencimientos y movimientos auditables.
+- **Inventario:** cantidades por almacén, reservas, artículos configurables por serie/lote/sin seguimiento, vencimientos y movimientos auditables.
 - **Despacho:** las guías internas permiten entregas parciales; el sistema calcula el entregado y el saldo pendiente por línea.
 - **Búsqueda operativa:** clientes, proveedores y artículos se seleccionan desde maestros mediante listas buscables y autocompletado.
 - **Configuración:** series, listas de valores, campos personalizados, perfiles y permisos se gestionan desde Gestión.
@@ -36,6 +36,9 @@ Nota operativa vigente: tanto Anular como Cancelar son estados terminales y revi
 - Flujo financiero primero: orden de compra → factura de reserva → entrada de mercancías.
 - La entrada no crea por sí misma una cuenta por pagar; incrementa existencias y consume el saldo abierto por línea del documento base.
 - Cada entrada conserva su cabecera, detalle, documento base, estado e historial. Las recepciones parciales dejan el origen abierto y la anulación reabre el saldo.
+- En el resumen de órdenes, una orden de compra aprobada o parcial ofrece **Copiar a entrada** a usuarios con permiso de inventario; la pantalla carga el origen y sus saldos pendientes.
+- Una orden vigente sin factura activa ofrece **Copiar a factura** a usuarios con permiso de compras; el formulario preselecciona la orden y conserva sus validaciones de proveedor, moneda, líneas, importes y duplicidad.
+- Estas acciones son atajos a flujos especializados, no conversiones universales: el servidor vuelve a validar el documento origen y los permisos. La prueba automatizada cubre la visibilidad/preselección; queda pendiente la validación interactiva completa de recepción y factura.
 3. Cuentas por cobrar/pagar, antigüedad, vencidos y pagos aplicados.
 4. Stock por almacén, lote, vencimiento, reservado y disponible.
 5. Flujo documental y documentos pendientes por atender.

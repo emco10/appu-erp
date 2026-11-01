@@ -57,7 +57,7 @@
       $form[0].reset();
       $form.find(':input[name]').not(':button,[type=submit]').each(function () {
         if (this.type === 'checkbox' || this.type === 'radio') $(this).prop('checked', false);
-        else $(this).val('');
+        else $(this).val($(this).attr('data-master-default') || '');
       });
       $form.find('select').trigger('change.select2');
       $(options.customFields).empty();

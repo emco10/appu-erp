@@ -8,11 +8,12 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     require_once '../../global/purchase-document-validation.php';
     require_once '../../global/business-partner-details.php';
     require_once '../../global/purchase-receipt.php';
+    require_once '../../global/validation.php';
 
     $supplierReference = trim((string) ($_POST['orden_nro'] ?? ''));
     if ($supplierReference === '' || mb_strlen($supplierReference) > 100) {
         http_response_code(422);
-        echo 'ERROR';
+        app_api_error(new InvalidArgumentException('Ingresa la referencia del proveedor (máximo 100 caracteres).'),'La referencia del proveedor no es válida.');
         exit;
     }
     $ord_tipo = $_POST['orden_tipo'];
@@ -43,7 +44,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     $ord_request = trim($_POST['orden_solicitante']);
     $ord_estado = 'Pendiente';
     $documentSubtype = strtoupper(trim((string)($_POST['orden_tipo_documento'] ?? 'STANDARD')));
-    if (!in_array($documentSubtype, ['STANDARD','RESERVE'], true)) { http_response_code(422); echo 'ERROR'; exit; }
+    if (!in_array($documentSubtype, ['STANDARD','RESERVE'], true)) { http_response_code(422); app_api_error(new InvalidArgumentException('Selecciona el tipo de factura de proveedor.'),'El tipo de documento no es válido.'); exit; }
     $user_id = (int) $_SESSION['loggedInUser']['USERID'];
     $ord_totneto = $_POST['orden_totneto'];
     $ord_totcompra = $_POST['orden_totcompra'];
@@ -70,7 +71,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             break;
         default:
             http_response_code(422);
-            echo 'ERROR';
+            app_api_error(new InvalidArgumentException('Selecciona si vas a registrar una compra o un servicio.'),'No se pudo identificar el tipo de compra.');
             exit;
     }
 
@@ -96,16 +97,16 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             $orderStatement->execute([$purchaseOrderId]);
             $purchaseOrder = $orderStatement->fetch();
             if (!$purchaseOrder || in_array($purchaseOrder['status'], ['Anulado', 'Anulada', 'Cancelada', 'Rechazado'], true)) {
-                throw new RuntimeException('La orden de compra seleccionada no está disponible.');
+                throw new DomainException('La orden de compra seleccionada no está disponible.');
             }
             if ((int) $purchaseOrder['provider_id'] !== (int) $ord_provider) {
-                throw new RuntimeException('El proveedor de la compra debe coincidir con el proveedor de la orden.');
+                throw new DomainException('El proveedor de la compra debe coincidir con el proveedor de la orden.');
             }
             $providerAddress = ['id'=>$purchaseOrder['provider_address_id'] ?: null,'address_line'=>(string)$purchaseOrder['provider_address']];
             $linkedPurchase = $pdo->prepare("SELECT id FROM tbl_purchase WHERE purchase_order_id = ? AND id <> ? AND status NOT IN ('Anulado','Anulada','Cancelada') LIMIT 1");
             $linkedPurchase->execute([$purchaseOrderId, $ord_id === '' ? 0 : (int) $ord_id]);
             if ($linkedPurchase->fetchColumn()) {
-                throw new RuntimeException('La orden de compra ya está vinculada a otra compra.');
+                throw new DomainException('La orden de compra ya está vinculada a otra compra.');
             }
         }
         $response = '';
@@ -121,7 +122,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             $ord_code = (string) ($existingPurchase['number'] ?? '');
 
             if ($previous_status === false || !in_array($previous_status, ['Pendiente', 'Rechazado'], true)) {
-                throw new RuntimeException('La compra ya no se puede modificar.');
+                throw new DomainException('La compra ya no se puede modificar.');
             }
         }
 
@@ -289,8 +290,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             $pdo->rollBack();
         }
         error_log('APPU purchase save error: ' . $exception->getMessage());
-        http_response_code(422);
-        echo 'ERROR';
+        app_api_error($exception,'No se pudo guardar la compra. Revisa los datos e inténtalo nuevamente.');
     }
 
 } else {

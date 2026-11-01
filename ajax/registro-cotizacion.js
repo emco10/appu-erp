@@ -593,7 +593,7 @@ $("#FRM_INSERT_COTIZACION").submit(function(e) {
     contentType: false,
     cache: false,
     processData: false,
-    error: function(xhr) { Swal.close(); var response=xhr.responseJSON || {}; toastr.error(response.message || response.error || 'No se pudo guardar. Revisa los datos e inténtalo nuevamente.'); },
+    error: function(xhr) { Swal.close(); if (typeof window.appuShowRequestError === 'function') window.appuShowRequestError(form,xhr,'No se pudo guardar la cotización. Revisa los datos e inténtalo nuevamente.'); else toastr.error(xhr.responseJSON && xhr.responseJSON.message || 'No se pudo guardar la cotización. Revisa los datos e inténtalo nuevamente.'); },
     beforeSend: function() {
       Swal.fire({
         html: "<h4>Guardando cotización</h4>",

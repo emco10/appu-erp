@@ -193,6 +193,7 @@ function app_view_permission(string $route): ?string
 
     if($section==='trazabilidad'){
         $flowType=strtolower(trim((string)($_GET['type']??'')));
+        if($flowType===''&&app_can('reports.view'))return 'reports.view';
         if(in_array($flowType,['quotation','sales_order','invoice','receipt','credit_note'],true))return 'sales.view';
         if($flowType==='remission_guide')return 'logistics.view';
         if(in_array($flowType,['incoming_payment','outgoing_payment'],true))return 'finance.view';
@@ -225,4 +226,3 @@ function app_view_permission(string $route): ?string
 
     return $permissions[$section] ?? null;
 }
-

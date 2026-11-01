@@ -13,7 +13,7 @@ $contracts = [
     'ajax/resumen-compras.js' => ['record_id', 'table-primary', 'scrollIntoView'],
     'ajax/solicitudes.js' => ['record_id', 'table-primary', 'scrollIntoView'],
     'ajax/documentos.js' => ['Ver relaciones', 'Abrir módulo', 'record_id', 'initialType', 'initialId'],
-    'ajax/flujo-documental.js' => ['Ver mapa', 'incoming_payment', 'outgoing_payment'],
+    'ajax/flujo-comercial.js' => ['flow-report-refresh', 'flow-summary', 'Ver relaciones', 'incoming_payment', 'outgoing_payment'],
 ];
 
 foreach ($contracts as $relativePath => $needles) {
@@ -81,6 +81,21 @@ if (preg_match('/<a\b[^>]*class="nav-link"[^>]*href="[^"]*facturacion\/registro-
 }
 if (!str_contains($salesOrderView, 'id="btn-new-sales-order"')) {
     throw new RuntimeException('El resumen de órdenes no contiene el control de creación esperado.');
+}
+$commercialFlow = file_get_contents($root . '/views/ventas/flujo-comercial.php');
+$legacyFlowReport = file_get_contents($root . '/views/reportes/flujo-documental.php');
+$logisticsDocuments = file_get_contents($root . '/views/logistica/documentos.php');
+if ($commercialFlow === false || $legacyFlowReport === false || $logisticsDocuments === false) {
+    throw new RuntimeException('No se pudieron leer las vistas de trazabilidad.');
+}
+if (!str_contains($legacyFlowReport, "require __DIR__.'/../ventas/flujo-comercial.php'") || !str_contains($legacyFlowReport, "'flujo-comercial'")) {
+    throw new RuntimeException('La ruta anterior de flujo documental no reutiliza el mapa unificado.');
+}
+if (!str_contains($commercialFlow, 'id="flow-summary"') || !str_contains($commercialFlow, 'id="commercial-flow-canvas"')) {
+    throw new RuntimeException('El mapa unificado debe conservar el resumen y el grafo interactivo.');
+}
+if (!str_contains($logisticsDocuments, 'Seguimiento de despachos')) {
+    throw new RuntimeException('La vista logística conserva un nombre que puede confundirse con el mapa de relaciones.');
 }
 
 echo 'PASS document map direct navigation contract' . PHP_EOL;

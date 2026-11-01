@@ -137,6 +137,9 @@ if errorlevel 1 exit /b 1
 "%APPU_PHP%" "%~dp0validation-engine.php"
 if errorlevel 1 exit /b 1
 
+"%APPU_PHP%" "%~dp0integration-network-policy.php"
+if errorlevel 1 exit /b 1
+
 "%APPU_PHP%" "%~dp0custom-field-metadata-lifecycle.php"
 if errorlevel 1 exit /b 1
 

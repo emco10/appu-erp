@@ -1,7 +1,7 @@
 <div class="content-wrapper">
   <div class="content-header"><div class="container-fluid"><h1 class="m-0"><i class="fas fa-truck-loading mr-2"></i>Entrada de mercancías</h1><p class="text-muted mb-0">Documento logístico de Compras basado en una orden de compra o factura de reserva/proveedor.</p></div></div>
   <section class="content"><div class="container-fluid">
-    <div class="callout callout-info"><strong>Flujo documental:</strong> copie las cantidades pendientes desde el documento base. Esta entrada aumenta las existencias y mantiene la relación entre sus líneas; no genera por sí sola una cuenta por pagar.</div>
+    <div class="callout callout-info"><strong>Recepción desde documento base:</strong> copie las cantidades pendientes desde el documento de origen. Esta entrada aumenta las existencias y mantiene la relación entre sus líneas; no genera por sí sola una cuenta por pagar.</div>
     <div class="card appu-document-selector"><div class="card-body"><div class="form-row align-items-end"><div class="form-group col-lg-8 mb-lg-0"><label>Buscar entrada de mercancías</label><select name="goods_receipt_list" id="goods-receipt-list" class="form-control select2"><option value="">Seleccione un documento registrado</option></select></div><div class="form-group col-lg-4 mb-0"><button type="button" id="btn-select-goods-receipt" class="btn btn-secondary"><i class="fas fa-folder-open mr-1"></i>Seleccionar</button></div></div></div></div>
     <form id="goods-receipt-form">
       <input type="hidden" name="goods_receipt_id" id="goods-receipt-id">

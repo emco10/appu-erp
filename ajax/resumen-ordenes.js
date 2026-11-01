@@ -38,6 +38,27 @@ var tbl_ordenes = $("#table-ordenes").DataTable({
 
 tbl_ordenes.columns([0,6]).visible(false);
 
+function accionesOrden(row) {
+  var id = Number(row.IDORDEN);
+  if (!Number.isSafeInteger(id) || id < 1) return "";
+  var status = String(row.ORDESTADO || "");
+  var html = '<div class="btn-group btn-group-sm" role="group">';
+  html += '<button type="button" class="btn btn-outline-secondary js-order-history" data-id="' + id + '" title="Ver historial"><i class="fas fa-history"></i><span class="sr-only">Historial</span></button>';
+  if (status === "Pendiente" && appuCan("purchases.approve")) {
+    html += '<button type="button" class="btn btn-outline-success js-order-approve" data-id="' + id + '"><i class="fas fa-check"></i> Aprobar</button>';
+    html += '<button type="button" class="btn btn-outline-danger js-order-reject" data-id="' + id + '"><i class="fas fa-times"></i> Rechazar</button>';
+  } else if (status === "Pendiente") {
+    html += '<span class="btn btn-light disabled" aria-label="Pendiente de aprobación">Pendiente</span>';
+  }
+  if (Number(row.TIPOORDEN) === 1 && appuCan("inventory.manage") && ["Aprobado", "Parcial"].indexOf(status) !== -1) {
+    html += '<a class="btn btn-outline-primary" href="../../views/compras/recepciones.php?base_type=ORDER&base_id=' + id + '" title="Copiar a entrada de mercancías"><i class="fas fa-copy mr-1"></i>Copiar a entrada</a>';
+  }
+  if (Number(row.TIPOORDEN) === 1 && appuCan("purchases.manage") && Number(row.LINKED_PURCHASE_COUNT || 0) === 0 && ["Aprobado", "Parcial", "Atendido", "Convertida"].indexOf(status) !== -1) {
+    html += '<a class="btn btn-outline-success" href="../../views/compras/compra-interna.php?copy_from=order&source_id=' + id + '" title="Copiar a factura de proveedor"><i class="fas fa-copy mr-1"></i>Copiar a factura</a>';
+  }
+  return html + '</div>';
+}
+
 $('input[name="orden_numero"]').autocomplete({
     source: function(request, response) {
       $.getJSON("../../modules/ordenes/obtener-ordenes.php", { ORDEN_NRO: $('input[name="orden_numero"]').val() }, response);
@@ -125,6 +146,7 @@ $(document).ready(function() {
                 4: data_orden[i]["TOTNET"],
                 5: appuStatusBadge(data_orden[i]["ORDESTADO"]),
                 6: data_orden[i]["TIPOORDEN"],
+                7: accionesOrden(data_orden[i]),
               }
             ])
             .draw();
@@ -168,6 +190,7 @@ $('select[name="ordenes_tipo"]').on("change", function() {
                 4: data_orden[i]["TOTNET"],
                 5: appuStatusBadge(data_orden[i]["ORDESTADO"]),
                 6: data_orden[i]["TIPOORDEN"],
+                7: accionesOrden(data_orden[i]),
               }
             ])
             .draw();
@@ -229,6 +252,7 @@ $("#btn-buscar").click(function(){
                         4: data_orden[i]["TOTNET"],
                         5: appuStatusBadge(data_orden[i]["ORDESTADO"]),
                         6: data_orden[i]["TIPOORDEN"],
+                        7: accionesOrden(data_orden[i]),
                     }
                     ])
                     .draw();
@@ -302,6 +326,7 @@ $("#table-ordenes").contextMenu({
                                       4: data_orden[i]["TOTNET"],
                                       5: appuStatusBadge(data_orden[i]["ORDESTADO"]),
                                       6: data_orden[i]["TIPOORDEN"],
+                                      7: accionesOrden(data_orden[i]),
                                     }
                                   ])
                                   .draw();
@@ -338,6 +363,16 @@ $("#table-ordenes").contextMenu({
       }
     }
   }
+});
+
+$(document).on("click", ".js-order-approve", function () {
+  procesarAprobacion("order", Number($(this).data("id")), "approve", function () { location.reload(); });
+});
+$(document).on("click", ".js-order-reject", function () {
+  procesarAprobacion("order", Number($(this).data("id")), "reject", function () { location.reload(); });
+});
+$(document).on("click", ".js-order-history", function () {
+  mostrarHistorialEstados("order", Number($(this).data("id")));
 });
 
 $("#btn-reset").click(function (e) {

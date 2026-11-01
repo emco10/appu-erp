@@ -97,6 +97,11 @@ $(function () {
         }
         var $actions = $("<td>");
         $("<button type='button' class='btn btn-sm btn-outline-primary mr-1'><i class='fas fa-folder-open'></i> Abrir</button>").on("click",function(){window.appuConfirmDiscard(function(){openRequest(item.id);});}).appendTo($actions);
+        if (item.status === "Aprobada" && appuCan("purchases.manage")) {
+          $("<a class='btn btn-sm btn-outline-success mr-1' aria-label='Copiar solicitud a orden de compra'><i class='fas fa-copy mr-1'></i>Copiar a orden</a>")
+            .attr("href", "../../views/ordenes/orden-de-compra?copy_from=purchase_request&source_id=" + encodeURIComponent(item.id))
+            .appendTo($actions);
+        }
         if (item.status === "Pendiente" && appuCan("purchases.approve")) {
           $("<button type='button' class='btn btn-sm btn-outline-success mr-1'>Aprobar</button>").on("click", function () { procesarAprobacion("purchase_request", item.id, "approve", load); }).appendTo($actions);
           $("<button type='button' class='btn btn-sm btn-outline-warning mr-1'>Rechazar</button>").on("click", function () { procesarAprobacion("purchase_request", item.id, "reject", load); }).appendTo($actions);

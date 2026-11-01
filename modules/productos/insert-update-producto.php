@@ -25,6 +25,8 @@ $taxCode = trim((string) ($_POST['producto_tax_code'] ?? ''));
 $osceCode = trim((string) ($_POST['producto_osce_code'] ?? ''));
 $manufacturerCode = trim((string) ($_POST['producto_manufacturer_code'] ?? ''));
 $model = trim((string) ($_POST['producto_model'] ?? ''));
+$trackingTypeProvided = array_key_exists('producto_tracking_type', $_POST);
+$trackingType = trim((string) ($_POST['producto_tracking_type'] ?? 'NONE'));
 $active = isset($_POST['producto_estado']) && $_POST['producto_estado'] === 'on' ? 0 : 1;
 $customValues = is_array($_POST['custom_field'] ?? null) ? $_POST['custom_field'] : [];
 
@@ -67,9 +69,9 @@ try {
         throw new AppValidationException($errors ?: [app_field_error('producto_code','UNIQUE','Ya existe un artículo con estos datos.')]);
     }
 
-    $values = [$code,$brand,$name,$description,$price,$unitValue,$active,$barcode,$sunatCode,$sunatUnit,$taxCode,$osceCode,$manufacturerCode,$model];
+    $values = [$code,$brand,$name,$description,$price,$unitValue,$active,$barcode,$sunatCode,$sunatUnit,$taxCode,$osceCode,$manufacturerCode,$model,$trackingType];
     if (!$productId) {
-        $statement = $pdo->prepare('INSERT INTO tbl_product(code,brand,name,description,stock_quantity,unit_price,unit_value,active_status,barcode,sunat_item_code,sunat_unit_code,tax_affectation_code,osce_catalog_code,manufacturer_code,model) VALUES(?,?,?,?,0,?,?,?,?,?,?,?,?,?,?)');
+        $statement = $pdo->prepare('INSERT INTO tbl_product(code,brand,name,description,stock_quantity,unit_price,unit_value,active_status,barcode,sunat_item_code,sunat_unit_code,tax_affectation_code,osce_catalog_code,manufacturer_code,model,tracking_type) VALUES(?,?,?,?,0,?,?,?,?,?,?,?,?,?,?,?)');
         $statement->execute($values);
         $productId = (int) $pdo->lastInsertId();
         $result = 'OK_INSERT';
@@ -77,8 +79,12 @@ try {
         $exists = $pdo->prepare('SELECT id FROM tbl_product WHERE id=? LIMIT 1');
         $exists->execute([$productId]);
         if (!$exists->fetchColumn()) throw new InvalidArgumentException('El artículo que intentas editar ya no existe.');
-        $statement = $pdo->prepare('UPDATE tbl_product SET code=?,brand=?,name=?,description=?,unit_price=?,unit_value=?,active_status=?,barcode=?,sunat_item_code=?,sunat_unit_code=?,tax_affectation_code=?,osce_catalog_code=?,manufacturer_code=?,model=? WHERE id=?');
-        $statement->execute(array_merge($values, [$productId]));
+        $trackingSql = $trackingTypeProvided ? ',tracking_type=?' : '';
+        $updateValues = array_slice($values, 0, 14);
+        if ($trackingTypeProvided) $updateValues[] = $trackingType;
+        $updateValues[] = $productId;
+        $statement = $pdo->prepare('UPDATE tbl_product SET code=?,brand=?,name=?,description=?,unit_price=?,unit_value=?,active_status=?,barcode=?,sunat_item_code=?,sunat_unit_code=?,tax_affectation_code=?,osce_catalog_code=?,manufacturer_code=?,model=?'.$trackingSql.' WHERE id=?');
+        $statement->execute($updateValues);
         $result = 'OK_UPDATE';
     }
     app_save_custom_fields($pdo, 'product', $productId, $customValues, $jsonResponse);

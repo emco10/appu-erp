@@ -68,4 +68,14 @@
       focusTarget.focus();
     } else $summary.trigger('focus');
   };
+  global.appuShowRequestError = function (form, xhr, fallback) {
+    var response = xhr && xhr.responseJSON || {};
+    if (response.message || Array.isArray(response.errors)) {
+      global.appuShowValidation(form, response);
+      return;
+    }
+    var message = typeof response.error === 'string' ? response.error : fallback;
+    if (!xhr || xhr.status === 0) message = 'No hubo conexión con el servidor. Tus datos siguen en el formulario; vuelve a intentarlo.';
+    global.toastr.error(message);
+  };
 })(window);

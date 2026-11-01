@@ -14,8 +14,10 @@ try {
     $_POST=$base; ob_start(); include 'insert-update-producto.php'; $result=trim(ob_get_clean());
     if($result!=='OK_INSERT') throw new RuntimeException('Inserción fallida: '.$result);
     $find->execute([$code]); $productId=(int)$find->fetchColumn(); if(!$productId) throw new RuntimeException('No se recuperó el artículo.');
-    $stock=$pdo->prepare('SELECT stock_quantity FROM tbl_product WHERE id=?'); $stock->execute([$productId]);
-    if((int)$stock->fetchColumn()!==0) throw new RuntimeException('El artículo no inició con stock cero.');
+    $stock=$pdo->prepare('SELECT stock_quantity,tracking_type FROM tbl_product WHERE id=?'); $stock->execute([$productId]);
+    $inserted=$stock->fetch();
+    if((int)$inserted['stock_quantity']!==0) throw new RuntimeException('El artículo no inició con stock cero.');
+    if($inserted['tracking_type']!=='NONE') throw new RuntimeException('El modo de seguimiento predeterminado no es Ninguno.');
     $_POST=array_merge($base,['producto_id'=>(string)$productId,'producto_nombre'=>'ARTÍCULO PRUEBA APPU EDITADO','producto_precio'=>'25.50']);
     ob_start(); include 'insert-update-producto.php'; $result=trim(ob_get_clean());
     if($result!=='OK_UPDATE') throw new RuntimeException('Actualización fallida: '.$result);

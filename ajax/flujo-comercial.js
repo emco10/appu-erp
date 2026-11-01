@@ -1,8 +1,44 @@
 $(function () {
+  $('#m_flujo_documental').addClass('active').parents('.has-treeview').addClass('menu-open');
   var epoch = 0, current = null;
   var ranks = { quotation: 0, sales_order: 1, remission_guide: 2, invoice: 3, receipt: 3, credit_note: 4, purchase_request: 0, order: 1, purchase_order: 1, goods_receipt: 2, purchase: 3, landed_cost: 3, incoming_payment: 4, outgoing_payment: 4 };
   var statuses = { DRAFT: 'Borrador', PENDING_APPROVAL: 'Pendiente de aprobación', OPEN: 'Abierta', PARTIALLY_PROCESSED: 'Parcial', CLOSED: 'Cerrada', CANCELLED: 'Anulada' };
+  var labels = { quotation: 'Cotización', sales_order: 'Orden de venta', invoice: 'Factura', receipt: 'Boleta', credit_note: 'Nota de crédito', purchase_request: 'Solicitud de compra', order: 'Orden de compra', purchase_order: 'Orden de compra', goods_receipt: 'Entrada de mercancías', remission_guide: 'Guía de remisión', purchase: 'Factura de proveedor', landed_cost: 'Costo de entrega', incoming_payment: 'Cobro recibido', outgoing_payment: 'Pago efectuado' };
+  function canOpen(type) { return ($('#commercial-flow').data('types') || {})[type] === true; }
   function svg(name, attributes) { var element = document.createElementNS('http://www.w3.org/2000/svg', name); Object.keys(attributes).forEach(function (key) { element.setAttribute(key, attributes[key]); }); return element; }
+  function renderReport(data) {
+    $('#flow-report-error').addClass('d-none');
+    $('#flow-summary').empty();
+    (data.summary || []).forEach(function (summary) {
+      var $card = $('<div class="col-md-3 mb-2"><div class="border rounded p-2"></div></div>').appendTo('#flow-summary').children();
+      $('<strong>').text((labels[summary.source_type] || summary.source_type) + ' → ' + (labels[summary.target_type] || summary.target_type)).appendTo($card);
+      $('<br>').appendTo($card);
+      $('<span class="text-muted">').text(summary.relationship_type + ': ' + summary.flow_count).appendTo($card);
+    });
+    if (!(data.summary || []).length) $('<div class="col-12 text-muted">').text('Aún no hay relaciones registradas.').appendTo('#flow-summary');
+    var $body = $('#flow-table tbody').empty();
+    (data.flows || []).forEach(function (flow) {
+      var $row = $('<tr>').appendTo($body);
+      $('<td>').text((labels[flow.source_type] || flow.source_type) + ' ' + (flow.source_number || ('#' + flow.source_id))).appendTo($row);
+      $('<td>').text((labels[flow.target_type] || flow.target_type) + ' ' + (flow.target_number || ('#' + flow.target_id))).appendTo($row);
+      $('<td>').text(flow.relationship_type).appendTo($row);
+      $('<td>').text(flow.quantity_applied || '-').appendTo($row);
+      $('<td>').text(flow.registration_date).appendTo($row);
+      var mapType = canOpen(flow.source_type) ? flow.source_type : (canOpen(flow.target_type) ? flow.target_type : null);
+      var mapId = mapType === flow.source_type ? flow.source_id : flow.target_id;
+      var $action = $('<td>').appendTo($row);
+      if (mapType) $('<button type="button" class="btn btn-xs btn-outline-primary js-open-flow">').text('Ver relaciones').data({ type: mapType, id: mapId }).appendTo($action);
+      else $action.text('Sin permiso para abrir');
+    });
+    if (!(data.flows || []).length) $('<tr><td colspan="6" class="text-muted">Aún no hay relaciones registradas.</td></tr>').appendTo($body);
+  }
+  function loadReport() {
+    if (!$('#flow-table').length) return;
+    $('#flow-report-error').addClass('d-none');
+    $.getJSON('../../modules/reportes/flujo-documental.php').done(renderReport).fail(function (xhr) {
+      $('#flow-report-error').text(xhr.responseJSON && xhr.responseJSON.message || 'No se pudo cargar la lista de relaciones.').removeClass('d-none');
+    });
+  }
   function draw(data) {
     var nodes = {}, columns = {}, positions = {}, $canvas = $('#commercial-flow-canvas').empty().addClass('commercial-flow-canvas'), height = 170;
     var incoming={},targets={},levels={},visited={};
@@ -37,8 +73,10 @@ $(function () {
     current = { type: type, id: id }; var request = ++epoch; $('#commercial-flow-error').addClass('d-none');
     $.getJSON('../../modules/trazabilidad/flujo.php', { action: 'flow', type: type, id: id }).done(function (data) { if (request === epoch) draw(data); }).fail(function (xhr) { if (request === epoch) $('#commercial-flow-error').text(xhr.responseJSON && xhr.responseJSON.message || 'No se pudo cargar el flujo documental.').removeClass('d-none'); });
   }
-  $(document).on('click', '.flow-select', function () { var type = $(this).data('type'), id = $(this).data('id'); history.replaceState(null, '', '?type=' + encodeURIComponent(type) + '&id=' + id); load(type, id); });
+  $(document).on('click', '.flow-select, .js-open-flow', function () { var type = $(this).data('type'), id = $(this).data('id'); history.replaceState(null, '', '?type=' + encodeURIComponent(type) + '&id=' + id); load(type, id); });
   $('#commercial-flow-refresh').on('click', function () { if (current) load(current.type, current.id); });
+  $('#flow-report-refresh').on('click', loadReport);
   var params = new URLSearchParams(window.location.search), type = params.get('type'), id = Number(params.get('id'));
-  if (Object.prototype.hasOwnProperty.call(ranks, type) && id > 0) load(type, id); else $('#commercial-flow-status').text('Abre Ver relaciones desde un documento comercial.');
+  if (Object.prototype.hasOwnProperty.call(ranks, type) && id > 0) load(type, id); else $('#commercial-flow-status').text('Selecciona una relación reciente o abre este mapa desde un documento.');
+  loadReport();
 });

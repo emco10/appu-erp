@@ -243,6 +243,32 @@ table.dataTable tr:hover {
 }
 .appu-management-shortcuts { border-left: 3px solid var(--appu-accent); }
 .appu-management-shortcuts h5 { color: var(--appu-primary-dark); font-weight: 600; }
+.appu-management-nav { padding: .5rem 0; background: rgba(245,246,246,.96); border-bottom: 1px solid #dfe4e5; }
+.appu-management-nav .nav { gap: .35rem; }
+.appu-management-nav .nav-link { color: var(--appu-primary-dark); padding: .45rem .7rem; font-size: .9rem; }
+.appu-management-nav .nav-link:hover, .appu-management-nav .nav-link:focus { background: #e8edef; }
+.appu-management-section { scroll-margin-top: 1rem; }
+.appu-profile-help { border-left: 3px solid var(--appu-cyan); }
+.appu-management-advanced { padding: .7rem .85rem; border: 1px solid #dfe4e5; border-radius: .35rem; background: #f8f9fa; }
+.appu-management-advanced > summary { color: var(--appu-primary); cursor: pointer; font-weight: 600; }
+.appu-management-advanced > summary:focus { outline: 2px solid var(--appu-cyan); outline-offset: 3px; }
+.appu-role-card { padding: 1rem; border: 1px solid #dfe4e5; border-left: 3px solid var(--appu-primary); border-radius: .4rem; background: #fff; }
+.appu-role-card__header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
+.appu-role-card__header h4 { margin: 0 0 .25rem; color: var(--appu-primary-dark); font-size: 1.1rem; }
+.appu-permissions-heading { float: none; width: 100%; margin: .4rem 0 .6rem; color: var(--appu-primary-dark); font-size: 1rem; font-weight: 700; }
+.appu-permission-group { min-width: 0; margin: 0 0 .75rem; padding: .75rem; border: 1px solid #e3e8e9; border-radius: .35rem; background: #fbfcfc; }
+.appu-permission-group legend { display: flex; justify-content: space-between; align-items: center; gap: .5rem; width: 100%; margin: 0 0 .5rem; color: var(--appu-primary-dark); font-size: .95rem; font-weight: 700; }
+.appu-permission-select-all { margin: 0; color: #53646b; font-size: .75rem; font-weight: 600; white-space: nowrap; }
+.appu-permission-option { display: flex; align-items: flex-start; gap: .4rem; width: 100%; min-height: 3.2rem; margin: 0 0 .35rem; padding: .45rem; border: 1px solid #edf0f1; border-radius: .25rem; background: #fff; font-weight: 500; }
+.appu-permission-option input { margin-top: .2rem; }
+.appu-permission-option span { flex: 1; }
+.appu-permission-option small { display: block; color: #69777d; font-size: .7rem; }
+@media (max-width: 575.98px) {
+    .appu-management-nav .nav { flex-wrap: nowrap; overflow-x: auto; padding-bottom: .25rem; }
+    .appu-management-nav .nav-link { white-space: nowrap; }
+    .appu-role-card__header { flex-direction: column; }
+    .appu-permission-group legend { align-items: flex-start; flex-direction: column; }
+}
 
 .dashboard-sales-row {
     display: grid;

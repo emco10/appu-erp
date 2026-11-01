@@ -58,7 +58,7 @@ try {
         $updateStatement->execute([$newStatus, $documentId]);
     } elseif ($action === 'approve') {
         $employeeStatement = $pdo->prepare(
-            "SELECT CONCAT(employee.name, ' ', employee.last_name_1, ' ', employee.last_name_2)
+            "SELECT COALESCE(NULLIF(TRIM(CONCAT_WS(' ', employee.name, employee.last_name_1, employee.last_name_2)), ''), user.username)
              FROM tbl_user user
              JOIN tbl_employee employee ON employee.id = user.employee_id
              WHERE user.id = ?"
@@ -139,4 +139,3 @@ try {
             : 'No se pudo actualizar la aprobacion.',
     ], JSON_UNESCAPED_UNICODE);
 }
-

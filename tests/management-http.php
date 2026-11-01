@@ -44,6 +44,10 @@ try{
  [$status]=$http->request('/modules/gestion/integraciones.php',['code'=>$key,'name'=>'Integración QA','integration_type'=>'LOGISTICS','base_url'=>'https://api.example.test','active_status'=>0]);managementAssert($status===200,'No guarda configuración de integración.');
  [$status,$integrations]=$http->request('/modules/gestion/integraciones.php');$rows=array_values(array_filter($integrations['integrations'],fn($row)=>$row['code']===$key));managementAssert($status===200&&count($rows)===1&&(int)$rows[0]['active_status']===0,'La integración no se recupera desactivada.');
  [$status]=$http->request('/modules/gestion/integraciones.php',['action'=>'test','code'=>$key]);managementAssert($status===422,'Se intentó conectar una integración desactivada.');
+ [$status]=$http->request('/modules/gestion/integraciones.php',['code'=>$key,'name'=>'Integración QA','integration_type'=>'LOGISTICS','base_url'=>'http://127.0.0.1:8765','active_status'=>1]);managementAssert($status===200,'No se pudo preparar la prueba de bloqueo SSRF.');
+ $integrationQuery=$pdo->prepare('SELECT id FROM tbl_external_integration WHERE code=?');$integrationQuery->execute([$key]);$integrationId=(int)$integrationQuery->fetchColumn();$logCount=$pdo->prepare('SELECT COUNT(*) FROM tbl_external_integration_log WHERE integration_id=?');$logCount->execute([$integrationId]);$logsBefore=(int)$logCount->fetchColumn();
+ [$status,$blocked]=$http->request('/modules/gestion/integraciones.php',['action'=>'test','code'=>$key]);managementAssert($status===422&&str_contains($blocked['error']??'','redes privadas'),'No se bloqueó el destino de loopback antes de la conexión.');
+ $logCount->execute([$integrationId]);managementAssert((int)$logCount->fetchColumn()===$logsBefore,'Se registró una conexión no permitida.');
  echo "PASS HTTP management company role permissions values UDF payment warehouse series and integration configuration\n";
 }catch(Throwable $e){fwrite(STDERR,'FAIL management HTTP: '.$e->getMessage().PHP_EOL);$failed=true;}
 finally{

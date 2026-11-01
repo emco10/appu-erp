@@ -210,15 +210,16 @@
 	                            </div>
 	                            <div class="col-md-4">
 	                                <div class="form-group">
-	                                    <label>Autorizado por</label>
+	                                    <label>Aprobado por</label>
 	                                    <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
                                                     <i class="fas fa-user-check"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" name="orden_autorizador" class="form-control" placeholder="Nombre de quien autoriza" required>
+                                            <input type="text" name="orden_autorizador" class="form-control" placeholder="Se asignará al aprobar" readonly>
                                         </div>
+                                        <small class="form-text text-muted">La aprobación se realiza desde Resumen de Órdenes y registra automáticamente al usuario que la confirma.</small>
 	                                </div>
 	                            </div>
 	                            <div class="col-md-12">

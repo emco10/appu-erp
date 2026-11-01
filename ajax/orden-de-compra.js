@@ -93,7 +93,14 @@ $('select[name="orden_producto_select"]').on("change", function() {
 $.getJSON("../../modules/compras/solicitudes.php").done(function (response) {
   var options = [{ id: "", text: "Sin solicitud" }];
   (response.requests || []).filter(function (request) { return request.status === "Aprobada"; }).forEach(function (request) { options.push({ id: request.id, text: request.number + " · " + request.status + " · " + (request.requester_name || "Sin solicitante") + " · " + request.required_date }); });
-  $('select[name="orden_solicitud_compra"]').empty().select2({ data: options, language: "es", placeholder: "Sin solicitud" });
+  var $requestSelect = $('select[name="orden_solicitud_compra"]').empty().select2({ data: options, language: "es", placeholder: "Sin solicitud" });
+  var query = new URLSearchParams(window.location.search);
+  if (query.get("copy_from") === "purchase_request") {
+    var requestedId = Number(query.get("source_id"));
+    var source = options.find(function (option) { return Number(option.id) === requestedId && requestedId > 0; });
+    if (source) $requestSelect.val(String(source.id)).trigger({ type: "select2:select", params: { data: source } });
+    else toastr.warning("La solicitud indicada no está disponible para copiar; debe estar aprobada y no convertida.");
+  }
 });
 
 /*
@@ -521,7 +528,7 @@ $("#table-ord-compras").on("dblclick", "tr", function() {
   }
 });
 
-$('input[name="orden_tipomoneda"]').on("change", function() {
+$('select[name="orden_tipomoneda"]').on("change", function() {
   $('input[name="orden_porcdscto"]').trigger("change");
 });
 
@@ -672,6 +679,7 @@ $("#FRM_INSERT_DETA_ORDCOMPRA").submit(function (e) {
   e.preventDefault();
 
   var form = $(this);
+  if (typeof window.appuClearValidation === "function") window.appuClearValidation(form);
   var idform = form.attr("id");
   var url = form.attr('action');
   var formElement = document.getElementById(idform);
@@ -699,9 +707,15 @@ $("#FRM_INSERT_DETA_ORDCOMPRA").submit(function (e) {
               }
           })
       },
+      error: function (xhr) {
+          Swal.close();
+          if (typeof window.appuShowRequestError === "function") window.appuShowRequestError(form, xhr, "No se pudo guardar la orden. Revisa los datos e inténtalo nuevamente.");
+          else toastr.error(xhr.responseJSON && xhr.responseJSON.message || "No se pudo guardar la orden. Revisa los datos e inténtalo nuevamente.");
+          $("#btn-save-orden").prop("disabled", tbl_prodordcompra.rows().count() === 0);
+      },
       success: function (data) {
           if (data == "ERROR") {
-            $.Notification.notify("error", "bottom-right", "Error de guardado", "No se pudo guardar datos de orden de compra");
+            toastr.error("El servidor rechazó la orden, pero no indicó el motivo. Verifica los datos e inténtalo nuevamente.");
             Swal.close();
           } else if (data == "OK_INSERT") {
             $('input[name="orden_nro"]').focus();

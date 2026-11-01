@@ -1,11 +1,18 @@
 <?php
+require_once __DIR__.'/validation.php';
+
 function app_validate_purchase_input(array $data,array $rows,bool $services=false):void
 {
-    foreach(['orden_fecemision','orden_fecentrega'] as $field){$value=trim((string)($data[$field]??''));$date=DateTimeImmutable::createFromFormat('!Y-m-d',$value);if(!$date||$date->format('Y-m-d')!==$value)throw new DomainException('Las fechas del documento no son válidas.');}
-    if((string)$data['orden_fecentrega']<(string)$data['orden_fecemision'])throw new DomainException('La fecha de entrega no puede ser anterior a la emisión.');
-    if(!in_array($data['orden_tipomoneda']??'', ['PEN','USD'],true))throw new DomainException('Selecciona una moneda válida.');
-    $days=filter_var($data['orden_tipopago']??null,FILTER_VALIDATE_INT);if($days===false||$days<0||$days>3650)throw new DomainException('Los días de pago no son válidos.');
-    if(!$rows)throw new DomainException('Agrega al menos una línea al documento.');
+    $errors=[];
+    foreach(['orden_fecemision'=>'Fecha de emisión','orden_fecentrega'=>'Fecha de entrega'] as $field=>$label){
+        $value=trim((string)($data[$field]??''));$date=DateTimeImmutable::createFromFormat('!Y-m-d',$value);
+        if($value===''||!$date||$date->format('Y-m-d')!==$value)$errors[]=app_field_error($field,$value===''?'REQUIRED':'INVALID_DATE',$value===''?$label.' es obligatoria.':$label.' no es válida.');
+    }
+    if(!empty($data['orden_fecemision'])&&!empty($data['orden_fecentrega'])&&(string)$data['orden_fecentrega']<(string)$data['orden_fecemision'])$errors[]=app_field_error('orden_fecentrega','INVALID_RANGE','La fecha de entrega no puede ser anterior a la fecha de emisión.');
+    if(!in_array($data['orden_tipomoneda']??'', ['MN','ME','PEN','USD'],true))$errors[]=app_field_error('orden_tipomoneda','INVALID_VALUE','Selecciona una moneda válida.');
+    $days=filter_var($data['orden_tipopago']??null,FILTER_VALIDATE_INT);if($days===false||$days<0||$days>3650)$errors[]=app_field_error('orden_tipopago','INVALID_VALUE','Indica días de pago entre 0 y 3650.');
+    if(!$rows)$errors[]=app_field_error($services?'orden_lstservicios':'orden_lstprods','REQUIRED','Agrega al menos un artículo o servicio antes de guardar.');
+    if($errors)throw new AppValidationException($errors);
     $subtotal=0;$seen=[];
     foreach($rows as $row){
         $priceIndex=$services?3:5;$quantityIndex=$services?4:6;$discountIndex=$services?5:7;$totalIndex=$services?6:8;

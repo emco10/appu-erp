@@ -31,6 +31,29 @@ var tbl_cotizaciones = $("#table-cotizaciones").DataTable({
   language: { url: "../../plugins/datatables/Spanish.json" }
 });
 
+function accionesCotizacion(row) {
+  if (!appuCan("sales.manage") || Number(row.ESTADO) !== 1) return "";
+  var id = Number(row.CODIGOID);
+  if (!Number.isSafeInteger(id) || id < 1) return "";
+  return '<button type="button" class="btn btn-sm btn-outline-success js-copy-quotation-order" data-id="' + id + '" title="Copiar a orden de venta"><i class="fas fa-copy mr-1"></i>Copiar a orden</button>';
+}
+
+function copiarCotizacionAOrden(quotationId) {
+  if (!appuCan("sales.manage")) return toastr.error("No tienes permiso para crear órdenes de venta.");
+  $.ajax({
+    url: "../../modules/ventas/ordenes.php",
+    method: "POST",
+    dataType: "json",
+    data: { action: "convert_from_quotation", quotation_id: quotationId }
+  }).done(function (response) {
+    toastr.success(response.message || "Orden de venta creada desde la cotización.");
+    location.href = "../../views/ventas/resumen-ordenes-venta?record_id=" + Number(response.order_id);
+  }).fail(function (xhr) {
+    var response = xhr && xhr.responseJSON || {};
+    toastr.error(response.message || response.error || "No se pudo copiar la cotización a una orden de venta.");
+  });
+}
+
 $.post(
   "../../modules/cotizaciones/consultar-cotizacion.php",
   { FILTER: "ALL", ESTADO: "ALL" },
@@ -46,7 +69,8 @@ $.post(
             2: data_cotiz[i]["FECREG"],
             3: data_cotiz[i]["CLIENTNAME"],
             4: data_cotiz[i]["TOTAL_NET"],
-            5: data_cotiz[i]["ESTADO_VAL"]
+            5: data_cotiz[i]["ESTADO_VAL"],
+            6: accionesCotizacion(data_cotiz[i])
           }]).draw();
 
           tbl_cotizaciones.columns.adjust().draw();
@@ -155,7 +179,8 @@ $("#btn-buscar").click(function(){
                       2: data_cotiz[i]["FECREG"],
                       3: data_cotiz[i]["CLIENTNAME"],
                       4: data_cotiz[i]["TOTAL_NET"],
-                      5: data_cotiz[i]["ESTADO_VAL"]
+                      5: data_cotiz[i]["ESTADO_VAL"],
+                      6: accionesCotizacion(data_cotiz[i])
                     }]).draw();
 
                     tbl_cotizaciones.columns.adjust().draw();
@@ -177,15 +202,7 @@ $("#table-cotizaciones").contextMenu({
         var accion = key;
         switch (accion) {
         case "sales_order":
-            if (!appuCan("sales.manage")) break;
-            $.ajax({
-                url: "../../modules/ventas/ordenes.php",
-                method: "POST",
-                dataType: "json",
-                data: { action: "convert_from_quotation", quotation_id: row_id }
-            }).done(function (response) {
-                toastr.success(response.message || "Orden de venta creada.");
-            });
+            copiarCotizacionAOrden(Number(row_id));
             break;
         case "edit":
             crear_cookie('COOKIE_ID_COTIZ', row_id, 1, "/");
@@ -214,7 +231,8 @@ $("#table-cotizaciones").contextMenu({
                                   2: data_cotiz[i]["FECREG"],
                                   3: data_cotiz[i]["CLIENTNAME"],
                                   4: data_cotiz[i]["TOTAL_NET"],
-                                  5: data_cotiz[i]["ESTADO_VAL"]
+                                  5: data_cotiz[i]["ESTADO_VAL"],
+                                  6: accionesCotizacion(data_cotiz[i])
                                 }]).draw();
 
                                 tbl_cotizaciones.columns.adjust().draw();
@@ -235,7 +253,7 @@ $("#table-cotizaciones").contextMenu({
     }
   },
   items: {
-    sales_order: { name: "Crear orden de venta", icon: "paste", visible: function () { return appuCan("sales.manage"); } },
+    sales_order: { name: "Copiar a orden de venta", icon: "paste", visible: function () { var row = tbl_cotizaciones.row(this).data(); return appuCan("sales.manage") && row && String(row[5]).toLowerCase() === "vigente"; } },
     edit: { name: "Visualizar", icon: "edit" },
     delete: { name: "Anular", icon: "delete" },
     sep1: "---------",
@@ -246,6 +264,10 @@ $("#table-cotizaciones").contextMenu({
       }
     }
   }
+});
+
+$(document).on("click", ".js-copy-quotation-order", function () {
+  copiarCotizacionAOrden(Number($(this).data("id")));
 });
 
 $("#btn-reset").click(function (e) {

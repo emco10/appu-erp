@@ -314,7 +314,7 @@
           <li class="nav-item">
             <a id="m_logistica_documentos" href="<?php echo $functions->direct_paginas()."logistica/documentos" ?>" class="nav-link">
               <i class="nav-icon fas fa-truck"></i>
-              <p>Mapa de documentos</p>
+              <p>Seguimiento de despachos</p>
             </a>
           </li>
           <?php endif; ?>
@@ -394,9 +394,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a id="m_flujo_documental" href="<?php echo $functions->direct_paginas()."reportes/flujo-documental" ?>" class="nav-link">
+                <a id="m_flujo_documental" href="<?php echo $functions->direct_paginas()."trazabilidad/flujo" ?>" class="nav-link">
                   <i class="fas fa-project-diagram nav-icon"></i>
-                  <p>Flujo documental</p>
+                  <p>Mapa de relaciones</p>
                 </a>
               </li>
             </ul>
