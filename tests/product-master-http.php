@@ -26,7 +26,7 @@ try {
     $custom[$requiredId]='CORPORATIVO'; $custom[$optionalId]='BORRAR';
     $key='master-'.bin2hex(random_bytes(12)); $keys[]=$key;
     $input=['response_format'=>'json','request_key'=>$key,'producto_code'=>$prefix,'producto_nombre'=>$prefix.' artículo',
-        'producto_marca'=>'APPU','producto_unitvalue'=>'und','producto_precio'=>'19.9','custom_field'=>$custom];
+        'producto_marca'=>'APPU','producto_unitvalue'=>'und','producto_precio'=>'19.9','producto_tax_code'=>'10','custom_field'=>$custom];
     [$status,$created]=$client->request($save,$input);
     productAssert($status===200 && ($created['success']??false),'No se creó el artículo: '.json_encode($created));
     $id=(int)$created['id']; $productIds[]=$id;

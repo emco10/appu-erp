@@ -113,5 +113,6 @@ try {
     $insert = $pdo->prepare('INSERT INTO tbl_warehouse_movement (type, product_id, warehouse_id, quantity, inventory_value_delta, observation, doc_reference, source_type, source_id, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
     $insert->execute([STOCK_MOVEMENT_TRANSFER_OUT, $productId, $fromId, -$quantity, -$transferValue, $observation, $reference, 'warehouse_transfer', $transferId, $userId]);
     $insert->execute([STOCK_MOVEMENT_TRANSFER_IN, $productId, $toId, $quantity, $transferValue, $observation, $reference, 'warehouse_transfer', $transferId, $userId]);
+    app_record_document_status($pdo, 'stock_transfer', $transferId, $reference, '', 'Registrada', 'Creacion', $userId, $observation);
     $pdo->commit(); echo json_encode(['message' => 'Transferencia registrada correctamente.', 'reference' => $reference], JSON_UNESCAPED_UNICODE);
 } catch (Throwable $exception) { if ($pdo->inTransaction()) $pdo->rollBack(); http_response_code(422); echo json_encode(['error' => $exception->getMessage()], JSON_UNESCAPED_UNICODE); }

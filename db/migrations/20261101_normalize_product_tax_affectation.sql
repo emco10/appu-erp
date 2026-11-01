@@ -12,3 +12,6 @@ SET `tax_affectation_code` = CASE UPPER(TRIM(`tax_affectation_code`))
   WHEN 'EXPORTACIÓN' THEN '40'
   ELSE `tax_affectation_code`
 END;
+
+ALTER TABLE `tbl_product`
+  MODIFY `tax_affectation_code` varchar(10) NOT NULL DEFAULT '10';
