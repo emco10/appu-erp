@@ -94,7 +94,7 @@ $('input[name="facturacion_valcliente"]').autocomplete({
     $(this).val(ui.item.label);
     $('input[name="facturacion_cliruc"]').val("");
     $('input[name="facturacion_clidirecc"]').val("");
-    $('input[name="facturacion_clirefer"]').val("");
+    $('[name="facturacion_clirefer"]').val("");
     if (ui.item.id != "" && ui.item.id != null) {
       $.post(
         "../../modules/clientes/consultar-cliente.php",
@@ -451,7 +451,7 @@ $("#btn-select-factura").click(function() {
           
           $('input[name="facturacion_cliruc"]').val(data_json[0]["CLIENTRUC"]);
           $('input[name="facturacion_clidirecc"]').val(data_json[0]["CLIENTADDR"]);
-          $('input[name="facturacion_clirefer"]').val(data_json[0]["CLIENTREFER"]);
+          $('[name="facturacion_clirefer"]').val(data_json[0]["CLIENTREFER"]);
 
           $('select[name="facturacion_formpagotext"]').val(data_json[0]["PAY_DAYS"]);
           $('select[name="facturacion_formpagotext"]').trigger("change");
@@ -564,7 +564,7 @@ $("#btn-select-cotizacion").click(function() {
         
         $('input[name="facturacion_cliruc"]').val(data_json[0]["CLIENTRUC"]);
         $('input[name="facturacion_clidirecc"]').val(data_json[0]["CLIENTADDR"]);
-        $('input[name="facturacion_clirefer"]').val(data_json[0]["CLIENTREFER"]);
+        $('[name="facturacion_clirefer"]').val(data_json[0]["CLIENTREFER"]);
 
         $('select[name="facturacion_formpagotext"]').val(data_json[0]["PAY_DAYS"]);
         $('select[name="facturacion_formpagotext"]').trigger("change");
@@ -649,7 +649,7 @@ $("#btn-select-orden-venta").click(function() {
     $('input[name="facturacion_valcliente"]').val(order.customer_name);
     $('input[name="facturacion_cliruc"]').val(order.ruc);
     $('input[name="facturacion_clidirecc"]').val(order.address);
-    $('input[name="facturacion_clirefer"]').val(order.reference);
+    $('[name="facturacion_clirefer"]').val(order.reference);
     $('select[name="facturacion_formpagotext"]').val(String(order.payment_days)).trigger("change");
     $('input[name="facturacion_formpago"]').val(order.payment_days);
     $('input[name="facturacion_fecentrega"]').val(order.delivery_date);

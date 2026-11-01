@@ -172,15 +172,15 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Dirección</label>
+                                        <label>Dirección fiscal del cliente</label>
                                         <input type="text" class="form-control" name="facturacion_clidirecc" placeholder="Dirección fiscal (opcional)">
                                         <small class="form-text text-muted">Recomendado para que la representación impresa quede completa.</small>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Referencia</label>
-                                        <input type="text" class="form-control" name="facturacion_clirefer" placeholder="Referencia">
+                                        <label>Observaciones <small class="text-muted">(opcional)</small></label>
+                                        <textarea class="form-control" name="facturacion_clirefer" maxlength="300" rows="2" placeholder="Orden de compra, condiciones especiales u otra información para el PDF"></textarea>
                                     </div>
                                 </div>
                             </div>
