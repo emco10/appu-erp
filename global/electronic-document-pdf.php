@@ -39,7 +39,9 @@ final class AppuElectronicDocumentPdf extends FPDF {
  function render(array $lines,array $taxes,?array $sunat):void{
   $this->AliasNbPages();$this->AddPage();$status=!empty($this->doc['is_simulation'])?'simulation':($sunat['status']??'draft');$names=['accepted'=>'ACEPTADO POR SUNAT','observed'=>'ACEPTADO CON OBSERVACIONES','rejected'=>'RECHAZADO POR SUNAT','processing'=>'EN PROCESO','technical_error'=>'ERROR TECNICO','draft'=>'PENDIENTE DE ENVIO','simulation'=>'SIMULACION QA - NO VALIDO'];
   $this->SetFillColor(232,244,238);$this->SetTextColor(25,80,55);$this->SetFont('Arial','B',8);$this->Cell(0,6,$this->pdfText('Estado SUNAT: '.($names[$status]??strtoupper($status))),1,1,'C',true);$this->SetTextColor(0);$this->Ln(3);
-  $this->field('Fecha de emisión',date('d/m/Y',strtotime($this->doc['date'])),'Moneda',$this->doc['currency_label']);$this->field('Cliente',$this->doc['name'],'RUC / DNI',$this->doc['ruc']);$this->field('Dirección fiscal',$this->doc['address']?:'No consignada','Forma de pago',$this->doc['payment_label']);
+  $this->field('Fecha de emisión',date('d/m/Y',strtotime($this->doc['date'])),'Moneda',$this->doc['currency_label']);$this->field('Cliente',$this->doc['name'],'RUC / DNI',$this->doc['ruc']);
+  $this->SetFont('Arial','B',8);$this->Cell(30,5,$this->pdfText('Dirección fiscal:'));$this->SetFont('Arial','',8);$this->MultiCell(158,5,$this->pdfText($this->doc['address']?:'No consignada'));
+  $this->field('Forma de pago',$this->doc['payment_label']);
   if(trim((string)($this->doc['reference']??''))!==''){$this->SetFont('Arial','B',8);$this->Cell(30,5,$this->pdfText('Observaciones:'));$this->SetFont('Arial','',8);$this->MultiCell(158,5,$this->pdfText($this->doc['reference']));}
   $this->Ln(2);$this->SetAutoPageBreak(false);$this->tableHeader();foreach($lines as $line)$this->row($line);$this->SetAutoPageBreak(true,18);
   $required=18+count($taxes)*6+38;if($this->GetY()+$required>248)$this->AddPage();else $this->Ln(4);
