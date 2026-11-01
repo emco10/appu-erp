@@ -11,8 +11,8 @@ function app_validate_legacy_sales_input(PDO $pdo,array $input,&$rows,string $pr
     $seller=filter_var($input[$prefix.'_usuarioid']??null,FILTER_VALIDATE_INT);$user=$pdo->prepare('SELECT id FROM tbl_user WHERE id=? AND active_status=1');$user->execute([$seller?:0]);if(!$user->fetchColumn())throw new DomainException('Selecciona un vendedor activo.');
     $discount=filter_var(($input[$prefix.'_porcdesc']??'')===''?0:$input[$prefix.'_porcdesc'],FILTER_VALIDATE_FLOAT);if($discount===false||!is_finite((float)$discount)||$discount<0||$discount>100)throw new DomainException('El descuento debe estar entre 0 y 100 por ciento.');
     if(!is_array($rows)||!array_is_list($rows)||!$rows||count($rows)>500)throw new DomainException('Agrega entre 1 y 500 artículos válidos al documento.');
-    $priceIndex=$quotation?3:4;$qtyIndex=$quotation?4:5;$seen=[];$subtotal=0;
-    $product=$pdo->prepare('SELECT code,name,description FROM tbl_product WHERE id=? AND active_status=1');
+    $priceIndex=$quotation?3:4;$qtyIndex=$quotation?4:5;$seen=[];$subtotal=0;$tax=0;
+    $product=$pdo->prepare('SELECT code,name,description,tax_affectation_code FROM tbl_product WHERE id=? AND active_status=1');
     foreach($rows as &$row){
         if(!is_array($row))throw new DomainException('Una línea del documento no es válida.');
         $id=filter_var($row[0]??null,FILTER_VALIDATE_INT);$price=filter_var($row[$priceIndex]??null,FILTER_VALIDATE_FLOAT);$quantity=filter_var($row[$qtyIndex]??null,FILTER_VALIDATE_INT);
@@ -20,10 +20,14 @@ function app_validate_legacy_sales_input(PDO $pdo,array $input,&$rows,string $pr
         if(isset($seen[$id]))throw new DomainException('No repitas artículos; consolida su cantidad en una línea.');$seen[$id]=true;
         $product->execute([$id]);$master=$product->fetch();if(!$master)throw new DomainException('Uno de los artículos no existe o está inactivo.');
         if($quotation){$row[1]=$master['name'];$row[2]=$master['description'];}else{$row[1]=$master['code'];$row[2]=$master['name'];$row[3]=$master['description'];}
-        $subtotal+=round((float)$price*$quantity,2);
+        $lineValue=round((float)$price*$quantity,2);
+        $subtotal+=$lineValue;
+        $taxCode=trim((string)($master['tax_affectation_code']??''));
+        if(!in_array($taxCode,['10','20','30','40'],true))throw new DomainException('Un artículo no tiene una afectación SUNAT soportada (10, 20, 30 o 40).');
+        if($taxCode==='10')$tax+=round($lineValue*.18,2);
         if(!is_finite($subtotal)||$subtotal>999999999.99)throw new DomainException('El importe supera el máximo permitido por documento.');
     }unset($row);
-    $subtotal=round($subtotal,2);$tax=round($subtotal*.18,2);$gross=round($subtotal+$tax,2);$discountValue=round($gross*$discount/100,2);
+    $subtotal=round($subtotal,2);$tax=round($tax,2);$gross=round($subtotal+$tax,2);$discountValue=round($gross*$discount/100,2);
     return ['subtotal'=>$subtotal,'tax'=>$tax,'discount_rate'=>$discount,'discount'=>$discountValue,'total'=>round($gross-$discountValue,2)];
 }
 

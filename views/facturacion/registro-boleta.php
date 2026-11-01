@@ -312,7 +312,7 @@
                                     </div>
                                     <div class="row mb-2">
                                         <div class="col-md-6 text-right">
-                                            <label>IGV 18%</label>
+                                            <label>IGV</label>
                                         </div>
                                         <div class="col-md-6">
                                             <input type="number" name="facturacion_igv" min="0" step="0.1" class="form-control" readonly>

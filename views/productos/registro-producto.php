@@ -81,7 +81,7 @@
                                 <div class="col-md-3"><div class="form-group"><label>Código de barras</label><input type="text" class="form-control" name="producto_barcode" maxlength="50"></div></div>
                                 <div class="col-md-3"><div class="form-group"><label>Código de artículo SUNAT</label><input type="text" class="form-control" name="producto_sunat_code" maxlength="30"></div></div>
                                 <div class="col-md-3"><div class="form-group"><label>Unidad SUNAT</label><input type="text" class="form-control" name="producto_sunat_unit" maxlength="10" placeholder="NIU, KGM..."></div></div>
-                                <div class="col-md-3"><div class="form-group"><label>Afectación tributaria</label><input type="text" class="form-control" name="producto_tax_code" maxlength="10"></div></div>
+                                <div class="col-md-3"><div class="form-group"><label>Afectación tributaria SUNAT</label><select class="form-control" name="producto_tax_code" required><option value="10">10 - Gravado (18% IGV)</option><option value="20">20 - Exonerado (0% IGV)</option><option value="30">30 - Inafecto (0% IGV)</option><option value="40">40 - Exportación (0% IGV)</option></select></div></div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4"><div class="form-group"><label>Código catálogo OSCE</label><input type="text" class="form-control" name="producto_osce_code" maxlength="50"></div></div>

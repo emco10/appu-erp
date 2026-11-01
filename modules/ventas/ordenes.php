@@ -50,11 +50,13 @@ if ($method === 'GET') {
         }
 
         $detailStatement = $pdo->prepare(
-            'SELECT id, item_id, item_code, item_name, item_description,
-                    item_quantity, item_unit_price, item_total
-             FROM tbl_sales_order_detail
-             WHERE sales_order_id = ?
-             ORDER BY id'
+            'SELECT detail.id, detail.item_id, detail.item_code, detail.item_name, detail.item_description,
+                    detail.item_quantity, detail.item_unit_price, detail.item_total,
+                    product.tax_affectation_code
+             FROM tbl_sales_order_detail detail
+             LEFT JOIN tbl_product product ON product.id=detail.item_id
+             WHERE detail.sales_order_id = ?
+             ORDER BY detail.id'
         );
         $detailStatement->execute([$requestedOrderId]);
         echo json_encode(['error' => false, 'order' => $order, 'details' => $detailStatement->fetchAll()], JSON_UNESCAPED_UNICODE);

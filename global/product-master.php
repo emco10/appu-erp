@@ -39,6 +39,7 @@ function app_product_master_errors(PDO $pdo, array $input): array
     }
     $schema['producto_precio']=['label'=>'Precio','required'=>true,'min'=>0,'max'=>999999999,
         'messages'=>['min'=>'El precio debe ser un número mayor o igual que cero.','max'=>'El precio excede el máximo permitido.']];
+    $schema['producto_tax_code']=['label'=>'Afectacion tributaria','required'=>true,'validValues'=>['10','20','30','40']];
     $schema['producto_estado']=['label'=>'Estado','validValues'=>['on','']];
     $errors=app_validate_fields($input,$schema);
     if (isset($input['producto_id']) && $input['producto_id']!=='' && !(filter_var($input['producto_id'],FILTER_VALIDATE_INT)>0))

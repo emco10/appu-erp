@@ -162,6 +162,7 @@ $('select[name="facturacion_producto"]').on("change", function() {
         $('input[name="facturacion_proddesc"]').val(mydata[0]["DESCRIPTION"]);
         $('input[name="facturacion_prodprecio"]').val(mydata[0]["PRECIO"]);
         $('input[name="facturacion_stockprod"]').val(mydata[0]["CANTIDAD"]);
+        selected_tax_affectation = String(mydata[0]["TAX_CODE"] || "10");
         if (stock_producto <= 0) {
           $.Notification.notify(
             "error",
@@ -235,6 +236,8 @@ var total_temporal = 0;
 tbl_prodfactura.columns([0]).visible(false);
 
 var tbl_data = "";
+var selected_tax_affectation = "10";
+function appuIgvFilas(rows) { return rows.reduce(function(total, row) { return total + (String(row[7] || "10") === "10" ? Number(row[6] || 0) * 0.18 : 0); }, 0); }
 
 $("#btn-add-prodtofactura").click(function() {
   idprod = $('select[name="facturacion_producto"]').val();
@@ -270,7 +273,8 @@ $("#btn-add-prodtofactura").click(function() {
           3: descripcion,
           4: precio.toFixed(2),
           5: cantidad,
-          6: importe.toFixed(2)
+          6: importe.toFixed(2),
+          7: selected_tax_affectation
         }
       ])
       .draw();
@@ -286,7 +290,7 @@ $("#btn-add-prodtofactura").click(function() {
         : 0;
     importe_totactual = parseFloat(opergrab);
     importe_totactual += importe_actual;
-    new_igv = importe_totactual * 0.18;
+    new_igv = appuIgvFilas(tbl_data);
     new_total = importe_totactual + new_igv;
 
     total_temporal = new_total;
@@ -623,7 +627,7 @@ $("#btn-select-orden-venta").click(function() {
     total_temporal = order.total_net;
     tbl_prodfactura.clear();
     (response.details || []).forEach(function(detail) {
-      tbl_prodfactura.rows.add([{ 0: detail.item_id, 1: detail.item_code, 2: detail.item_name, 3: detail.item_description, 4: parseFloat(detail.item_unit_price).toFixed(2), 5: detail.item_quantity, 6: parseFloat(detail.item_total).toFixed(2) }]);
+      tbl_prodfactura.rows.add([{ 0: detail.item_id, 1: detail.item_code, 2: detail.item_name, 3: detail.item_description, 4: parseFloat(detail.item_unit_price).toFixed(2), 5: detail.item_quantity, 6: parseFloat(detail.item_total).toFixed(2), 7: detail.tax_affectation_code || "10" }]);
     });
     tbl_prodfactura.draw();
     $("#btn-save-facturaprod").prop("disabled", false);
@@ -641,7 +645,7 @@ $("#table-productsfactura").on("dblclick", "tr", function() {
       : 0;
   importe_totactual = parseFloat(opergrab);
   importe_totactual -= importe_prod;
-  new_igv = importe_totactual * 0.18;
+  new_igv = Math.max(0, Number($('input[name="facturacion_igv"]').val() || 0) - (String(data_row[7] || "10") === "10" ? Number(importe_prod) * 0.18 : 0));
   new_total = importe_totactual + new_igv;
 
   total_temporal = new_total;
