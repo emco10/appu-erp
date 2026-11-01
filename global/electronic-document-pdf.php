@@ -10,7 +10,11 @@ final class AppuElectronicDocumentPdf extends FPDF {
   if($this->logo&&is_file($this->logo))$this->Image($this->logo,12,12,34);
   $this->SetXY(49,12);$this->SetFont('Arial','B',12);$this->Cell(94,6,$this->pdfText($this->company['legal_name']?:'APPU'),0,1);$this->SetX(49);$this->SetFont('Arial','',8);$this->MultiCell(94,4,$this->pdfText($this->company['address']?:'Domicilio fiscal no configurado'));
   $location=implode(' - ',array_filter([$this->company['district']??'',$this->company['province']??'',$this->company['department']??'']));if($location){$this->SetX(49);$this->Cell(94,4,$this->pdfText($location));}
-  $this->SetXY(146,12);$this->SetDrawColor(35,75,120);$this->SetLineWidth(.45);$this->SetFont('Arial','B',10);$this->Cell(52,8,'RUC: '.$this->pdfText($this->company['tax_id']),'LTR',1,'C');$this->SetX(146);$this->Cell(52,8,$this->pdfText($this->label.' ELECTRONICA'),'LR',1,'C');$this->SetX(146);$this->SetFont('Arial','B',12);$this->Cell(52,9,$this->pdfText($this->doc['series'].'-'.$this->doc['number']),'LBR',1,'C');$this->Ln(7);
+  $this->SetXY(146,12);$this->SetDrawColor(35,75,120);$this->SetLineWidth(.45);$this->SetFont('Arial','B',10);$this->Cell(52,8,'RUC: '.$this->pdfText($this->company['tax_id']),'LTR',1,'C');
+  $title=$this->label==='BOLETA DE VENTA'?["BOLETA DE VENTA","ELECTRONICA"]:[$this->label.' ELECTRONICA'];
+  $this->SetX(146);$this->SetFont('Arial','B',8.5);$this->Cell(52,5.5,$this->pdfText($title[0]),'LR',1,'C');
+  if(isset($title[1])){$this->SetX(146);$this->Cell(52,5.5,$this->pdfText($title[1]),'LR',1,'C');}
+  $this->SetX(146);$this->SetFont('Arial','B',12);$this->Cell(52,9,$this->pdfText($this->doc['series'].'-'.$this->doc['number']),'LBR',1,'C');$this->Ln(7);
  }
  function Footer():void{$this->SetY(-15);$this->SetFont('Arial','I',7);$this->SetTextColor(80);$this->Cell(0,4,$this->pdfText('Representación impresa del comprobante electrónico - Página '.$this->PageNo().'/{nb}'),0,1,'C');$this->Cell(0,4,$this->pdfText('La validez tributaria se acredita con el XML firmado y la respuesta de SUNAT.'),0,0,'C');}
  private function field(string $label,string $value,string $label2='',string $value2=''):void{$this->SetFont('Arial','B',8);$this->Cell(30,6,$this->pdfText($label.':'));$this->SetFont('Arial','',8);$this->Cell(78,6,$this->pdfText($value));if($label2){$this->SetFont('Arial','B',8);$this->Cell(25,6,$this->pdfText($label2.':'));$this->SetFont('Arial','',8);$this->Cell(55,6,$this->pdfText($value2));}$this->Ln();}

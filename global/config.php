@@ -1,7 +1,7 @@
 <?php
 
 define('APP_NAME', 'APPU');
-define('SCRIPT_VER', '261029_381');
+define('SCRIPT_VER', '261101_382');
 define('SERVER', getenv('APPU_DB_HOST') ?: 'localhost');
 define('DB_USER', getenv('APPU_DB_USER') ?: 'root');
 define('DB_PASSWORD', getenv('APPU_DB_PASSWORD') ?: '');

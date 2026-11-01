@@ -1,20 +1,14 @@
 <?php
 require '../../global/connection.php';
-header('Content-Type: application/json; charset=utf-8');
-app_require_permission('sales.view');
-$summary=['accepted'=>0,'observed'=>0,'rejected'=>0,'pending'=>0,'technical_error'=>0];
-foreach($pdo->query("SELECT status,COUNT(*) total FROM tbl_sunat_document GROUP BY status")->fetchAll() as $row){
- $key=in_array($row['status'],['queued','processing','draft'],true)?'pending':$row['status'];
- if(isset($summary[$key]))$summary[$key]+=(int)$row['total'];
-}
-$sql="SELECT s.id,s.source_type,s.source_id,s.sunat_type,s.series,s.number,s.status,s.sunat_code,s.sunat_description,s.xml_path,s.cdr_path,s.digest_value,s.submitted_at,s.accepted_at,s.created_at,
- CASE s.source_type WHEN 'invoice' THEN i.name WHEN 'receipt' THEN r.name WHEN 'credit-note' THEN n.name ELSE '' END customer_name,
- CASE s.source_type WHEN 'invoice' THEN i.total_net WHEN 'receipt' THEN r.total_net WHEN 'credit-note' THEN n.total_net ELSE 0 END total_net
- FROM tbl_sunat_document s
- LEFT JOIN tbl_invoice i ON s.source_type='invoice' AND i.id=s.source_id
- LEFT JOIN tbl_receipt r ON s.source_type='receipt' AND r.id=s.source_id
- LEFT JOIN tbl_credit_note n ON s.source_type='credit-note' AND n.id=s.source_id
- ORDER BY s.id DESC LIMIT 500";
-$documents=$pdo->query($sql)->fetchAll();
-$series=$pdo->query("SELECT id,document_type,series,next_number,number_padding,sunat_enabled,active_status FROM tbl_document_series WHERE document_type IN('INVOICE','RECEIPT','CREDIT_NOTE') ORDER BY document_type,sunat_enabled DESC,series")->fetchAll();
-echo json_encode(compact('summary','documents','series'),JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+header('Content-Type: application/json; charset=utf-8');app_require_permission('sales.view');
+$validDate=static function(string $value,string $fallback):string{$date=DateTimeImmutable::createFromFormat('!Y-m-d',$value);return $date&&$date->format('Y-m-d')===$value?$value:$fallback;};
+$today=date('Y-m-d');$from=$validDate(trim((string)($_GET['date_from']??'')),date('Y-m-d',strtotime('-29 days')));$to=$validDate(trim((string)($_GET['date_to']??'')),$today);
+if($from>$to){http_response_code(422);echo json_encode(['error'=>'La fecha desde no puede ser posterior a la fecha hasta.']);exit;}
+$type=trim((string)($_GET['document_type']??''));$status=trim((string)($_GET['status']??''));
+if(!in_array($type,['','invoice','receipt','credit-note'],true)||!in_array($status,['','accepted','observed','rejected','pending','technical_error','internal'],true)){http_response_code(422);echo json_encode(['error'=>'Filtro SUNAT invalido.']);exit;}
+$union="SELECT 'invoice' source_type,'INVOICE' series_type,id source_id,series,number,date document_date,name customer_name,total_net FROM tbl_invoice WHERE status NOT IN(2,4) UNION ALL SELECT 'receipt','RECEIPT',id,series,number,date,name,total_net FROM tbl_receipt WHERE status NOT IN(2,4) UNION ALL SELECT 'credit-note','CREDIT_NOTE',id,series,number,date,name,total_net FROM tbl_credit_note WHERE status NOT IN(2,4)";
+$where=['d.document_date BETWEEN ? AND ?'];$params=[$from,$to];if($type!==''){$where[]='d.source_type=?';$params[]=$type;}
+$effective="CASE WHEN COALESCE(ds.sunat_enabled,0)=0 THEN 'internal' WHEN s.id IS NULL OR s.status IN('draft','queued','processing') THEN 'pending' ELSE s.status END";if($status!==''){$where[]="$effective=?";$params[]=$status;}
+$sql="SELECT d.*,COALESCE(ds.sunat_enabled,0) sunat_enabled,s.id sunat_id,s.status,s.sunat_code,s.sunat_description,s.xml_path,s.cdr_path,s.digest_value,s.submitted_at,s.accepted_at,s.created_at,$effective effective_status FROM ($union) d LEFT JOIN tbl_document_series ds ON ds.document_type=d.series_type AND ds.series=d.series LEFT JOIN tbl_sunat_document s ON s.source_type=d.source_type AND s.source_id=d.source_id WHERE ".implode(' AND ',$where)." ORDER BY d.document_date DESC,d.source_id DESC LIMIT 1000";
+$query=$pdo->prepare($sql);$query->execute($params);$documents=$query->fetchAll();$summary=['accepted'=>0,'observed'=>0,'rejected'=>0,'pending'=>0,'technical_error'=>0,'internal'=>0];foreach($documents as $document){$key=(string)$document['effective_status'];if(isset($summary[$key]))$summary[$key]++;}
+$series=$pdo->query("SELECT id,document_type,series,next_number,number_padding,sunat_enabled,active_status FROM tbl_document_series WHERE document_type IN('INVOICE','RECEIPT','CREDIT_NOTE') ORDER BY document_type,sunat_enabled DESC,series")->fetchAll();echo json_encode(compact('summary','documents','series','from','to'),JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
