@@ -103,6 +103,7 @@
 <script src="<?php echo $functions->direct_sistema(); ?>/js/legacy-master-workspace.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
 <script src="<?php echo $functions->direct_sistema(); ?>/js/sales-document-list.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
 <script src="<?php echo $functions->direct_sistema(); ?>/js/delivery-billing.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
+<script src="<?php echo $functions->direct_sistema(); ?>/js/sunat-artifacts.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
 <script src="<?php echo $functions->direct_sistema(); ?>/js/footer-functions.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
 <script src="<?php echo $functions->direct_sistema(); ?>/ajax/business-partner-details.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
 

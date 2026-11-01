@@ -174,6 +174,13 @@
             </ul>
           </li>
 
+          <li class="nav-item">
+            <a id="m_panel_sunat" href="<?php echo $functions->direct_paginas()."facturacion/panel-sunat" ?>" class="nav-link">
+              <i class="nav-icon fas fa-satellite-dish"></i>
+              <p>Panel SUNAT</p>
+            </a>
+          </li>
+
           <li class="nav-item has-treeview menu-close">
             <a id="m_boleta" href="<?php echo $functions->direct_paginas()."facturacion/resumen-boletas" ?>" class="nav-link">
             <i class="nav-icon fas fa-file-invoice"></i>
