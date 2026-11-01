@@ -39,17 +39,22 @@ try {
         $legalName = trim((string) ($_POST['legal_name'] ?? ''));
         $tradeName = trim((string) ($_POST['trade_name'] ?? ''));
         $address = trim((string) ($_POST['address'] ?? ''));
+        $ubigeo = trim((string) ($_POST['ubigeo'] ?? ''));
+        $department = strtoupper(trim((string) ($_POST['department'] ?? '')));
+        $province = strtoupper(trim((string) ($_POST['province'] ?? '')));
+        $district = strtoupper(trim((string) ($_POST['district'] ?? '')));
         $phone = trim((string) ($_POST['phone'] ?? ''));
         $email = trim((string) ($_POST['email'] ?? ''));
         $currency = strtoupper(trim((string) ($_POST['currency'] ?? 'PEN')));
+        if (!preg_match('/^\d{6}$/', $ubigeo) || $department === '' || $province === '' || $district === '') { $json(422, ['error' => 'Completa el ubigeo SUNAT, departamento, provincia y distrito.']); }
         if (!preg_match('/^(10|20)\d{9}$/', $taxId) || $legalName === '') { $json(422, ['error' => 'Ingresa un RUC peruano válido y la razón social.']); }
         if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) { $json(422, ['error' => 'El correo de la empresa no es válido.']); }
         if (!in_array($currency, ['PEN', 'USD', 'EUR'], true)) { $json(422, ['error' => 'La moneda base no es válida.']); }
         $previousCurrency=$pdo->query('SELECT currency FROM tbl_company_settings WHERE id=1')->fetchColumn();
         if($previousCurrency!==false&&app_currency_code((string)$previousCurrency)!==$currency){$valued=(int)$pdo->query('SELECT (SELECT COUNT(*) FROM tbl_warehouse_movement WHERE ABS(inventory_value_delta)>0.000001)+(SELECT COUNT(*) FROM tbl_warehouse_stock WHERE ABS(inventory_value)>0.000001)')->fetchColumn();if($valued>0)throw new DomainException('La empresa ya tiene movimientos de inventario valorizados. No se puede cambiar su moneda base.');}
         foreach (['legal_name'=>[$legalName,200],'trade_name'=>[$tradeName,200],'address'=>[$address,300],'phone'=>[$phone,50],'email'=>[$email,150]] as [$value,$length]) if(mb_strlen($value)>$length) throw new DomainException('Uno de los datos de empresa supera la longitud permitida.');
-        $pdo->prepare('INSERT INTO tbl_company_settings (id,tax_id,legal_name,trade_name,address,phone,email,currency) VALUES (1,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE tax_id=VALUES(tax_id),legal_name=VALUES(legal_name),trade_name=VALUES(trade_name),address=VALUES(address),phone=VALUES(phone),email=VALUES(email),currency=VALUES(currency)')->execute([
-            $taxId, $legalName, $tradeName, $address, $phone, $email, $currency,
+        $pdo->prepare('INSERT INTO tbl_company_settings (id,tax_id,legal_name,trade_name,address,ubigeo,department,province,district,phone,email,currency) VALUES (1,?,?,?,?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE tax_id=VALUES(tax_id),legal_name=VALUES(legal_name),trade_name=VALUES(trade_name),address=VALUES(address),ubigeo=VALUES(ubigeo),department=VALUES(department),province=VALUES(province),district=VALUES(district),phone=VALUES(phone),email=VALUES(email),currency=VALUES(currency)')->execute([
+            $taxId, $legalName, $tradeName, $address, $ubigeo, $department, $province, $district, $phone, $email, $currency,
         ]);
     } elseif ($action === 'value_list') {
         $code = strtoupper(trim((string) ($_POST['code'] ?? '')));
