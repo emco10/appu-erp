@@ -1,7 +1,7 @@
 <?php
 
 define('APP_NAME', 'APPU');
-define('SCRIPT_VER', '261102_sunat_panel_fix');
+define('SCRIPT_VER', '261102_kpi_icon_layout');
 
 $databaseConfig = [];
 $privateConfigOverride = getenv('APPU_PRIVATE_CONFIG');

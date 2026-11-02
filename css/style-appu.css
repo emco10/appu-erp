@@ -89,6 +89,8 @@ label, .control-label { color: #25343c; font-weight: 600; }
 
 /* KPI sobrios: una sola superficie y acentos discretos, sin colores estridentes. */
 .small-box {
+    position: relative;
+    overflow: hidden;
     background: #fff !important;
     color: var(--appu-primary-dark) !important;
     border: 1px solid #d9e0e2;
@@ -96,10 +98,59 @@ label, .control-label { color: #25343c; font-weight: 600; }
     border-radius: .35rem;
     box-shadow: 0 .08rem .35rem rgba(23,37,44,.045);
 }
-.small-box .inner h3, .small-box .inner p { color: var(--appu-primary-dark) !important; }
-.small-box .icon { color: #9aabb0 !important; }
+.small-box .inner {
+    position: relative;
+    z-index: 1;
+    min-height: 105px;
+    padding: .75rem 4.75rem .75rem .75rem;
+}
+.small-box .inner h3,
+.small-box .inner p {
+    max-width: 100%;
+    color: var(--appu-primary-dark) !important;
+    overflow-wrap: anywhere;
+    white-space: normal;
+}
+.small-box .inner h3 {
+    margin-bottom: .45rem;
+    font-size: clamp(1.55rem, 2.15vw, 2.2rem);
+    line-height: 1.08;
+}
+.small-box .inner p { margin-bottom: 0; line-height: 1.25; }
+.small-box .icon {
+    top: .85rem !important;
+    right: .75rem !important;
+    z-index: 0;
+    display: flex;
+    width: 3.35rem;
+    height: 3.35rem;
+    align-items: center;
+    justify-content: center;
+    color: #9aabb0 !important;
+    pointer-events: none;
+}
+.small-box .icon > i,
+.small-box:hover .icon > i {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    font-size: 3.15rem !important;
+    transform: none !important;
+}
 .small-box .small-box-footer { color: var(--appu-primary) !important; background: #f4f6f6 !important; }
 .small-box.bg-info, .small-box.bg-success, .small-box.bg-warning, .small-box.bg-danger { border-top-color: var(--appu-primary) !important; }
+
+/* Entre tablet horizontal y escritorio las columnas KPI son más estrechas. */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .dashboard-kpis .small-box .inner { padding-right: 4.15rem; }
+    .dashboard-kpis .small-box .icon { width: 2.8rem; height: 2.8rem; }
+    .dashboard-kpis .small-box .icon > i,
+    .dashboard-kpis .small-box:hover .icon > i { font-size: 2.7rem !important; }
+    #sunat-summary .small-box .inner { min-height: 96px; padding-right: 3.35rem; }
+    #sunat-summary .small-box .icon { width: 2.25rem; height: 2.25rem; right: .55rem !important; }
+    #sunat-summary .small-box .icon > i,
+    #sunat-summary .small-box:hover .icon > i { font-size: 2.15rem !important; }
+}
 
 /* Barra de herramientas documental, inspirada en el patrón de SAP B1. */
 .appu-document-toolbar {
@@ -187,8 +238,10 @@ body.appu-has-unsaved-changes .appu-document-toolbar__eyebrow { color: var(--app
 
 @media (max-width: 575.98px) {
     .dashboard-kpis > .col-6 { flex: 0 0 100%; max-width: 100%; }
-    .small-box .inner { padding-right: 4.75rem; }
-    .small-box .inner p { white-space: normal; }
+    .small-box .inner { min-height: 96px; padding-right: 4.25rem; }
+    .small-box .icon { width: 2.8rem; height: 2.8rem; }
+    .small-box .icon > i,
+    .small-box:hover .icon > i { font-size: 2.65rem !important; }
     .btn-group.d-flex { flex-wrap: wrap; }
     .btn-group.d-flex > .btn { flex: 1 1 25%; }
     .input-group > .form-control,
