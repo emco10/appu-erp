@@ -2,10 +2,40 @@
 
 define('APP_NAME', 'APPU');
 define('SCRIPT_VER', '261101_382');
-define('SERVER', getenv('APPU_DB_HOST') ?: 'localhost');
-define('DB_USER', getenv('APPU_DB_USER') ?: 'root');
-define('DB_PASSWORD', getenv('APPU_DB_PASSWORD') ?: '');
-define('DB', getenv('APPU_DB_NAME') ?: 'db_appu');
+
+$databaseConfig = [];
+$privateConfigOverride = getenv('APPU_PRIVATE_CONFIG');
+$privateConfigPath = $privateConfigOverride !== false && $privateConfigOverride !== ''
+    ? $privateConfigOverride
+    : dirname(__DIR__, 5) . DIRECTORY_SEPARATOR . '.appu-erp' . DIRECTORY_SEPARATOR . 'database.php';
+
+if (is_file($privateConfigPath)) {
+    $loadedDatabaseConfig = require $privateConfigPath;
+    if (!is_array($loadedDatabaseConfig)) {
+        throw new RuntimeException('The private APPU database config must return an array.');
+    }
+    foreach (['host', 'user', 'password', 'database'] as $requiredKey) {
+        if (!array_key_exists($requiredKey, $loadedDatabaseConfig) || !is_string($loadedDatabaseConfig[$requiredKey])) {
+            throw new RuntimeException('The private APPU database config is missing a valid ' . $requiredKey . ' value.');
+        }
+    }
+    $databaseConfig = $loadedDatabaseConfig;
+} elseif ($privateConfigOverride !== false && $privateConfigOverride !== '') {
+    throw new RuntimeException('The configured APPU_PRIVATE_CONFIG file does not exist.');
+}
+
+$databaseSetting = static function (string $environmentKey, string $configKey, string $fallback) use ($databaseConfig): string {
+    $environmentValue = getenv($environmentKey);
+    if ($environmentValue !== false && $environmentValue !== '') {
+        return $environmentValue;
+    }
+    return $databaseConfig[$configKey] ?? $fallback;
+};
+
+define('SERVER', $databaseSetting('APPU_DB_HOST', 'host', 'localhost'));
+define('DB_USER', $databaseSetting('APPU_DB_USER', 'user', 'root'));
+define('DB_PASSWORD', $databaseSetting('APPU_DB_PASSWORD', 'password', ''));
+define('DB', $databaseSetting('APPU_DB_NAME', 'database', 'db_appu'));
 date_default_timezone_set('America/Lima');
 
 error_reporting(E_ALL);

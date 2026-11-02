@@ -36,6 +36,20 @@ La guía de remisión y los despachos son documentos operativos internos. No se 
 
 Si la base ya existía, aplica en orden los scripts de `db/migrations/`, incluyendo los más recientes de almacenes, lotes, seguimiento de artículos por serie/lote/ninguno, series documentales, pagos, compras, campos personalizados, integraciones y estados activos de clientes, proveedores, empleados y usuarios. La migración `20261101_add_product_tracking_type.sql` conserva el valor predeterminado `NONE` y marca como `LOT` los artículos con historial de lotes; `tests/schema-readiness.php` comprueba que la columna esté instalada.
 
+### Migraciones automáticas en Hostinger
+
+Agrega cada cambio de esquema como un archivo SQL nuevo en `db/migrations/`, con nombre cronológico único `YYYYMMDD_nombre.sql`; nunca edites una migración aplicada. El workflow `.github/workflows/hostinger-migrations.yml` espera el despliegue de Hostinger verificando los checksums y luego ejecuta `php db/migrate.php --apply` por SSH. Las migraciones aplicadas se registran con checksum en `appu_schema_migrations`, se serializan con un lock MySQL y no se repiten.
+
+Los secretos SSH requeridos son `HOSTINGER_SSH_HOST`, `HOSTINGER_SSH_PORT`, `HOSTINGER_SSH_USER`, `SSH_PRIVATE_KEY`, `HOSTINGER_SSH_KNOWN_HOSTS` y `HOSTINGER_APP_PATH`. PHP CLI del hosting lee la configuración privada de BD en `~/.appu-erp/database.php`; el archivo debe devolver `host`, `user`, `password` y `database`, tener permisos `0600` y estar fuera del directorio público. `global/config.php` también mantiene soporte para las variables `APPU_DB_HOST`, `APPU_DB_USER`, `APPU_DB_PASSWORD` y `APPU_DB_NAME`. No guardes contraseñas en GitHub como texto del código ni en el repositorio. Configura el entorno `production` en GitHub con revisores obligatorios antes de confiar cambios de esquema a producción.
+
+No habilites migraciones productivas hasta crear y probar un respaldo restaurable y reconciliar la estructura existente. La base actual puede tener historial incompleto; `php db/migrate.php --status` informa el estado. Solo después de comprobar manualmente que el esquema incluye todos los cambios históricos, establece la línea base una vez:
+
+```sh
+php db/migrate.php --baseline --through=20261101_normalize_product_tax_affectation.sql --confirm-db=u623025990_appucorp_erp --confirm-backup=YES
+```
+
+El comando registra como aplicadas las migraciones hasta ese archivo, sin ejecutarlas ni inspeccionar su contenido; reemplaza el nombre de la base si corresponde y no lo ejecutes hasta reconciliar el esquema. `--apply` se niega a operar si falta el historial. No importes un volcado completo para actualizar el esquema.
+
 La migración `20261026_custom_field_metadata.sql` añade búsqueda, copia optativa, defaults y restricciones a las definiciones de campos. Se aplica una sola vez después de las migraciones anteriores. El 29-10-2026 se completaron los metadatos y protecciones de operaciones pendientes de la base operativa, con respaldo previo y comparación de conteos/saldos. El comprobador CLI `tests/schema-readiness.php` informa si el esquema está listo.
 
 Después se aplican, una sola vez, `20261026_document_line_flow.sql` y `20261027_document_operation_guards.sql`. Añaden relaciones por línea, origen físico de la factura, trazabilidad de movimientos, índices, reintentos y redondeo explícito. El nuevo flujo Orden → Entrega → Factura requiere estas migraciones. Las guías históricas solo se marcan como salidas físicas si existe evidencia en el ledger; no se descuenta stock retrospectivamente.

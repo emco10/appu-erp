@@ -1,0 +1,113 @@
+name: Hostinger database migrations
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'db/migrations/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hostinger-production-migrations
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    steps:
+      - name: Check out migration files
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.HOSTINGER_SSH_KNOWN_HOSTS }}
+        run: |
+          test -n "$SSH_PRIVATE_KEY" || { echo "Missing SSH_PRIVATE_KEY"; exit 1; }
+          test -n "$SSH_KNOWN_HOSTS" || { echo "Missing HOSTINGER_SSH_KNOWN_HOSTS"; exit 1; }
+          install -m 700 -d "$HOME/.ssh"
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$HOME/.ssh/id_ed25519"
+          chmod 600 "$HOME/.ssh/id_ed25519"
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/known_hosts"
+
+      - name: Wait for Hostinger Git deployment
+        env:
+          SSH_HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
+          SSH_PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
+          SSH_USER: ${{ secrets.HOSTINGER_SSH_USER }}
+          APP_PATH: ${{ secrets.HOSTINGER_APP_PATH }}
+          BEFORE_SHA: ${{ github.event.before }}
+          CURRENT_SHA: ${{ github.sha }}
+        run: |
+          test -n "$SSH_HOST" || { echo "Missing HOSTINGER_SSH_HOST"; exit 1; }
+          test -n "$SSH_PORT" || { echo "Missing HOSTINGER_SSH_PORT"; exit 1; }
+          test -n "$SSH_USER" || { echo "Missing HOSTINGER_SSH_USER"; exit 1; }
+          test -n "$APP_PATH" || { echo "Missing HOSTINGER_APP_PATH"; exit 1; }
+          python3 - "$APP_PATH" "$SSH_USER@$SSH_HOST" "$SSH_PORT" "$BEFORE_SHA" "$CURRENT_SHA" <<'PY'
+          import hashlib
+          import pathlib
+          import shlex
+          import subprocess
+          import sys
+          import time
+
+          app_path, target, port, before, current = sys.argv[1:]
+          root = pathlib.Path.cwd()
+          changed = subprocess.check_output(
+              ["git", "diff", "--name-only", before, current, "--", "db/migrate.php", "db/migrations"],
+              text=True,
+          ).splitlines()
+          required = ["db/migrate.php", *[name for name in changed if name.endswith(".sql")]]
+          for name in changed:
+              if name.endswith(".sql") and not (root / name).is_file():
+                  raise SystemExit(f"Migration files must not be deleted: {name}")
+
+          for name in required:
+              local_hash = hashlib.sha256((root / name).read_bytes()).hexdigest()
+              remote_file = shlex.quote(f"{app_path.rstrip('/')}/{name}")
+              command = f"sha256sum {remote_file} 2>/dev/null | cut -d ' ' -f 1"
+              for attempt in range(60):
+                  result = subprocess.run(
+                      ["ssh", "-p", port, "-o", "BatchMode=yes", target, command],
+                      capture_output=True,
+                      text=True,
+                  )
+                  if result.returncode == 0 and result.stdout.strip() == local_hash:
+                      break
+                  time.sleep(10)
+              else:
+                  raise SystemExit(f"Hostinger did not deploy {name} with the expected checksum within 10 minutes.")
+          PY
+
+      - name: Apply pending migrations
+        env:
+          SSH_HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
+          SSH_PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
+          SSH_USER: ${{ secrets.HOSTINGER_SSH_USER }}
+          APP_PATH: ${{ secrets.HOSTINGER_APP_PATH }}
+        run: |
+          test -n "$SSH_HOST" || { echo "Missing HOSTINGER_SSH_HOST"; exit 1; }
+          test -n "$SSH_PORT" || { echo "Missing HOSTINGER_SSH_PORT"; exit 1; }
+          test -n "$SSH_USER" || { echo "Missing HOSTINGER_SSH_USER"; exit 1; }
+          test -n "$APP_PATH" || { echo "Missing HOSTINGER_APP_PATH"; exit 1; }
+          python3 - "$APP_PATH" "$SSH_USER@$SSH_HOST" "$SSH_PORT" <<'PY'
+          import shlex
+          import subprocess
+          import sys
+
+          app_path, target, port = sys.argv[1:]
+          command = (
+              f"cd {shlex.quote(app_path)} && "
+              "APPU_MIGRATION_ALLOW_PRODUCTION=1 php db/migrate.php --apply && "
+              "php tests/schema-readiness.php"
+          )
+          result = subprocess.run(["ssh", "-p", port, "-o", "BatchMode=yes", target, command])
+          raise SystemExit(result.returncode)
+          PY
