@@ -1,6 +1,6 @@
 <?php
 require '../../global/connection.php';
-header('Content-Type: application/json; charset=utf-8');app_require_permission('sales.view');
+header('Content-Type: application/json; charset=utf-8');header('Cache-Control: private, no-store');app_require_permission('sales.view');
 $validDate=static function(string $value,string $fallback):string{$date=DateTimeImmutable::createFromFormat('!Y-m-d',$value);return $date&&$date->format('Y-m-d')===$value?$value:$fallback;};
 $today=date('Y-m-d');$from=$validDate(trim((string)($_GET['date_from']??'')),date('Y-m-d',strtotime('-29 days')));$to=$validDate(trim((string)($_GET['date_to']??'')),$today);
 if($from>$to){http_response_code(422);echo json_encode(['error'=>'La fecha desde no puede ser posterior a la fecha hasta.']);exit;}

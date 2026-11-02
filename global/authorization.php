@@ -85,6 +85,10 @@ function app_endpoint_permission(): ?string
         return 'sales.view';
     }
 
+    if ($directory === 'sunat') {
+        return ($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'GET' ? 'sales.view' : 'sales.manage';
+    }
+
     if ($directory === 'compras' && in_array($fileName, ['recepciones.php', 'goods-receipts.php'], true)) {
         return ($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'GET' ? 'purchases.view' : 'inventory.manage';
     }

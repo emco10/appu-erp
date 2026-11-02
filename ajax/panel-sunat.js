@@ -14,14 +14,19 @@ $(function(){
     if(d.cdr_path){buttons.push("<a target='_blank' class='btn btn-outline-success' href='"+base+"cdr'>Ver CDR</a>","<a class='btn btn-outline-success' href='"+base+"cdr&download=1'>Descargar CDR</a>");}
     return "<div class='btn-group btn-group-sm flex-wrap'>"+buttons.join("")+"</div>";
   }
-  function load(){
+  function load(retry){
     var query=$("#sunat-filters").serialize();
     $.getJSON("../../modules/sunat/panel.php?"+query).done(function(data){
       var cards=[["accepted","Aceptados","check-circle","success"],["observed","Objetados","exclamation-triangle","warning"],["rejected","Rechazados","times-circle","danger"],["pending","Pendientes","clock","info"],["technical_error","Errores tecnicos","tools","danger"],["internal","Series internas","folder","secondary"]];
       $("#sunat-summary").html(cards.map(function(c){return "<div class='col-lg-2 col-md-4'><div class='small-box bg-"+c[3]+"'><div class='inner'><h3>"+Number(data.summary[c[0]]||0)+"</h3><p>"+c[1]+"</p></div><div class='icon'><i class='fas fa-"+c[2]+"'></i></div></div></div>";}).join(""));
       $("#sunat-documents tbody").html((data.documents||[]).map(function(d){var s=states[d.effective_status]||[d.effective_status,"secondary"];return "<tr><td><strong>"+e(labels[d.source_type]||d.source_type)+"</strong><br>"+e(d.series+"-"+d.number)+"</td><td>"+e(d.customer_name||"-")+"</td><td>S/ "+Number(d.total_net||0).toFixed(2)+"</td><td><span class='badge badge-"+s[1]+"'>"+e(s[0])+"</span></td><td><small>"+e((d.sunat_code||"")+" "+(d.sunat_description||""))+"</small></td><td>"+e(d.document_date||"")+"</td><td>"+fileButtons(d)+"</td></tr>";}).join("")||"<tr><td colspan='7' class='text-center text-muted'>No hay documentos para los filtros seleccionados.</td></tr>");
       $("#sunat-series tbody").html((data.series||[]).map(function(s){return "<tr><td>"+e(s.document_type)+"</td><td><strong>"+e(s.series)+"</strong></td><td>"+Number(s.next_number)+"</td><td><span class='badge badge-"+(Number(s.sunat_enabled)===1?"primary":"secondary")+"'>"+(Number(s.sunat_enabled)===1?"SUNAT":"Interna")+"</span></td><td>"+(Number(s.active_status)===1?"Activa":"Inactiva")+"</td></tr>";}).join(""));
-    }).fail(function(xhr){toastr.error((xhr.responseJSON||{}).error||"No se pudo cargar el panel SUNAT.");});
+    }).fail(function(xhr){
+      if(!retry&&xhr.status>=500){window.setTimeout(function(){load(true);},400);return;}
+      if(xhr.status===401){window.location.href="../../";return;}
+      var response=xhr.responseJSON||{},message=response.message||response.error;
+      toastr.error(message||("No se pudo cargar el panel SUNAT (HTTP "+(xhr.status||"sin conexion")+")."));
+    });
   }
   $("#sunat-filters").on("submit",function(event){event.preventDefault();load();});$("#sunat-refresh").on("click",load);load();
 });

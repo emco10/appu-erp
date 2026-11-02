@@ -1,6 +1,6 @@
 <?php
 require '../../global/connection.php';
-header('Content-Type: application/json; charset=utf-8');app_require_permission('sales.view');
+header('Content-Type: application/json; charset=utf-8');header('Cache-Control: private, no-store');app_require_permission('sales.view');
 $type=trim((string)($_GET['source_type']??''));$id=filter_var($_GET['source_id']??null,FILTER_VALIDATE_INT);
 if(!in_array($type,['invoice','receipt','credit-note'],true)||$id===false){http_response_code(422);echo json_encode(['error'=>'Documento inválido.']);exit;}
 $seriesType=['invoice'=>'INVOICE','receipt'=>'RECEIPT','credit-note'=>'CREDIT_NOTE'][$type];

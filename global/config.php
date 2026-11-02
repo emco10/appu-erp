@@ -1,7 +1,7 @@
 <?php
 
 define('APP_NAME', 'APPU');
-define('SCRIPT_VER', '261102_sunat_beta');
+define('SCRIPT_VER', '261102_sunat_panel_fix');
 
 $databaseConfig = [];
 $privateConfigOverride = getenv('APPU_PRIVATE_CONFIG');
