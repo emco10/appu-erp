@@ -30,6 +30,11 @@ if ($repairMigration === false || count(appuSplitSqlStatements($repairMigration)
     throw new RuntimeException('The schema repair migration should contain five SQL statements.');
 }
 
+$transferRepairMigration = file_get_contents(__DIR__ . '/../db/migrations/20261101_repair_inventory_transfer_schema.sql');
+if ($transferRepairMigration === false || count(appuSplitSqlStatements($transferRepairMigration)) !== 4) {
+    throw new RuntimeException('The inventory transfer repair migration should contain four SQL statements.');
+}
+
 try {
     appuSplitSqlStatements("SELECT 'unterminated;");
     throw new RuntimeException('Unterminated SQL strings must be rejected.');
