@@ -1,3 +1,5 @@
+-- Reconciles verified production schema gaps without rewriting operational data.
+
 ALTER TABLE `tbl_product`
   ADD COLUMN IF NOT EXISTS `tracking_type` ENUM('NONE','SERIAL','LOT') NOT NULL DEFAULT 'NONE' AFTER `model`;
 

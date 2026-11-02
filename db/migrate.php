@@ -6,6 +6,7 @@ if (PHP_SAPI !== 'cli') {
 }
 
 require __DIR__ . '/../global/config.php';
+require __DIR__ . '/sql-statements.php';
 
 $mode = $argv[1] ?? '';
 $options = [];
@@ -44,7 +45,6 @@ $pdo = new PDO('mysql:host=' . SERVER . ';dbname=' . DB . ';charset=utf8mb4', DB
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     PDO::ATTR_EMULATE_PREPARES => false,
-    PDO::MYSQL_ATTR_MULTI_STATEMENTS => true,
 ]);
 
 $trackingTable = 'appu_schema_migrations';
@@ -158,13 +158,19 @@ try {
                 throw new RuntimeException('Migration is empty or unreadable: ' . $version);
             }
             try {
-                $statement = $pdo->query($sql);
-                do {
-                    if ($statement->columnCount() > 0) {
-                        $statement->fetchAll();
-                    }
-                } while ($statement->nextRowset());
-                $statement->closeCursor();
+                $sqlStatements = appuSplitSqlStatements($sql);
+                if (!$sqlStatements) {
+                    throw new RuntimeException('Migration contains no SQL statements: ' . $version);
+                }
+                foreach ($sqlStatements as $sqlStatement) {
+                    $statement = $pdo->query($sqlStatement);
+                    do {
+                        if ($statement->columnCount() > 0) {
+                            $statement->fetchAll();
+                        }
+                    } while ($statement->nextRowset());
+                    $statement->closeCursor();
+                }
                 $insert = $pdo->prepare("INSERT INTO `{$trackingTable}` (`version`, `checksum`) VALUES (?, ?)");
                 $insert->execute([$version, $checksum]);
             } catch (Throwable $exception) {
