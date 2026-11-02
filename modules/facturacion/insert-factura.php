@@ -11,6 +11,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     require_once '../../global/business-partner-details.php';
     require_once '../finanzas/sync.php';
     require_once '../../global/sales-advance.php';
+    require_once '../../global/sunat-api.php';
 
     $f_faccod = "";
     $f_series = $_POST['facturacion_series'];
@@ -195,6 +196,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 
         app_document_request_finish($pdo,'invoice_create',$_POST,(int)$f_user_id,'invoice',(int)$id_facturacion,['response'=>'OK_INSERT']);
         $pdo->commit();
+        try { app_sunat_submit_document($pdo, 'invoice', (int) $id_facturacion); }
+        catch (Throwable $sunatException) { error_log('APPU automatic SUNAT invoice submission: ' . $sunatException->getMessage()); }
         echo 'OK_INSERT';
     } catch (Throwable $exception) {
         if ($pdo->inTransaction()) {

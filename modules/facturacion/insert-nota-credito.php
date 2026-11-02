@@ -7,6 +7,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     require_once '../inventory/stock.php';
     require_once '../../global/document-history.php';
     require_once '../finanzas/sync.php';
+    require_once '../../global/sunat-api.php';
     require_once '../../global/sales-document-validation.php';
 
     $f_faccod = "";
@@ -154,6 +155,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 
         finance_recalculate_credit_notes($pdo, (int) $f_selectcotizid, (int) $f_referenced_doc_type);
         $pdo->commit();
+        try { app_sunat_submit_document($pdo, 'credit-note', (int) $id_facturacion); }
+        catch (Throwable $sunatException) { error_log('APPU automatic SUNAT credit note submission: ' . $sunatException->getMessage()); }
         echo 'OK_INSERT';
     } catch (Throwable $exception) {
         if ($pdo->inTransaction()) {
