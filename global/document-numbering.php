@@ -35,7 +35,9 @@ function app_next_document_number(PDO $pdo, string $documentType, string $fallba
     $seriesCode = (string) $series['series'];
     if (isset($tableMap[$documentType])) {
         $numberColumn = in_array($documentType, ['INCOMING_PAYMENT', 'OUTGOING_PAYMENT'], true) ? 'payment_number' : 'number';
-        $maxStatement = $pdo->prepare("SELECT COALESCE(MAX(CAST(SUBSTRING_INDEX({$numberColumn}, '-', -1) AS UNSIGNED)), 0) FROM {$tableMap[$documentType]} WHERE {$numberColumn} LIKE CONCAT(?, '-%')");
+        // Hostinger puede tener columnas/cadenas con collations distintas (p. ej. bin vs unicode_ci).
+        // Normalizamos ambos operandos para que la reserva del correlativo no falle con error 1267.
+        $maxStatement = $pdo->prepare("SELECT COALESCE(MAX(CAST(SUBSTRING_INDEX({$numberColumn}, '-', -1) AS UNSIGNED)), 0) FROM {$tableMap[$documentType]} WHERE {$numberColumn} COLLATE utf8mb4_unicode_ci LIKE CONCAT(CAST(? AS CHAR), '-%') COLLATE utf8mb4_unicode_ci");
         $maxStatement->execute([$seriesCode]);
         $nextNumber = max($nextNumber, (int) $maxStatement->fetchColumn() + 1);
     }
