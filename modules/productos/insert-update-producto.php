@@ -66,8 +66,22 @@ try {
             app_validate_custom_fields($pdo,'product',$customValues);
         }
     }
-    $duplicate = $pdo->prepare("SELECT code,name,barcode FROM tbl_product WHERE (code=? OR name=? OR (?<>'' AND barcode=?)) AND (? IS NULL OR id<>?)");
-    $duplicate->execute([$code,$name,$barcode,$barcode,$productId,$productId]);
+    // Do not compare a bound string against a SQL literal here. Older production
+    // schemas can mix utf8mb4_general_ci and utf8mb4_unicode_ci, which makes that
+    // otherwise harmless comparison fail before the duplicate check is evaluated.
+    $duplicateConditions = ['code=?', 'name=?'];
+    $duplicateValues = [$code, $name];
+    if ($barcode !== '') {
+        $duplicateConditions[] = 'barcode=?';
+        $duplicateValues[] = $barcode;
+    }
+    $duplicateValues[] = $productId;
+    $duplicateValues[] = $productId;
+    $duplicate = $pdo->prepare(
+        'SELECT code,name,barcode FROM tbl_product WHERE (' . implode(' OR ', $duplicateConditions) . ')'
+        . ' AND (? IS NULL OR id<>?)'
+    );
+    $duplicate->execute($duplicateValues);
     $duplicates=$duplicate->fetchAll();
     if ($duplicates) {
         if (!$jsonResponse) { $pdo->rollBack(); echo 'EXISTE'; return; }

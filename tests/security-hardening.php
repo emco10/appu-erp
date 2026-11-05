@@ -7,6 +7,7 @@ $security = file_get_contents($root . '/global/security.php');
 $login = file_get_contents($root . '/modules/login.php');
 $htaccess = file_get_contents($root . '/.htaccess');
 $migration = file_get_contents($root . '/db/migrations/20261104_add_login_rate_limiting.sql');
+$productSave = file_get_contents($root . '/modules/productos/insert-update-producto.php');
 
 $requirements = [
     [$config, "session.use_strict_mode", 'La sesión no activa el modo estricto.'],
@@ -23,7 +24,12 @@ $requirements = [
     [$login, 'password_needs_rehash', 'El login no actualiza hashes de contraseña obsoletos.'],
     [$htaccess, 'RewriteRule (^|/)\\.', 'No se bloquean archivos ocultos.'],
     [$migration, 'idx_login_attempt_pair_time', 'La tabla de intentos no tiene el índice esperado.'],
+    [$productSave, "if (\$barcode !== '')", 'El guardado de productos no separa la búsqueda opcional por código de barras.'],
 ];
+
+if (preg_match("/\\?\\s*<>\\s*''/", $productSave)) {
+    throw new RuntimeException('El guardado de productos conserva una comparación sensible a intercalaciones mixtas.');
+}
 
 foreach ($requirements as [$source, $needle, $message]) {
     if (!str_contains($source, $needle)) {
