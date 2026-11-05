@@ -59,6 +59,7 @@ jobs:
           import shlex
           import subprocess
           import sys
+          import time
 
           app_path, target, port = sys.argv[1:]
           root = pathlib.Path.cwd()
@@ -100,33 +101,14 @@ jobs:
               local_hash = hashlib.sha256((root / name).read_bytes()).hexdigest()
               if remote_hashes.get(remote_file) != local_hash:
                   raise SystemExit(f"Hostinger checksum mismatch after uploading {name}.")
-          PY
 
-      - name: Apply pending migrations
-        env:
-          SSH_HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
-          SSH_PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
-          SSH_USER: ${{ secrets.HOSTINGER_SSH_USER }}
-          APP_PATH: ${{ secrets.HOSTINGER_APP_PATH }}
-        run: |
-          test -n "$SSH_HOST" || { echo "Missing HOSTINGER_SSH_HOST"; exit 1; }
-          test -n "$SSH_PORT" || { echo "Missing HOSTINGER_SSH_PORT"; exit 1; }
-          test -n "$SSH_USER" || { echo "Missing HOSTINGER_SSH_USER"; exit 1; }
-          test -n "$APP_PATH" || { echo "Missing HOSTINGER_APP_PATH"; exit 1; }
-          python3 - "$APP_PATH" "$SSH_USER@$SSH_HOST" "$SSH_PORT" <<'PY'
-          import shlex
-          import subprocess
-          import sys
-          import time
-
-          app_path, target, port = sys.argv[1:]
-          command = (
+          apply_command = (
               f"cd {shlex.quote(app_path)} && "
               "APPU_MIGRATION_ALLOW_PRODUCTION=1 php db/migrate.php --apply && "
               "php tests/schema-readiness.php"
           )
           for attempt in range(1, 4):
-              result = subprocess.run(["ssh", "-p", port, "-o", "BatchMode=yes", target, command])
+              result = subprocess.run(["ssh", "-p", port, "-o", "BatchMode=yes", target, apply_command])
               if result.returncode != 255:
                   raise SystemExit(result.returncode)
               if attempt < 3:
