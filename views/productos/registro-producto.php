@@ -60,8 +60,8 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>Código</label>
-                                        <input type="text" class="form-control" placeholder="Ingrese código" name="producto_code" required>
+                                        <label>Código interno</label>
+                                        <input type="text" class="form-control" placeholder="Se genera automáticamente" name="producto_code">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -73,14 +73,14 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Marca</label>
-                                        <input type="text" class="form-control" placeholder="Ingrese marca de producto" name="producto_marca" required>
+                                        <input type="text" class="form-control" placeholder="Ingrese marca de producto" name="producto_marca">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-3"><div class="form-group"><label>Código de barras</label><input type="text" class="form-control" name="producto_barcode" maxlength="50"></div></div>
                                 <div class="col-md-3"><div class="form-group"><label>Código de artículo SUNAT</label><input type="text" class="form-control" name="producto_sunat_code" maxlength="30"></div></div>
-                                <div class="col-md-3"><div class="form-group"><label>Unidad SUNAT</label><input type="text" class="form-control" name="producto_sunat_unit" maxlength="10" placeholder="NIU, KGM..."></div></div>
+                                <div class="col-md-3"><div class="form-group"><label>Unidad SUNAT</label><input type="text" class="form-control" name="producto_sunat_unit" maxlength="10" value="NIU" placeholder="NIU, KGM..."></div></div>
                                 <div class="col-md-3"><div class="form-group"><label>Afectación tributaria SUNAT</label><select class="form-control" name="producto_tax_code" required><option value="10">10 - Gravado (18% IGV)</option><option value="20">20 - Exonerado (0% IGV)</option><option value="30">30 - Inafecto (0% IGV)</option><option value="40">40 - Exportación (0% IGV)</option></select></div></div>
                             </div>
                             <div class="row">
@@ -112,7 +112,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="producto_tracking_type">Gestionar artículo por</label>
-                                        <select class="form-control" id="producto_tracking_type" name="producto_tracking_type" data-master-default="NONE" required>
+                                        <select class="form-control" id="producto_tracking_type" name="producto_tracking_type" data-master-default="NONE">
                                             <option value="NONE">Ninguno</option>
                                             <option value="SERIAL">Serie</option>
                                             <option value="LOT">Lote</option>
@@ -130,7 +130,7 @@
                                                     <i class="fas fa-dollar-sign"></i>
                                                 </span>
                                             </div>
-                                            <input type="number" min="0" step="any" class="form-control"name="producto_precio" value="" required>
+                                            <input type="number" min="0" step="any" class="form-control"name="producto_precio" value="">
                                         </div>
                                     </div>
                                 </div>

@@ -17,11 +17,12 @@ $name = trim((string) ($_POST['producto_nombre'] ?? ''));
 $description = trim((string) ($_POST['producto_description'] ?? ''));
 $brand = trim((string) ($_POST['producto_marca'] ?? ''));
 $unitValue = trim((string) ($_POST['producto_unitvalue'] ?? ''));
-$price = filter_var($_POST['producto_precio'] ?? null, FILTER_VALIDATE_FLOAT);
+$priceInput = trim((string) ($_POST['producto_precio'] ?? ''));
+$price = $priceInput === '' ? 0.0 : filter_var($priceInput, FILTER_VALIDATE_FLOAT);
 $barcode = trim((string) ($_POST['producto_barcode'] ?? ''));
 $sunatCode = trim((string) ($_POST['producto_sunat_code'] ?? ''));
-$sunatUnit = trim((string) ($_POST['producto_sunat_unit'] ?? ''));
-$taxCode = trim((string) ($_POST['producto_tax_code'] ?? ''));
+$sunatUnit = trim((string) ($_POST['producto_sunat_unit'] ?? '')) ?: 'NIU';
+$taxCode = trim((string) ($_POST['producto_tax_code'] ?? '')) ?: '10';
 $osceCode = trim((string) ($_POST['producto_osce_code'] ?? ''));
 $manufacturerCode = trim((string) ($_POST['producto_manufacturer_code'] ?? ''));
 $model = trim((string) ($_POST['producto_model'] ?? ''));
@@ -31,7 +32,11 @@ $active = isset($_POST['producto_estado']) && $_POST['producto_estado'] === 'on'
 $customValues = is_array($_POST['custom_field'] ?? null) ? $_POST['custom_field'] : [];
 
 try {
-    $errors=app_product_master_errors($pdo,$_POST);
+    $validationInput=$_POST;
+    if (trim((string)($validationInput['producto_sunat_unit']??''))==='') $validationInput['producto_sunat_unit']='NIU';
+    if (trim((string)($validationInput['producto_tax_code']??''))==='') $validationInput['producto_tax_code']='10';
+    if (trim((string)($validationInput['producto_tracking_type']??''))==='') $validationInput['producto_tracking_type']='NONE';
+    $errors=app_product_master_errors($pdo,$validationInput);
     if ($errors) throw new AppValidationException($errors);
 
     $pdo->beginTransaction();
@@ -40,6 +45,13 @@ try {
     if ($replay!==null) {
         $pdo->commit(); header('Content-Type: application/json; charset=utf-8');
         echo json_encode($replay,JSON_UNESCAPED_UNICODE); return;
+    }
+    if ($code==='') {
+        do {
+            $code='ART-'.strtoupper(bin2hex(random_bytes(6)));
+            $generated=$pdo->prepare('SELECT 1 FROM tbl_product WHERE code=? LIMIT 1');
+            $generated->execute([$code]);
+        } while ($generated->fetchColumn());
     }
     if ($productId) {
         $snapshot=app_product_master_snapshot($pdo,$productId,true);

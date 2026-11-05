@@ -16,7 +16,7 @@ try {
     [$status,$catalog]=$client->request($path.'?action=catalog');
     productAssert($status===200 && in_array($requiredId,array_column($catalog['custom_fields'],'id')),'No se devolvieron los metadatos.');
     [$status,$error]=$client->request($save,['response_format'=>'json','producto_precio'=>'-1']);
-    productAssert($status===422 && count($error['errors']??[])>=6,'No se agregaron todos los errores del maestro.');
+    productAssert($status===422 && count($error['errors']??[])>=3,'No se agregaron todos los errores del maestro.');
     productAssert(in_array('custom_field['.$requiredId.']',array_column($error['errors'],'path')),'Falta el error de UDF obligatorio.');
     $custom=[];
     foreach ($catalog['custom_fields'] as $field) {
@@ -32,6 +32,15 @@ try {
     productAssert($status===200 && ($created['success']??false),'No se creó el artículo: '.json_encode($created));
     $id=(int)$created['id']; $productIds[]=$id;
     productAssert($created['snapshot']['values']['producto_tracking_type']==='SERIAL','No se guardó el seguimiento por serie.');
+    $minimalKey='master-'.bin2hex(random_bytes(12)); $keys[]=$minimalKey;
+    [$status,$minimal]=$client->request($save,['response_format'=>'json','request_key'=>$minimalKey,
+        'producto_nombre'=>'Artículo mínimo '.bin2hex(random_bytes(4)),'custom_field'=>[$requiredId=>'MINIMO']]);
+    productAssert($status===200 && ($minimal['success']??false),'Los campos internos opcionales impiden crear el artículo: '.json_encode($minimal));
+    $minimalId=(int)$minimal['id']; $productIds[]=$minimalId;
+    productAssert(str_starts_with($minimal['snapshot']['values']['producto_code'],'ART-'),'No se generó el código interno.');
+    productAssert($minimal['snapshot']['values']['producto_precio']==='0' && $minimal['snapshot']['values']['producto_sunat_unit']==='NIU'
+        && $minimal['snapshot']['values']['producto_tax_code']==='10' && $minimal['snapshot']['values']['producto_tracking_type']==='NONE',
+        'No se aplicaron los valores tributarios y operativos predeterminados.');
     $invalidTracking=array_replace($input,['request_key'=>'master-'.bin2hex(random_bytes(12)),
         'producto_code'=>$prefix.'-INVALID','producto_nombre'=>$prefix.' inválido','producto_tracking_type'=>'INVALID']);
     $keys[]=$invalidTracking['request_key'];
@@ -73,6 +82,14 @@ try {
     [$status,$inactive]=$client->request($save,$deactivate); productAssert($status===200 && $inactive['snapshot']['values']['producto_estado']===true,'No se persistió la desactivación.');
     [$status,$htmlData,$html]=$client->request('/views/productos/editar-producto?id='.$id);
     productAssert($status===200 && str_contains($html,'data-master-action="edit"') && str_contains($html,'/ajax/registro-producto.js?'),'La URL anterior no usa la ficha común.');
+    foreach (['producto_code','producto_marca','producto_precio','producto_tracking_type'] as $optionalField) {
+        productAssert(!preg_match('/name="'.preg_quote($optionalField,'/').'"[^>]*\srequired(?:\s|>|=)/i',$html),
+            'El campo interno opcional '.$optionalField.' volvió a marcarse obligatorio.');
+    }
+    foreach (['producto_nombre','producto_tax_code'] as $requiredField) {
+        productAssert((bool)preg_match('/name="'.preg_quote($requiredField,'/').'"[^>]*\srequired(?:\s|>|=)/i',$html),
+            'Falta marcar el dato tributario o descriptivo '.$requiredField.' como obligatorio.');
+    }
     echo 'PASS HTTP product master: validation, metadata, read/edit, retry, concurrency, search, status, legacy route; no stock effects'.PHP_EOL;
     $fixture=$pdo->prepare("INSERT INTO tbl_product(code,brand,name,description,stock_quantity,unit_price,unit_value,active_status) VALUES(?,'QA',?,'QA',0,1,'und',1)");
     for ($i=0;$i<26;$i++) { $fixture->execute([$prefix.'-'.$i,$prefix.' paginado '.$i]); $productIds[]=(int)$pdo->lastInsertId(); }

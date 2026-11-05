@@ -36,11 +36,11 @@ function app_product_master_errors(PDO $pdo, array $input): array
         'producto_tax_code'=>['Afectación tributaria',10], 'producto_osce_code'=>['Código OSCE',50],
         'producto_manufacturer_code'=>['Código fabricante',50], 'producto_model'=>['Modelo',100]] as $name=>$rule) {
         $schema[$name]=['label'=>$rule[0],'maxLength'=>$rule[1],
-            'required'=>in_array($name,['producto_code','producto_nombre','producto_marca','producto_unitvalue'],true)];
+            'required'=>$name==='producto_nombre'];
     }
-    $schema['producto_tracking_type']=['label'=>'Gestión de inventario','required'=>true,
+    $schema['producto_tracking_type']=['label'=>'Gestión de inventario',
         'validValues'=>['NONE','SERIAL','LOT']];
-    $schema['producto_precio']=['label'=>'Precio','required'=>true,'min'=>0,'max'=>999999999,
+    $schema['producto_precio']=['label'=>'Precio','min'=>0,'max'=>999999999,
         'messages'=>['min'=>'El precio debe ser un número mayor o igual que cero.','max'=>'El precio excede el máximo permitido.']];
     $schema['producto_tax_code']=['label'=>'Afectacion tributaria','required'=>true,'validValues'=>['10','20','30','40']];
     $schema['producto_estado']=['label'=>'Estado','validValues'=>['on','']];
