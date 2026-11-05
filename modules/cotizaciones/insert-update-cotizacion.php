@@ -58,7 +58,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         $calculatedSubtotal=0.0;
         foreach($c_lst_prods as $row){$price=filter_var($row[3]??null,FILTER_VALIDATE_FLOAT);$quantity=filter_var($row[4]??null,FILTER_VALIDATE_FLOAT);if($price===false||$price<0||$quantity===false||$quantity<=0)throw new InvalidArgumentException('La cotizacion contiene precios o cantidades invalidas.');$calculatedSubtotal+=round((float)$price*(float)$quantity,2);}
         $c_porcdesc=filter_var($c_porcdesc,FILTER_VALIDATE_FLOAT);if($c_porcdesc===false||$c_porcdesc<0||$c_porcdesc>100)throw new InvalidArgumentException('El descuento debe estar entre 0 y 100 por ciento.');
-        $c_subtotal=round($calculatedSubtotal,2);$c_taxigv=round($c_subtotal*0.18,2);$gross=round($c_subtotal+$c_taxigv,2);$c_valdesc=round($gross*((float)$c_porcdesc/100),2);$c_totalneto=round($gross-$c_valdesc,2);
+        $c_subtotal=$calculated['subtotal'];$c_taxigv=$calculated['tax'];$c_valdesc=$calculated['discount'];$c_totalneto=$calculated['total'];
     } catch (Throwable $exception) {
         app_api_error($exception,'No se pudo validar la cotización.');
         exit;

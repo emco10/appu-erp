@@ -58,8 +58,8 @@ function app_validate_sales_order_input(PDO $pdo, array $input): array
         $errors[] = app_field_error('details', 'REQUIRED', 'Artículos: agregue al menos una línea.');
         $rows = [];
     }
-    $details = []; $seen = []; $subtotal = 0.0;
-    $query = $pdo->prepare('SELECT id, code, name, description FROM tbl_product WHERE id = ? AND active_status = 1');
+    $details = []; $seen = []; $subtotal = 0.0; $tax = 0.0;
+    $query = $pdo->prepare('SELECT id, code, name, description, tax_affectation_code FROM tbl_product WHERE id = ? AND active_status = 1');
     foreach ($rows as $index => $row) {
         $row = is_array($row) ? $row : [];
         $prefix = 'Línea ' . ($index + 1) . ': ';
@@ -75,12 +75,14 @@ function app_validate_sales_order_input(PDO $pdo, array $input): array
         if ($price === false || $price === null || !is_finite((float) $price) || $price < 0 || $price > 999999999) $errors[] = app_field_error($path . '.unit_price', 'MIN', $prefix . 'ingrese un precio entre 0 y 999999999.');
         $lineTotal = round((float) $quantity * (float) $price, 2);
         $subtotal += $lineTotal;
+        if ($product && (string) ($product['tax_affectation_code'] ?? '') === '10') $tax += round($lineTotal * .18, 2);
         $details[] = [$product, (int) $quantity, (float) $price, $lineTotal];
     }
     $values = is_array($input['custom_field'] ?? null) ? $input['custom_field'] : [];
     $errors = array_merge($errors, app_custom_field_errors($pdo, 'sales_order', $values));
     if ($errors) throw new AppValidationException($errors);
-    return ['customer_id' => (int) $customerId, 'warehouse_id' => (int) $warehouseId, 'delivery_date' => $date, 'currency' => $currency, 'reference' => $reference, 'details' => $details, 'custom_fields' => $values, 'subtotal' => round($subtotal, 2), 'tax' => round($subtotal * .18, 2), 'total' => round($subtotal + round($subtotal * .18, 2), 2)];
+    $subtotal = round($subtotal, 2); $tax = round($tax, 2);
+    return ['customer_id' => (int) $customerId, 'warehouse_id' => (int) $warehouseId, 'delivery_date' => $date, 'currency' => $currency, 'reference' => $reference, 'details' => $details, 'custom_fields' => $values, 'subtotal' => $subtotal, 'tax' => $tax, 'total' => round($subtotal + $tax, 2)];
 }
 
 function app_write_sales_order_lines(PDO $pdo, int $id, array $details): void
