@@ -55,10 +55,12 @@ jobs:
           test -n "$APP_PATH" || { echo "Missing HOSTINGER_APP_PATH"; exit 1; }
           python3 - "$APP_PATH" "$SSH_USER@$SSH_HOST" "$SSH_PORT" <<'PY'
           import hashlib
+          import io
           import pathlib
           import shlex
           import subprocess
           import sys
+          import tarfile
           import time
 
           app_path, target, port = sys.argv[1:]
@@ -69,21 +71,6 @@ jobs:
               *sorted(str(path.relative_to(root)).replace("\\", "/") for path in (root / "db/migrations").glob("*.sql")),
           ]
 
-          remote_db = f"{app_path.rstrip('/')}/db"
-          remote_migrations = f"{remote_db}/migrations"
-          subprocess.run(
-              ["ssh", "-p", port, "-o", "BatchMode=yes", target, f"mkdir -p {shlex.quote(remote_migrations)}"],
-              check=True,
-          )
-          subprocess.run(
-              ["scp", "-P", port, "-o", "BatchMode=yes", "db/migrate.php", "db/sql-statements.php", f"{target}:{remote_db}/"],
-              check=True,
-          )
-          subprocess.run(
-              ["scp", "-P", port, "-o", "BatchMode=yes", *required[2:], f"{target}:{remote_migrations}/"],
-              check=True,
-          )
-
           remote_files = [f"{app_path.rstrip('/')}/{name}" for name in required]
           verification = []
           for name, remote_file in zip(required, remote_files):
@@ -92,13 +79,21 @@ jobs:
                   f"test \"$(sha256sum {shlex.quote(remote_file)} | cut -d ' ' -f 1)\" = {shlex.quote(local_hash)}"
               )
 
-          apply_command = " && ".join(verification) + " && " + (
+          archive = io.BytesIO()
+          with tarfile.open(fileobj=archive, mode="w:gz") as package:
+              for name in required:
+                  package.add(root / name, arcname=name)
+
+          apply_command = f"tar -xz -C {shlex.quote(app_path)} && " + " && ".join(verification) + " && " + (
               f"cd {shlex.quote(app_path)} && "
               "APPU_MIGRATION_ALLOW_PRODUCTION=1 php db/migrate.php --apply && "
               "php tests/schema-readiness.php"
           )
           for attempt in range(1, 4):
-              result = subprocess.run(["ssh", "-p", port, "-o", "BatchMode=yes", target, apply_command])
+              result = subprocess.run(
+                  ["ssh", "-p", port, "-o", "BatchMode=yes", target, apply_command],
+                  input=archive.getvalue(),
+              )
               if result.returncode != 255:
                   raise SystemExit(result.returncode)
               if attempt < 3:
