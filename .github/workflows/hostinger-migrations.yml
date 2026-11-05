@@ -39,6 +39,8 @@ jobs:
           chmod 600 "$HOME/.ssh/id_ed25519"
           printf '%s\n' "$SSH_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
           chmod 600 "$HOME/.ssh/known_hosts"
+          printf '%s\n' 'Host *' '  ControlMaster auto' '  ControlPersist 120' '  ControlPath ~/.ssh/control-%C' > "$HOME/.ssh/config"
+          chmod 600 "$HOME/.ssh/config"
 
       - name: Deploy and verify migration files
         env:
