@@ -14,7 +14,7 @@ $code = 'QA-PROV-001';
 $providerId = null;
 $base = [
     'proveedor_id'=>'','proveedor_numero'=>$code,'proveedor_razsoc'=>'PROVEEDOR PRUEBA APPU',
-    'proveedor_pais'=>'Perú','proveedor_ciudad'=>'Lima','proveedor_distrito'=>'San Isidro','proveedor_direccion'=>'Dirección de prueba',
+    'proveedor_pais'=>'','proveedor_ciudad'=>'','proveedor_distrito'=>'','proveedor_direccion'=>'',
     'proveedor_contnom_1'=>'','proveedor_conttelef_1'=>'','proveedor_contnom_2'=>'','proveedor_conttelef_2'=>'',
     'proveedor_banco_1'=>'','proveedor_tipmoneda_1'=>'','proveedor_ctacorriente_1'=>'','proveedor_titularcta_1'=>'',
     'proveedor_banco_2'=>'','proveedor_tipmoneda_2'=>'','proveedor_ctacorriente_2'=>'','proveedor_titularcta_2'=>'',

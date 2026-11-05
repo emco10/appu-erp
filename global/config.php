@@ -1,7 +1,7 @@
 <?php
 
 define('APP_NAME', 'APPU');
-define('SCRIPT_VER', '261102_kpi_icon_layout');
+define('SCRIPT_VER', '261105_form_validation_feedback');
 
 $databaseConfig = [];
 $privateConfigOverride = getenv('APPU_PRIVATE_CONFIG');

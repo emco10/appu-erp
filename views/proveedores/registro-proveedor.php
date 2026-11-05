@@ -54,13 +54,13 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>País</label>
-                                        <input type="text" class="form-control" placeholder="Ingrese país" name="proveedor_pais" required>
+                                        <input type="text" class="form-control" placeholder="Ingrese país" name="proveedor_pais">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Ciudad</label>
-                                        <input type="text" class="form-control" placeholder="Ingrese ciudad" name="proveedor_ciudad" required>
+                                        <input type="text" class="form-control" placeholder="Ingrese ciudad" name="proveedor_ciudad">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -80,7 +80,7 @@
                                                     <i class="fas fa-home"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" class="form-control" placeholder="Ingrese dirección" name="proveedor_direccion" required>
+                                            <input type="text" class="form-control" placeholder="Ingrese dirección" name="proveedor_direccion">
                                         </div>
                                     </div>
                                 </div>
@@ -93,7 +93,7 @@
                                                     <i class="far fa-calendar-alt"></i>
                                                 </span>
                                             </div>
-                                            <input type="date" class="form-control" name="proveedor_fecreg" value="<?php echo date('Y-m-d'); ?>" readonly required>
+                                            <input type="date" class="form-control" name="proveedor_fecreg" value="<?php echo date('Y-m-d'); ?>" readonly>
                                         </div>
                                     </div>
                                 </div>

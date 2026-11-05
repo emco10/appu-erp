@@ -5,6 +5,7 @@ if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQU
 }
 
 require '../../global/connection.php';
+require_once '../../global/validation.php';
 require_once '../../global/document-history.php';
 
 $providerId = filter_var($_POST['proveedor_id'] ?? null, FILTER_VALIDATE_INT) ?: null;
@@ -34,7 +35,8 @@ $active = (int) ($_POST['proveedor_active_status'] ?? 1) === 0 ? 0 : 1;
 $customValues = is_array($_POST['custom_field'] ?? null) ? $_POST['custom_field'] : [];
 
 try {
-    if ($code === '' || $businessName === '' || $country === '' || $city === '' || $address === '') throw new InvalidArgumentException('Completa los datos obligatorios del proveedor.');
+    if ($code === '') throw new InvalidArgumentException('El RUC o código del proveedor es obligatorio.');
+    if ($businessName === '') throw new InvalidArgumentException('La razón social del proveedor es obligatoria.');
     if (strlen($code) > 50) throw new InvalidArgumentException('El código del proveedor es demasiado largo.');
     if (!in_array($defaultCurrency, ['PEN','USD','EUR'], true)) throw new InvalidArgumentException('Moneda predeterminada no valida.');
     if ($paymentDays === false || $paymentDays < 0 || $paymentDays > 3650) throw new InvalidArgumentException('Dias de pago no validos.');
@@ -74,6 +76,5 @@ try {
 } catch (Throwable $exception) {
     if ($pdo->inTransaction()) $pdo->rollBack();
     error_log('APPU provider save error: ' . $exception->getMessage());
-    http_response_code($exception instanceof InvalidArgumentException ? 422 : 500);
-    echo 'ERROR';
+    app_api_error($exception, 'No se pudo guardar el proveedor. Reintenta o revisa el registro del servidor.');
 }

@@ -5,6 +5,7 @@ if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQU
 }
 
 require '../../global/connection.php';
+require_once '../../global/validation.php';
 require_once '../../global/document-history.php';
 
 $customerId = filter_var($_POST['cliente_id'] ?? null, FILTER_VALIDATE_INT);
@@ -75,6 +76,5 @@ try {
 } catch (Throwable $exception) {
     if ($pdo->inTransaction()) $pdo->rollBack();
     error_log('APPU customer save error: ' . $exception->getMessage());
-    http_response_code($exception instanceof InvalidArgumentException ? 422 : 500);
-    echo 'ERROR';
+    app_api_error($exception, 'No se pudo guardar el cliente. Reintenta o revisa el registro del servidor.');
 }

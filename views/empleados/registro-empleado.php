@@ -46,7 +46,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Apellido Materno</label>
-                                        <input type="text" class="form-control" placeholder="Ingrese apellido materno" name="empleado_apemat" required>
+                                        <input type="text" class="form-control" placeholder="Ingrese apellido materno" name="empleado_apemat">
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                                                     <i class="fas fa-home"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" class="form-control" placeholder="Ingrese dirección" name="empleado_direccion" required>
+                                            <input type="text" class="form-control" placeholder="Ingrese dirección" name="empleado_direccion">
                                         </div>
                                     </div>
                                 </div>
@@ -72,7 +72,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Tipo de Doc. Identidad</label>
-                                        <select class="form-control select2" style="width: 100%;" name="empleado_tipodoc" required>
+                                        <select class="form-control select2" style="width: 100%;" name="empleado_tipodoc">
                                             <option value="">Seleccione un tipo</option>
                                             <option value="DNI">DNI</option>
                                             <option value="Carnet de Extranjería">Carnet de Extranjería</option>
@@ -124,7 +124,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Cargo</label>
-                                        <select class="form-control select2" style="width: 100%;" name="empleado_cargo" required>
+                                        <select class="form-control select2" style="width: 100%;" name="empleado_cargo">
                                             <option value="">Seleccione un cargo</option>
                                             <option value="Gerente General">Gerente General</option>
                                             <option value="Gerente de Marketing">Gerente de Marketing</option>

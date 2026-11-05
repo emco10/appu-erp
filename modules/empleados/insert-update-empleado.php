@@ -3,6 +3,7 @@
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 
     require '../../global/connection.php';
+    require_once '../../global/validation.php';
     require_once '../../global/document-history.php';
 
     $e_nombres = trim($_POST['empleado_nombres']);
@@ -31,16 +32,15 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         $date = DateTime::createFromFormat('Y-m-d', $value);
         return $date !== false && $date->format('Y-m-d') === $value;
     };
-    if ($e_nombres === '' || $e_apepat === '' || $e_direccion === '' || $e_numdoc === '' || !$validDate($e_fecnac) || !$validDate($e_fecing)) {
-        http_response_code(422);
-        echo 'ERROR_VALIDATION';
-        exit;
-    }
-    if ($e_correo !== '' && filter_var($e_correo, FILTER_VALIDATE_EMAIL) === false) {
-        http_response_code(422);
-        echo 'ERROR_VALIDATION';
-        exit;
-    }
+    $fieldErrors=[];
+    if ($e_nombres === '') $fieldErrors[]=app_field_error('empleado_nombres','REQUIRED','Los nombres son obligatorios.');
+    if ($e_apepat === '') $fieldErrors[]=app_field_error('empleado_apepat','REQUIRED','El apellido paterno es obligatorio.');
+    if ($e_numdoc === '') $fieldErrors[]=app_field_error('empleado_numdoc','REQUIRED','El número de documento es obligatorio.');
+    if (!$validDate($e_fecnac)) $fieldErrors[]=app_field_error('empleado_fecnac','INVALID_DATE','La fecha de nacimiento no es válida.');
+    if (!$validDate($e_fecing)) $fieldErrors[]=app_field_error('empleado_fecing','INVALID_DATE','La fecha de ingreso no es válida.');
+    if ($e_correo !== '' && filter_var($e_correo, FILTER_VALIDATE_EMAIL) === false)
+        $fieldErrors[]=app_field_error('empleado_correo','INVALID_EMAIL','El correo electrónico no es válido.');
+    if ($fieldErrors) { app_api_error(new AppValidationException($fieldErrors),'No se pudo validar el empleado.'); exit; }
     if ((int) $e_idemp > 0 && $e_active === 0) {
         $activeUser = $pdo->prepare('SELECT COUNT(*) FROM tbl_user WHERE employee_id=? AND active_status=1');
         $activeUser->execute([(int) $e_idemp]);
@@ -105,8 +105,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     } catch (Throwable $exception) {
         if ($pdo->inTransaction()) $pdo->rollBack();
         error_log('APPU employee save: ' . $exception->getMessage());
-        http_response_code($exception instanceof InvalidArgumentException ? 422 : 500);
-        echo 'ERROR';
+        app_api_error($exception, 'No se pudo guardar el empleado. Reintenta o revisa el registro del servidor.');
     }
 } else {
     echo "ERROR";
