@@ -4,7 +4,8 @@ RewriteEngine On
 
 # Prevent source data and local configuration artifacts from being downloaded.
 RewriteRule ^(?:db|global|tests|\.git|\.github)/ - [F,L,NC]
-<FilesMatch "\.(?:sql|psd|ya?ml)$">
+RewriteRule (^|/)\. - [F,L]
+<FilesMatch "(?:^\.|\.(?:sql|psd|ya?ml|env|ini|log|bak|old|orig|dist|conf|key|pem))$">
     Require all denied
 </FilesMatch>
 

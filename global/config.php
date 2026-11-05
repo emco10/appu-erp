@@ -38,6 +38,10 @@ define('DB_PASSWORD', $databaseSetting('APPU_DB_PASSWORD', 'password', ''));
 define('DB', $databaseSetting('APPU_DB_NAME', 'database', 'db_appu'));
 date_default_timezone_set('America/Lima');
 
+if (getenv('APPU_ENV') === 'production' && (DB_USER === 'root' || DB_PASSWORD === '')) {
+    throw new RuntimeException('Production database credentials must not use the development defaults.');
+}
+
 error_reporting(E_ALL);
 ini_set('display_errors', getenv('APPU_ENV') === 'development' ? '1' : '0');
 ini_set('display_startup_errors', '0');
@@ -101,10 +105,17 @@ function app_start_session(): void
     }
 
     $basePath = app_base_path();
+    $isHttps = !empty($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off';
+
+    ini_set('session.use_only_cookies', '1');
+    ini_set('session.use_strict_mode', '1');
+    ini_set('session.cookie_httponly', '1');
+    ini_set('session.cookie_secure', $isHttps ? '1' : '0');
+    ini_set('session.cookie_samesite', 'Lax');
     setcookie(session_name(), '', [
         'expires' => time() - 42000,
         'path' => $basePath . '/modules',
-        'secure' => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
+        'secure' => $isHttps,
         'httponly' => true,
         'samesite' => 'Lax',
     ]);
@@ -112,11 +123,32 @@ function app_start_session(): void
     session_set_cookie_params([
         'lifetime' => 0,
         'path' => $basePath ?: '/',
-        'secure' => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
+        'secure' => $isHttps,
         'httponly' => true,
         'samesite' => 'Lax',
     ]);
     session_start();
+
+    $now = time();
+    $idleLimit = 2 * 60 * 60;
+    $absoluteLimit = 12 * 60 * 60;
+    if (
+        !empty($_SESSION['loggedInUser'])
+        && (
+            ($now - (int) ($_SESSION['_last_activity_at'] ?? $now)) > $idleLimit
+            || ($now - (int) ($_SESSION['_created_at'] ?? $now)) > $absoluteLimit
+        )
+    ) {
+        $_SESSION = [];
+        session_regenerate_id(true);
+    }
+
+    $_SESSION['_created_at'] = (int) ($_SESSION['_created_at'] ?? $now);
+    $_SESSION['_last_activity_at'] = $now;
+    if (($now - (int) ($_SESSION['_regenerated_at'] ?? 0)) >= 30 * 60) {
+        session_regenerate_id(true);
+        $_SESSION['_regenerated_at'] = $now;
+    }
 }
 
 function e($value): string

@@ -17,10 +17,18 @@ if (
 
 $username = trim($_POST['txtUsername'] ?? '');
 $password = $_POST['txtPassword'] ?? '';
+$remoteAddress = (string) ($_SERVER['REMOTE_ADDR'] ?? 'unknown');
 
 if ($username === '' || $password === '') {
     http_response_code(422);
     echo json_encode(['error' => true]);
+    exit;
+}
+
+if (app_login_is_rate_limited($pdo, $username, $remoteAddress)) {
+    http_response_code(429);
+    header('Retry-After: 900');
+    echo json_encode(['error' => true, 'message' => 'Demasiados intentos. Espera 15 minutos antes de volver a intentar.']);
     exit;
 }
 
@@ -36,8 +44,16 @@ $sqlStatement->execute(['username' => $username]);
 $sqlData = $sqlStatement->fetch();
 
 if (!$sqlData || !password_verify($password, $sqlData['PASS'])) {
+    app_record_failed_login($pdo, $username, $remoteAddress);
     echo json_encode(['error' => true]);
     exit;
+}
+
+app_clear_login_attempts($pdo, $username, $remoteAddress);
+
+if (password_needs_rehash($sqlData['PASS'], PASSWORD_DEFAULT)) {
+    $rehashStatement = $pdo->prepare('UPDATE tbl_user SET password = ? WHERE id = ?');
+    $rehashStatement->execute([password_hash($password, PASSWORD_DEFAULT), (int) $sqlData['USERID']]);
 }
 
 unset($sqlData['PASS']);
@@ -56,5 +72,8 @@ $sqlData['PERMISSIONS'] = $permissionStatement->fetchAll(PDO::FETCH_COLUMN);
 session_regenerate_id(true);
 $_SESSION['loggedInUser'] = $sqlData;
 $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+$_SESSION['_created_at'] = time();
+$_SESSION['_last_activity_at'] = time();
+$_SESSION['_regenerated_at'] = time();
 
 echo json_encode(['error' => false]);

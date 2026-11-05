@@ -2,7 +2,9 @@
 
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/authorization.php';
+require_once __DIR__ . '/security.php';
 
+app_send_security_headers();
 app_start_session();
 
 if (PHP_SAPI !== 'cli' && !defined('APPU_PUBLIC_ENDPOINT')) {
