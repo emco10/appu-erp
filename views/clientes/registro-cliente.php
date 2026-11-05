@@ -32,8 +32,8 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>RUC</label>
-                                        <input minlength="11" maxlength="11" type="text" class="form-control" placeholder="Ingrese RUC" name="cliente_ruc" required>
+                                        <label>DNI / RUC</label>
+                                        <input minlength="8" maxlength="11" pattern="(?:[0-9]{8}|[0-9]{11})" inputmode="numeric" type="text" class="form-control" placeholder="Ingrese DNI o RUC" name="cliente_ruc" required>
                                     </div>
                                 </div>
                                 <div class="col-md-5">

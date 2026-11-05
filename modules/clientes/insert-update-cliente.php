@@ -35,7 +35,7 @@ $active = (int) ($_POST['cliente_active_status'] ?? 1) === 0 ? 0 : 1;
 $customValues = is_array($_POST['custom_field'] ?? null) ? $_POST['custom_field'] : [];
 
 try {
-    if (!preg_match('/^\d{11}$/', $ruc)) throw new InvalidArgumentException('El RUC debe contener 11 dígitos.');
+    if (!preg_match('/^(?:\d{8}|\d{11})$/', $ruc)) throw new InvalidArgumentException('El documento debe ser un DNI de 8 dígitos o un RUC de 11 dígitos.');
     if ($businessName === '' || $address === '' || $department === '' || $province === '' || $district === '') throw new InvalidArgumentException('Completa los datos obligatorios del cliente.');
     if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) throw new InvalidArgumentException('El correo electrónico no es válido.');
     if ($commission === false || $commission < 0) throw new InvalidArgumentException('La comisión no puede ser negativa.');
