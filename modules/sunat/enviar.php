@@ -10,7 +10,7 @@ app_require_permission('sales.manage');
 
 $type = trim((string) ($_POST['source_type'] ?? ''));
 $id = filter_var($_POST['source_id'] ?? null, FILTER_VALIDATE_INT);
-if (!in_array($type, ['invoice', 'receipt', 'credit-note'], true) || $id === false || $id < 1) {
+if (!in_array($type, ['invoice', 'receipt', 'credit-note', 'despatch'], true) || $id === false || $id < 1) {
     http_response_code(422);
     echo json_encode(['message' => 'Selecciona un comprobante válido.'], JSON_UNESCAPED_UNICODE);
     exit;

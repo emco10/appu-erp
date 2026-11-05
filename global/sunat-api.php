@@ -76,21 +76,24 @@ function app_sunat_submit_document(PDO $pdo, string $type, int $id): array
         'invoice' => ['table' => 'tbl_invoice', 'series_type' => 'INVOICE'],
         'receipt' => ['table' => 'tbl_receipt', 'series_type' => 'RECEIPT'],
         'credit-note' => ['table' => 'tbl_credit_note', 'series_type' => 'CREDIT_NOTE'],
+        'despatch' => ['table' => 'tbl_remission_guide', 'series_type' => 'REMISSION_GUIDE'],
     ];
     if (!isset($documents[$type]) || $id < 1) {
         throw new DomainException('Selecciona un comprobante válido.');
     }
     $config = $documents[$type];
-    $document = $pdo->prepare("SELECT series, number, status FROM {$config['table']} WHERE id=?");
+    $document = $type === 'despatch'
+        ? $pdo->prepare("SELECT 'T001' AS series, id AS number, status FROM {$config['table']} WHERE id=?")
+        : $pdo->prepare("SELECT series, number, status FROM {$config['table']} WHERE id=?");
     $document->execute([$id]);
     $row = $document->fetch();
     if (!$row) throw new DomainException('El comprobante no existe.');
-    if (in_array((int) $row['status'], [2, 4], true)) {
+    if ($type !== 'despatch' && in_array((int) $row['status'], [2, 4], true)) {
         throw new DomainException('Un comprobante anulado o cancelado no puede enviarse a SUNAT.');
     }
     $series = $pdo->prepare('SELECT sunat_enabled FROM tbl_document_series WHERE document_type=? AND series=? AND active_status=1');
     $series->execute([$config['series_type'], $row['series']]);
-    if ((int) $series->fetchColumn() !== 1) {
+    if ($type !== 'despatch' && (int) $series->fetchColumn() !== 1) {
         return ['automatic' => false, 'reason' => 'internal_series'];
     }
 
