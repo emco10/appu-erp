@@ -28,7 +28,12 @@ final class AppuElectronicDocumentPdf extends FPDF {
   $description=trim((string)(($line['item_description']??'')?:($line['item_name']??'')));$height=max(7,$this->wrappedLines($this->widths[3],$description)*4.2);
   if($this->GetY()+$height>248){$this->AddPage();$this->tableHeader();}
   $x=$this->GetX();$y=$this->GetY();$values=[number_format((float)$line['item_quantity'],2),$line['sunat_unit_code']?:'NIU',$line['item_code'],'',number_format((float)$line['item_unit_price'],2),number_format((float)$line['item_quantity']*(float)$line['item_unit_price'],2)];
-  foreach($values as $i=>$value){$this->SetXY($x+array_sum(array_slice($this->widths,0,$i)),$y);if($i===3)$this->MultiCell($this->widths[$i],4.2,$this->pdfText($description),1);else $this->Cell($this->widths[$i],$height,$this->pdfText($value),1,0,$i===0||$i>3?'R':'C');}$this->SetY($y+$height);
+  foreach($values as $i=>$value){
+   $cellX=$x+array_sum(array_slice($this->widths,0,$i));$this->Rect($cellX,$y,$this->widths[$i],$height);$this->SetXY($cellX,$y);
+   if($i===3)$this->MultiCell($this->widths[$i],4.2,$this->pdfText($description),0,'L');
+   else $this->Cell($this->widths[$i],$height,$this->pdfText($value),0,0,$i===0||$i>3?'R':'C');
+  }
+  $this->SetXY($x,$y+$height);
  }
  private function qrPayload(array $sunat):string{
   $type=['FACTURA'=>'01','BOLETA DE VENTA'=>'03','NOTA DE CREDITO'=>'07'][$this->label]??'';$customer=(string)($this->doc['ruc']??'');$customerType=preg_match('/^\d{11}$/',$customer)?'6':(preg_match('/^\d{8}$/',$customer)?'1':'0');$number=ltrim((string)$this->doc['number'],'0')?:'0';
