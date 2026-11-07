@@ -56,6 +56,7 @@ jobs:
           php tests/migration-sql-statements.php
           php tests/security-php-input-boundaries.php
           php tests/security-qr-tempfile.php
+          php tests/security-asset-cache-version.php
       - name: Verify GRE lifecycle in a disposable database
         run: php tests/gre-lifecycle.php
         env:
