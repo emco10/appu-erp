@@ -23,6 +23,8 @@ $requirements = [
     [$login, 'app_record_failed_login', 'El login no registra intentos fallidos.'],
     [$login, 'password_needs_rehash', 'El login no actualiza hashes de contraseña obsoletos.'],
     [$htaccess, 'RewriteRule (^|/)\\.', 'No se bloquean archivos ocultos.'],
+    [$htaccess, 'RewriteRule ^(?:bin|db|docs|global|tests|', 'No se bloquean los artefactos internos del repositorio.'],
+    [$htaccess, '\\.(?:md|py|sql|psd', 'No se bloquean los documentos ni scripts internos.'],
     [$migration, 'idx_login_attempt_pair_time', 'La tabla de intentos no tiene el índice esperado.'],
     [$productSave, "if (\$barcode !== '')", 'El guardado de productos no separa la búsqueda opcional por código de barras.'],
 ];
