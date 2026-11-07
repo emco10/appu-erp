@@ -6,7 +6,7 @@ The first full master CodeQL report (`42421200811`) contained 12 findings rather
 
 `plugins/context-menu/jquery.ui.position.js` is the existing jQuery UI 1.12.1 positioning module with the exact six-line upstream backport for [CVE-2021-41184](https://github.com/jquery/jquery-ui/commit/effa323f1505f2ce7a324e4f429fa9032c72f280). The previous `$(options.of)` could create an HTML element when handed an HTML string. String values now go through `$(document).find(options.of)`; DOM, window and event inputs retain their existing behavior. The version header remains 1.12.1 because this is a targeted patch, not a package-wide upgrade.
 
-This occurrence is fixed in runtime code and is not added to the reviewed-finding allowance manifest.
+The original unguarded occurrence at line 159 is fixed in runtime code and has no allowance. The subsequent complete PR scan (`42421943264`) still reports `$(options.of)` at the new line 163, with a different exact identity. That remaining occurrence is the non-string branch after the upstream `typeof options.of === 'string'` guard. Options have already been copied into a plain local object; every string goes through the selector-only branch. CodeQL's reported trace does not preserve that branch restriction. The guarded occurrence is therefore reviewed separately as a false positive, bound to the patched source and real-plugin tests. The raw full report still contains 12 observations; the review does not remove it from the report.
 
 ## Context-menu plugin: three scoped observations
 

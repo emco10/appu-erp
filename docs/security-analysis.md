@@ -24,6 +24,8 @@ CodeQL uses full-source analysis on both pull requests and master. The first pos
 
 Of those four additional observations, the jQuery UI positioning helper required a real fix. The local 1.12.1 positioning module now includes the exact six-line upstream [CVE-2021-41184 fix](https://github.com/jquery/jquery-ui/commit/effa323f1505f2ce7a324e4f429fa9032c72f280): string `options.of` values are resolved as selectors with `find`, while node/event inputs retain their normal path. This is a targeted backport, not a claim that the whole jQuery UI package was upgraded. The other three observations in the context-menu plugin are reviewed against the five actual APPU DOM-bound initializers and executable plugin evidence; see the [context-menu review](security/context-menu-review-20261107.md).
 
+The subsequent full PR report retains a new observation on the patched positioning helper's non-string branch. Its exact identity is reviewed separately; the former vulnerable unguarded occurrence is never allowed. The final manifest contains 291 individual reviews: 279 Semgrep and 12 CodeQL observations. The release also versions every local footer script with the current `SCRIPT_VER`, so browsers with the server's seven-day asset cache receive the fixes. A PHP regression renders the real footer and checks all 23 local script URLs. Only the 188 reviews whose footer/config dependency changed were re-bound to the separately reviewed cache-version commit `d9629e1`; their other source and evidence bytes were verified unchanged.
+
 Do not hide findings to make CI green. Investigate and fix them, or document a narrow false-positive decision for review before changing a rule or exclusion.
 
 Primary sources verified on 7 November 2026:
