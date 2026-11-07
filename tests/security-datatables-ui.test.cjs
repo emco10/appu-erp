@@ -63,6 +63,35 @@ test('DataTables actualizado conserva Bootstrap y exportaciones Buttons con los 
   } finally { t.dom.window.close(); }
 });
 
+test('Revisión vendor: búsqueda, orden, ancho y aria no pasan datos externos a innerHTML sin escapar', () => {
+  const t=environment('<table id="qa"><thead><tr><th>Nombre</th></tr></thead></table>');
+  try {
+    const {w,$}=t,unsafe=[];
+    const descriptor=Object.getOwnPropertyDescriptor(w.Element.prototype,'innerHTML');
+    Object.defineProperty(w.Element.prototype,'innerHTML',{...descriptor,set(value){if(/<(?:img|svg|script)\b/i.test(String(value)))unsafe.push(String(value));return descriptor.set.call(this,value);}});
+    const samples=['<script<script>x</script>',payload,'&lt;img src=x onerror=alert(1)&gt;','" \\ <svg onload=alert(1)>',[payload]];
+    const table=$('#qa').DataTable({data:samples.map(name=>({name})),columns:[{data:'name',type:'html',ariaTitle:payload,render:$.fn.dataTable.render.text()}],dom:'frtip',deferRender:true});
+    table.columns.adjust().order([0,'desc']).draw();table.search('" \\ ] <img').draw();table.search('').draw();
+    assert.deepEqual(unsafe,[],'Un paso de búsqueda/orden/ancho interpretó etiquetas de datos como HTML');
+    assert.equal($('#qa img,#qa svg,#qa script').length,0);
+    assert.ok($('#qa th').attr('aria-label').startsWith(payload),'ARIA conserva texto mediante setAttribute');
+    assert.equal(table.rows().count(),samples.length);
+  }finally{t.dom.window.close();}
+});
+
+test('Revisión vendor: restaurar childRows permanece desactivado y nuevas opciones requieren revisar el hallazgo', () => {
+  const t=environment('<table id="qa"><thead><tr><th>Nombre</th></tr></thead></table>');
+  try {
+    assert.equal(t.$.fn.dataTable.defaults.bStateSave,false);
+    assert.equal(t.$.fn.dataTable.defaults.rowId,'DT_RowId');
+    // This exact review depends on the absence of these optional first-party
+    // integrations. A new consumer must trigger a fresh selector/state review.
+    const sensitive=/\b(?:stateSave|bStateSave|stateLoadCallback|stateLoadParams|stateSaveCallback|stateSaveParams|rowId|childRows)\b|\.child\s*\(/;
+    function inspect(directory){for(const entry of fs.readdirSync(directory,{withFileTypes:true})){const file=path.join(directory,entry.name);if(entry.isDirectory())inspect(file);else if(/\.(?:js|php)$/.test(entry.name))assert.doesNotMatch(fs.readFileSync(file,'utf8'),sensitive,'Nueva integración de estado/childRows requiere revisar CodeQL 8436: '+path.relative(root,file));}}
+    for(const directory of ['ajax','js','views','modules','global'])inspect(path.join(root,directory));
+  }finally{t.dom.window.close();}
+});
+
 for (const spec of cases) test(spec.file + ': datos externos se dibujan como texto y conservan su valor original', () => {
   const t = environment('<table id="qa"><thead><tr>' + '<th>Campo</th>'.repeat(spec.count) + '</tr></thead><tbody></tbody></table>');
   try {
