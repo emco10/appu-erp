@@ -70,8 +70,8 @@ test('Position conserva objetivos DOM, jQuery y selectores CSS existentes', () =
   } finally { t.dom.window.close(); }
 });
 
-for (const [file, selector, tableName, historyType] of callers) test(file + ': menú real conserva contexto DOM, etiquetas y acción', () => {
-  const t = environment();
+for (const plugin of ['jquery.contextMenu.min.js', 'jquery.contextMenu.js']) for (const [file, selector, tableName, historyType] of callers) test(plugin + ' / ' + file + ': contexto DOM, acción y registro de destrucción', () => {
+  const t = environment(plugin);
   try {
     const { $, w } = t, history = [], row = [123, 'QA-123', '', '', '', 'Pendiente', 'Pendiente', 'Registrada'];
     const id = selector.slice(1);
@@ -92,6 +92,7 @@ for (const [file, selector, tableName, historyType] of callers) test(file + ': m
     const saved = menu.data('contextMenuRoot');
     assert.equal(saved.context, element[0]);
     assert.equal(saved.$trigger[0], trigger[0]);
+    assert.equal($.contextMenu.menus[saved.ns], saved, 'El menú debe estar registrado en el plugin real');
     assert.equal(menu.find('img,svg,script').length, 0);
     for (const item of Object.values(options.items)) if (item && typeof item === 'object' && typeof item.name === 'string') assert.ok(menu.text().includes(item.name));
     if (historyType) {
@@ -103,11 +104,24 @@ for (const [file, selector, tableName, historyType] of callers) test(file + ': m
       // menu through the same plugin callback without making an HTTP request.
       menu.find('.context-menu-item').filter(function () { return $(this).text() === 'Cancelar'; }).trigger('mouseup');
     }
+    assert.equal($.contextMenu.menus[saved.ns], saved, 'El callback cierra el menú sin destruir su registro');
+    assert.equal($('.context-menu-root').length, 1, 'El menú debe existir antes de probar Destroy');
     // Destroy's context is a matching trigger row; it stays a jQuery/DOM node
     // when the library evaluates its selector and removes this menu.
     trigger.contextMenu('destroy');
     assert.equal($('.context-menu-root').length, 0, 'Destroy debe retirar el menú del contexto DOM');
+    assert.equal(Object.hasOwn($.contextMenu.menus, saved.ns), false, 'Destroy debe eliminar el registro, no solamente ocultar HTML');
   } finally { t.dom.window.close(); }
+});
+
+test('El mapa del plugin minificado conserva la fuente auditada, normalizando solo finales de línea', () => {
+  const directory = path.join(root, 'plugins/context-menu');
+  const minified = fs.readFileSync(path.join(directory, 'jquery.contextMenu.min.js'), 'utf8');
+  const source = fs.readFileSync(path.join(directory, 'jquery.contextMenu.js'), 'utf8');
+  const map = JSON.parse(fs.readFileSync(path.join(directory, 'jquery.contextMenu.min.js.map'), 'utf8'));
+  assert.match(minified, /sourceMappingURL=jquery\.contextMenu\.min\.js\.map/);
+  assert.equal(map.sourcesContent.length, 1);
+  assert.equal(map.sourcesContent[0].replace(/\r\n/g, '\n'), source.replace(/\r\n/g, '\n'));
 });
 
 test('Revisión de contexto cubre los cinco consumidores y exige revisar nuevas opciones', () => {
