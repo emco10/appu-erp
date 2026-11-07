@@ -1,5 +1,6 @@
 <?php
 require '../../global/connection.php';
+header('Content-Type: application/json; charset=utf-8');
 $FILTER_PROD = $_POST["FILTER"];
 $ESTADO_PROD = $_POST["ESTADO"];
 $warehouseId = filter_var($_POST['warehouse_id'] ?? null, FILTER_VALIDATE_INT);

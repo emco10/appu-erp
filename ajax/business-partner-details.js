@@ -5,7 +5,7 @@
   var endpoint = panel.data('endpoint'), partnerId = 0, addresses = [], contacts = [], loadEpoch = 0;
   var typeLabels = { billing: 'Fiscal', shipping: 'Entrega', other: 'Otra' };
 
-  function escapeHtml(value) { return $('<div>').text(value == null ? '' : value).html(); }
+  function escapeHtml(value) { return String(value == null ? '' : value).replace(/[&<>"']/g, function (character) { return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#039;' }[character]; }); }
   function badge(active, preferred) { return (preferred ? '<span class="badge badge-primary mr-1">Predeterminada</span>' : '') + '<span class="badge ' + (Number(active) === 1 ? 'badge-success' : 'badge-secondary') + '">' + (Number(active) === 1 ? 'Activa' : 'Inactiva') + '</span>'; }
   function render() {
     var addressRows = panel.find('.appu-address-rows').empty(), contactRows = panel.find('.appu-contact-rows').empty();

@@ -9,7 +9,7 @@
 # the `language` matrix defined below to confirm you have the correct set of
 # supported CodeQL languages.
 #
-name: "CodeQL"
+name: "Security analysis"
 
 on:
   push:
@@ -19,11 +19,89 @@ on:
     branches: [ "master" ]
   schedule:
     - cron: '35 13 * * 3'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-analysis-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  analyze:
-    name: Analyze
+  semgrep:
+    name: PHP and JavaScript security (Semgrep CE)
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      SEMGREP_SEND_METRICS: 'off'
+      SEMGREP_ENABLE_VERSION_CHECK: '0'
+      SEMGREP_APP_TOKEN: ''
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Install pinned open source scanner
+        run: |
+          python -m pip install --disable-pip-version-check 'semgrep==1.184.0'
+          python -c "import importlib.metadata; assert importlib.metadata.version('semgrep') == '1.184.0'"
+      - name: Obtain pinned community rules and their license
+        uses: actions/checkout@v7
+        with:
+          repository: semgrep/semgrep-rules
+          ref: 16b9e6d45f10649f6a531ec4838ed9924372c3bc
+          path: .security-rules
+          persist-credentials: false
+          sparse-checkout: |
+            php
+            javascript
+            LICENSE
+          sparse-checkout-cone-mode: false
+      - name: Verify finding gate behavior
+        run: python tests/security-sarif-gate.py
+      - name: Analyze every first party PHP and JavaScript directory
+        run: |
+          mkdir -p security-results
+          printf '%s\n' 'Semgrep CE 1.184.0' 'Rules: semgrep/semgrep-rules@16b9e6d45f10649f6a531ec4838ed9924372c3bc' 'Rules license: https://semgrep.dev/legal/rules-license/' > security-results/provenance.txt
+          set +e
+          semgrep scan --oss-only --strict --error --disable-nosem \
+            --metrics=off --disable-version-check --max-target-bytes=0 \
+            --config .security-rules/php --config .security-rules/javascript \
+            --exclude '**/vendor/**' --exclude '**/plugins/**' --exclude '**/libs/**' \
+            --exclude '**/*.min.js' --exclude '**/*.min.css' \
+            --json --output security-results/semgrep.json \
+            --sarif-output security-results/semgrep.sarif \
+            global modules ajax js views
+          scan_status=$?
+          printf '%s\n' "$scan_status" > security-results/scanner-exit-code.txt
+          # Exit 1 means findings, not a failed scan. The mandatory gate below
+          # evaluates every result against exact, source-bound reviewed entries.
+          if [ "$scan_status" -gt 1 ]; then exit "$scan_status"; fi
+      - name: Preserve complete security reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: semgrep-php-javascript-${{ github.run_id }}
+          path: security-results/
+          if-no-files-found: error
+          retention-days: 7
+      - name: Require a complete scan and zero unreviewed findings
+        if: always()
+        run: |
+          review_args=()
+          if [ -f .github/security-reviewed-findings.json ]; then review_args=(--reviewed-allowances .github/security-reviewed-findings.json); fi
+          python bin/check-security-sarif.py --sarif security-results/semgrep.sarif --semgrep-json security-results/semgrep.json --scanner-exit security-results/scanner-exit-code.txt "${review_args[@]}"
+
+  analyze:
+    name: CodeQL (licensed or public repository)
+    # This does not enable billing. CODEQL_LICENSED requires an existing compatible license.
+    if: ${{ github.event.repository.visibility == 'public' || vars.CODEQL_LICENSED == 'true' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
     permissions:
       actions: read
       contents: read
@@ -41,6 +119,9 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+        fetch-depth: 0
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
@@ -69,4 +150,27 @@ jobs:
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4
       with:
+        category: "/language:${{matrix.language}}"
+        output: security-results/codeql
+        upload: never
+        upload-database: false
+    - name: Preserve CodeQL SARIF even when a later gate fails
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: codeql-${{ matrix.language }}-${{ github.run_id }}
+        path: security-results/codeql/
+        if-no-files-found: error
+        retention-days: 7
+    - name: Require zero unreviewed CodeQL findings
+      if: always()
+      run: |
+        review_args=()
+        if [ -f .github/security-reviewed-findings.json ]; then review_args=(--reviewed-allowances .github/security-reviewed-findings.json); fi
+        python3 bin/check-security-sarif.py --sarif security-results/codeql/${{ matrix.language }}.sarif "${review_args[@]}"
+    - name: Upload to security dashboard only when supported
+      if: ${{ github.event.repository.visibility == 'public' || vars.CODE_SCANNING_UPLOAD == 'true' }}
+      uses: github/codeql-action/upload-sarif@v4
+      with:
+        sarif_file: security-results/codeql/${{ matrix.language }}.sarif
         category: "/language:${{matrix.language}}"

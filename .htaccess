@@ -3,9 +3,9 @@ Options All -Indexes
 RewriteEngine On
 
 # Prevent source data and local configuration artifacts from being downloaded.
-RewriteRule ^(?:db|global|tests|\.git|\.github)/ - [F,L,NC]
+RewriteRule ^(?:bin|db|docs|global|tests|\.git|\.github)/ - [F,L,NC]
 RewriteRule (^|/)\. - [F,L]
-<FilesMatch "(?:^\.|\.(?:sql|psd|ya?ml|env|ini|log|bak|old|orig|dist|conf|key|pem))$">
+<FilesMatch "(?:^\.|\.(?:md|py|sql|psd|ya?ml|env|ini|log|bak|old|orig|dist|conf|key|pem))$">
     Require all denied
 </FilesMatch>
 

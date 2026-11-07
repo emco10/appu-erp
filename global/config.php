@@ -1,7 +1,7 @@
 <?php
 
 define('APP_NAME', 'APPU');
-define('SCRIPT_VER', '261105_form_validation_feedback');
+define('SCRIPT_VER', '261106_peru_integrations_manual');
 
 $databaseConfig = [];
 $privateConfigOverride = getenv('APPU_PRIVATE_CONFIG');

@@ -52,6 +52,9 @@
 
 <!-- Toastr -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+<script>
+  if (window.toastr) window.toastr.options.escapeHtml = true;
+</script>
 
 <!-- Font Awesome Icons -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/js/all.min.js"></script>
@@ -101,6 +104,7 @@
 <script src="<?php echo $functions->direct_sistema(); ?>/js/document-ui.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
 <script src="<?php echo $functions->direct_sistema(); ?>/js/master-workspace.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
 <script src="<?php echo $functions->direct_sistema(); ?>/js/legacy-master-workspace.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
+<script src="<?php echo $functions->direct_sistema(); ?>/js/identity-lookup.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
 <script src="<?php echo $functions->direct_sistema(); ?>/js/sales-document-list.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
 <script src="<?php echo $functions->direct_sistema(); ?>/js/delivery-billing.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
 <script src="<?php echo $functions->direct_sistema(); ?>/js/sunat-artifacts.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>

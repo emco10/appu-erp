@@ -13,6 +13,7 @@ $(document).ready(function(){
 if (!appuCan("purchases.manage")) $("#btn-nuevo").hide();
 
 var tbl_ordenes = $("#table-ordenes").DataTable({
+  columnDefs: [{ targets: [0,1,2,3,4,6], render: $.fn.dataTable.render.text() }],
   dom: 'Bfrtip',
   "order": [[0, "DESC"]],
   buttons: [
@@ -134,7 +135,7 @@ $(document).ready(function() {
       { FILTER: "ALL", ESTADO: "ALL"},
       function(data) {
         tbl_ordenes.clear().draw();
-        data_orden = JSON.parse(data);
+        data_orden = (typeof data === "string" ? JSON.parse(data) : data);
         for (i = 0; i < data_orden.length; i++) {
           tbl_ordenes.rows
             .add([
@@ -178,7 +179,7 @@ $('select[name="ordenes_tipo"]').on("change", function() {
       { FILTER: "ALL", ESTADO: "ALL", TIPO_ORDEN: ORD_TIPO },
       function(data) {
         tbl_ordenes.clear().draw();
-        data_orden = JSON.parse(data);
+        data_orden = (typeof data === "string" ? JSON.parse(data) : data);
         for (i = 0; i < data_orden.length; i++) {
           tbl_ordenes.rows
             .add([
@@ -240,7 +241,7 @@ $("#btn-buscar").click(function(){
             { orden_nroo:orden_nroo, orden_prov:orden_prov, orden_fini:orden_fini, orden_ffin:orden_ffin  },
             function(data) {
                 tbl_ordenes.clear().draw();
-                data_orden = JSON.parse(data);
+                data_orden = (typeof data === "string" ? JSON.parse(data) : data);
                 for (i = 0; i < data_orden.length; i++) {
                 tbl_ordenes.rows
                     .add([
@@ -314,7 +315,7 @@ $("#table-ordenes").contextMenu({
                             { FILTER: "ALL", ESTADO: "ALL", TIPO_ORDEN: TIPO_ORDEN },
                             function(data) {
                               tbl_ordenes.clear().draw();
-                              data_orden = JSON.parse(data);
+                              data_orden = (typeof data === "string" ? JSON.parse(data) : data);
                               for (i = 0; i < data_orden.length; i++) {
                                 tbl_ordenes.rows
                                   .add([

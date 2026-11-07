@@ -43,7 +43,10 @@ $(function () {
       { extend: "print", text: '<i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir' }
     ],
     language: { url: "../../plugins/datatables/Spanish.json" },
-    columnDefs: [{ targets: 7, render: function (data, type) { return type === "display" ? appuStatusBadge(data) : data; } }]
+    columnDefs: [
+      { targets: [0,1,2,3,4,5,6], render: $.fn.dataTable.render.text() },
+      { targets: 7, render: function (data, type) { return type === "display" ? appuStatusBadge(data) : data; } }
+    ]
   });
   table.columns([0]).visible(false);
 
@@ -82,6 +85,8 @@ $(function () {
     $.getJSON("../../modules/logistica/guias.php", { action: "sources" }).done(function (response) {
       if (epoch !== guideEpoch) return;
       var sources = response.sources || [];
+      var $series = $('#guide-series').empty().append($('<option>').val('').text('Serie predeterminada'));
+      (response.guide_series || []).forEach(function (item) { $('<option>').val(item.series).text(item.series + (/^T[A-Z0-9]{3}$/.test(item.series) ? ' · GRE' : ' · Operativa')).appendTo($series); });
       appuRenderCustomFields($('#guide-custom-fields'), response.custom_fields, response.custom_values, 'guide-custom-');
       var options = [{ id: "", text: sources.length ? "Seleccione factura, boleta u orden confirmada" : "No hay documentos confirmados disponibles para generar una guía." }];
       sources.forEach(function (source) {

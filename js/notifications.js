@@ -6,6 +6,12 @@
 !function($) {
     "use strict";
 
+    function escapeMessage(value) {
+        return String(value == null ? '' : value).replace(/[&<>"']/g, function (character) {
+            return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#039;' }[character];
+        });
+    }
+
     class Notification {
         constructor() { }
         //Simple notification
@@ -25,8 +31,8 @@
                 icon = "zwicon-moon";
             }
             $.notify({
-                title: title,
-                text: text,
+                title: escapeMessage(title),
+                text: escapeMessage(text),
                 image: "<i class='" + icon + "'></i>"
             }, {
                 style: 'metro',
@@ -56,8 +62,8 @@
                 icon = "fa fa-adjust";
             }
             $.notify({
-                title: title,
-                text: text,
+                title: escapeMessage(title),
+                text: escapeMessage(text),
                 image: "<i class='" + icon + "'></i>"
             }, {
                 style: 'metro',
@@ -88,7 +94,7 @@
                 icon = "fa fa-adjust";
             }
             $.notify({
-                title: title,
+                title: escapeMessage(title),
                 text: 'Are you sure you want to do nothing?<div class="clearfix"></div><br><a class="btn btn-sm btn-white yes">Yes</a> <a class="btn btn-sm btn-danger no">No</a>',
                 image: "<i class='" + icon + "'></i>"
             }, {

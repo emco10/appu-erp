@@ -3,7 +3,7 @@ async function setup(view,scripts,manage=true){
  const html=fs.readFileSync(path.join(root,'views',view+'.php'),'utf8').replace(/<\?php[\s\S]*?\?>/g,'');const dom=new JSDOM(html,{url:'http://localhost/views/'+view,runScripts:'outside-only',pretendToBeVisual:true});const w=dom.window,$=jquery(w),requests=[],notifications=[],dialogs=[],histories=[];
  w.$=w.jQuery=$;w.alert=message=>{throw new Error(message);};w.HTMLElement.prototype.scrollIntoView=function(){};w.appuCan=()=>manage;w.appuMarkSaved=()=>{};w.appuConfirmDiscard=callback=>callback();w.appuStatusBadge=value=>$('<span class="badge">').text(value).prop('outerHTML');w.mostrarHistorialEstados=(...args)=>histories.push(args);w.toastr=Object.fromEntries(['error','success','warning','info'].map(name=>[name,message=>notifications.push({name,message})]));w.leer_cookie=()=>'';w.eliminar_cookie=()=>{};
  $.Notification={notify:(name,_position,_title,message)=>notifications.push({name,message})};w.Swal={fire:options=>{dialogs.push(options);return Promise.resolve({value:'Motivo válido QA'});},close:()=>{},showLoading:()=>{}};
- $.fn.modal=function(){return this;};$.fn.select2=function(options){if(options?.data)this.each(function(){const select=$(this).empty();options.data.forEach(row=>select.append($('<option>').val(row.id).text(row.text)));});return this;};
+ $.fn.modal=function(){return this;};$.fn.select2=function(options){if(options?.data)this.each(function(){const select=$(this).empty();options.data.forEach(row=>select.append($('<option>').val(row.id).text(row.text)));});return this;};$.fn.autocomplete=function(){return this;};
  function request(options){const d=$.Deferred(),promise=d.promise();requests.push({...options,deferred:d});promise.readyState=1;promise.abort=()=>d.reject({status:0});if(options.beforeSend)options.beforeSend();if(options.success)d.done(options.success);if(options.error)d.fail(options.error);if(options.complete)d.always(options.complete);d.always(()=>{promise.readyState=4;});return promise;}
  $.ajax=request;$.post=(url,data,success)=>{if(typeof data==='function'){success=data;data=undefined;}return request({url,data,type:'POST',success});};$.getJSON=(url,data)=>request({url,data,type:'GET'});
  w.eval(fs.readFileSync(path.join(root,'plugins/datatables/jquery.dataTables.js'),'utf8'));for(const script of scripts)w.eval(fs.readFileSync(path.join(root,script),'utf8'));
@@ -43,4 +43,33 @@ test('Orden de servicio: recupera UDF sin heredarlos y conserva proveedor ante c
 });
 test('Orden de servicio: usuario de consulta conserva el selector y no puede agregar ni guardar',async()=>{
  const t=await setup('ordenes/orden-de-servicio',['ajax/orden-de-servicio.js'],false);try{assert.equal(t.$('#btn-save-orden').css('display'),'none');assert.equal(t.$('[name=orden_nombre_serv]').prop('disabled'),true);assert.equal(t.$('[name=orden_listado]').prop('disabled'),false);t.$('#FRM_INSERT_DETA_ORDSERV').trigger('submit');assert.equal(t.requests.filter(r=>String(r.url).includes('insert-update-orden')).length,0);}finally{t.dom.window.close();}
+});
+
+test('Orden de servicio: nombre/glosa con etiquetas se agregan y guardan literales sin ejecutar HTML',async()=>{
+ const t=await setup('ordenes/orden-de-servicio',['ajax/orden-de-servicio.js']);try{
+  const {$}=t,payload='<img src=x onerror="window.appuXss=true"><svg onload="window.appuXss=true"></svg> & servicio';
+  $('[name=orden_nombre_serv],[name=orden_glosa]').val(payload);$('[name=orden_precunit]').val(10);$('[name=orden_cantidad]').val(2);$('[name=orden_porcdscto]').val(0).trigger('change');$('#btn-add-prodtporden').prop('disabled',false).trigger('click');
+  const table=$('#table-ord-servicios').DataTable();assert.equal(table.rows().count(),1);assert.equal($('#table-ord-servicios tbody img,#table-ord-servicios tbody svg').length,0);assert.equal($(table.cell(0,1).node()).text(),payload);assert.equal(table.row(0).data()[1],payload);assert.equal($('[name=orden_totneto]').val(),'23.60');
+  $('#FRM_INSERT_DETA_ORDSERV').trigger('submit');const save=t.requests.filter(r=>String(r.url).includes('insert-update-orden')).at(-1);assert.ok(save);const rows=JSON.parse(save.data.get('orden_lstservicios'));assert.equal(rows[0][1],payload);assert.equal(rows[0][2],payload);assert.equal(rows[0][4],2);
+ }finally{t.dom.window.close();}
+});
+
+test('Boleta: agregar producto y guardar conserva descripción literal y totales con DataTables real',async()=>{
+ const t=await setup('facturacion/registro-boleta',['ajax/registro-boleta.js']);try{
+  const {$}=t,payload='<img src=x onerror="window.appuXss=true"><svg onload="window.appuXss=true"></svg> & artículo';
+  $('[name=facturacion_producto]').append($('<option>').val('42').text('Producto QA')).val('42');$('[name=facturacion_codeprod]').val('QA42');$('[name=facturacion_nameprod],[name=facturacion_proddesc]').val(payload);$('[name=facturacion_prodprecio]').val('10');$('[name=facturacion_prodcant]').val('2');$('#btn-add-prodtofactura').prop('disabled',false).trigger('click');
+  const table=$('#table-productsfactura').DataTable();assert.equal(table.rows().count(),1);assert.equal($('#table-productsfactura tbody img,#table-productsfactura tbody svg').length,0);assert.equal($(table.cell(0,2).node()).text(),payload);assert.equal(table.row(0).data()[3],payload);assert.equal($('[name=facturacion_total]').val(),'23.60');
+  $('#FRM_INSERT_FACTURA').trigger('submit');const save=t.requests.find(r=>r.data instanceof t.w.FormData&&r.data.has('facturacion_prods'));assert.ok(save);const rows=JSON.parse(save.data.get('facturacion_prods'));assert.equal(rows[0][2],payload);assert.equal(rows[0][3],payload);assert.equal(rows[0][5],2);
+ }finally{t.dom.window.close();}
+});
+
+for(const format of ['texto','JSON decodificado'])test('Catálogos de boleta y servicio aceptan respuesta '+format,async()=>{
+ const encode=value=>format==='texto'?JSON.stringify(value):value;
+ for(const spec of [{view:'facturacion/registro-boleta',script:'registro-boleta',product:'facturacion_producto',name:'facturacion_nameprod',description:'facturacion_proddesc'},{view:'ordenes/orden-de-servicio',script:'orden-de-servicio',product:'orden_producto_select',name:'orden_nombre_serv',description:'orden_glosa'}]){
+  const t=await setup(spec.view,['ajax/'+spec.script+'.js']);try{
+   const {$}=t;const catalog=t.pending(r=>String(r.url).includes('listar-productos-xprov.php'))[0];assert.ok(catalog);catalog.deferred.resolve(encode([{id:42,text:'Producto JSON'}]));
+   $('[name='+spec.product+']').val('42').trigger('change');const request=t.pending(r=>String(r.url).includes('consultar-productos.php')).at(-1);assert.ok(request);request.deferred.resolve(encode([{CODPROD:'QA42',NOMBRE:'Producto JSON',DESCRIPTION:'Descripción JSON',PRECIO:10,UNITVALUE:'UND',CANTIDAD:10}]));
+   assert.equal($('[name='+spec.name+']').val(),'Producto JSON');assert.equal($('[name='+spec.description+']').val(),'Descripción JSON');
+  }finally{t.dom.window.close();}
+ }
 });

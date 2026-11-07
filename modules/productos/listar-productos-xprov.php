@@ -1,6 +1,7 @@
 <?php
 
 require '../../global/connection.php';
+header('Content-Type: application/json; charset=utf-8');
 
 $ID_PROV = "";
 $COND_PROV = "";

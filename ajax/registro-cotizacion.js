@@ -158,7 +158,7 @@ $("#btn-use-customer").on("click", function () {
 });
 
 $.post("../../modules/usuarios/listar-usuarios-xtipo.php", function(data) {
-  mydata = JSON.parse(data);
+  mydata = (typeof data === "string" ? JSON.parse(data) : data);
   data_users = mydata[0];
   user_id = mydata[1];
   user_job = mydata[2];
@@ -185,7 +185,7 @@ $('select[name="cotizacion_usuario"]').on("change", function(){
 $.post("../../modules/cotizaciones/listar-cotizaciones.php", function(data) {
   $('select[name="cotizacion_listado"]').empty();
   $('select[name="cotizacion_listado"]').select2({
-    data: JSON.parse(data)
+    data: (typeof data === "string" ? JSON.parse(data) : data)
   });
   appuOpenRequestedRecord('select[name="cotizacion_listado"]', '#btn-select-cotizacion');
 });
@@ -196,7 +196,7 @@ $.post(
   function(data) {
     $('select[name="cotizacion_producto"]').empty();
     $('select[name="cotizacion_producto"]').select2({
-      data: JSON.parse(data)
+      data: (typeof data === "string" ? JSON.parse(data) : data)
     });
   }
 );
@@ -214,7 +214,7 @@ $('select[name="cotizacion_producto"]').on("change", function() {
       "../../modules/productos/consultar-productos.php",
       { FILTER: DATA_ID, ESTADO: "1", warehouse_id: $('select[name="cotizacion_almacen_id"]').val() || 1 },
       function(data) {
-        var mydata = JSON.parse(data);
+        var mydata = (typeof data === "string" ? JSON.parse(data) : data);
         stock_producto = parseInt(mydata[0]["CANTIDAD"]);
         $('input[name="cotizacion_nameprod"]').val(mydata[0]["NOMBRE"]);
         $('input[name="cotizacion_proddesc"]').val(mydata[0]["DESCRIPTION"]);
@@ -286,6 +286,7 @@ $('select[name="cotizacion_producto"]').on("change", function() {
 });
 
 var tbl_prodcotiz = $("#table-productscotiz").DataTable({
+  columnDefs: [{ targets: '_all', render: $.fn.dataTable.render.text() }],
   "language": {"url": "../../plugins/datatables/Spanish.json"}
 });
 
@@ -406,7 +407,7 @@ $("#btn-select-cotizacion").click(function() {
       "../../modules/cotizaciones/consultar-cotizacion.php",
       { FILTER: DATA_ID, ESTADO: "ALL" },
       function(data) {
-        var data_json = JSON.parse(data);
+        var data_json = (typeof data === "string" ? JSON.parse(data) : data);
 
         est_cotiz = data_json[0]["ESTADO"];
 
@@ -474,7 +475,7 @@ $("#btn-select-cotizacion").click(function() {
             $("#btn-save-cotizprod").prop("disabled", false);
 
             tbl_prodcotiz.clear().draw();
-            detacotiz_json = JSON.parse(data);
+            detacotiz_json = (typeof data === "string" ? JSON.parse(data) : data);
             for (i = 0; i < detacotiz_json.length; i++) {
               var precio = parseFloat(detacotiz_json[i]["PRECIOUNIT"]).toFixed(2);
               var importe = parseFloat(detacotiz_json[i]["IMPORTE"]).toFixed(2);
@@ -637,7 +638,7 @@ $("#FRM_INSERT_COTIZACION").submit(function(e) {
         ) {
           $('select[name="cotizacion_listado"]').empty();
           $('select[name="cotizacion_listado"]').select2({
-            data: JSON.parse(data)
+            data: (typeof data === "string" ? JSON.parse(data) : data)
           });
         });
       } else if (data == "OK_UPDATE") {
@@ -672,7 +673,7 @@ $("#FRM_INSERT_COTIZACION").submit(function(e) {
         ) {
           $('select[name="cotizacion_listado"]').empty();
           $('select[name="cotizacion_listado"]').select2({
-            data: JSON.parse(data)
+            data: (typeof data === "string" ? JSON.parse(data) : data)
           });
         });
 
@@ -715,7 +716,7 @@ $("#btn-anular-cotizprod").click(function() {
                 function(data) {
                   $('select[name="cotizacion_listado"]').empty();
                   $('select[name="cotizacion_listado"]').select2({
-                    data: JSON.parse(data)
+                    data: (typeof data === "string" ? JSON.parse(data) : data)
                   });
                 }
               );

@@ -10,6 +10,7 @@ $(document).ready(function(){
 });
 
 var tbl_ordenes = $("#table-ordenes").DataTable({
+  columnDefs: [{ targets: [0,2,3,4,5,7], render: $.fn.dataTable.render.text() }],
   dom: 'Bfrtip',
   "order": [[0, "DESC"]],
   buttons: [
@@ -132,13 +133,13 @@ $('select[name="ordenes_tipo"]').on("change", function() {
       { FILTER: "ALL", ESTADO: "ALL", TIPO_ORDEN: ORD_TIPO },
       function(data) {
         tbl_ordenes.clear().draw();
-        data_orden = JSON.parse(data);
+        data_orden = (typeof data === "string" ? JSON.parse(data) : data);
         for (i = 0; i < data_orden.length; i++) {
           tbl_ordenes.rows
             .add([
               {
                 0: data_orden[i]["IDORDEN"],
-                1: data_orden[i]["ORDNUMBER"],
+                1: appuEscapeHtml(data_orden[i]["ORDNUMBER"]),
                 2: data_orden[i]["NOMPROV"],
                 3: data_orden[i]["OBSERV"],
                 4: data_orden[i]["TOTNET"],
@@ -198,12 +199,12 @@ $("#btn-buscar").click(function(){
         { orden_nroo:orden_nroo, orden_prov:orden_prov, orden_fini:orden_fini, orden_ffin:orden_ffin },
         function(data) {
             tbl_ordenes.clear().draw();
-            data_orden = JSON.parse(data);
+            data_orden = (typeof data === "string" ? JSON.parse(data) : data);
             for (i = 0; i < data_orden.length; i++) {
               tbl_ordenes.rows.add([
                 {
                   0: data_orden[i]["ID"],
-                  1: data_orden[i]["NUMBER"],
+                  1: appuEscapeHtml(data_orden[i]["NUMBER"]),
                   2: data_orden[i]["SUPPLIER_REFERENCE"] || "-",
                   3: data_orden[i]["DATE"],
                   4: data_orden[i]["PROV_NAME"],
@@ -332,13 +333,13 @@ function listarCompras(){
     { orden_nroo:"", orden_prov:"", orden_fini:"", orden_ffin:""},
     function(data) {
       tbl_ordenes.clear().draw();
-      data_orden = JSON.parse(data);
+      data_orden = (typeof data === "string" ? JSON.parse(data) : data);
       for (i = 0; i < data_orden.length; i++) {
         tbl_ordenes.rows
           .add([
           {
             0: data_orden[i]["ID"],
-            1: data_orden[i]["NUMBER"] + '<br><small class="text-muted">' + (data_orden[i]["DOCUMENT_SUBTYPE"] === "RESERVE" ? "Factura de reserva" : "Factura estándar") + '</small>',
+            1: appuEscapeHtml(data_orden[i]["NUMBER"]) + '<br><small class="text-muted">' + (data_orden[i]["DOCUMENT_SUBTYPE"] === "RESERVE" ? "Factura de reserva" : "Factura estándar") + '</small>',
             2: data_orden[i]["SUPPLIER_REFERENCE"] || "-",
             3: data_orden[i]["DATE"],
             4: data_orden[i]["PROV_NAME"],

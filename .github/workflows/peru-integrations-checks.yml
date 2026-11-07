@@ -1,0 +1,80 @@
+name: Peru integration checks
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - 'feature/peru-integrations-*'
+  workflow_dispatch:
+
+# Validation only: no deployment credentials or repository write permissions.
+permissions:
+  contents: read
+
+concurrency:
+  group: peru-checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  php:
+    name: PHP 8.3 syntax and isolated checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    services:
+      mysql:
+        image: mariadb:10.11
+        env:
+          MARIADB_ROOT_PASSWORD: appu-ci-local-password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mariadb-admin ping -h 127.0.0.1 -pappu-ci-local-password"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, pdo_mysql, curl, gd
+          coverage: none
+          tools: none
+      - name: Lint integration files
+        run: php bin/verify-peru-integrations.php
+      - name: Run isolated PHP regressions
+        run: |
+          php tests/peru-tax-rules.php
+          php tests/peru-tax-evaluation-idempotency.php
+          php tests/migration-byte-integrity.php
+          php tests/document-totals.php
+          php tests/database-connection-retry.php
+          php tests/integration-network-policy.php
+          php tests/migration-sql-statements.php
+          php tests/security-php-input-boundaries.php
+          php tests/security-qr-tempfile.php
+      - name: Verify GRE lifecycle in a disposable database
+        run: php tests/gre-lifecycle.php
+        env:
+          APPU_TEST_MYSQL_USER: root
+          APPU_TEST_MYSQL_PASSWORD: appu-ci-local-password
+
+  ui:
+    name: Node 22 UI regressions
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Install UI test dependencies
+        run: npm install --prefix tests --ignore-scripts --no-package-lock --no-audit --no-fund
+      - name: Run UI regressions
+        run: npm test --prefix tests

@@ -48,7 +48,7 @@ $('select[name="facturacion_formpagotext"]').on("change", function() {
 $.post("../../modules/facturacion/listar-boletas.php", function(data) {
   $('select[name="facturas_listado"]').empty();
   $('select[name="facturas_listado"]').select2({
-    data: JSON.parse(data)
+    data: (typeof data === "string" ? JSON.parse(data) : data)
   });
   appuOpenRequestedRecord('select[name="facturas_listado"]', '#btn-select-factura');
 });
@@ -76,7 +76,7 @@ $('input[name="facturacion_valcliente"]').autocomplete({
         "../../modules/clientes/consultar-cliente.php",
         { FILTER: ui.item.id },
         function(data) {
-          var mydata = JSON.parse(data);
+          var mydata = (typeof data === "string" ? JSON.parse(data) : data);
           appuAplicarClienteBoleta({client_id: mydata[0]["CODIGO"], ruc: mydata[0]["RUC"], business_name: mydata[0]["RAZ_SOC"], trade_name: mydata[0]["NOM_COM"], address: mydata[0]["DIRECC"], email: mydata[0]["EMAIL"], phone: mydata[0]["TELEF"], cellphone: mydata[0]["CELULAR"]});
           //$('input[name="facturacion_clirefer"]').val("No registrada");
         }
@@ -88,7 +88,7 @@ $('input[name="facturacion_valcliente"]').autocomplete({
 buscarCorrelativo();
 
 $.post("../../modules/usuarios/listar-usuarios-xtipo.php", function(data) {
-  mydata = JSON.parse(data);
+  mydata = (typeof data === "string" ? JSON.parse(data) : data);
   data_users = mydata[0];
   user_id = mydata[1];
   user_job = mydata[2];
@@ -115,7 +115,7 @@ $('select[name="facturacion_usuario"]').on("change", function(){
 $.post("../../modules/cotizaciones/listar-cotizaciones.php", function(data) {
   $('select[name="facturacion_listadocotiz"]').empty();
   $('select[name="facturacion_listadocotiz"]').select2({
-    data: JSON.parse(data)
+    data: (typeof data === "string" ? JSON.parse(data) : data)
   });
 });
 
@@ -139,7 +139,7 @@ $.post(
   function(data) {
     $('select[name="facturacion_producto"]').empty();
     $('select[name="facturacion_producto"]').select2({
-      data: JSON.parse(data)
+      data: (typeof data === "string" ? JSON.parse(data) : data)
     });
   }
 );
@@ -158,7 +158,7 @@ $('select[name="facturacion_producto"]').on("change", function() {
       "../../modules/productos/consultar-productos.php",
       { FILTER: DATA_ID, ESTADO: "1", warehouse_id: $('select[name="facturacion_almacen_id"]').val() || 1 },
       function(data) {
-        var mydata = JSON.parse(data);
+        var mydata = (typeof data === "string" ? JSON.parse(data) : data);
         stock_producto = parseInt(mydata[0]["CANTIDAD"]);
         $('input[name="facturacion_codeprod"]').val(mydata[0]["CODPROD"]);
         $('input[name="facturacion_nameprod"]').val(mydata[0]["NOMBRE"]);
@@ -232,6 +232,7 @@ $('select[name="facturacion_producto"]').on("change", function() {
 });
 
 var tbl_prodfactura = $("#table-productsfactura").DataTable({
+  columnDefs: [{ targets: '_all', render: $.fn.dataTable.render.text() }],
   "language": {"url": "../../plugins/datatables/Spanish.json"}
 });
 
@@ -362,7 +363,7 @@ $("#btn-select-factura").click(function() {
       "../../modules/facturacion/consultar-boleta.php",
       { FILTER: DATA_ID, ESTADO:"ALL" },
       function(data) {
-        var data_json = JSON.parse(data);
+        var data_json = (typeof data === "string" ? JSON.parse(data) : data);
 
         if(data_json.length > 0){
 
@@ -464,7 +465,7 @@ $("#btn-select-factura").click(function() {
               //$("#btn-save-facturaprod").prop("disabled", false);
   
               tbl_prodfactura.clear().draw();
-              detafact_prods = JSON.parse(data);
+              detafact_prods = (typeof data === "string" ? JSON.parse(data) : data);
               for (i = 0; i < detafact_prods.length; i++) {
                 var precio = parseFloat(detafact_prods[i]["PRECIOUNIT"]).toFixed(2);
                 var importe = parseFloat(detafact_prods[i]["IMPORTE"]).toFixed(2);
@@ -520,7 +521,7 @@ $("#btn-select-cotizacion").click(function() {
     $.post("../../modules/cotizaciones/consultar-cotizacion.php",
       { FILTER: DATA_ID, ESTADO: "ALL" }, function(data) {
 
-        var data_json = JSON.parse(data);
+        var data_json = (typeof data === "string" ? JSON.parse(data) : data);
         $('input[name="facturacion_valcliente"]').focus();
         $('input[name="facturacion_fecha"]').val(data_json[0]["FECREG"]);
         $('select[name="facturacion_usuario"]').val(data_json[0]["USER_ID"]);
@@ -570,7 +571,7 @@ $("#btn-select-cotizacion").click(function() {
             $("#btn-save-facturaprod").prop("disabled", false);
 
             tbl_prodfactura.clear().draw();
-            detacotiz_json = JSON.parse(data);
+            detacotiz_json = (typeof data === "string" ? JSON.parse(data) : data);
             for (i = 0; i < detacotiz_json.length; i++) {
               var precio = parseFloat(detacotiz_json[i]["PRECIOUNIT"]).toFixed(2);
               var importe = parseFloat(detacotiz_json[i]["IMPORTE"]).toFixed(2);
@@ -759,7 +760,7 @@ $("#FRM_INSERT_FACTURA").submit(function(e) {
         $.post("../../modules/facturacion/listar-boletas.php", function(data) {
         $('select[name="facturas_listado"]').empty();
         $('select[name="facturas_listado"]').select2({
-          data: JSON.parse(data)
+          data: (typeof data === "string" ? JSON.parse(data) : data)
           });
         });
 

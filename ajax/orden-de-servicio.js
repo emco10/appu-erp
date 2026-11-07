@@ -41,7 +41,7 @@ $('select[name="orden_tipopagotext"]').on("change", function() {
 $.post("../../modules/ordenes/listar-ordenes.php", {orden_tipo:"SERVICIO"}, function(data) {
   $('select[name="orden_listado"]').empty();
   $('select[name="orden_listado"]').select2({
-    data: JSON.parse(data)
+    data: (typeof data === "string" ? JSON.parse(data) : data)
   });
 });
 
@@ -49,7 +49,7 @@ $.post("../../modules/proveedores/listar-proveedores.php", function(data) {
   var selected=$('select[name="orden_proveedor"]').val(),label=$('select[name="orden_proveedor"] option:selected').text();
   $('select[name="orden_proveedor"]').empty();
   $('select[name="orden_proveedor"]').select2({
-    data: JSON.parse(data)
+    data: (typeof data === "string" ? JSON.parse(data) : data)
   });
   if(selected){var $select=$('select[name="orden_proveedor"]');if(!$select.find('option').filter(function(){return String(this.value)===String(selected);}).length)$select.append($('<option>').val(selected).text(label||'Proveedor '+selected));$select.val(selected).trigger('change.select2');}
 });
@@ -59,7 +59,7 @@ function cargarProductosOrdenServicio(proveedorId) {
   var payload = { ESTADO: 1 }; if (proveedorId) payload.PROV_ID = proveedorId;
   $.post("../../modules/productos/listar-productos-xprov.php", payload, function(data) {
     if(current!==serviceCatalogEpoch)return;
-    $('select[name="orden_producto_select"]').empty().select2({ data: JSON.parse(data), language: "es", placeholder: "Buscar por código o descripción" });
+    $('select[name="orden_producto_select"]').empty().select2({ data: (typeof data === "string" ? JSON.parse(data) : data), language: "es", placeholder: "Buscar por código o descripción" });
   }).fail(function(xhr){if(current===serviceCatalogEpoch)serviceError(xhr,'No se pudo cargar el catálogo de artículos.');});
 }
 cargarProductosOrdenServicio("");
@@ -70,7 +70,7 @@ $('select[name="orden_producto_select"]').on("change", function() {
   if (!productId) return;
   $.post("../../modules/productos/consultar-productos.php", { FILTER: productId, ESTADO: "1" }, function(data) {
     if(current!==serviceProductEpoch)return;
-    var product = JSON.parse(data)[0]; if (!product) return;
+    var product = (typeof data === "string" ? JSON.parse(data) : data)[0]; if (!product) return;
     $('input[name="orden_codprod"]').val(product.CODPROD);
     $('input[name="orden_nombre_serv"]').val(product.NOMBRE);
     $('input[name="orden_glosa"]').val(product.DESCRIPTION || product.NOMBRE);
@@ -115,7 +115,7 @@ $('select[name="orden_proveedor"]').on('change', function(){
       { FILTER:provid },
       function(data) {
         if(currentProvider!==serviceProviderEpoch)return;
-        var mydata = JSON.parse(data);
+        var mydata = (typeof data === "string" ? JSON.parse(data) : data);
         if(!mydata.length)return;
         $('input[name="orden_provruc"]').val(mydata[0]["NUMERO"]);
         $('input[name="orden_nomprov"]').val(mydata[0]["RAZ_SOC"]);
@@ -145,7 +145,7 @@ $('select[name="orden_proveedor"]').on('change', function(){
             function(data) {
               $('input[name="orden_porcdscto"]').prop("disabled", false);
               $('input[name="orden_cantidad"]').prop("disabled", false);
-              var mydata = JSON.parse(data);
+              var mydata = (typeof data === "string" ? JSON.parse(data) : data);
               precioprod_temp = parseFloat(mydata[0]["PRECIO"]);
               stock_producto = parseInt(mydata[0]["CANTIDAD"]);
               $('input[name="orden_producto"]').val(mydata[0]["CODIGO"]);
@@ -183,7 +183,7 @@ var precioprod_temp = 0;
       function(data) {
         $('input[name="orden_porcdscto"]').prop("disabled", false);
         $('input[name="orden_cantidad"]').prop("disabled", false);
-        var mydata = JSON.parse(data);
+        var mydata = (typeof data === "string" ? JSON.parse(data) : data);
         precioprod_temp = parseFloat(mydata[0]["PRECIO"]);
         stock_producto = parseInt(mydata[0]["CANTIDAD"]);
         $('input[name="orden_nameprod"]').val(mydata[0]["NOMBRE"]);
@@ -244,6 +244,7 @@ $('input[name="orden_cantidad"]').on("change", function() {
 
 
 var tbl_prodordcompra = $("#table-ord-servicios").DataTable({
+  columnDefs: [{ targets: '_all', render: $.fn.dataTable.render.text() }],
   "language": {"url": "../../plugins/datatables/Spanish.json"}
 });
 
@@ -478,7 +479,7 @@ $("#btn-select-orden").click(function() {
       { TIPO_ORDEN:"SERVICIO", FILTER: DATA_ID, ESTADO: "ALL" },
       function(data) {
         if(current!==serviceOpenEpoch)return;
-        var data_json = JSON.parse(data);
+        var data_json = (typeof data === "string" ? JSON.parse(data) : data);
         if(!data_json.length){Swal.close();return toastr.warning('No se encontró la orden seleccionada.');}
         serviceStatus=data_json[0].ORDESTADO;
         $('#FRM_INSERT_DETA_ORDSERV [name]').filter(function(){return this.name.indexOf('custom_field[')===0;}).each(function(){var match=this.name.match(/\[(\d+)\]/),value=match?(data_json[0].CUSTOM_FIELDS||{})[match[1]]:'';if(this.type==='checkbox')$(this).prop('checked',String(value)==='1');else $(this).val(value==null?'':value).trigger('change.select2');});
@@ -545,7 +546,7 @@ $("#btn-select-orden").click(function() {
             $("#btn-save-orden").prop("disabled", !serviceCanEdit());
 
             tbl_prodordcompra.clear().draw();
-            detaorden_json = JSON.parse(data);
+            detaorden_json = (typeof data === "string" ? JSON.parse(data) : data);
             for (i = 0; i < detaorden_json.length; i++) {
               tbl_prodordcompra.rows
                 .add([
@@ -644,7 +645,7 @@ $("#FRM_INSERT_DETA_ORDSERV").submit(function (e) {
             $.post("../../modules/ordenes/listar-ordenes.php", {orden_tipo:"SERVICIO"}, function(data) {
               $('select[name="orden_listado"]').empty();
               $('select[name="orden_listado"]').select2({
-                data: JSON.parse(data)
+                data: (typeof data === "string" ? JSON.parse(data) : data)
               });
             });
             
@@ -713,7 +714,7 @@ $("#btn-delete-orden").click(function() {
               $.post("../../modules/ordenes/listar-ordenes.php", {orden_tipo:"SERVICIO"}, function(data) {
                 $('select[name="orden_listado"]').empty();
                 $('select[name="orden_listado"]').select2({
-                  data: JSON.parse(data)
+                  data: (typeof data === "string" ? JSON.parse(data) : data)
                 });
               });
 
