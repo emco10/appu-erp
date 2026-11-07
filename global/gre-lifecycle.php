@@ -24,9 +24,12 @@ function app_gre_require_local_cancellation(PDO $pdo, int $guideId): void
     }
 }
 
-function app_gre_require_transit_ready(PDO $pdo, int $guideId): void
+function app_gre_require_transit_ready(PDO $pdo, int $guideId, string $guideNumber=''): void
 {
     $record=app_gre_lifecycle_record($pdo,$guideId);
+    if ($record===null&&preg_match('/^T[A-Z0-9]{3}-[0-9]{1,8}$/D',strtoupper(trim($guideNumber)))) {
+        throw new DomainException('La guía electrónica aún no tiene un envío GRE. Envía la guía y espera un CDR aceptado antes de iniciar el traslado.');
+    }
     if ($record!==null&&!in_array($record['status'],['accepted','observed'],true)) {
         throw new DomainException('La guía tiene un envío GRE pendiente, rechazado o incierto. Consulta su ticket y espera un CDR aceptado antes de iniciar el traslado.');
     }

@@ -203,7 +203,7 @@ if ($action === 'advance') {
         if (!$guide || ($statusOrder[$guide['status']] ?? null) !== $nextStatus) {
             throw new DomainException('La guia debe avanzar al siguiente estado.');
         }
-        if ($nextStatus==='En transito') app_gre_require_transit_ready($pdo,(int)$guideId);
+        if ($nextStatus==='En transito') app_gre_require_transit_ready($pdo,(int)$guideId,(string)$guide['number']);
         $pdo->prepare('UPDATE tbl_remission_guide SET status = ?, last_update = NOW() WHERE id = ?')->execute([$nextStatus, $guideId]);
         app_record_document_status($pdo, 'remission_guide', (int) $guideId, (string) $guide['number'], (string) $guide['status'], $nextStatus, 'Cambio de estado', (int) $_SESSION['loggedInUser']['USERID']);
         $pdo->commit();
