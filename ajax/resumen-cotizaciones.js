@@ -8,6 +8,7 @@ $(document).ready(function(){
 });
 
 var tbl_cotizaciones = $("#table-cotizaciones").DataTable({
+  columnDefs: [{ targets: [0,1,2,3,4,5], render: $.fn.dataTable.render.text() }],
   dom: 'Bfrtip',
   "order": [[0, "DESC"]],
   buttons: [
@@ -59,7 +60,7 @@ $.post(
   { FILTER: "ALL", ESTADO: "ALL" },
   function(data) {
     tbl_cotizaciones.clear().draw();
-    data_cotiz = JSON.parse(data);
+    data_cotiz = (typeof data === "string" ? JSON.parse(data) : data);
     for (i = 0; i < data_cotiz.length; i++) {
       tbl_cotizaciones.rows
         .add([
@@ -169,7 +170,7 @@ $("#btn-buscar").click(function(){
             { cotiz_nroo:cotiz_nroo, cotiz_client:cotiz_client, cotiz_fini:cotiz_fini, cotiz_ffin:cotiz_ffin  },
             function(data) {
                 tbl_cotizaciones.clear().draw();
-                data_cotiz = JSON.parse(data);
+                data_cotiz = (typeof data === "string" ? JSON.parse(data) : data);
                 for (i = 0; i < data_cotiz.length; i++) {
                 tbl_cotizaciones.rows
                     .add([
@@ -221,7 +222,7 @@ $("#table-cotizaciones").contextMenu({
                         { FILTER: "ALL", ESTADO: "ALL" },
                         function(data) {
                           tbl_cotizaciones.clear().draw();
-                          data_cotiz = JSON.parse(data);
+                          data_cotiz = (typeof data === "string" ? JSON.parse(data) : data);
                           for (i = 0; i < data_cotiz.length; i++) {
                             tbl_cotizaciones.rows
                               .add([

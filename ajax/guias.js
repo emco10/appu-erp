@@ -43,7 +43,10 @@ $(function () {
       { extend: "print", text: '<i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir' }
     ],
     language: { url: "../../plugins/datatables/Spanish.json" },
-    columnDefs: [{ targets: 7, render: function (data, type) { return type === "display" ? appuStatusBadge(data) : data; } }]
+    columnDefs: [
+      { targets: [0,1,2,3,4,5,6], render: $.fn.dataTable.render.text() },
+      { targets: 7, render: function (data, type) { return type === "display" ? appuStatusBadge(data) : data; } }
+    ]
   });
   table.columns([0]).visible(false);
 

@@ -191,7 +191,8 @@ window.appuOpenRequestedRecord = function (selectSelector, buttonSelector) {
   var requestedId = new URLSearchParams(window.location.search).get("record_id");
   if (!requestedId || !/^\d+$/.test(requestedId)) return false;
   var $select = $(selectSelector).first();
-  if (!$select.length || !$select.find("option[value='" + String(requestedId).replace(/'/g, "\\'") + "']").length) {
+  var available = $select.find('option').filter(function () { return this.value === requestedId; }).length;
+  if (!$select.length || !available) {
     if (window.toastr) toastr.warning("El documento solicitado no está disponible en el listado actual.");
     return false;
   }

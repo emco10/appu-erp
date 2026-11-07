@@ -1,5 +1,6 @@
 <?php
 require '../../global/connection.php';
+header('Content-Type: application/json; charset=utf-8');
 $FILTER_ID = $_POST["FILTER"];
 $ESTADO_FAC = $_POST["ESTADO"];
 

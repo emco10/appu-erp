@@ -8,6 +8,7 @@ $(document).ready(function(){
 var tabla_movimientos = $('#table-movimientos');
 
 tabla_movimientos.DataTable({
+    columnDefs: [{ targets: '_all', render: $.fn.dataTable.render.text() }],
     "ajax": {
         "url": "../../modules/productos/consultar-movimientos.php",
         "type": "POST",

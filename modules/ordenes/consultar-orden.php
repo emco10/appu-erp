@@ -1,5 +1,6 @@
 <?php
 require '../../global/connection.php';
+header('Content-Type: application/json; charset=utf-8');
 
 $FILTER_COTIZ = $_POST["FILTER"];
 $ESTADO_ORDEN = $_POST["ESTADO"];

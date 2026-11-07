@@ -21,7 +21,7 @@ exports.setup = async function (view, scripts, query = '', settings = {}) {
     return this;
   };
   const table = { columns: () => ({ visible() {} }), rows: Object.assign(() => ({ indexes: () => [], data:()=>({toArray:()=>settings.rowData?[settings.rowData]:rows}) }), { add: added => {rows.push(...added);return table;} }), clear() { rows.length = 0; return this; }, draw() { return this; }, row: () => ({ data: () => settings.rowData || null }) };
-  $.fn.DataTable = () => table; $.fn.dataTable = { ext: { search: [] } }; $.fn.contextMenu = function (options) { contextMenus.push(options);return this; };$.fn.autocomplete=function(){return this;};
+  $.fn.DataTable = () => table; $.fn.dataTable = { ext: { search: [] }, render: { text: () => ({ display: value => $('<div>').text(value == null ? '' : value).html(), filter: value => $('<div>').text(value == null ? '' : value).html() }) } }; $.fn.contextMenu = function (options) { contextMenus.push(options);return this; };$.fn.autocomplete=function(){return this;};
   function request(url, data, method) { const deferred = $.Deferred(); requests.push({ url, data, method, deferred }); return deferred.promise(); }
   $.getJSON = (url, data, success) => {if(typeof data==='function'){success=data;data=undefined;}const promise=request(url,data,'GET');if(success)promise.done(success);return promise;};
   $.ajax = options => {const promise=request(options.url,options.data,options.method||options.type);if(options.success)promise.done(options.success);if(options.error)promise.fail(options.error);if(options.complete)promise.always(options.complete);return promise;};

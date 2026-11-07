@@ -10,7 +10,7 @@ $.post(
   function(data) {
     $('select[name="customer_list"]').empty();
     $('select[name="customer_list"]').select2({
-      data: JSON.parse(data)
+      data: (typeof data === "string" ? JSON.parse(data) : data)
     });
   }
 );

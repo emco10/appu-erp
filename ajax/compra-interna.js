@@ -53,7 +53,7 @@ $('select[name="orden_tipopagotext"]').on("change", function() {
 $.post("../../modules/compras/listar-compras.php", {orden_tipo:"COMPRA"}, function(data) {
   $('select[name="orden_listado"]').empty();
   $('select[name="orden_listado"]').select2({
-    data: JSON.parse(data)
+    data: (typeof data === "string" ? JSON.parse(data) : data)
   });
 });
 
@@ -74,7 +74,7 @@ $.getJSON("../../modules/ordenes/listar-ordenes-disponibles.php").done(function(
 $.post("../../modules/proveedores/listar-proveedores.php", function(data) {
   $('select[name="orden_proveedor"]').empty();
   $('select[name="orden_proveedor"]').select2({
-    data: JSON.parse(data)
+    data: (typeof data === "string" ? JSON.parse(data) : data)
   });
 });
 
@@ -102,7 +102,7 @@ $('select[name="orden_direccion_proveedor_id"]').on('change', function () { $('i
 function cargarProductosCompra(proveedorId) {
   var payload = { ESTADO: 1 }; if (proveedorId) payload.PROV_ID = proveedorId;
   $.post("../../modules/productos/listar-productos-xprov.php", payload, function(data) {
-    $('select[name="orden_producto_select"]').empty().select2({ data: JSON.parse(data), language: "es", placeholder: "Buscar por código o descripción" });
+    $('select[name="orden_producto_select"]').empty().select2({ data: (typeof data === "string" ? JSON.parse(data) : data), language: "es", placeholder: "Buscar por código o descripción" });
   });
 }
 cargarProductosCompra("");
@@ -110,7 +110,7 @@ $('select[name="orden_producto_select"]').on("change", function() {
   var productId = $(this).val();
   if (!productId) return;
   $.post("../../modules/productos/consultar-productos.php", { FILTER: productId, ESTADO: "1" }, function(data) {
-    var product = JSON.parse(data)[0];
+    var product = (typeof data === "string" ? JSON.parse(data) : data)[0];
     if (!product) return;
     $('input[name="orden_codprod"]').val(product.CODPROD);
     $('input[name="orden_descprod"]').val(product.DESCRIPTION || product.NOMBRE);
@@ -154,7 +154,7 @@ $('select[name="orden_proveedor"]').on('change', function(){
       "../../modules/proveedores/consultar-proveedor.php",
       { FILTER:provid },
       function(data) {
-        var mydata = JSON.parse(data);
+        var mydata = (typeof data === "string" ? JSON.parse(data) : data);
         $('input[name="orden_provruc"]').val(mydata[0]["NUMERO"]);
         $('input[name="orden_nomprov"]').val(mydata[0]["RAZ_SOC"]);
       }
@@ -182,7 +182,7 @@ $('select[name="orden_proveedor"]').on('change', function(){
             function(data) {
               $('input[name="orden_porcdscto"]').prop("disabled", false);
               $('input[name="orden_cantidad"]').prop("disabled", false);
-              var mydata = JSON.parse(data);
+              var mydata = (typeof data === "string" ? JSON.parse(data) : data);
               precioprod_temp = parseFloat(mydata[0]["PRECIO"]);
               stock_producto = parseInt(mydata[0]["CANTIDAD"]);
               $('input[name="orden_producto"]').val(mydata[0]["CODIGO"]);
@@ -220,7 +220,7 @@ var precioprod_temp = 0;
       function(data) {
         $('input[name="orden_porcdscto"]').prop("disabled", false);
         $('input[name="orden_cantidad"]').prop("disabled", false);
-        var mydata = JSON.parse(data);
+        var mydata = (typeof data === "string" ? JSON.parse(data) : data);
         precioprod_temp = parseFloat(mydata[0]["PRECIO"]);
         stock_producto = parseInt(mydata[0]["CANTIDAD"]);
         $('input[name="orden_nameprod"]').val(mydata[0]["NOMBRE"]);
@@ -281,6 +281,7 @@ $('input[name="orden_cantidad"]').on("change", function() {
 
 
 var tbl_prodordcompra = $("#table-ord-compras").DataTable({
+  columnDefs: [{ targets: '_all', render: $.fn.dataTable.render.text() }],
   "language": {"url": "../../plugins/datatables/Spanish.json"}
 });
 
@@ -298,7 +299,7 @@ $('#purchase-order-source').on('change', function () {
     ESTADO: 'ALL',
     TIPO_ORDEN: 'COMPRA'
   }, function (data) {
-    var order = (JSON.parse(data) || [])[0];
+    var order = ((typeof data === "string" ? JSON.parse(data) : data) || [])[0];
     if (!order) return;
     $('select[name="orden_proveedor"]').val(order.PROVID).trigger('change');
     cargarDireccionesProveedor(order.PROVID, order.PROVIDER_ADDRESS_ID, order.PROVIDER_ADDRESS);
@@ -319,7 +320,7 @@ $('#purchase-order-source').on('change', function () {
       $('input[name="orden_tipopago"]').val(paymentDays);
     }
     $.post('../../modules/ordenes/consultar-detalle-orden.php', { IDORDEN: orderId }, function (detailData) {
-      var details = JSON.parse(detailData) || [];
+      var details = (typeof detailData === "string" ? JSON.parse(detailData) : detailData) || [];
       tbl_prodordcompra.clear();
       details.forEach(function (item, index) {
         tbl_prodordcompra.row.add({
@@ -560,7 +561,7 @@ $("#btn-select-orden").click(function() {
       "../../modules/compras/consultar-compra.php",
       { TIPO_ORDEN:"COMPRA", FILTER: DATA_ID, ESTADO: "ALL" },
       function(data) {
-        var data_json = JSON.parse(data);
+        var data_json = (typeof data === "string" ? JSON.parse(data) : data);
         $('input[name="orden_nro"]').focus();
         $('input[name="orden_nro"]').val(data_json[0]["SUPPLIER_REFERENCE"] || "");
 
@@ -625,7 +626,7 @@ $("#btn-select-orden").click(function() {
             $("#btn-save-orden").prop("disabled", false);
 
             tbl_prodordcompra.clear().draw();
-            detaorden_json = JSON.parse(data);
+            detaorden_json = (typeof data === "string" ? JSON.parse(data) : data);
             for (i = 0; i < detaorden_json.length; i++) {
               tbl_prodordcompra.rows
                 .add([
@@ -728,7 +729,7 @@ $("#FRM_INSERT_DETA_ORDCOMPRA").submit(function (e) {
             $.post("../../modules/compras/listar-compras.php", {orden_tipo:"COMPRA"}, function(data) {
               $('select[name="orden_listado"]').empty();
               $('select[name="orden_listado"]').select2({
-                data: JSON.parse(data)
+                data: (typeof data === "string" ? JSON.parse(data) : data)
               });
             });
             
@@ -759,7 +760,7 @@ $("#FRM_INSERT_DETA_ORDCOMPRA").submit(function (e) {
                 $.post("../../modules/compras/listar-compras.php", {orden_tipo:"COMPRA"}, function(data) {
                   $('select[name="orden_listado"]').empty();
                   $('select[name="orden_listado"]').select2({
-                    data: JSON.parse(data)
+                    data: (typeof data === "string" ? JSON.parse(data) : data)
                   });
                 });
               }
@@ -802,7 +803,7 @@ $("#btn-delete-orden").click(function() {
               $.post("../../modules/compras/listar-compras.php", {orden_tipo:"COMPRA"}, function(data) {
                 $('select[name="orden_listado"]').empty();
                 $('select[name="orden_listado"]').select2({
-                  data: JSON.parse(data)
+                  data: (typeof data === "string" ? JSON.parse(data) : data)
                 });
               });
 

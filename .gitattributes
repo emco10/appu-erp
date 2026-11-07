@@ -3,3 +3,5 @@ db/migrations/*.sql text eol=lf
 # Preserve the exact bytes originally recorded in Hostinger's migration ledger.
 db/migrations/20261102_repair_sunat_series_scope.sql -text
 db/migrations/20261102_repair_sunat_series_scope.sql whitespace=cr-at-eol
+# Keep the audited upstream DataTables release byte-for-byte, including its formatting.
+plugins/datatables/jquery.dataTables.js -text -whitespace

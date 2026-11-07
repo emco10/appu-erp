@@ -107,7 +107,7 @@ $(function () {
     { ESTADO: "ALL", REPORT: 1 },
     function (data) {
       $("#inventory-product-select").select2({
-        data: JSON.parse(data)
+        data: (typeof data === "string" ? JSON.parse(data) : data)
       });
     }
   );

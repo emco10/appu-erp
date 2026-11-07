@@ -8,7 +8,7 @@ $(function () {
   $('#sire-period').val(today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0'));
 
   function message(text, state) { $('#sire-status').attr('class', 'alert alert-' + (state || 'info')).text(text); }
-  function escape(value) { return $('<div>').text(value == null ? '' : String(value)).html(); }
+  function escape(value) { return String(value == null ? '' : value).replace(/[&<>"']/g, function (character) { return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#039;' }[character]; }); }
   function selection(needsTicket) {
     var period = String($('#sire-period').val() || '').replace('-', ''), book = $('#sire-book').val(), ticket = String($('#sire-ticket').val() || '').trim();
     if (!/^(19|20)\d{2}(0[1-9]|1[0-2])$/.test(period)) { message('Selecciona un período válido.', 'warning'); return null; }

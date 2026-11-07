@@ -1,5 +1,6 @@
 <?php
 require '../../global/connection.php';
+header('Content-Type: application/json; charset=utf-8');
 $query_adic = "";
 if(isset($_POST["ESTADO"])){
     $estado = filter_var($_POST['ESTADO'], FILTER_VALIDATE_INT);

@@ -3,13 +3,14 @@ $("#btn-delete-product").hide();
 $.post("../../modules/proveedores/listar-proveedores.php", function (data) {
     $('select[name="producto_proveedor"]').empty();
     $('select[name="producto_proveedor"]').select2({
-        data: JSON.parse(data)
+        data: (typeof data === "string" ? JSON.parse(data) : data)
     })
 });
 
 var tabla_productos = $('#table-productos');
 
 tabla_productos.dataTable({
+    columnDefs: [{ targets: '_all', render: $.fn.dataTable.render.text() }],
     "ajax": {
         "url": "../../modules/productos/consultar-productos.php",
         "type": "POST",
@@ -100,7 +101,7 @@ tabla_productos.on('click', 'tr', function () {
         }
     });
     $.post("../../modules/productos/consultar-productos.php", { FILTER: id_row, ESTADO: 'ALL' }, function (data) {
-        var data_json = JSON.parse(data);        
+        var data_json = (typeof data === "string" ? JSON.parse(data) : data);
         $('#btn-delete-product').attr("js-id", data_json[0]["CODIGO"]);
         $('input[name="producto_id"]').val(data_json[0]["CODIGO"]);
         $('input[name="producto_codigo"]').val("PROD-" + data_json[0]["CODIGO"]);

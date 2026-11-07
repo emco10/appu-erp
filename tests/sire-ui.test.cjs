@@ -6,6 +6,19 @@ async function create(settings = {}) {
   return setup('views/gestion/sire.php', ['ajax/sire.js'], '', settings);
 }
 
+test('SIRE conserva comillas de una respuesta como datos sin inyectar atributos en los botones',async()=>{
+  const t=await create();try{
+    const payload='123456789012" autofocus onfocus="window.__xss=1';
+    t.$('#sire-tickets').trigger('click');
+    t.requests.at(-1).deferred.resolve({data:{tickets:[{ticket:payload,period:payload,status:'completed',status_description:'Terminado',files:[{name:'file.zip'}]}],pagination:{total:1}}});
+    const button=t.$('[data-sire-download]');
+    assert.equal(button.attr('data-ticket'),payload);
+    assert.equal(button.attr('data-period'),payload);
+    assert.equal(t.$('#sire-ticket-table [onfocus],#sire-ticket-table [autofocus]').length,0);
+    assert.equal(t.window.__xss,undefined);
+  }finally{t.dom.window.close();}
+});
+
 test('SIRE no consulta al abrir ni al cambiar libro/período; consulta solo al pulsar un botón', async () => {
   const t = await create();
   try {
