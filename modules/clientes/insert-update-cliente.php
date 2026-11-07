@@ -7,6 +7,7 @@ if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQU
 require '../../global/connection.php';
 require_once '../../global/validation.php';
 require_once '../../global/document-history.php';
+require_once '../../global/peru-tax-profile.php';
 
 $customerId = filter_var($_POST['cliente_id'] ?? null, FILTER_VALIDATE_INT);
 $ruc = preg_replace('/\D+/', '', (string) ($_POST['cliente_ruc'] ?? ''));
@@ -71,6 +72,11 @@ try {
         $result = 'OK_UPDATE';
     }
     app_save_custom_fields($pdo, 'customer', $normalizedId, $customValues);
+    if (trim((string) ($_POST['partner_tax_profile_json'] ?? '')) !== '') {
+        app_partner_tax_profile_save($pdo, 'customer', $normalizedId, $ruc, (string) $_POST['partner_tax_profile_json']);
+    } elseif (app_peru_table_exists($pdo, 'tbl_partner_tax_profile')) {
+        $pdo->prepare("DELETE FROM tbl_partner_tax_profile WHERE partner_type='customer' AND partner_id=? AND document_number<>?")->execute([$normalizedId, $ruc]);
+    }
     $pdo->commit();
     echo $result;
 } catch (Throwable $exception) {

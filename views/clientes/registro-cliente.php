@@ -21,6 +21,7 @@
             <div style="max-width: 1140px;margin: 0 auto;">
                 <form id="FRM_INSERT_CLIENTE" method="post" action="<?php echo $functions->direct_sistema(); ?>/modules/clientes/insert-update-cliente.php" enctype="multipart/form-data">
                     <input type="hidden" name="cliente_id">
+                    <input type="hidden" name="partner_tax_profile_json">
                     <div class="card card-primary">
                         <div class="card-header ">
                             <div class="card-title">Datos de Cliente</div>
@@ -34,6 +35,8 @@
                                     <div class="form-group">
                                         <label>DNI / RUC</label>
                                         <input minlength="8" maxlength="11" pattern="(?:[0-9]{8}|[0-9]{11})" inputmode="numeric" type="text" class="form-control" placeholder="Ingrese DNI o RUC" name="cliente_ruc" required>
+                                        <button type="button" class="btn btn-sm btn-outline-primary mt-2" data-identity-consult><i class="fas fa-search mr-1"></i>Consultar DNI/RUC</button>
+                                        <small class="form-text text-muted">Consulta solo al pulsar el botón. Revisa y aplica los datos que necesites.</small>
                                     </div>
                                 </div>
                                 <div class="col-md-5">

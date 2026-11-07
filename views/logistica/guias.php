@@ -2,13 +2,13 @@
     <div class="content-header">
         <div class="container-fluid">
             <h1 class="m-0 text-dark"><i class="fas fa-truck-loading mr-2"></i>Guia de Remision</h1>
-            <p class="text-muted mb-0">Documento para controlar el traslado de productos. Todavia no es una GRE de SUNAT.</p>
+            <p class="text-muted mb-0">Documento para controlar el traslado de productos. La emisión GRE requiere configuración y validación SUNAT.</p>
         </div>
     </div>
     <div class="content">
         <div class="container-fluid">
             <div class="alert alert-info">
-                <strong>¿Para qué sirve?</strong> Esta guia acompaña el traslado desde un origen hasta un destino y conserva el documento de origen, productos, transporte y destinatario. La estructura queda preparada para una futura integracion, pero no envia informacion a SUNAT.
+                <strong>¿Para qué sirve?</strong> Conserva el origen, destino, productos, transporte y destinatario. <a href="<?php echo $functions->direct_paginas(); ?>logistica/gre">Gestionar GRE y consultar SUNAT</a>. El traslado con GRE requiere CDR aceptado.
             </div>
             <div class="card card-primary">
                 <div class="card-header d-flex justify-content-between align-items-center">
@@ -36,7 +36,8 @@
             <div class="modal-body">
                 <input type="hidden" name="action" value="create">
                 <input type="hidden" name="request_key">
-                <div class="alert alert-warning">Esta Guia de Remision es operativa. Para una GRE futura se validaran catalogos, establecimientos, vehiculo, conductor y comunicacion con SUNAT.</div>
+                <div class="form-group"><label for="guide-series">Serie de la guía</label><select id="guide-series" name="guide_series" class="form-control"><option value="">Serie predeterminada</option></select><small class="form-text text-muted">Para emitir GRE selecciona una serie TXXX activa, configurada en Gestión. La serie interna conserva el flujo operativo.</small></div>
+                <div class="alert alert-warning">Guardar la guía registra la entrega operativa. El envío GRE se solicita manualmente en Gestionar GRE y requiere serie electrónica T, datos SUNAT completos y habilitación del servidor.</div>
                 <div class="form-row">
                     <div class="form-group col-md-8">
                         <label>Documento de origen</label>
@@ -91,10 +92,16 @@
                 <div class="form-row">
                     <div class="form-group col-md-3"><label>RUC transportista</label><input name="carrier_ruc" class="form-control" maxlength="11"></div>
                     <div class="form-group col-md-3"><label>Transportista</label><input name="carrier_name" class="form-control" maxlength="200"></div>
-                    <div class="form-group col-md-3"><label>Conductor</label><input name="driver_name" class="form-control" maxlength="200"></div>
+                    <div class="form-group col-md-3"><label>Nombres del conductor</label><input name="driver_name" class="form-control" maxlength="200"></div>
                     <div class="form-group col-md-3"><label>Licencia</label><input name="driver_license" class="form-control" maxlength="30"></div>
                 </div>
                 <?php $guideCustomFields = $pdo->query("SELECT id,label,field_type,value_list_code,required_status FROM tbl_custom_field_definition WHERE entity='remission_guide' AND active_status=1 ORDER BY id")->fetchAll(); if ($guideCustomFields): ?><div class="card card-outline card-secondary mb-3"><div class="card-header"><strong>Campos adicionales</strong></div><div class="card-body"><div class="form-row"><?php foreach ($guideCustomFields as $customField): ?><div class="form-group col-md-4"><label><?php echo e($customField['label']); ?></label><?php if ($customField['field_type'] === 'select'): ?><select class="form-control" name="custom_field[<?php echo (int) $customField['id']; ?>]" <?php echo $customField['required_status'] ? 'required' : ''; ?>><option value="">Seleccione</option><?php $options = $pdo->prepare('SELECT label,value_code FROM tbl_app_value_option WHERE list_id=(SELECT id FROM tbl_app_value_list WHERE code=?) AND active_status=1 ORDER BY sort_order,label'); $options->execute([$customField['value_list_code']]); foreach ($options->fetchAll() as $option): ?><option value="<?php echo e($option['value_code']); ?>"><?php echo e($option['label']); ?></option><?php endforeach; ?></select><?php elseif ($customField['field_type'] === 'checkbox'): ?><div class="custom-control custom-checkbox"><input class="custom-control-input" id="guide-custom-<?php echo (int) $customField['id']; ?>" type="checkbox" value="1" name="custom_field[<?php echo (int) $customField['id']; ?>]"><label class="custom-control-label" for="guide-custom-<?php echo (int) $customField['id']; ?>">Sí / No</label></div><?php else: ?><input class="form-control" type="<?php echo $customField['field_type'] === 'number' ? 'number' : ($customField['field_type'] === 'date' ? 'date' : 'text'); ?>" name="custom_field[<?php echo (int) $customField['id']; ?>]" <?php echo $customField['required_status'] ? 'required' : ''; ?>><?php endif; ?></div><?php endforeach; ?></div></div></div><?php endif; ?>
+                <div class="form-row">
+                    <div class="form-group col-md-3"><label>Apellidos del conductor</label><input name="driver_last_name" class="form-control" maxlength="100"></div>
+                    <div class="form-group col-md-3"><label>Documento del conductor</label><select name="driver_doc_type" class="form-control"><option value="">Sin indicar</option><option value="1">DNI</option><option value="4">Carné de extranjería</option><option value="7">Pasaporte</option></select><input name="driver_doc_number" class="form-control mt-1" maxlength="15" aria-label="Número de documento del conductor"></div>
+                    <div class="form-group col-md-3"><label>Peso bruto total (para GRE)</label><input name="gross_weight" class="form-control" inputmode="decimal" placeholder="Peso real del traslado"></div>
+                    <div class="form-group col-md-3"><label>Unidad del peso</label><select name="weight_unit" class="form-control"><option value="KGM">Kilogramos</option><option value="TNE">Toneladas</option></select></div>
+                </div>
                 <div class="form-group mb-0"><label>Observaciones</label><textarea name="notes" class="form-control" rows="2" maxlength="500"></textarea></div>
             </div>
             <div id="guide-custom-fields" class="px-3"></div>

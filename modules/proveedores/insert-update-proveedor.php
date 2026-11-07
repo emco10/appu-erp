@@ -7,6 +7,7 @@ if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQU
 require '../../global/connection.php';
 require_once '../../global/validation.php';
 require_once '../../global/document-history.php';
+require_once '../../global/peru-tax-profile.php';
 
 $providerId = filter_var($_POST['proveedor_id'] ?? null, FILTER_VALIDATE_INT) ?: null;
 $code = strtoupper(trim((string) ($_POST['proveedor_numero'] ?? '')));
@@ -71,6 +72,11 @@ try {
         $result = 'OK_UPDATE';
     }
     app_save_custom_fields($pdo, 'provider', $providerId, $customValues);
+    if (trim((string) ($_POST['partner_tax_profile_json'] ?? '')) !== '') {
+        app_partner_tax_profile_save($pdo, 'provider', $providerId, $code, (string) $_POST['partner_tax_profile_json']);
+    } elseif (app_peru_table_exists($pdo, 'tbl_partner_tax_profile')) {
+        $pdo->prepare("DELETE FROM tbl_partner_tax_profile WHERE partner_type='supplier' AND partner_id=? AND document_number<>?")->execute([$providerId, $code]);
+    }
     $pdo->commit();
     echo $result;
 } catch (Throwable $exception) {

@@ -1,4 +1,5 @@
 <div class="content-wrapper">
+ <div class="container-fluid pt-3"><a class="btn btn-outline-primary" href="<?php echo $functions->direct_paginas(); ?>gestion/integraciones-peru">Integraciones Perú · RUC/DNI, GRE, SIRE y asistencia tributaria</a></div>
  <div class="content-header"><div class="container-fluid"><h1 class="m-0"><i class="fas fa-sliders-h mr-2"></i>Gestión</h1><p class="text-muted mb-0">Configuración central de la empresa, valores y campos personalizados.</p></div></div>
  <div class="content"><div class="container-fluid">
   <div class="card appu-management-shortcuts"><div class="card-body d-flex flex-wrap align-items-center justify-content-between"><div><h5 class="mb-1"><i class="fas fa-warehouse mr-2"></i>Maestros de configuración</h5><p class="text-muted mb-0">Los almacenes se crean aquí; en Inventario se consultan y operan sus existencias.</p></div><a class="btn btn-primary" href="<?php echo $functions->direct_paginas()."productos/almacenes" ?>"><i class="fas fa-warehouse mr-1"></i>Administrar almacenes</a></div></div>

@@ -33,7 +33,7 @@ function app_sunat_api_config(): array
     return ['base_url' => rtrim($baseUrl, '/'), 'api_key' => $apiKey];
 }
 
-function app_sunat_api_request(string $method, string $path, array $headers = []): array
+function app_sunat_api_request(string $method, string $path, array $headers = [], ?array $payload = null): array
 {
     $config = app_sunat_api_config();
     $curl = curl_init($config['base_url'] . '/' . ltrim($path, '/'));
@@ -45,6 +45,7 @@ function app_sunat_api_request(string $method, string $path, array $headers = []
         'X-API-Key: ' . $config['api_key'],
         'X-Request-Id: erp-' . bin2hex(random_bytes(12)),
     ], $headers);
+    if ($payload !== null) $requestHeaders[] = 'Content-Type: application/json';
     curl_setopt_array($curl, [
         CURLOPT_CUSTOMREQUEST => strtoupper($method),
         CURLOPT_HTTPHEADER => $requestHeaders,
@@ -55,6 +56,7 @@ function app_sunat_api_request(string $method, string $path, array $headers = []
         CURLOPT_SSL_VERIFYPEER => true,
         CURLOPT_SSL_VERIFYHOST => 2,
     ]);
+    if ($payload !== null) curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($payload, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE));
     $body = curl_exec($curl);
     $status = (int) curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
     $error = curl_error($curl);
@@ -72,6 +74,7 @@ function app_sunat_api_request(string $method, string $path, array $headers = []
 
 function app_sunat_submit_document(PDO $pdo, string $type, int $id): array
 {
+    if ($type === 'despatch') throw new DomainException('Para enviar una guía utiliza Logística → Gestionar GRE, donde se valida su configuración y ticket.');
     $documents = [
         'invoice' => ['table' => 'tbl_invoice', 'series_type' => 'INVOICE'],
         'receipt' => ['table' => 'tbl_receipt', 'series_type' => 'RECEIPT'],
