@@ -1,5 +1,6 @@
 <?php
 require '../../global/connection.php';
+require_once '../../global/peru-tax-profile.php';
 $FILTER_PROV = trim((string) ($_POST["FILTER"] ?? 'ALL'));
 if ($FILTER_PROV == "ALL") {
     $sqlStatement = $pdo->prepare("SELECT * FROM tbl_provider ORDER BY id DESC");
@@ -57,6 +58,7 @@ if ($FILTER_PROV == "ALL") {
             $ROWDATA['PAYMENT_DAYS'] = (int) $ROW['payment_days'];
             $ROWDATA['CREDIT_LIMIT'] = (float) $ROW['credit_limit'];
             $ROWDATA['BUYER_EMPLOYEE_ID'] = $ROW['buyer_employee_id'] !== null ? (int) $ROW['buyer_employee_id'] : null;
+            $ROWDATA['TAX_PROFILE_JSON'] = app_partner_tax_profile_json($pdo, 'provider', (int) $ROW['id']);
             $customStatement = $pdo->prepare('SELECT field_definition_id, field_value FROM tbl_custom_field_value WHERE entity = ? AND record_id = ?');
             $customStatement->execute(['provider', (int) $ROW['id']]);
             $ROWDATA['CUSTOM_FIELDS'] = [];

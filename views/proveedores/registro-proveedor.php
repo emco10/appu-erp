@@ -22,6 +22,7 @@
             <div style="max-width: 1140px;margin: 0 auto;">
                 <form id="FRM_INSERT_PROVEEDOR" method="post" action="<?php echo $functions->direct_sistema(); ?>/modules/proveedores/insert-update-proveedor.php" enctype="multipart/form-data">
                     <input type="hidden" name="proveedor_id" value="">
+                    <input type="hidden" name="partner_tax_profile_json">
                     <div class="card card-primary">
                         <div class="card-header">
                             <div class="card-title">Datos de Empresa</div>
@@ -41,6 +42,8 @@
                                         <label>RUC Proveedor</label>
                                         <input type="text" class="form-control" name="proveedor_numero" 
                                         placeholder="Número de proveedor" required>
+                                        <button type="button" class="btn btn-sm btn-outline-primary mt-2" data-identity-consult><i class="fas fa-search mr-1"></i>Consultar DNI/RUC</button>
+                                        <small class="form-text text-muted">Consulta solo al pulsar el botón. Los proveedores con otro código se registran manualmente.</small>
                                     </div>
                                 </div>
                                 <div class="col-md-8">

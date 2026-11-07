@@ -2,6 +2,7 @@
 require_once __DIR__ . '/document-engine.php';
 require_once __DIR__ . '/document-history.php';
 require_once __DIR__ . '/sales-delivery.php';
+require_once __DIR__ . '/gre-lifecycle.php';
 require_once __DIR__ . '/../modules/inventory/stock.php';
 
 /** Root order first, then source document, then guide/lines and stock. */
@@ -61,6 +62,7 @@ function app_cancel_sales_delivery(PDO $pdo, int $guideId, int $userId, string $
     $source = app_lock_delivery_source($pdo,$before['source_type'],(int)$before['source_id']);
     $guide = app_document_header($pdo,'remission_guide',$guideId,true);
     if (!in_array($guide['status'],['Registrada','En transito'],true)) throw new DomainException('Solo se pueden anular entregas registradas o en tránsito.');
+    app_gre_require_local_cancellation($pdo,$guideId);
     $billed = $pdo->prepare("SELECT id FROM tbl_document_line_application WHERE source_type='remission_guide' AND source_id=? AND stage='BILLING' AND status='ACTIVE' FOR UPDATE"); $billed->execute([$guideId]);
     if ($billed->fetch()) throw new DomainException('La entrega tiene una factura activa; anula primero la factura relacionada.');
     if($guide['source_type']==='invoice'){

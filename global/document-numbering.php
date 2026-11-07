@@ -5,7 +5,7 @@
  * Debe ejecutarse dentro de la transacción del documento para que el bloqueo
  * FOR UPDATE garantice que dos usuarios no reciban el mismo correlativo.
  */
-function app_next_document_number(PDO $pdo, string $documentType, string $fallbackPrefix): string
+function app_next_document_number(PDO $pdo, string $documentType, string $fallbackPrefix, ?string $selectedSeries = null): string
 {
     $tableMap = [
         'QUOTATION' => 'tbl_quotation',
@@ -24,10 +24,14 @@ function app_next_document_number(PDO $pdo, string $documentType, string $fallba
     ];
     $documentType = strtoupper(trim($documentType));
     $fallbackPrefix = strtoupper(trim($fallbackPrefix));
-    $statement = $pdo->prepare('SELECT id, series, next_number, number_padding FROM tbl_document_series WHERE document_type = ? AND active_status = 1 ORDER BY id LIMIT 1 FOR UPDATE');
-    $statement->execute([$documentType]);
+    $sql = 'SELECT id, series, next_number, number_padding FROM tbl_document_series WHERE document_type = ? AND active_status = 1';
+    $parameters = [$documentType];
+    if ($selectedSeries !== null && $selectedSeries !== '') { $sql .= ' AND series = ?'; $parameters[] = $selectedSeries; }
+    $statement = $pdo->prepare($sql . ' ORDER BY id LIMIT 1 FOR UPDATE');
+    $statement->execute($parameters);
     $series = $statement->fetch();
     if (!$series) {
+        if ($selectedSeries !== null && $selectedSeries !== '') throw new DomainException('La serie seleccionada no existe o está inactiva.');
         return $fallbackPrefix . '-' . date('YmdHis') . '-' . strtoupper(bin2hex(random_bytes(3)));
     }
 

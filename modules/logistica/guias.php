@@ -127,7 +127,8 @@ if ($method === 'GET') {
             }
         }
         usort($sources, static fn ($left, $right): int => (int) $right['id'] <=> (int) $left['id']);
-        $jsonResponse(200, ['sources' => array_slice($sources, 0, 100), 'custom_fields'=>app_custom_field_definitions($pdo,'remission_guide'), 'custom_values'=>(object)app_custom_field_defaults($pdo,'remission_guide',[])]);
+        $guideSeries = $pdo->query("SELECT series,number_padding FROM tbl_document_series WHERE document_type='REMISSION_GUIDE' AND active_status=1 ORDER BY id")->fetchAll();
+        $jsonResponse(200, ['sources' => array_slice($sources, 0, 100), 'guide_series'=>$guideSeries, 'custom_fields'=>app_custom_field_definitions($pdo,'remission_guide'), 'custom_values'=>(object)app_custom_field_defaults($pdo,'remission_guide',[])]);
     }
 
     if ($action === 'source') {
@@ -202,6 +203,7 @@ if ($action === 'advance') {
         if (!$guide || ($statusOrder[$guide['status']] ?? null) !== $nextStatus) {
             throw new DomainException('La guia debe avanzar al siguiente estado.');
         }
+        if ($nextStatus==='En transito') app_gre_require_transit_ready($pdo,(int)$guideId);
         $pdo->prepare('UPDATE tbl_remission_guide SET status = ?, last_update = NOW() WHERE id = ?')->execute([$nextStatus, $guideId]);
         app_record_document_status($pdo, 'remission_guide', (int) $guideId, (string) $guide['number'], (string) $guide['status'], $nextStatus, 'Cambio de estado', (int) $_SESSION['loggedInUser']['USERID']);
         $pdo->commit();
@@ -286,7 +288,9 @@ try {
         }
     }
     $userId = (int) $_SESSION['loggedInUser']['USERID'];
-    $guideNumber = app_next_document_number($pdo, 'REMISSION_GUIDE', 'GI');
+    $selectedGuideSeries = trim((string) ($_POST['guide_series'] ?? ''));
+    if ($selectedGuideSeries !== '' && !preg_match('/^[A-Z0-9-]{1,10}$/D',$selectedGuideSeries)) throw new DomainException('Selecciona una serie válida para la guía.');
+    $guideNumber = app_next_document_number($pdo, 'REMISSION_GUIDE', 'GI', $selectedGuideSeries ?: null);
     $insert = $pdo->prepare(
         'INSERT INTO tbl_remission_guide
             (number, status, guide_type, source_type, source_id, warehouse_id, destination_address_id, transfer_reason_code,
@@ -344,6 +348,15 @@ try {
         'created_by' => $userId,
     ]);
     $guideId = (int) $pdo->lastInsertId();
+    $grossWeight = trim((string) ($_POST['gross_weight'] ?? ''));
+    $driverLastName = trim((string) ($_POST['driver_last_name'] ?? ''));
+    if ($grossWeight !== '' || $driverLastName !== '') {
+        $weightUnit = (string) ($_POST['weight_unit'] ?? 'KGM');
+        if ($grossWeight !== '' && (!preg_match('/^[0-9]{1,11}(?:\.[0-9]{1,3})?$/D', $grossWeight) || (float)$grossWeight <= 0)) throw new DomainException('El peso bruto debe ser mayor a cero, con hasta tres decimales.');
+        if (!in_array($weightUnit, ['KGM','TNE'], true)) throw new DomainException('Selecciona kilogramos o toneladas para el peso de la guía.');
+        if (mb_strlen($driverLastName) > 100) throw new DomainException('El apellido del conductor admite hasta 100 caracteres.');
+        $pdo->prepare('UPDATE tbl_remission_guide SET gross_weight=?,weight_unit=?,driver_last_name=? WHERE id=?')->execute([$grossWeight === '' ? null : $grossWeight,$weightUnit,$driverLastName,$guideId]);
+    }
     $detailInsert = $pdo->prepare(
         'INSERT INTO tbl_remission_guide_detail
             (remission_guide_id, source_detail_id, product_id, item_code, description, unit_code, quantity)
