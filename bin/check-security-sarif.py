@@ -146,7 +146,8 @@ def reviewed_findings(findings: list[dict], manifest: Path, sources: GitSources,
 
 
 def evaluate(sarif: Path, semgrep_json: Path | None = None, scanner_exit: Path | None = None,
-             allowances: Path | None = None, source_root: Path | None = None, source_commit: str = 'HEAD') -> tuple[list[str], dict]:
+             allowances: Path | None = None, source_root: Path | None = None, source_commit: str = 'HEAD',
+             require_full_codeql: bool = False) -> tuple[list[str], dict]:
     report = load_object(sarif)
     if report.get("version") != "2.1.0" or not isinstance(report.get("runs"), list) or not report["runs"]:
         raise ValueError("Missing SARIF runs or unsupported report format")
@@ -171,6 +172,20 @@ def evaluate(sarif: Path, semgrep_json: Path | None = None, scanner_exit: Path |
         if not rules:
             raise ValueError('A scan without a rule catalog cannot pass')
         engines.add(scanner_engine(driver['name']))
+        if require_full_codeql:
+            properties = run.get('properties', {})
+            if scanner_engine(driver['name']) != 'codeql':
+                raise ValueError('Full CodeQL verification requires a CodeQL report')
+            if properties.get('incrementalMode') not in [None, '', 'none', 'full'] or any(
+                    component.get('name') == 'codeql-action/pr-diff-range' for component in extensions):
+                raise ValueError('Incremental or diff-informed CodeQL cannot satisfy the full-source gate')
+            metrics = properties.get('metricResults', [])
+            if properties.get('codeqlConfigSummary', {}).get('disableDefaultQueries') is not False or not any(
+                    metric.get('ruleId') == 'js/summary/lines-of-user-code'
+                    and isinstance(metric.get('value'), (int, float)) and metric['value'] > 0
+                    and isinstance(metric.get('baseline'), (int, float)) and metric['baseline'] > 0
+                    for metric in metrics):
+                raise ValueError('Full CodeQL must attest default queries and nonempty source coverage')
         invocations = run.get('invocations')
         if not isinstance(invocations, list) or not invocations:
             raise ValueError('SARIF must attest a completed scanner invocation')
@@ -225,9 +240,10 @@ def main() -> int:
     parser.add_argument('--reviewed-allowances', type=Path)
     parser.add_argument('--source-root', type=Path, default=Path.cwd())
     parser.add_argument('--source-commit', default='HEAD')
+    parser.add_argument('--require-full-codeql', action='store_true', help='Reject incremental CodeQL reports and require full-source coverage metrics')
     args = parser.parse_args()
     try:
-        findings, coverage = evaluate(args.sarif, args.semgrep_json, args.scanner_exit, args.reviewed_allowances, args.source_root, args.source_commit)
+        findings, coverage = evaluate(args.sarif, args.semgrep_json, args.scanner_exit, args.reviewed_allowances, args.source_root, args.source_commit, args.require_full_codeql)
     except (OSError, ValueError, TypeError, KeyError, AttributeError) as error:
         print(f"FAIL security analysis: {error}", file=sys.stderr)
         return 1

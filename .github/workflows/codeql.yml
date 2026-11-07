@@ -102,6 +102,12 @@ jobs:
     if: ${{ github.event.repository.visibility == 'public' || vars.CODEQL_LICENSED == 'true' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 20
+    # The source-bound review gate must see the same complete findings on PRs
+    # and master. Diff-informed queries can omit unchanged plugin findings.
+    env:
+      CODEQL_ACTION_DIFF_INFORMED_QUERIES: 'false'
+      CODEQL_OVERLAY_DATABASE_MODE: 'none'
+      CODEQL_ACTION_FILE_COVERAGE_ON_PRS: 'true'
     permissions:
       actions: read
       contents: read
@@ -167,7 +173,7 @@ jobs:
       run: |
         review_args=()
         if [ -f .github/security-reviewed-findings.json ]; then review_args=(--reviewed-allowances .github/security-reviewed-findings.json); fi
-        python3 bin/check-security-sarif.py --sarif security-results/codeql/${{ matrix.language }}.sarif "${review_args[@]}"
+        python3 bin/check-security-sarif.py --require-full-codeql --sarif security-results/codeql/${{ matrix.language }}.sarif "${review_args[@]}"
     - name: Upload to security dashboard only when supported
       if: ${{ github.event.repository.visibility == 'public' || vars.CODE_SCANNING_UPLOAD == 'true' }}
       uses: github/codeql-action/upload-sarif@v4

@@ -114,6 +114,46 @@ class SecurityGateTests(unittest.TestCase):
         with self.assertRaises(ValueError): self.evaluate()
 
 
+class FullCodeQLTests(unittest.TestCase):
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory(prefix='appu-full-codeql-')
+        self.sarif = Path(self.temporary.name) / 'report.sarif'
+        self.run = {'tool': {'driver': {'name': 'CodeQL', 'semanticVersion': '2.27.4', 'rules': [{'id': 'js/unsafe-jquery-plugin'}]}},
+                    'invocations': [{'executionSuccessful': True}], 'results': [],
+                    'properties': {'codeqlConfigSummary': {'disableDefaultQueries': False},
+                                   'metricResults': [{'ruleId': 'js/summary/lines-of-user-code', 'value': 100, 'baseline': 120}]}}
+
+    def tearDown(self):
+        self.temporary.cleanup()
+
+    def evaluate(self):
+        self.sarif.write_text(json.dumps({'version': '2.1.0', 'runs': [self.run]}), encoding='utf-8')
+        return gate.evaluate(self.sarif, require_full_codeql=True)
+
+    def test_complete_codeql_with_default_queries_and_coverage_passes(self):
+        self.assertEqual(self.evaluate(), ([], {}))
+
+    def test_diff_or_overlay_report_cannot_pass_even_without_findings(self):
+        for mode in ['diff-informed', 'overlay', 'diff-informed,overlay']:
+            self.run['properties']['incrementalMode'] = mode
+            with self.assertRaises(ValueError): self.evaluate()
+
+    def test_diff_pack_cannot_pass_by_omitting_mode_metadata(self):
+        self.run['tool']['extensions'] = [{'name': 'codeql-action/pr-diff-range', 'rules': []}]
+        with self.assertRaises(ValueError): self.evaluate()
+
+    def test_missing_source_metrics_or_disabled_defaults_fail(self):
+        self.run['properties']['metricResults'][0]['baseline'] = 0
+        with self.assertRaises(ValueError): self.evaluate()
+        self.run['properties']['metricResults'][0]['baseline'] = 120
+        self.run['properties']['codeqlConfigSummary']['disableDefaultQueries'] = True
+        with self.assertRaises(ValueError): self.evaluate()
+
+    def test_another_engine_cannot_attest_full_codeql(self):
+        self.run['tool']['driver']['name'] = 'Semgrep'
+        with self.assertRaises(ValueError): self.evaluate()
+
+
 class ExactReviewedFindingTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

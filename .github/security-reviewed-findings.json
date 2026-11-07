@@ -10823,8 +10823,189 @@
           "description": "Official source/license/checksum and reproduced dependency vulnerability remediation."
         }
       ]
+    },
+    {
+      "id": "vendor-context-menu-1895c5c6016f0f49",
+      "engine": "codeql",
+      "rule_id": "js/unsafe-jquery-plugin",
+      "path": "plugins/context-menu/jquery.contextMenu.js",
+      "fingerprint": "1895c5c6016f0f492feabff03ac05ed4d0243fff33f4fd1d8f66477106dd09d5",
+      "source_sha256": "53040768b35cb59d6af65d42bf663dabeb50e9d5333aa60af19478a1edcb3d6c",
+      "reviewed_commit": "bcadc5ee116428514884f9889a6596704d512a37",
+      "scanner_version": "2.27.4",
+      "reviewer": "Codex /root/independent_js_review source and real DOM review; /root/security_finalize verification; /root final approval",
+      "reviewed_on": "2026-11-07",
+      "rationale": "The actual deployed plugin is jquery.contextMenu.min.js. Its equivalent source $.fn.contextMenu wrapper overwrites operation.context with the existing table jQuery collection before calling $.contextMenu(create, operation). All five APPU initializers select literal table IDs and provide only local menu options. At this occurrence o.context is that collection, not provider or record HTML. The review is conditional on these exact callers; the regression scans all first-party directories and rejects new consumers or context/build/position overrides.",
+      "disposition": "vendor_reviewed",
+      "dependencies": [
+        {
+          "path": "plugins/context-menu/jquery.contextMenu.min.js",
+          "sha256": "71492a47a3902527206ec92708d3d5b18116b298bde3230d887acb414da4d3fe"
+        },
+        {
+          "path": "plugins/context-menu/jquery.ui.position.js",
+          "sha256": "8ec6562621d78da9401c2a9e8711798371f91eb4cbd0a64ac238720175a78705"
+        },
+        {
+          "path": "views/template/footer.php",
+          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+        },
+        {
+          "path": "ajax/guias.js",
+          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+        },
+        {
+          "path": "ajax/resumen-ordenes.js",
+          "sha256": "1876bbd2b6772f1477b86a2aafc8476dc7f8ecbaf30b1fd01369ff1f130c1a05"
+        },
+        {
+          "path": "ajax/resumen-ordenes-venta.js",
+          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+        },
+        {
+          "path": "ajax/resumen-cotizaciones.js",
+          "sha256": "248aa69477763c9b6042eff2d053e6aa2c850552f350b7012bd600f6247bd57c"
+        },
+        {
+          "path": "ajax/resumen-compras.js",
+          "sha256": "58731b743f9d80f91acb48543723afc45433baecefd1ab6843180b8cb51c66b2"
+        },
+        {
+          "path": "plugins/context-menu/jquery.contextMenu.min.js.map",
+          "sha256": "702c1e65c53b0ea1e33e64c8f59de9ee5f13125d6b781d2faebc883033af6070"
+        }
+      ],
+      "dependency_review": "Pinned deployed minified and unminified source counterparts, patched positioning helper, footer load order and all five DOM-bound APPU menu initializers; none take external context or build options. Source and real-plugin behavior reviewed independently.",
+      "evidence": [
+        {
+          "path": "tests/security-context-menu-ui.test.cjs",
+          "sha256": "6340d1de057926e76c7a9d2eadd30effa692b2f5eae4d03ffcf0b4eeec08a769",
+          "description": "Fourteen real-plugin tests: HTML-of regression and supported positioning; all five actual menu configurations on both minified and unminified plugins, with DOM context, labels/actions and true destroy registry removal; consumer/option invariant and source-map provenance."
+        }
+      ]
+    },
+    {
+      "id": "vendor-context-menu-44cfae4f58c8db99",
+      "engine": "codeql",
+      "rule_id": "js/unsafe-jquery-plugin",
+      "path": "plugins/context-menu/jquery.contextMenu.js",
+      "fingerprint": "44cfae4f58c8db99310cf0682d47bc8642888476d25f186b66de4cbb20d45e5a",
+      "source_sha256": "53040768b35cb59d6af65d42bf663dabeb50e9d5333aa60af19478a1edcb3d6c",
+      "reviewed_commit": "bcadc5ee116428514884f9889a6596704d512a37",
+      "scanner_version": "2.27.4",
+      "reviewer": "Codex /root/independent_js_review source and real DOM review; /root/security_finalize verification; /root final approval",
+      "reviewed_on": "2026-11-07",
+      "rationale": "After the immediately preceding normalization, o.context equals $context.get(0), an existing DOM table node. The jQuery expression here checks that node against document; it does not parse a string. The wrapper/callers and live minified-plugin regression prove the current DOM provenance. No assertion is made that arbitrary untrusted plugin configuration is safe.",
+      "disposition": "vendor_reviewed",
+      "dependencies": [
+        {
+          "path": "plugins/context-menu/jquery.contextMenu.min.js",
+          "sha256": "71492a47a3902527206ec92708d3d5b18116b298bde3230d887acb414da4d3fe"
+        },
+        {
+          "path": "plugins/context-menu/jquery.ui.position.js",
+          "sha256": "8ec6562621d78da9401c2a9e8711798371f91eb4cbd0a64ac238720175a78705"
+        },
+        {
+          "path": "views/template/footer.php",
+          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+        },
+        {
+          "path": "ajax/guias.js",
+          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+        },
+        {
+          "path": "ajax/resumen-ordenes.js",
+          "sha256": "1876bbd2b6772f1477b86a2aafc8476dc7f8ecbaf30b1fd01369ff1f130c1a05"
+        },
+        {
+          "path": "ajax/resumen-ordenes-venta.js",
+          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+        },
+        {
+          "path": "ajax/resumen-cotizaciones.js",
+          "sha256": "248aa69477763c9b6042eff2d053e6aa2c850552f350b7012bd600f6247bd57c"
+        },
+        {
+          "path": "ajax/resumen-compras.js",
+          "sha256": "58731b743f9d80f91acb48543723afc45433baecefd1ab6843180b8cb51c66b2"
+        },
+        {
+          "path": "plugins/context-menu/jquery.contextMenu.min.js.map",
+          "sha256": "702c1e65c53b0ea1e33e64c8f59de9ee5f13125d6b781d2faebc883033af6070"
+        }
+      ],
+      "dependency_review": "Pinned deployed minified and unminified source counterparts, patched positioning helper, footer load order and all five DOM-bound APPU menu initializers; none take external context or build options. Source and real-plugin behavior reviewed independently.",
+      "evidence": [
+        {
+          "path": "tests/security-context-menu-ui.test.cjs",
+          "sha256": "6340d1de057926e76c7a9d2eadd30effa692b2f5eae4d03ffcf0b4eeec08a769",
+          "description": "Fourteen real-plugin tests: HTML-of regression and supported positioning; all five actual menu configurations on both minified and unminified plugins, with DOM context, labels/actions and true destroy registry removal; consumer/option invariant and source-map provenance."
+        }
+      ]
+    },
+    {
+      "id": "vendor-context-menu-071a40dade5df8fc",
+      "engine": "codeql",
+      "rule_id": "js/unsafe-jquery-plugin",
+      "path": "plugins/context-menu/jquery.contextMenu.js",
+      "fingerprint": "071a40dade5df8fc6390b22a41b3e65552fe5c101462cfc217f9864421172fe3",
+      "source_sha256": "53040768b35cb59d6af65d42bf663dabeb50e9d5333aa60af19478a1edcb3d6c",
+      "reviewed_commit": "bcadc5ee116428514884f9889a6596704d512a37",
+      "scanner_version": "2.27.4",
+      "reviewer": "Codex /root/independent_js_review source and real DOM review; /root/security_finalize verification; /root final approval",
+      "reviewed_on": "2026-11-07",
+      "rationale": "The destroy branch captures context from the already-normalized o.context DOM node. The .is(o.selector) predicate compares that existing node with a locally configured selector (tbody tr), not attacker HTML. APPU removes menus through contextMenu(destroy) on an existing DOM collection; actual menu destruction is exercised for all five first-party initializers. New contexts/selectors/callers require re-review.",
+      "disposition": "vendor_reviewed",
+      "dependencies": [
+        {
+          "path": "plugins/context-menu/jquery.contextMenu.min.js",
+          "sha256": "71492a47a3902527206ec92708d3d5b18116b298bde3230d887acb414da4d3fe"
+        },
+        {
+          "path": "plugins/context-menu/jquery.ui.position.js",
+          "sha256": "8ec6562621d78da9401c2a9e8711798371f91eb4cbd0a64ac238720175a78705"
+        },
+        {
+          "path": "views/template/footer.php",
+          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+        },
+        {
+          "path": "ajax/guias.js",
+          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+        },
+        {
+          "path": "ajax/resumen-ordenes.js",
+          "sha256": "1876bbd2b6772f1477b86a2aafc8476dc7f8ecbaf30b1fd01369ff1f130c1a05"
+        },
+        {
+          "path": "ajax/resumen-ordenes-venta.js",
+          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+        },
+        {
+          "path": "ajax/resumen-cotizaciones.js",
+          "sha256": "248aa69477763c9b6042eff2d053e6aa2c850552f350b7012bd600f6247bd57c"
+        },
+        {
+          "path": "ajax/resumen-compras.js",
+          "sha256": "58731b743f9d80f91acb48543723afc45433baecefd1ab6843180b8cb51c66b2"
+        },
+        {
+          "path": "plugins/context-menu/jquery.contextMenu.min.js.map",
+          "sha256": "702c1e65c53b0ea1e33e64c8f59de9ee5f13125d6b781d2faebc883033af6070"
+        }
+      ],
+      "dependency_review": "Pinned deployed minified and unminified source counterparts, patched positioning helper, footer load order and all five DOM-bound APPU menu initializers; none take external context or build options. Source and real-plugin behavior reviewed independently.",
+      "evidence": [
+        {
+          "path": "tests/security-context-menu-ui.test.cjs",
+          "sha256": "6340d1de057926e76c7a9d2eadd30effa692b2f5eae4d03ffcf0b4eeec08a769",
+          "description": "Fourteen real-plugin tests: HTML-of regression and supported positioning; all five actual menu configurations on both minified and unminified plugins, with DOM context, labels/actions and true destroy registry removal; consumer/option invariant and source-map provenance."
+        }
+      ]
     }
   ],
+  "additional_review_runs": [42421200811],
   "approved_by": "Codex /root after independent PHP, JavaScript and vendor source review",
   "approved_on": "2026-11-07"
 }
