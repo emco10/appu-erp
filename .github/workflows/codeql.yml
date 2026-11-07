@@ -89,7 +89,7 @@ jobs:
           path: security-results/
           if-no-files-found: error
           retention-days: 7
-      - name: Require a complete scan and zero findings
+      - name: Require a complete scan and zero unreviewed findings
         if: always()
         run: |
           review_args=()
@@ -162,7 +162,7 @@ jobs:
         path: security-results/codeql/
         if-no-files-found: error
         retention-days: 7
-    - name: Require zero CodeQL findings
+    - name: Require zero unreviewed CodeQL findings
       if: always()
       run: |
         review_args=()
