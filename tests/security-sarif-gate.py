@@ -18,7 +18,7 @@ class SecurityGateTests(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory(prefix="appu-security-gate-")
         self.root = Path(self.temporary.name)
-        self.report = {"version": "2.1.0", "runs": [{"tool": {"driver": {"name": "Semgrep", "rules": [{"id": "example-security-rule"}]}}, "invocations": [{"executionSuccessful": True}], "results": []}]}
+        self.report = {"version": "2.1.0", "runs": [{"tool": {"driver": {"name": "Semgrep", "rules": [{"id": "example-security-rule"}, {"id": "sql-injection"}]}}, "invocations": [{"executionSuccessful": True}], "results": []}]}
 
     def tearDown(self):
         self.temporary.cleanup()
@@ -86,6 +86,32 @@ class SecurityGateTests(unittest.TestCase):
     def test_missing_error_status_is_not_a_successful_scan(self):
         for status in [None, {}]:
             with self.assertRaises(ValueError): self.evaluate({'errors': status, 'results': [], 'paths': {'scanned': ['a.php', 'a.js']}})
+
+    def test_codeql_rulepack_extensions_are_a_valid_catalog(self):
+        run = self.report['runs'][0]
+        run['tool'] = {'driver': {'name': 'CodeQL', 'semanticVersion': '2.27.4', 'rules': []}, 'extensions': [{'name': 'codeql-action/pr-diff-range', 'rules': []}, {'name': 'codeql/javascript-queries', 'rules': [{'id': 'sql-injection'}]}, {'name': 'codeql/javascript-all', 'rules': []}]}
+        run['results'] = [{'ruleId': 'sql-injection', 'message': {'text': 'Review the result'}}]
+        sarif = self.root / 'codeql-rulepacks.sarif'
+        sarif.write_text(json.dumps(self.report), encoding='utf-8')
+        findings, _ = gate.evaluate(sarif)
+        self.assertEqual(len(findings), 1)
+        self.assertIn('sql-injection', findings[0])
+        run['results'] = []
+        sarif.write_text(json.dumps(self.report), encoding='utf-8')
+        self.assertEqual(gate.evaluate(sarif), ([], {}))
+
+    def test_empty_rulepacks_and_missing_invocation_cannot_pass(self):
+        run = self.report['runs'][0]
+        run['tool']['driver']['rules'] = []
+        run['tool']['extensions'] = [{'name': 'fake-pack', 'rules': []}]
+        with self.assertRaises(ValueError): self.evaluate()
+        run['tool']['extensions'][0]['rules'] = [{'id': 'example-security-rule'}]
+        del run['invocations']
+        with self.assertRaises(ValueError): self.evaluate()
+
+    def test_result_rule_must_exist_in_catalog(self):
+        self.report['runs'][0]['results'] = [{'ruleId': 'invented-rule'}]
+        with self.assertRaises(ValueError): self.evaluate()
 
 
 class ExactReviewedFindingTests(unittest.TestCase):
@@ -210,7 +236,7 @@ class ExactReviewedFindingTests(unittest.TestCase):
 
     def test_default_cli_still_blocks_and_exact_manifest_does_not_mutate_raw_report(self):
         self.apply()
-        report = {'version': '2.1.0', 'runs': [{'tool': {'driver': {'name': 'Semgrep OSS', 'semanticVersion': 'test.1', 'rules': [{'id': 'example.sql-sink'}]}}, 'results': [self.result]}]}
+        report = {'version': '2.1.0', 'runs': [{'tool': {'driver': {'name': 'Semgrep OSS', 'semanticVersion': 'test.1', 'rules': [{'id': 'example.sql-sink'}]}}, 'invocations': [{'executionSuccessful': True}], 'results': [self.result]}]}
         sarif = self.root / 'reviewed.sarif'
         sarif.write_text(json.dumps(report), encoding='utf-8')
         original_bytes = sarif.read_bytes()

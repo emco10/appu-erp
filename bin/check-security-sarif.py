@@ -153,12 +153,29 @@ def evaluate(sarif: Path, semgrep_json: Path | None = None, scanner_exit: Path |
     findings = []
     engines = set()
     for run in report["runs"]:
-        driver = run.get("tool", {}).get("driver", {})
-        if not driver.get("name") or not isinstance(driver.get("rules"), list) or not driver["rules"]:
+        tool = run.get('tool', {})
+        driver = tool.get('driver', {})
+        extensions = tool.get('extensions', [])
+        if not driver.get('name') or not isinstance(extensions, list):
             raise ValueError("A scan without an identified tool and rules cannot pass")
+        # SARIF rule packs can define rules in tool.extensions rather than driver.
+        # CodeQL 2.27.4 uses an empty driver.rules with javascript-queries rules here.
+        rules = set()
+        for component in [driver] + extensions:
+            if not isinstance(component, dict) or not isinstance(component.get('rules', []), list):
+                raise ValueError('Invalid SARIF rule component')
+            for rule in component.get('rules', []):
+                if not isinstance(rule, dict) or not isinstance(rule.get('id'), str) or not rule['id']:
+                    raise ValueError('SARIF rules require an explicit identity')
+                rules.add(rule['id'])
+        if not rules:
+            raise ValueError('A scan without a rule catalog cannot pass')
         engines.add(scanner_engine(driver['name']))
-        for invocation in run.get("invocations", []):
-            if invocation.get("executionSuccessful") is False:
+        invocations = run.get('invocations')
+        if not isinstance(invocations, list) or not invocations:
+            raise ValueError('SARIF must attest a completed scanner invocation')
+        for invocation in invocations:
+            if invocation.get("executionSuccessful") is not True:
                 raise ValueError("Scanner reported an incomplete or failed execution")
             for notification in invocation.get("toolExecutionNotifications", []):
                 if notification.get("level") == "error":
@@ -167,6 +184,8 @@ def evaluate(sarif: Path, semgrep_json: Path | None = None, scanner_exit: Path |
         if not isinstance(results, list):
             raise ValueError("Missing SARIF results array")
         for result in results:
+            if result.get('ruleId') not in rules:
+                raise ValueError('SARIF result references an unknown rule')
             # Suppressions, baselines and severity do not implicitly waive a finding.
             finding = finding_identity(driver['name'], result)
             finding['scanner_version'] = str(driver.get('semanticVersion') or driver.get('version') or '')
