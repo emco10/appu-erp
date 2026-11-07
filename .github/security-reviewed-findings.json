@@ -3494,7 +3494,7 @@
       "path": "views/template/main.php",
       "fingerprint": "a77a86c658466bfc80645315f07fb38f7f379cd224004561756eb81320cb3265",
       "source_sha256": "f555513499044afd643a4abb38386331ec8d8d7f69f09fcb05d3e14e160fb60a",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "scanner_version": "1.184.0",
       "id": "php-final-103",
       "disposition": "false_positive",
@@ -3504,7 +3504,7 @@
       "dependencies": [
         {
           "path": "global/config.php",
-          "sha256": "c8bfbe31ab092765629e47ea630cc9ddab360204f4b129f7402529ace96c1a42"
+          "sha256": "56ae40430a3d62272bcf3c1df12475d12c06fc8159fd9cc5346c1eeb4c00fa75"
         },
         {
           "path": "modules/web_functions.php",
@@ -3526,7 +3526,7 @@
       "path": "views/template/main.php",
       "fingerprint": "33d6ef38eb962e9353f9f0568b1f0235aaefb8c6a933eaca6d85e3894b7655f7",
       "source_sha256": "f555513499044afd643a4abb38386331ec8d8d7f69f09fcb05d3e14e160fb60a",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "scanner_version": "1.184.0",
       "id": "php-final-104",
       "disposition": "false_positive",
@@ -3536,7 +3536,7 @@
       "dependencies": [
         {
           "path": "global/config.php",
-          "sha256": "c8bfbe31ab092765629e47ea630cc9ddab360204f4b129f7402529ace96c1a42"
+          "sha256": "56ae40430a3d62272bcf3c1df12475d12c06fc8159fd9cc5346c1eeb4c00fa75"
         },
         {
           "path": "modules/web_functions.php",
@@ -3560,11 +3560,11 @@
       "source_sha256": "0cf538b84a6f18e51be10031533f316170b18f8861afd89060064fa23703fd39",
       "scanner_version": "1.184.0",
       "id": "js-audit-ccc9ca5c20288ac0",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -3596,11 +3596,11 @@
       "source_sha256": "0cf538b84a6f18e51be10031533f316170b18f8861afd89060064fa23703fd39",
       "scanner_version": "1.184.0",
       "id": "js-audit-6bbb876d7c6e2362",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -3632,11 +3632,11 @@
       "source_sha256": "0cf538b84a6f18e51be10031533f316170b18f8861afd89060064fa23703fd39",
       "scanner_version": "1.184.0",
       "id": "js-audit-3c82c3dad198e837",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -3668,11 +3668,11 @@
       "source_sha256": "0cf538b84a6f18e51be10031533f316170b18f8861afd89060064fa23703fd39",
       "scanner_version": "1.184.0",
       "id": "js-audit-47d5c8d4e3d4c470",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -3704,11 +3704,11 @@
       "source_sha256": "0cf538b84a6f18e51be10031533f316170b18f8861afd89060064fa23703fd39",
       "scanner_version": "1.184.0",
       "id": "js-audit-b53d60d9f404fd25",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -3740,11 +3740,11 @@
       "source_sha256": "0cf538b84a6f18e51be10031533f316170b18f8861afd89060064fa23703fd39",
       "scanner_version": "1.184.0",
       "id": "js-audit-d73bf66a1c1fe242",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -3776,11 +3776,11 @@
       "source_sha256": "0cf538b84a6f18e51be10031533f316170b18f8861afd89060064fa23703fd39",
       "scanner_version": "1.184.0",
       "id": "js-audit-4fa28532cae6bff7",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -3812,11 +3812,11 @@
       "source_sha256": "0cf538b84a6f18e51be10031533f316170b18f8861afd89060064fa23703fd39",
       "scanner_version": "1.184.0",
       "id": "js-audit-ea14cd2488b9d2ad",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -3848,11 +3848,11 @@
       "source_sha256": "0cf538b84a6f18e51be10031533f316170b18f8861afd89060064fa23703fd39",
       "scanner_version": "1.184.0",
       "id": "js-audit-e1bc7de4cddd96e8",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -3884,11 +3884,11 @@
       "source_sha256": "0cf538b84a6f18e51be10031533f316170b18f8861afd89060064fa23703fd39",
       "scanner_version": "1.184.0",
       "id": "js-audit-cdba5dc8dec79b7f",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -3920,11 +3920,11 @@
       "source_sha256": "0cf538b84a6f18e51be10031533f316170b18f8861afd89060064fa23703fd39",
       "scanner_version": "1.184.0",
       "id": "js-audit-7879a8cd76e51cfe",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -3956,11 +3956,11 @@
       "source_sha256": "0cf538b84a6f18e51be10031533f316170b18f8861afd89060064fa23703fd39",
       "scanner_version": "1.184.0",
       "id": "js-audit-7877c9f2f2992aef",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -3992,11 +3992,11 @@
       "source_sha256": "0cf538b84a6f18e51be10031533f316170b18f8861afd89060064fa23703fd39",
       "scanner_version": "1.184.0",
       "id": "js-audit-f30aafcd495fb61b",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4028,11 +4028,11 @@
       "source_sha256": "6023a4251b73cf1367f8f1879c454b3649373a181c711b3af639eb34c11087fa",
       "scanner_version": "1.184.0",
       "id": "js-audit-a3bd4441a650af01",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4060,11 +4060,11 @@
       "source_sha256": "6023a4251b73cf1367f8f1879c454b3649373a181c711b3af639eb34c11087fa",
       "scanner_version": "1.184.0",
       "id": "js-audit-59b612aa654eb9d5",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4092,11 +4092,11 @@
       "source_sha256": "b397428e5beeff8814a97c223f5db9d48a5449850b3b0fbd7ba7f18279d85a08",
       "scanner_version": "1.184.0",
       "id": "js-audit-bd4fdcbeb8d45956",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4124,11 +4124,11 @@
       "source_sha256": "b397428e5beeff8814a97c223f5db9d48a5449850b3b0fbd7ba7f18279d85a08",
       "scanner_version": "1.184.0",
       "id": "js-audit-09114c8ff02b6abb",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4156,11 +4156,11 @@
       "source_sha256": "b397428e5beeff8814a97c223f5db9d48a5449850b3b0fbd7ba7f18279d85a08",
       "scanner_version": "1.184.0",
       "id": "js-audit-11bf95b67d4c096c",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4188,11 +4188,11 @@
       "source_sha256": "a14d5f96212dfd8365a0825730cdb507d49ef689ebf8cef164d314c17bfd107d",
       "scanner_version": "1.184.0",
       "id": "js-audit-87b547319677352a",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4220,11 +4220,11 @@
       "source_sha256": "a14d5f96212dfd8365a0825730cdb507d49ef689ebf8cef164d314c17bfd107d",
       "scanner_version": "1.184.0",
       "id": "js-audit-075a873db6dd5fec",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4252,11 +4252,11 @@
       "source_sha256": "a14d5f96212dfd8365a0825730cdb507d49ef689ebf8cef164d314c17bfd107d",
       "scanner_version": "1.184.0",
       "id": "js-audit-f9182858bb526743",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4284,11 +4284,11 @@
       "source_sha256": "a14d5f96212dfd8365a0825730cdb507d49ef689ebf8cef164d314c17bfd107d",
       "scanner_version": "1.184.0",
       "id": "js-audit-15d9785a4d566c2c",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4316,11 +4316,11 @@
       "source_sha256": "a14d5f96212dfd8365a0825730cdb507d49ef689ebf8cef164d314c17bfd107d",
       "scanner_version": "1.184.0",
       "id": "js-audit-b521b81d1ff3a0ba",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4348,11 +4348,11 @@
       "source_sha256": "a8ba845a21d48d6cf7e6cbedc983ec09f64dda58e83d76c4948f79ffcd699a12",
       "scanner_version": "1.184.0",
       "id": "js-audit-c8a9248a8c2369fb",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4380,11 +4380,11 @@
       "source_sha256": "a8ba845a21d48d6cf7e6cbedc983ec09f64dda58e83d76c4948f79ffcd699a12",
       "scanner_version": "1.184.0",
       "id": "js-audit-6e325f635c7928bb",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4412,11 +4412,11 @@
       "source_sha256": "a8ba845a21d48d6cf7e6cbedc983ec09f64dda58e83d76c4948f79ffcd699a12",
       "scanner_version": "1.184.0",
       "id": "js-audit-d42763abed92ce1f",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4444,11 +4444,11 @@
       "source_sha256": "a8ba845a21d48d6cf7e6cbedc983ec09f64dda58e83d76c4948f79ffcd699a12",
       "scanner_version": "1.184.0",
       "id": "js-audit-ebd4ea3c5a9bc8f5",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4476,11 +4476,11 @@
       "source_sha256": "d9624791399688b3a8f140a96b73820da736177cfaebfbc6b3a9e3e2c11b3290",
       "scanner_version": "1.184.0",
       "id": "js-audit-4879fa2c7c6e52d0",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4508,11 +4508,11 @@
       "source_sha256": "d9624791399688b3a8f140a96b73820da736177cfaebfbc6b3a9e3e2c11b3290",
       "scanner_version": "1.184.0",
       "id": "js-audit-268c3524cbe7cdcc",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4540,11 +4540,11 @@
       "source_sha256": "d9624791399688b3a8f140a96b73820da736177cfaebfbc6b3a9e3e2c11b3290",
       "scanner_version": "1.184.0",
       "id": "js-audit-9f3662d5fc6dc45e",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4572,11 +4572,11 @@
       "source_sha256": "d9624791399688b3a8f140a96b73820da736177cfaebfbc6b3a9e3e2c11b3290",
       "scanner_version": "1.184.0",
       "id": "js-audit-577f157f57397930",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4604,11 +4604,11 @@
       "source_sha256": "d9624791399688b3a8f140a96b73820da736177cfaebfbc6b3a9e3e2c11b3290",
       "scanner_version": "1.184.0",
       "id": "js-audit-4905865a6c8277ac",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4636,11 +4636,11 @@
       "source_sha256": "d9624791399688b3a8f140a96b73820da736177cfaebfbc6b3a9e3e2c11b3290",
       "scanner_version": "1.184.0",
       "id": "js-audit-0c26bd59d578ebde",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4668,11 +4668,11 @@
       "source_sha256": "d9624791399688b3a8f140a96b73820da736177cfaebfbc6b3a9e3e2c11b3290",
       "scanner_version": "1.184.0",
       "id": "js-audit-f6ef0b8a7d607c2a",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4700,11 +4700,11 @@
       "source_sha256": "b3bf815d9c9cba363fab74760ddfcb5136b3568de51af3c576b2a089cf06a1c8",
       "scanner_version": "1.184.0",
       "id": "js-audit-17392bc6d580903a",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4737,11 +4737,11 @@
       "source_sha256": "34b9d482391a12559f83b4824aa66f254fbfd413829e42971d972a0b74d811bf",
       "scanner_version": "1.184.0",
       "id": "js-audit-b0ab328d0469098d",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4769,11 +4769,11 @@
       "source_sha256": "34b9d482391a12559f83b4824aa66f254fbfd413829e42971d972a0b74d811bf",
       "scanner_version": "1.184.0",
       "id": "js-audit-7479acc008c331b3",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4801,11 +4801,11 @@
       "source_sha256": "34b9d482391a12559f83b4824aa66f254fbfd413829e42971d972a0b74d811bf",
       "scanner_version": "1.184.0",
       "id": "js-audit-962abfc432d88e84",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4833,11 +4833,11 @@
       "source_sha256": "34b9d482391a12559f83b4824aa66f254fbfd413829e42971d972a0b74d811bf",
       "scanner_version": "1.184.0",
       "id": "js-audit-d83458ecf841bb64",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4865,11 +4865,11 @@
       "source_sha256": "34b9d482391a12559f83b4824aa66f254fbfd413829e42971d972a0b74d811bf",
       "scanner_version": "1.184.0",
       "id": "js-audit-d47c1296e9fdd448",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4897,11 +4897,11 @@
       "source_sha256": "8f3406a9b17027b7a7db41340cfed7e531652bc3063ac399f6b47d54246d2471",
       "scanner_version": "1.184.0",
       "id": "js-audit-16cd233bc6dc9c15",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4934,11 +4934,11 @@
       "source_sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea",
       "scanner_version": "1.184.0",
       "id": "js-audit-1d34d558f3913407",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -4971,11 +4971,11 @@
       "source_sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea",
       "scanner_version": "1.184.0",
       "id": "js-audit-fb609cbdca405f6a",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5008,11 +5008,11 @@
       "source_sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea",
       "scanner_version": "1.184.0",
       "id": "js-audit-fa6d0f01486a3f97",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5045,11 +5045,11 @@
       "source_sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea",
       "scanner_version": "1.184.0",
       "id": "js-audit-9e806083d6674e60",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5082,11 +5082,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-e4ed2c990da657d6",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5123,11 +5123,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-39593fff33643cee",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5164,11 +5164,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-5ff5f04ace8f0f79",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5205,11 +5205,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-3dc21abc11b64bf4",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5246,11 +5246,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-5625d48c9c8fd846",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5287,11 +5287,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-e0a6e290a4ee7a66",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5328,11 +5328,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-c08e6ff240c692dc",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5369,11 +5369,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-4dff90cb05feb455",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5410,11 +5410,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-1d9f1c5983e770d4",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5451,11 +5451,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-41b22c8b28e3aee4",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5492,11 +5492,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-c4d8d8dd2a5c366d",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5533,11 +5533,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-4b2b31252f3c9524",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5574,11 +5574,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-37a221194492a8de",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5615,11 +5615,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-b45f8878e534e72e",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5656,11 +5656,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-09494714a0d3fb98",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5697,11 +5697,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-0466f75f82ad931f",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5738,11 +5738,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-5aefaecc92537172",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5779,11 +5779,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-9e5371d221ee7862",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5820,11 +5820,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-921a56abe79794c7",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5861,11 +5861,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-8c75cc566884768c",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5902,11 +5902,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-b28d961c9d853ee8",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5943,11 +5943,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-d28e1cac4522e7d3",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -5984,11 +5984,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-078c24977f94b1e1",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6025,11 +6025,11 @@
       "source_sha256": "bda8c7e7c161a65178d9e8c019b2ebd7cc1d7efc7d2f53b1c6b95af0a5c0a075",
       "scanner_version": "1.184.0",
       "id": "js-audit-ffebb03c5375542b",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6066,11 +6066,11 @@
       "source_sha256": "6c3c74d8e926006703a6d636e0ae048a2b6641e3ba642df9ab7206f88ee7cc53",
       "scanner_version": "1.184.0",
       "id": "js-audit-4ee3bd412e123d7e",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6102,11 +6102,11 @@
       "source_sha256": "0bbdd65fdb1c9f76e3f2fd85da50c43c42388a0cc37ec0cccb8c91137aa17881",
       "scanner_version": "1.184.0",
       "id": "js-audit-10630d13d085c9dd",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6134,11 +6134,11 @@
       "source_sha256": "9afb14302fc85627071ab196160a2e615f16f043a194097995f89df813a4ceb6",
       "scanner_version": "1.184.0",
       "id": "js-audit-bc15863818362e08",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6166,11 +6166,11 @@
       "source_sha256": "9afb14302fc85627071ab196160a2e615f16f043a194097995f89df813a4ceb6",
       "scanner_version": "1.184.0",
       "id": "js-audit-3579cc27fb3e85d9",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6198,11 +6198,11 @@
       "source_sha256": "fd825aab3360eb2af6b830d1fa4124b426a3f08ad7b126e9eb2d2f7877f4d6e3",
       "scanner_version": "1.184.0",
       "id": "js-audit-15b518cda21e5878",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6230,11 +6230,11 @@
       "source_sha256": "fd825aab3360eb2af6b830d1fa4124b426a3f08ad7b126e9eb2d2f7877f4d6e3",
       "scanner_version": "1.184.0",
       "id": "js-audit-b87e87b8e8bbbe3c",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6262,11 +6262,11 @@
       "source_sha256": "fd825aab3360eb2af6b830d1fa4124b426a3f08ad7b126e9eb2d2f7877f4d6e3",
       "scanner_version": "1.184.0",
       "id": "js-audit-cd2eb5691e0656e4",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6294,11 +6294,11 @@
       "source_sha256": "fd825aab3360eb2af6b830d1fa4124b426a3f08ad7b126e9eb2d2f7877f4d6e3",
       "scanner_version": "1.184.0",
       "id": "js-audit-6572771e23ba2316",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6326,11 +6326,11 @@
       "source_sha256": "fd825aab3360eb2af6b830d1fa4124b426a3f08ad7b126e9eb2d2f7877f4d6e3",
       "scanner_version": "1.184.0",
       "id": "js-audit-a1c853d5acbf9663",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6358,11 +6358,11 @@
       "source_sha256": "fd825aab3360eb2af6b830d1fa4124b426a3f08ad7b126e9eb2d2f7877f4d6e3",
       "scanner_version": "1.184.0",
       "id": "js-audit-6d42c27f76bf51b5",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6390,11 +6390,11 @@
       "source_sha256": "20d189666920a2511397972419e705f9062fa731e9388405d028bb2708496c36",
       "scanner_version": "1.184.0",
       "id": "js-audit-c522aa86e2356930",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6422,11 +6422,11 @@
       "source_sha256": "20d189666920a2511397972419e705f9062fa731e9388405d028bb2708496c36",
       "scanner_version": "1.184.0",
       "id": "js-audit-5923c8dcb62a8d77",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6454,11 +6454,11 @@
       "source_sha256": "428c571dbd14fba4db3da468a60f7d1fc4fea77d4ed7df4d83d7e9cc68a106ab",
       "scanner_version": "1.184.0",
       "id": "js-audit-3a2348517849181a",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6490,11 +6490,11 @@
       "source_sha256": "428c571dbd14fba4db3da468a60f7d1fc4fea77d4ed7df4d83d7e9cc68a106ab",
       "scanner_version": "1.184.0",
       "id": "js-audit-b15d5df21f72c0b1",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6526,11 +6526,11 @@
       "source_sha256": "428c571dbd14fba4db3da468a60f7d1fc4fea77d4ed7df4d83d7e9cc68a106ab",
       "scanner_version": "1.184.0",
       "id": "js-audit-c15d7c9fd0a147c8",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6562,11 +6562,11 @@
       "source_sha256": "428c571dbd14fba4db3da468a60f7d1fc4fea77d4ed7df4d83d7e9cc68a106ab",
       "scanner_version": "1.184.0",
       "id": "js-audit-53dd977f35d41fda",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6598,11 +6598,11 @@
       "source_sha256": "428c571dbd14fba4db3da468a60f7d1fc4fea77d4ed7df4d83d7e9cc68a106ab",
       "scanner_version": "1.184.0",
       "id": "js-audit-538ca30323c33c95",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6634,11 +6634,11 @@
       "source_sha256": "428c571dbd14fba4db3da468a60f7d1fc4fea77d4ed7df4d83d7e9cc68a106ab",
       "scanner_version": "1.184.0",
       "id": "js-audit-e952e0aa99da68fc",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6670,11 +6670,11 @@
       "source_sha256": "60032e4b8593d00b4b741fe99d0f018dc1ad112bf8055836c6a1aba0a13cd82a",
       "scanner_version": "1.184.0",
       "id": "js-audit-16e240a6b23aa670",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6702,11 +6702,11 @@
       "source_sha256": "60032e4b8593d00b4b741fe99d0f018dc1ad112bf8055836c6a1aba0a13cd82a",
       "scanner_version": "1.184.0",
       "id": "js-audit-e7f8d29e32b8ae80",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6734,11 +6734,11 @@
       "source_sha256": "c896eab0ebc9bd4563bb35b6242442f113140a12ed0915b95dddba602ed91d61",
       "scanner_version": "1.184.0",
       "id": "js-audit-b50be2e3b1848176",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6766,11 +6766,11 @@
       "source_sha256": "4206013d35f7e84327852fe130c199c872c20f8197e321545b39204685308432",
       "scanner_version": "1.184.0",
       "id": "js-audit-ae0d521300937763",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6798,11 +6798,11 @@
       "source_sha256": "4206013d35f7e84327852fe130c199c872c20f8197e321545b39204685308432",
       "scanner_version": "1.184.0",
       "id": "js-audit-feda329dec08609b",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6830,11 +6830,11 @@
       "source_sha256": "4206013d35f7e84327852fe130c199c872c20f8197e321545b39204685308432",
       "scanner_version": "1.184.0",
       "id": "js-audit-430f6f11732add4d",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6862,11 +6862,11 @@
       "source_sha256": "e6e9fee54104f9aced4feb113568d8f0838731ea1c4c6867985b4e1e39552c78",
       "scanner_version": "1.184.0",
       "id": "js-audit-e6e1213f8e443a2f",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6894,11 +6894,11 @@
       "source_sha256": "e6e9fee54104f9aced4feb113568d8f0838731ea1c4c6867985b4e1e39552c78",
       "scanner_version": "1.184.0",
       "id": "js-audit-9452e3df2b12880d",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6926,11 +6926,11 @@
       "source_sha256": "1bb3514418a8fef80967e59679ac40457b5902be6f09a4ee901b7fe67201cb38",
       "scanner_version": "1.184.0",
       "id": "js-audit-065363e253f5c1de",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6958,11 +6958,11 @@
       "source_sha256": "1bb3514418a8fef80967e59679ac40457b5902be6f09a4ee901b7fe67201cb38",
       "scanner_version": "1.184.0",
       "id": "js-audit-871fe50b6b0fbb62",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -6990,11 +6990,11 @@
       "source_sha256": "58731b743f9d80f91acb48543723afc45433baecefd1ab6843180b8cb51c66b2",
       "scanner_version": "1.184.0",
       "id": "js-audit-d1585ae9ac62f7e5",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7027,11 +7027,11 @@
       "source_sha256": "58731b743f9d80f91acb48543723afc45433baecefd1ab6843180b8cb51c66b2",
       "scanner_version": "1.184.0",
       "id": "js-audit-f394e87dc307a12d",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7064,11 +7064,11 @@
       "source_sha256": "58731b743f9d80f91acb48543723afc45433baecefd1ab6843180b8cb51c66b2",
       "scanner_version": "1.184.0",
       "id": "js-audit-a5641890d9f9f0d8",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7101,11 +7101,11 @@
       "source_sha256": "58731b743f9d80f91acb48543723afc45433baecefd1ab6843180b8cb51c66b2",
       "scanner_version": "1.184.0",
       "id": "js-audit-d5cb62ef4151c0d3",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7138,11 +7138,11 @@
       "source_sha256": "58731b743f9d80f91acb48543723afc45433baecefd1ab6843180b8cb51c66b2",
       "scanner_version": "1.184.0",
       "id": "js-audit-5012875f3bf18600",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7175,11 +7175,11 @@
       "source_sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713",
       "scanner_version": "1.184.0",
       "id": "js-audit-0b431c734473d20c",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7212,11 +7212,11 @@
       "source_sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713",
       "scanner_version": "1.184.0",
       "id": "js-audit-bcdafc4100f30d7f",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7249,11 +7249,11 @@
       "source_sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713",
       "scanner_version": "1.184.0",
       "id": "js-audit-abf64ca3983540c9",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7286,11 +7286,11 @@
       "source_sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713",
       "scanner_version": "1.184.0",
       "id": "js-audit-7ccd52fe3df0e5c2",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7323,11 +7323,11 @@
       "source_sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713",
       "scanner_version": "1.184.0",
       "id": "js-audit-ffbfd6cfc6e2cb35",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7360,11 +7360,11 @@
       "source_sha256": "1876bbd2b6772f1477b86a2aafc8476dc7f8ecbaf30b1fd01369ff1f130c1a05",
       "scanner_version": "1.184.0",
       "id": "js-audit-e2796e07c3d1822d",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7397,11 +7397,11 @@
       "source_sha256": "1876bbd2b6772f1477b86a2aafc8476dc7f8ecbaf30b1fd01369ff1f130c1a05",
       "scanner_version": "1.184.0",
       "id": "js-audit-ef1647dd9e25bee5",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7434,11 +7434,11 @@
       "source_sha256": "38265cc0a6043cfb39eb1d0650a4de8d267e959da15d2f381e65f0efafa0f142",
       "scanner_version": "1.184.0",
       "id": "js-audit-64e0a65199ec0c4d",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7471,11 +7471,11 @@
       "source_sha256": "38265cc0a6043cfb39eb1d0650a4de8d267e959da15d2f381e65f0efafa0f142",
       "scanner_version": "1.184.0",
       "id": "js-audit-5fbb4fd9fa2c6417",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7508,11 +7508,11 @@
       "source_sha256": "38265cc0a6043cfb39eb1d0650a4de8d267e959da15d2f381e65f0efafa0f142",
       "scanner_version": "1.184.0",
       "id": "js-audit-3f46169cb3ff1fe1",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7545,11 +7545,11 @@
       "source_sha256": "38265cc0a6043cfb39eb1d0650a4de8d267e959da15d2f381e65f0efafa0f142",
       "scanner_version": "1.184.0",
       "id": "js-audit-e8081b2f95ccb62f",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7582,11 +7582,11 @@
       "source_sha256": "38265cc0a6043cfb39eb1d0650a4de8d267e959da15d2f381e65f0efafa0f142",
       "scanner_version": "1.184.0",
       "id": "js-audit-b66340066ce0bb83",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7619,11 +7619,11 @@
       "source_sha256": "38265cc0a6043cfb39eb1d0650a4de8d267e959da15d2f381e65f0efafa0f142",
       "scanner_version": "1.184.0",
       "id": "js-audit-97dbd800839e8f62",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7656,11 +7656,11 @@
       "source_sha256": "38265cc0a6043cfb39eb1d0650a4de8d267e959da15d2f381e65f0efafa0f142",
       "scanner_version": "1.184.0",
       "id": "js-audit-4d3927068f1b6472",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7693,11 +7693,11 @@
       "source_sha256": "38265cc0a6043cfb39eb1d0650a4de8d267e959da15d2f381e65f0efafa0f142",
       "scanner_version": "1.184.0",
       "id": "js-audit-05032736379c704f",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7730,11 +7730,11 @@
       "source_sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
       "scanner_version": "1.184.0",
       "id": "js-audit-3051f8267897ce82",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7762,11 +7762,11 @@
       "source_sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
       "scanner_version": "1.184.0",
       "id": "js-audit-857a291c214d9dbd",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7794,11 +7794,11 @@
       "source_sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
       "scanner_version": "1.184.0",
       "id": "js-audit-d85155bfef7493c3",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7826,11 +7826,11 @@
       "source_sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
       "scanner_version": "1.184.0",
       "id": "js-audit-ff7bc21bec596500",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7858,11 +7858,11 @@
       "source_sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
       "scanner_version": "1.184.0",
       "id": "js-audit-0281890fe6a553d3",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7890,11 +7890,11 @@
       "source_sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
       "scanner_version": "1.184.0",
       "id": "js-audit-8c71c4b19f65fea2",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7922,11 +7922,11 @@
       "source_sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
       "scanner_version": "1.184.0",
       "id": "js-audit-762aab18fefa11a6",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7954,11 +7954,11 @@
       "source_sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
       "scanner_version": "1.184.0",
       "id": "js-audit-d2ceecd9ea69b03a",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -7986,11 +7986,11 @@
       "source_sha256": "0e5d16424d626d7e78c98fdb9edfe3ad58e0e4848a0bed1b0b845201971bfec1",
       "scanner_version": "1.184.0",
       "id": "js-audit-fc8b33bcb60a15bf",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8018,11 +8018,11 @@
       "source_sha256": "0e5d16424d626d7e78c98fdb9edfe3ad58e0e4848a0bed1b0b845201971bfec1",
       "scanner_version": "1.184.0",
       "id": "js-audit-4481f6b312802b51",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8050,11 +8050,11 @@
       "source_sha256": "0e5d16424d626d7e78c98fdb9edfe3ad58e0e4848a0bed1b0b845201971bfec1",
       "scanner_version": "1.184.0",
       "id": "js-audit-651710db1a7909c0",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8082,11 +8082,11 @@
       "source_sha256": "0e5d16424d626d7e78c98fdb9edfe3ad58e0e4848a0bed1b0b845201971bfec1",
       "scanner_version": "1.184.0",
       "id": "js-audit-7437a7331729c9b6",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8114,11 +8114,11 @@
       "source_sha256": "467ab7f147e4e3cb21fdfa2f9465aaa6e6a24c9bc22e667aac9bd12b76754948",
       "scanner_version": "1.184.0",
       "id": "js-audit-701c6325430f4001",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8150,11 +8150,11 @@
       "source_sha256": "467ab7f147e4e3cb21fdfa2f9465aaa6e6a24c9bc22e667aac9bd12b76754948",
       "scanner_version": "1.184.0",
       "id": "js-audit-29de11dbd50d3b4e",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8186,11 +8186,11 @@
       "source_sha256": "467ab7f147e4e3cb21fdfa2f9465aaa6e6a24c9bc22e667aac9bd12b76754948",
       "scanner_version": "1.184.0",
       "id": "js-audit-ec9064685ab32ad2",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8222,11 +8222,11 @@
       "source_sha256": "467ab7f147e4e3cb21fdfa2f9465aaa6e6a24c9bc22e667aac9bd12b76754948",
       "scanner_version": "1.184.0",
       "id": "js-audit-be61e5b4879cb019",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8258,11 +8258,11 @@
       "source_sha256": "467ab7f147e4e3cb21fdfa2f9465aaa6e6a24c9bc22e667aac9bd12b76754948",
       "scanner_version": "1.184.0",
       "id": "js-audit-ba51006d95752068",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8294,11 +8294,11 @@
       "source_sha256": "467ab7f147e4e3cb21fdfa2f9465aaa6e6a24c9bc22e667aac9bd12b76754948",
       "scanner_version": "1.184.0",
       "id": "js-audit-811a2d375c8ba96f",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8330,11 +8330,11 @@
       "source_sha256": "a20af0f49f8125b19cc8e6b2f6015d338a0c804b3f465cf5691270d654eae265",
       "scanner_version": "1.184.0",
       "id": "js-audit-bd9cce6c169aa642",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8362,11 +8362,11 @@
       "source_sha256": "a20af0f49f8125b19cc8e6b2f6015d338a0c804b3f465cf5691270d654eae265",
       "scanner_version": "1.184.0",
       "id": "js-audit-b91deb9130880ac4",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8394,11 +8394,11 @@
       "source_sha256": "ec56dc28a061cf36453b6ef5f3f05b706a60e111de5bca0ebe28de25af216167",
       "scanner_version": "1.184.0",
       "id": "js-audit-4039df98023d460e",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8426,11 +8426,11 @@
       "source_sha256": "ec56dc28a061cf36453b6ef5f3f05b706a60e111de5bca0ebe28de25af216167",
       "scanner_version": "1.184.0",
       "id": "js-audit-d7956a5bbdb1a119",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8458,11 +8458,11 @@
       "source_sha256": "ec56dc28a061cf36453b6ef5f3f05b706a60e111de5bca0ebe28de25af216167",
       "scanner_version": "1.184.0",
       "id": "js-audit-355b70482e490312",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8490,11 +8490,11 @@
       "source_sha256": "ec56dc28a061cf36453b6ef5f3f05b706a60e111de5bca0ebe28de25af216167",
       "scanner_version": "1.184.0",
       "id": "js-audit-897066da098c375c",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8522,11 +8522,11 @@
       "source_sha256": "ec56dc28a061cf36453b6ef5f3f05b706a60e111de5bca0ebe28de25af216167",
       "scanner_version": "1.184.0",
       "id": "js-audit-eac835a31196c846",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8554,11 +8554,11 @@
       "source_sha256": "ec56dc28a061cf36453b6ef5f3f05b706a60e111de5bca0ebe28de25af216167",
       "scanner_version": "1.184.0",
       "id": "js-audit-f60f963e07d35dd0",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8586,11 +8586,11 @@
       "source_sha256": "ec56dc28a061cf36453b6ef5f3f05b706a60e111de5bca0ebe28de25af216167",
       "scanner_version": "1.184.0",
       "id": "js-audit-05fd2b0bf5403922",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8618,11 +8618,11 @@
       "source_sha256": "a66841b9b2c0a35d09e8b1cc8e77a4dc557532fcfc340928d2869327399b3ffa",
       "scanner_version": "1.184.0",
       "id": "js-audit-e109ebca86e3cbac",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -8651,11 +8651,11 @@
       "source_sha256": "a66841b9b2c0a35d09e8b1cc8e77a4dc557532fcfc340928d2869327399b3ffa",
       "scanner_version": "1.184.0",
       "id": "js-audit-20406660e140d01c",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -8684,11 +8684,11 @@
       "source_sha256": "a66841b9b2c0a35d09e8b1cc8e77a4dc557532fcfc340928d2869327399b3ffa",
       "scanner_version": "1.184.0",
       "id": "js-audit-326c8b4436040719",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -8717,11 +8717,11 @@
       "source_sha256": "a66841b9b2c0a35d09e8b1cc8e77a4dc557532fcfc340928d2869327399b3ffa",
       "scanner_version": "1.184.0",
       "id": "js-audit-420332baa36ac26e",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -8750,11 +8750,11 @@
       "source_sha256": "a66841b9b2c0a35d09e8b1cc8e77a4dc557532fcfc340928d2869327399b3ffa",
       "scanner_version": "1.184.0",
       "id": "js-audit-0c2d9df3498cbd7f",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -8783,11 +8783,11 @@
       "source_sha256": "4170d43a80ce7d9e9f935a613a51ae95d1c9fd514838de75324888a0623179a7",
       "scanner_version": "1.184.0",
       "id": "js-audit-bd9b1f84d4933eae",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8828,11 +8828,11 @@
       "source_sha256": "4170d43a80ce7d9e9f935a613a51ae95d1c9fd514838de75324888a0623179a7",
       "scanner_version": "1.184.0",
       "id": "js-audit-ecb24ae5ee7347b6",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8873,11 +8873,11 @@
       "source_sha256": "4170d43a80ce7d9e9f935a613a51ae95d1c9fd514838de75324888a0623179a7",
       "scanner_version": "1.184.0",
       "id": "js-audit-b082ef57c5f78975",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8918,11 +8918,11 @@
       "source_sha256": "4170d43a80ce7d9e9f935a613a51ae95d1c9fd514838de75324888a0623179a7",
       "scanner_version": "1.184.0",
       "id": "js-audit-a6da9dd8dc252ff5",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -8963,11 +8963,11 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-27fbdda3ba939675",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9016,11 +9016,11 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-4da990a6dc465971",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9069,11 +9069,11 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-e0e46a43aab2ac50",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9122,11 +9122,11 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-5a33c029824170dc",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9175,11 +9175,11 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-6d4977cb784f3241",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9228,11 +9228,11 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-77b40b983b35f2a7",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9281,11 +9281,11 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-ad7e138d742a2fd1",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9334,11 +9334,11 @@
       "source_sha256": "6dbb81e22d1d2f08811db4c38ac3466c382ad90547aafeaf718e09d1af5a26f2",
       "scanner_version": "1.184.0",
       "id": "js-audit-9ab2a48885502086",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9375,11 +9375,11 @@
       "source_sha256": "6dbb81e22d1d2f08811db4c38ac3466c382ad90547aafeaf718e09d1af5a26f2",
       "scanner_version": "1.184.0",
       "id": "js-audit-d2f42380d0ef2313",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9416,11 +9416,11 @@
       "source_sha256": "6dbb81e22d1d2f08811db4c38ac3466c382ad90547aafeaf718e09d1af5a26f2",
       "scanner_version": "1.184.0",
       "id": "js-audit-5732c409027e216c",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9457,11 +9457,11 @@
       "source_sha256": "6dbb81e22d1d2f08811db4c38ac3466c382ad90547aafeaf718e09d1af5a26f2",
       "scanner_version": "1.184.0",
       "id": "js-audit-10ae30f630b2a76e",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9498,11 +9498,11 @@
       "source_sha256": "6dbb81e22d1d2f08811db4c38ac3466c382ad90547aafeaf718e09d1af5a26f2",
       "scanner_version": "1.184.0",
       "id": "js-audit-fe4d2a072334ccc7",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9539,11 +9539,11 @@
       "source_sha256": "6dbb81e22d1d2f08811db4c38ac3466c382ad90547aafeaf718e09d1af5a26f2",
       "scanner_version": "1.184.0",
       "id": "js-audit-6648a30fb018c814",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9580,11 +9580,11 @@
       "source_sha256": "13b4355325673c7c06f715a719875a0b95d8e1064369f03643db23364f3e6114",
       "scanner_version": "1.184.0",
       "id": "js-audit-9d307665b68ebc1c",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9617,11 +9617,11 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-3aacacc4a4d4607d",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9666,11 +9666,11 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-1381fdd4dc6983e5",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9715,11 +9715,11 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-27b517791727a475",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9764,11 +9764,11 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-081f273c12c4772d",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9813,11 +9813,11 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-3fe9875efb7147b5",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9862,11 +9862,11 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-44e6c4c6c993bd45",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9911,11 +9911,11 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-c823edb5e428b6fd",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9960,11 +9960,11 @@
       "source_sha256": "ddc2bbd6e678c77edb01cd5e32313f1884f13a3e663155b187463954fc578989",
       "scanner_version": "1.184.0",
       "id": "js-audit-9b01216408a20e5a",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -9992,11 +9992,11 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.4",
       "id": "vendor-datatables-db05a596880618c2",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -10097,11 +10097,11 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.4",
       "id": "vendor-datatables-7337c1c902ec7342",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -10202,11 +10202,11 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.4",
       "id": "vendor-datatables-6ae974eda02be810",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -10307,11 +10307,11 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.4",
       "id": "vendor-datatables-4bd2d1d1f8911717",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -10412,11 +10412,11 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.4",
       "id": "vendor-datatables-18458a854a6ffdb2",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -10517,11 +10517,11 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.4",
       "id": "vendor-datatables-f0685907220c2a2c",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -10622,11 +10622,11 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.4",
       "id": "vendor-datatables-483477a8b7141b75",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -10727,11 +10727,11 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.4",
       "id": "vendor-datatables-6bcfbb0871daafc8",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
       "dependencies": [
         {
           "path": "views/template/footer.php",
-          "sha256": "62407f93bf7fac40bf878caeb5da3d677ed2e6e198f902fdacdc5059c803c8bf"
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
         },
         {
           "path": "js/footer-functions.js",
@@ -10823,8 +10823,253 @@
           "description": "Official source/license/checksum and reproduced dependency vulnerability remediation."
         }
       ]
+    },
+    {
+      "id": "vendor-context-menu-1895c5c6016f0f49",
+      "engine": "codeql",
+      "rule_id": "js/unsafe-jquery-plugin",
+      "path": "plugins/context-menu/jquery.contextMenu.js",
+      "fingerprint": "1895c5c6016f0f492feabff03ac05ed4d0243fff33f4fd1d8f66477106dd09d5",
+      "source_sha256": "53040768b35cb59d6af65d42bf663dabeb50e9d5333aa60af19478a1edcb3d6c",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
+      "scanner_version": "2.27.4",
+      "reviewer": "Codex /root/independent_js_review source and real DOM review; /root/security_finalize verification; /root final approval",
+      "reviewed_on": "2026-11-07",
+      "rationale": "The actual deployed plugin is jquery.contextMenu.min.js. Its equivalent source $.fn.contextMenu wrapper overwrites operation.context with the existing table jQuery collection before calling $.contextMenu(create, operation). All five APPU initializers select literal table IDs and provide only local menu options. At this occurrence o.context is that collection, not provider or record HTML. The review is conditional on these exact callers; the regression scans all first-party directories and rejects new consumers or context/build/position overrides.",
+      "disposition": "vendor_reviewed",
+      "dependencies": [
+        {
+          "path": "plugins/context-menu/jquery.contextMenu.min.js",
+          "sha256": "71492a47a3902527206ec92708d3d5b18116b298bde3230d887acb414da4d3fe"
+        },
+        {
+          "path": "plugins/context-menu/jquery.ui.position.js",
+          "sha256": "8ec6562621d78da9401c2a9e8711798371f91eb4cbd0a64ac238720175a78705"
+        },
+        {
+          "path": "views/template/footer.php",
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
+        },
+        {
+          "path": "ajax/guias.js",
+          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+        },
+        {
+          "path": "ajax/resumen-ordenes.js",
+          "sha256": "1876bbd2b6772f1477b86a2aafc8476dc7f8ecbaf30b1fd01369ff1f130c1a05"
+        },
+        {
+          "path": "ajax/resumen-ordenes-venta.js",
+          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+        },
+        {
+          "path": "ajax/resumen-cotizaciones.js",
+          "sha256": "248aa69477763c9b6042eff2d053e6aa2c850552f350b7012bd600f6247bd57c"
+        },
+        {
+          "path": "ajax/resumen-compras.js",
+          "sha256": "58731b743f9d80f91acb48543723afc45433baecefd1ab6843180b8cb51c66b2"
+        },
+        {
+          "path": "plugins/context-menu/jquery.contextMenu.min.js.map",
+          "sha256": "702c1e65c53b0ea1e33e64c8f59de9ee5f13125d6b781d2faebc883033af6070"
+        }
+      ],
+      "dependency_review": "Pinned deployed minified and unminified source counterparts, patched positioning helper, footer load order and all five DOM-bound APPU menu initializers; none take external context or build options. Source and real-plugin behavior reviewed independently.",
+      "evidence": [
+        {
+          "path": "tests/security-context-menu-ui.test.cjs",
+          "sha256": "6340d1de057926e76c7a9d2eadd30effa692b2f5eae4d03ffcf0b4eeec08a769",
+          "description": "Fourteen real-plugin tests: HTML-of regression and supported positioning; all five actual menu configurations on both minified and unminified plugins, with DOM context, labels/actions and true destroy registry removal; consumer/option invariant and source-map provenance."
+        }
+      ]
+    },
+    {
+      "id": "vendor-context-menu-44cfae4f58c8db99",
+      "engine": "codeql",
+      "rule_id": "js/unsafe-jquery-plugin",
+      "path": "plugins/context-menu/jquery.contextMenu.js",
+      "fingerprint": "44cfae4f58c8db99310cf0682d47bc8642888476d25f186b66de4cbb20d45e5a",
+      "source_sha256": "53040768b35cb59d6af65d42bf663dabeb50e9d5333aa60af19478a1edcb3d6c",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
+      "scanner_version": "2.27.4",
+      "reviewer": "Codex /root/independent_js_review source and real DOM review; /root/security_finalize verification; /root final approval",
+      "reviewed_on": "2026-11-07",
+      "rationale": "After the immediately preceding normalization, o.context equals $context.get(0), an existing DOM table node. The jQuery expression here checks that node against document; it does not parse a string. The wrapper/callers and live minified-plugin regression prove the current DOM provenance. No assertion is made that arbitrary untrusted plugin configuration is safe.",
+      "disposition": "vendor_reviewed",
+      "dependencies": [
+        {
+          "path": "plugins/context-menu/jquery.contextMenu.min.js",
+          "sha256": "71492a47a3902527206ec92708d3d5b18116b298bde3230d887acb414da4d3fe"
+        },
+        {
+          "path": "plugins/context-menu/jquery.ui.position.js",
+          "sha256": "8ec6562621d78da9401c2a9e8711798371f91eb4cbd0a64ac238720175a78705"
+        },
+        {
+          "path": "views/template/footer.php",
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
+        },
+        {
+          "path": "ajax/guias.js",
+          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+        },
+        {
+          "path": "ajax/resumen-ordenes.js",
+          "sha256": "1876bbd2b6772f1477b86a2aafc8476dc7f8ecbaf30b1fd01369ff1f130c1a05"
+        },
+        {
+          "path": "ajax/resumen-ordenes-venta.js",
+          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+        },
+        {
+          "path": "ajax/resumen-cotizaciones.js",
+          "sha256": "248aa69477763c9b6042eff2d053e6aa2c850552f350b7012bd600f6247bd57c"
+        },
+        {
+          "path": "ajax/resumen-compras.js",
+          "sha256": "58731b743f9d80f91acb48543723afc45433baecefd1ab6843180b8cb51c66b2"
+        },
+        {
+          "path": "plugins/context-menu/jquery.contextMenu.min.js.map",
+          "sha256": "702c1e65c53b0ea1e33e64c8f59de9ee5f13125d6b781d2faebc883033af6070"
+        }
+      ],
+      "dependency_review": "Pinned deployed minified and unminified source counterparts, patched positioning helper, footer load order and all five DOM-bound APPU menu initializers; none take external context or build options. Source and real-plugin behavior reviewed independently.",
+      "evidence": [
+        {
+          "path": "tests/security-context-menu-ui.test.cjs",
+          "sha256": "6340d1de057926e76c7a9d2eadd30effa692b2f5eae4d03ffcf0b4eeec08a769",
+          "description": "Fourteen real-plugin tests: HTML-of regression and supported positioning; all five actual menu configurations on both minified and unminified plugins, with DOM context, labels/actions and true destroy registry removal; consumer/option invariant and source-map provenance."
+        }
+      ]
+    },
+    {
+      "id": "vendor-context-menu-071a40dade5df8fc",
+      "engine": "codeql",
+      "rule_id": "js/unsafe-jquery-plugin",
+      "path": "plugins/context-menu/jquery.contextMenu.js",
+      "fingerprint": "071a40dade5df8fc6390b22a41b3e65552fe5c101462cfc217f9864421172fe3",
+      "source_sha256": "53040768b35cb59d6af65d42bf663dabeb50e9d5333aa60af19478a1edcb3d6c",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
+      "scanner_version": "2.27.4",
+      "reviewer": "Codex /root/independent_js_review source and real DOM review; /root/security_finalize verification; /root final approval",
+      "reviewed_on": "2026-11-07",
+      "rationale": "The destroy branch captures context from the already-normalized o.context DOM node. The .is(o.selector) predicate compares that existing node with a locally configured selector (tbody tr), not attacker HTML. APPU removes menus through contextMenu(destroy) on an existing DOM collection; actual menu destruction is exercised for all five first-party initializers. New contexts/selectors/callers require re-review.",
+      "disposition": "vendor_reviewed",
+      "dependencies": [
+        {
+          "path": "plugins/context-menu/jquery.contextMenu.min.js",
+          "sha256": "71492a47a3902527206ec92708d3d5b18116b298bde3230d887acb414da4d3fe"
+        },
+        {
+          "path": "plugins/context-menu/jquery.ui.position.js",
+          "sha256": "8ec6562621d78da9401c2a9e8711798371f91eb4cbd0a64ac238720175a78705"
+        },
+        {
+          "path": "views/template/footer.php",
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
+        },
+        {
+          "path": "ajax/guias.js",
+          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+        },
+        {
+          "path": "ajax/resumen-ordenes.js",
+          "sha256": "1876bbd2b6772f1477b86a2aafc8476dc7f8ecbaf30b1fd01369ff1f130c1a05"
+        },
+        {
+          "path": "ajax/resumen-ordenes-venta.js",
+          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+        },
+        {
+          "path": "ajax/resumen-cotizaciones.js",
+          "sha256": "248aa69477763c9b6042eff2d053e6aa2c850552f350b7012bd600f6247bd57c"
+        },
+        {
+          "path": "ajax/resumen-compras.js",
+          "sha256": "58731b743f9d80f91acb48543723afc45433baecefd1ab6843180b8cb51c66b2"
+        },
+        {
+          "path": "plugins/context-menu/jquery.contextMenu.min.js.map",
+          "sha256": "702c1e65c53b0ea1e33e64c8f59de9ee5f13125d6b781d2faebc883033af6070"
+        }
+      ],
+      "dependency_review": "Pinned deployed minified and unminified source counterparts, patched positioning helper, footer load order and all five DOM-bound APPU menu initializers; none take external context or build options. Source and real-plugin behavior reviewed independently.",
+      "evidence": [
+        {
+          "path": "tests/security-context-menu-ui.test.cjs",
+          "sha256": "6340d1de057926e76c7a9d2eadd30effa692b2f5eae4d03ffcf0b4eeec08a769",
+          "description": "Fourteen real-plugin tests: HTML-of regression and supported positioning; all five actual menu configurations on both minified and unminified plugins, with DOM context, labels/actions and true destroy registry removal; consumer/option invariant and source-map provenance."
+        }
+      ]
+    },
+    {
+      "id": "vendor-patched-position-05410685be40c470",
+      "engine": "codeql",
+      "rule_id": "js/unsafe-jquery-plugin",
+      "path": "plugins/context-menu/jquery.ui.position.js",
+      "fingerprint": "05410685be40c470d713f4eace8eab385a1a9c233964750fa24b30efbb84dda9",
+      "source_sha256": "8ec6562621d78da9401c2a9e8711798371f91eb4cbd0a64ac238720175a78705",
+      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
+      "scanner_version": "2.27.4",
+      "reviewer": "Codex /root/independent_js_review type-guard and real jQuery review; /root/security_finalize source verification; /root final approval",
+      "reviewed_on": "2026-11-07",
+      "rationale": "This is the new line163 occurrence after applying the exact upstream CVE-2021-41184 fix, not the vulnerable former line159 occurrence. options is first copied into a plain local object (line156). The typeof options.of === string branch (161-162) sends every string through $(document).find, so only non-string DOM/jQuery/event/collection values reach $(options.of) at163. jQuery does not parse these non-string values as HTML. The scanner trace carries options.of but omits this branch condition. Real-plugin tests reject HTML-of strings, reproduce the former vulnerable parse path, preserve DOM/jQuery/CSS-selector targets, and exercise the five fixed APPU menu consumers. This review is conditional on the exact upstream patch and pinned callers.",
+      "disposition": "false_positive",
+      "dependencies": [
+        {
+          "path": "views/template/footer.php",
+          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
+        },
+        {
+          "path": "plugins/context-menu/jquery.contextMenu.js",
+          "sha256": "53040768b35cb59d6af65d42bf663dabeb50e9d5333aa60af19478a1edcb3d6c"
+        },
+        {
+          "path": "plugins/context-menu/jquery.contextMenu.min.js",
+          "sha256": "71492a47a3902527206ec92708d3d5b18116b298bde3230d887acb414da4d3fe"
+        },
+        {
+          "path": "plugins/context-menu/jquery.contextMenu.min.js.map",
+          "sha256": "702c1e65c53b0ea1e33e64c8f59de9ee5f13125d6b781d2faebc883033af6070"
+        },
+        {
+          "path": "ajax/guias.js",
+          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+        },
+        {
+          "path": "ajax/resumen-ordenes.js",
+          "sha256": "1876bbd2b6772f1477b86a2aafc8476dc7f8ecbaf30b1fd01369ff1f130c1a05"
+        },
+        {
+          "path": "ajax/resumen-ordenes-venta.js",
+          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+        },
+        {
+          "path": "ajax/resumen-cotizaciones.js",
+          "sha256": "248aa69477763c9b6042eff2d053e6aa2c850552f350b7012bd600f6247bd57c"
+        },
+        {
+          "path": "ajax/resumen-compras.js",
+          "sha256": "58731b743f9d80f91acb48543723afc45433baecefd1ab6843180b8cb51c66b2"
+        }
+      ],
+      "dependency_review": "The footer pins jQuery3.7.1 and local plugin load order. Both context-menu variants, source-map provenance and all five fixed DOM-bound consumers are reviewed. The positioning source itself is bound separately and contains the exact official type-guard patch.",
+      "evidence": [
+        {
+          "path": "tests/security-context-menu-ui.test.cjs",
+          "sha256": "6340d1de057926e76c7a9d2eadd30effa692b2f5eae4d03ffcf0b4eeec08a769",
+          "description": "Fourteen real-plugin tests reject HTML-of parsing, preserve normal targets, and verify both plugin variants with all five actual menus, callbacks, registry destruction and consumer/provenance invariants."
+        }
+      ]
     }
   ],
+  "additional_review_runs": [
+    42421200811,
+    42421943264
+  ],
   "approved_by": "Codex /root after independent PHP, JavaScript and vendor source review",
-  "approved_on": "2026-11-07"
+  "approved_on": "2026-11-07",
+  "cache_rebind_review_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb"
 }

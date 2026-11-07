@@ -23,7 +23,7 @@
 </script>
 
 <!-- Script for Notifications -->
-<script src="<?php echo $functions->direct_sistema(); ?>/js/notifications.js"></script>
+<script src="<?php echo $functions->direct_sistema(); ?>/js/notifications.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
 
 <!-- jQuery UI -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
@@ -60,21 +60,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/js/all.min.js"></script>
 
 <!-- Context Menu JS -->
-<script src="<?php echo $functions->direct_sistema(); ?>/plugins/context-menu/jquery.contextMenu.min.js"></script>
-<script src="<?php echo $functions->direct_sistema(); ?>/plugins/context-menu/jquery.ui.position.js"></script>
+<script src="<?php echo $functions->direct_sistema(); ?>/plugins/context-menu/jquery.contextMenu.min.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
+<script src="<?php echo $functions->direct_sistema(); ?>/plugins/context-menu/jquery.ui.position.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
 
 <!-- DataTables -->
-<script src="<?php echo $functions->direct_sistema(); ?>/plugins/datatables/jquery.dataTables.js"></script>
-<script src="<?php echo $functions->direct_sistema(); ?>/plugins/datatables-bs4/dataTables.bootstrap4.js"></script>
+<script src="<?php echo $functions->direct_sistema(); ?>/plugins/datatables/jquery.dataTables.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
+<script src="<?php echo $functions->direct_sistema(); ?>/plugins/datatables-bs4/dataTables.bootstrap4.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
 
 <!-- DataTables Buttons -->
-<script src="<?php echo $functions->direct_sistema(); ?>/plugins/datatables/dataTables.buttons.min.js"></script>
-<script src="<?php echo $functions->direct_sistema(); ?>/plugins/datatables/buttons.html5.min.js"></script>
-<script src="<?php echo $functions->direct_sistema(); ?>/plugins/datatables/buttons.flash.min.js"></script>
-<script src="<?php echo $functions->direct_sistema(); ?>/plugins/datatables/buttons.print.min.js"></script>
-<script src="<?php echo $functions->direct_sistema(); ?>/plugins/datatables/jszip.min.js"></script>
-<script src="<?php echo $functions->direct_sistema(); ?>/plugins/datatables/pdfmake.min.js"></script>
-<script src="<?php echo $functions->direct_sistema(); ?>/plugins/datatables/vfs_fonts.js"></script>
+<script src="<?php echo $functions->direct_sistema(); ?>/plugins/datatables/dataTables.buttons.min.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
+<script src="<?php echo $functions->direct_sistema(); ?>/plugins/datatables/buttons.html5.min.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
+<script src="<?php echo $functions->direct_sistema(); ?>/plugins/datatables/buttons.flash.min.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
+<script src="<?php echo $functions->direct_sistema(); ?>/plugins/datatables/buttons.print.min.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
+<script src="<?php echo $functions->direct_sistema(); ?>/plugins/datatables/jszip.min.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
+<script src="<?php echo $functions->direct_sistema(); ?>/plugins/datatables/pdfmake.min.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
+<script src="<?php echo $functions->direct_sistema(); ?>/plugins/datatables/vfs_fonts.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
 
 <!-- Moment JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -84,8 +84,8 @@
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.js"></script>
-<script src="<?php echo $functions->direct_sistema(); ?>/plugins/notifyjs/dist/notify.min.js"></script>
-<script src="<?php echo $functions->direct_sistema(); ?>/plugins/notifications/notify-metro.js"></script>
+<script src="<?php echo $functions->direct_sistema(); ?>/plugins/notifyjs/dist/notify.min.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
+<script src="<?php echo $functions->direct_sistema(); ?>/plugins/notifications/notify-metro.js?v=<?php echo rawurlencode(SCRIPT_VER); ?>"></script>
 <script>
   $(document).ajaxError(function (_event, xhr) {
     if (![401, 403, 419, 422].includes(xhr.status)) return;

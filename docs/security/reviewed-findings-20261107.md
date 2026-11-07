@@ -6,6 +6,8 @@ The raw reports from GitHub Actions run `42393727377`, analyzed source `9bfb43c0
 
 The review source `4c859d1` preserves those runtime files and adds further executable DataTables evidence. The later SARIF parser correction accepts CodeQL's extension rule catalog while requiring successful analysis and known rule IDs; it does not suppress findings.
 
+The later [full-source context-menu review](context-menu-review-20261107.md) records observations omitted by the initial diff-informed PR scan, the real positioning fix, and the separate exact review of its guarded replacement occurrence. The initial 279-plus-eight counts below describe the original run, not the final full-source result set.
+
 ## PHP observations — 104
 
 | Group | Findings | Source-to-sink assessment |
