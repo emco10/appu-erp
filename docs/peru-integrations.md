@@ -4,7 +4,7 @@ Implementación preparada el 6–7 de noviembre de 2026. La consulta manual no i
 
 ## Uso
 
-- Clientes/proveedores: ingresa DNI o RUC, pulsa **Consultar DNI/RUC**, revisa la respuesta y selecciona qué incorporar con **Aplicar selección**. **Guardar** persiste el maestro. Escribir o cambiar el documento no consulta un servicio externo.
+- Clientes/proveedores: ingresa DNI o RUC y pulsa **Consultar DNI/RUC**. Una respuesta válida completa automáticamente los campos permitidos y el perfil tributario disponible; para DNI sólo completa nombres. **Guardar** sigue siendo una acción separada que persiste el maestro. Escribir o cambiar el documento no consulta un servicio externo.
 - El perfil conserva agente de retención, agente de percepción y buen contribuyente como sí/no/sin verificar, además de procedencia y fecha. La cuenta BN de detracciones se registra y verifica manualmente. Cambiar el documento invalida el perfil anterior. No se infiere un régimen contable sólo del RUC.
 - Gestión → **Integraciones Perú**: opciones separadas para identidad, GRE, SIRE y asistencia de retenciones/detracciones; todas comienzan desactivadas. **Consultar configuración de la API** muestra pendientes sin revelar claves.
 - Logística → **Gestionar GRE**: consulta de guías, preparación de datos SUNAT, previsualización y envío manual, consulta manual del ticket y descarga de XML/CDR. La guía de origen conserva su número; una serie interna no se convierte en T ni se renumera. Al crear una nueva guía se puede elegir la serie T activa administrada en Gestión.
