@@ -57,6 +57,10 @@ foreach ([
     'window.setTimeout(appuCollapseNavigation, 750)',
     'route.indexOf("resumen-ordenes-venta") !== -1 ? "#btn-new-sales-order"',
     '$target.trigger("click")',
+    'contextmenu.appuDocumentRelations',
+    'Mapa de relaciones',
+    "'.appu-doc-relations'",
+    'isEditableContextTarget(event.target)',
 ] as $navigationRule) {
     if (!str_contains($navigationScript, $navigationRule)) {
         throw new RuntimeException('Falta regla de navegación activa: ' . $navigationRule);

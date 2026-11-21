@@ -18,6 +18,38 @@ test('Rutas limpias de Apache detectan cada tipo y conservan relaciones correcta
   let saves=0;t.$('#btn-save-goods-receipt').on('click',()=>saves++);t.$('.appu-doc-save').trigger('click');assert.equal(saves,1);
  }finally{t.dom.window.close();}
 });
+test('Clic derecho ofrece Mapa de relaciones solo sobre un documento guardado',async()=>{
+ const t=await setup('http://localhost/views/compras/recepciones?receipt_id=12');try{
+  const {$}=t;
+  const open=$.Event('contextmenu',{clientX:90,clientY:70});
+  $('#goods-receipt-id').closest('form').trigger(open);
+  assert.equal(open.isDefaultPrevented(),true);
+  assert.equal($('.appu-document-context-menu').hasClass('show'),true);
+  assert.match($('.appu-context-relations').attr('href'),/trazabilidad\/flujo\?type=goods_receipt&id=12$/);
+  assert.match($('.appu-context-relations').text(),/Mapa de relaciones/);
+  let bubbled=false;$(t.w.document).one('click.contextProof','.appu-context-relations',()=>{bubbled=true;});
+  $('.appu-context-relations').trigger('click');
+  assert.equal(bubbled,true);
+  await new Promise(resolve=>setTimeout(resolve,0));
+  assert.equal($('.appu-document-context-menu').length,0);
+
+  $('#goods-receipt-id').closest('form').trigger($.Event('contextmenu',{clientX:90,clientY:70}));
+  $(t.w.document).trigger($.Event('keydown',{key:'Escape'}));
+  assert.equal($('.appu-document-context-menu').length,0);
+
+  const nativeInputMenu=$.Event('contextmenu',{clientX:20,clientY:20});
+  $('#goods-receipt-id').trigger(nativeInputMenu);
+  assert.equal(nativeInputMenu.isDefaultPrevented(),false);
+  assert.equal($('.appu-document-context-menu').length,0);
+
+  $('#goods-receipt-id').val('0');
+  await new Promise(resolve=>setTimeout(resolve,550));
+  const unsaved=$.Event('contextmenu',{clientX:20,clientY:20});
+  $('#goods-receipt-id').closest('form').trigger(unsaved);
+  assert.equal(unsaved.isDefaultPrevented(),false);
+  assert.equal($('.appu-document-context-menu').length,0);
+ }finally{t.dom.window.close();}
+});
 test('Nuevo descarta solo contexto de registro y conserva la ruta del módulo',async()=>{
  const t=await setup('http://localhost/APPU%20ERP/index.php?url=views/compras/recepciones&receipt_id=12&record_id=4&base_id=2&base_type=ORDER#old');try{
   const url=new URL(t.w.appuNewDocumentUrl());assert.equal(url.searchParams.get('url'),'views/compras/recepciones');assert.equal(url.searchParams.get('mode'),'create');assert.equal(url.searchParams.has('receipt_id'),false);assert.equal(url.searchParams.has('record_id'),false);assert.equal(url.searchParams.has('base_id'),false);assert.equal(url.hash,'');

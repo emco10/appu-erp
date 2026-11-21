@@ -599,6 +599,56 @@ $(function () {
   }
   syncStatusActions();
   window.setInterval(syncStatusActions, 500);
+
+  /*
+   * Acceso contextual al mapa, equivalente al gesto de SAP Business One.
+   * La URL y la autorización provienen del mismo enlace de la barra. No se
+   * construye una segunda ruta ni se elude el control de permisos existente.
+   */
+  var $documentContextMenu = $('<div class="dropdown-menu appu-document-context-menu" role="menu" aria-label="Opciones del documento"><a class="dropdown-item appu-context-relations" role="menuitem" href="#"><i class="fas fa-project-diagram mr-2" aria-hidden="true"></i>Mapa de relaciones</a></div>')
+    .css({ position: 'fixed', zIndex: 1065 });
+  function closeDocumentContextMenu() {
+    if (!$documentContextMenu.parent().length) return;
+    $documentContextMenu.removeClass('show').detach();
+  }
+  function isEditableContextTarget(target) {
+    var element = target && target.nodeType === 1 ? target : target && target.parentElement;
+    return !!(element && element.closest('input,textarea,select,option,button,a,[contenteditable="true"],.select2-container'));
+  }
+  function positionDocumentContextMenu(event) {
+    $documentContextMenu.appendTo(document.body).addClass('show').css({ left: 0, top: 0 });
+    var menu = $documentContextMenu[0], width = menu.offsetWidth, height = menu.offsetHeight;
+    var left = Math.min(event.clientX, Math.max(0, window.innerWidth - width - 8));
+    var top = Math.min(event.clientY, Math.max(0, window.innerHeight - height - 8));
+    $documentContextMenu.css({ left: left + 'px', top: top + 'px' });
+    $documentContextMenu.find('.appu-context-relations').trigger('focus');
+  }
+  $save.closest('form').add($toolbar).on('contextmenu.appuDocumentRelations', function (event) {
+    var $relationsLink = $toolbar.find('.appu-doc-relations');
+    var relationUrl = $relationsLink.css('display') !== 'none' ? $relationsLink.attr('href') : '';
+    var selection = window.getSelection && String(window.getSelection());
+    if (!relationUrl || isEditableContextTarget(event.target) || selection) {
+      closeDocumentContextMenu();
+      return;
+    }
+    event.preventDefault();
+    closeDocumentContextMenu();
+    $documentContextMenu.find('.appu-context-relations').attr('href', relationUrl);
+    positionDocumentContextMenu(event);
+  });
+  $(document).on('mousedown.appuDocumentRelations', function (event) {
+    var menu = $documentContextMenu[0];
+    if (!menu || !menu.contains(event.target)) closeDocumentContextMenu();
+  }).on('keydown.appuDocumentRelations', function (event) {
+    if (event.key === 'Escape') closeDocumentContextMenu();
+  });
+  $(window).on('blur.appuDocumentRelations resize.appuDocumentRelations scroll.appuDocumentRelations', closeDocumentContextMenu);
+  $documentContextMenu.on('click', '.appu-context-relations', function () {
+    // El cierre diferido permite que la protección global de cambios sin
+    // guardar reciba primero el clic del enlace y, si corresponde, confirme.
+    window.setTimeout(closeDocumentContextMenu, 0);
+  });
+
   $toolbar.find(".appu-doc-history").on("click", function () {
     var id = currentDocumentId();
     if (!id || typeof mostrarHistorialEstados !== "function") return toastr.info("Selecciona un documento para consultar su historial.");
