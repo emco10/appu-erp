@@ -3568,7 +3568,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/documents.php",
@@ -3604,7 +3604,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/documents.php",
@@ -3640,7 +3640,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/documents.php",
@@ -3676,7 +3676,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/documents.php",
@@ -3712,7 +3712,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/documents.php",
@@ -3748,7 +3748,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/documents.php",
@@ -3784,7 +3784,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/documents.php",
@@ -3820,7 +3820,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/documents.php",
@@ -3856,7 +3856,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/documents.php",
@@ -3892,7 +3892,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/documents.php",
@@ -3928,7 +3928,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/documents.php",
@@ -3964,7 +3964,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/documents.php",
@@ -4000,7 +4000,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/documents.php",
@@ -4036,7 +4036,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4068,7 +4068,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4100,7 +4100,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4132,7 +4132,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4164,7 +4164,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4196,7 +4196,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4228,7 +4228,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4260,7 +4260,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4292,7 +4292,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4324,7 +4324,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4356,7 +4356,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4388,7 +4388,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4420,7 +4420,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4452,7 +4452,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4484,7 +4484,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4516,7 +4516,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4548,7 +4548,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4580,7 +4580,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4612,7 +4612,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4644,7 +4644,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4676,7 +4676,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4708,7 +4708,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4745,7 +4745,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4777,7 +4777,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4809,7 +4809,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4841,7 +4841,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4873,7 +4873,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4905,7 +4905,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4942,7 +4942,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -4979,7 +4979,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -5016,7 +5016,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -5053,7 +5053,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -5090,7 +5090,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5131,7 +5131,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5172,7 +5172,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5213,7 +5213,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5254,7 +5254,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5295,7 +5295,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5336,7 +5336,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5377,7 +5377,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5418,7 +5418,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5459,7 +5459,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5500,7 +5500,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5541,7 +5541,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5582,7 +5582,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5623,7 +5623,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5664,7 +5664,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5705,7 +5705,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5746,7 +5746,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5787,7 +5787,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5828,7 +5828,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5869,7 +5869,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5910,7 +5910,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5951,7 +5951,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -5992,7 +5992,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -6033,7 +6033,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/gestion/configuracion.php",
@@ -6074,7 +6074,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/productos/consultar-productos.php",
@@ -6110,7 +6110,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6142,7 +6142,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6174,7 +6174,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6206,7 +6206,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6238,7 +6238,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6270,7 +6270,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6302,7 +6302,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6334,7 +6334,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6366,7 +6366,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6398,7 +6398,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6430,7 +6430,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6462,7 +6462,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/compras/goods-receipts.php",
@@ -6498,7 +6498,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/compras/goods-receipts.php",
@@ -6534,7 +6534,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/compras/goods-receipts.php",
@@ -6570,7 +6570,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/compras/goods-receipts.php",
@@ -6606,7 +6606,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/compras/goods-receipts.php",
@@ -6642,7 +6642,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/compras/goods-receipts.php",
@@ -6678,7 +6678,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6710,7 +6710,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6742,7 +6742,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6774,7 +6774,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6806,7 +6806,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6838,7 +6838,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6870,7 +6870,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6902,7 +6902,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6934,7 +6934,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6966,7 +6966,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6998,7 +6998,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7035,7 +7035,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7072,7 +7072,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7109,7 +7109,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7146,7 +7146,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7183,7 +7183,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7220,7 +7220,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7257,7 +7257,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7294,7 +7294,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7331,7 +7331,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7368,7 +7368,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7405,7 +7405,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7442,7 +7442,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7479,7 +7479,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7516,7 +7516,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7553,7 +7553,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7590,7 +7590,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7627,7 +7627,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7664,7 +7664,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7701,7 +7701,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7738,7 +7738,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7770,7 +7770,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7802,7 +7802,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7834,7 +7834,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7866,7 +7866,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7898,7 +7898,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7930,7 +7930,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7962,7 +7962,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -7994,7 +7994,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -8026,7 +8026,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -8058,7 +8058,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -8090,7 +8090,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -8122,7 +8122,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/transfers.php",
@@ -8158,7 +8158,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/transfers.php",
@@ -8194,7 +8194,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/transfers.php",
@@ -8230,7 +8230,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/transfers.php",
@@ -8266,7 +8266,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/transfers.php",
@@ -8302,7 +8302,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "modules/inventory/transfers.php",
@@ -8338,7 +8338,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -8370,7 +8370,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -8402,7 +8402,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -8434,7 +8434,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -8466,7 +8466,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -8498,7 +8498,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -8530,7 +8530,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -8562,7 +8562,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -8594,7 +8594,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -8615,7 +8615,7 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "js/footer-functions.js",
       "fingerprint": "e109ebca86e3cbac1f62f2cd368ee961aa411643d4bdf9dcc759d4c1bdf07a11",
-      "source_sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45",
+      "source_sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef",
       "scanner_version": "1.184.0",
       "id": "js-audit-e109ebca86e3cbac",
       "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
@@ -8633,12 +8633,12 @@
       "evidence": [
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45",
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
           "path": "tests/navigation-ui.test.cjs",
-          "sha256": "0ba75c257c57a9d07d67abb066e2950cd58a841dd8fda435e5f2f95db1911c29",
+          "sha256": "d7bf7898e3da97f8f7e9a9fd414209f58bf112e24a1e903e7608cf7376ee6c71",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -8648,7 +8648,7 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "js/footer-functions.js",
       "fingerprint": "20406660e140d01cdbb69e79ab1ad8e6c991e063e5dc4d358b05d85fcce7549d",
-      "source_sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45",
+      "source_sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef",
       "scanner_version": "1.184.0",
       "id": "js-audit-20406660e140d01c",
       "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
@@ -8666,12 +8666,12 @@
       "evidence": [
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45",
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
           "path": "tests/navigation-ui.test.cjs",
-          "sha256": "0ba75c257c57a9d07d67abb066e2950cd58a841dd8fda435e5f2f95db1911c29",
+          "sha256": "d7bf7898e3da97f8f7e9a9fd414209f58bf112e24a1e903e7608cf7376ee6c71",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -8681,7 +8681,7 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "js/footer-functions.js",
       "fingerprint": "326c8b4436040719ff34cdb4f653abe99a4e70771760079e570075e0efcdbeae",
-      "source_sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45",
+      "source_sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef",
       "scanner_version": "1.184.0",
       "id": "js-audit-326c8b4436040719",
       "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
@@ -8699,12 +8699,12 @@
       "evidence": [
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45",
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
           "path": "tests/navigation-ui.test.cjs",
-          "sha256": "0ba75c257c57a9d07d67abb066e2950cd58a841dd8fda435e5f2f95db1911c29",
+          "sha256": "d7bf7898e3da97f8f7e9a9fd414209f58bf112e24a1e903e7608cf7376ee6c71",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -8714,7 +8714,7 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "js/footer-functions.js",
       "fingerprint": "420332baa36ac26e17eb1b24b54756e57d4d787f78fbcb70f1967a879d5a387e",
-      "source_sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45",
+      "source_sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef",
       "scanner_version": "1.184.0",
       "id": "js-audit-420332baa36ac26e",
       "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
@@ -8732,12 +8732,12 @@
       "evidence": [
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45",
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
           "path": "tests/navigation-ui.test.cjs",
-          "sha256": "0ba75c257c57a9d07d67abb066e2950cd58a841dd8fda435e5f2f95db1911c29",
+          "sha256": "d7bf7898e3da97f8f7e9a9fd414209f58bf112e24a1e903e7608cf7376ee6c71",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -8747,7 +8747,7 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "js/footer-functions.js",
       "fingerprint": "0c2d9df3498cbd7f5e689afa104155ffd5ecf5170b67b7e3c7660334fff38351",
-      "source_sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45",
+      "source_sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef",
       "scanner_version": "1.184.0",
       "id": "js-audit-0c2d9df3498cbd7f",
       "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
@@ -8765,12 +8765,12 @@
       "evidence": [
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45",
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
           "path": "tests/navigation-ui.test.cjs",
-          "sha256": "0ba75c257c57a9d07d67abb066e2950cd58a841dd8fda435e5f2f95db1911c29",
+          "sha256": "d7bf7898e3da97f8f7e9a9fd414209f58bf112e24a1e903e7608cf7376ee6c71",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -8791,7 +8791,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/registro-cliente.js",
@@ -8836,7 +8836,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/registro-cliente.js",
@@ -8881,7 +8881,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/registro-cliente.js",
@@ -8926,7 +8926,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/registro-cliente.js",
@@ -8971,7 +8971,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/registro-cliente.js",
@@ -9024,7 +9024,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/registro-cliente.js",
@@ -9077,7 +9077,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/registro-cliente.js",
@@ -9130,7 +9130,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/registro-cliente.js",
@@ -9183,7 +9183,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/registro-cliente.js",
@@ -9236,7 +9236,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/registro-cliente.js",
@@ -9289,7 +9289,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/registro-cliente.js",
@@ -9342,7 +9342,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/registro-producto.js",
@@ -9383,7 +9383,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/registro-producto.js",
@@ -9424,7 +9424,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/registro-producto.js",
@@ -9465,7 +9465,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/registro-producto.js",
@@ -9506,7 +9506,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/registro-producto.js",
@@ -9547,7 +9547,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/registro-producto.js",
@@ -9588,7 +9588,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -9625,7 +9625,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/resumen-facturas.js",
@@ -9674,7 +9674,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/resumen-facturas.js",
@@ -9723,7 +9723,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/resumen-facturas.js",
@@ -9772,7 +9772,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/resumen-facturas.js",
@@ -9821,7 +9821,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/resumen-facturas.js",
@@ -9870,7 +9870,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/resumen-facturas.js",
@@ -9919,7 +9919,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/resumen-facturas.js",
@@ -9968,7 +9968,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -10000,7 +10000,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/compra-interna.js",
@@ -10105,7 +10105,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/compra-interna.js",
@@ -10210,7 +10210,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/compra-interna.js",
@@ -10315,7 +10315,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/compra-interna.js",
@@ -10420,7 +10420,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/compra-interna.js",
@@ -10525,7 +10525,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/compra-interna.js",
@@ -10630,7 +10630,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/compra-interna.js",
@@ -10735,7 +10735,7 @@
         },
         {
           "path": "js/footer-functions.js",
-          "sha256": "371ca45750cae3380842ee4315059e858f8db040a512c18c4ae46d50616d6c45"
+          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
         },
         {
           "path": "ajax/compra-interna.js",
