@@ -612,7 +612,8 @@ $(function () {
     $documentContextMenu.removeClass('show').detach();
   }
   function isEditableContextTarget(target) {
-    return $(target).closest('input,textarea,select,option,button,a,[contenteditable="true"],.select2-container').length > 0;
+    var element = target && target.nodeType === 1 ? target : target && target.parentElement;
+    return !!(element && element.closest('input,textarea,select,option,button,a,[contenteditable="true"],.select2-container'));
   }
   function positionDocumentContextMenu(event) {
     $documentContextMenu.appendTo(document.body).addClass('show').css({ left: 0, top: 0 });
@@ -636,7 +637,8 @@ $(function () {
     positionDocumentContextMenu(event);
   });
   $(document).on('mousedown.appuDocumentRelations', function (event) {
-    if (!$(event.target).closest('.appu-document-context-menu').length) closeDocumentContextMenu();
+    var menu = $documentContextMenu[0];
+    if (!menu || !menu.contains(event.target)) closeDocumentContextMenu();
   }).on('keydown.appuDocumentRelations', function (event) {
     if (event.key === 'Escape') closeDocumentContextMenu();
   });
