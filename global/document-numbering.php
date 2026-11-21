@@ -39,9 +39,13 @@ function app_next_document_number(PDO $pdo, string $documentType, string $fallba
     $seriesCode = (string) $series['series'];
     if (isset($tableMap[$documentType])) {
         $numberColumn = in_array($documentType, ['INCOMING_PAYMENT', 'OUTGOING_PAYMENT'], true) ? 'payment_number' : 'number';
-        // Hostinger puede tener columnas/cadenas con collations distintas (p. ej. bin vs unicode_ci).
-        // Normalizamos ambos operandos para que la reserva del correlativo no falle con error 1267.
-        $maxStatement = $pdo->prepare("SELECT COALESCE(MAX(CAST(SUBSTRING_INDEX({$numberColumn}, '-', -1) AS UNSIGNED)), 0) FROM {$tableMap[$documentType]} WHERE {$numberColumn} COLLATE utf8mb4_unicode_ci LIKE CONCAT(CAST(? AS CHAR), '-%') COLLATE utf8mb4_unicode_ci");
+        // Legacy document columns can use latin1 or a different utf8mb4 collation.
+        $maxStatement = $pdo->prepare(
+            "SELECT COALESCE(MAX(CAST(SUBSTRING_INDEX({$numberColumn}, '-', -1) AS UNSIGNED)), 0)
+             FROM {$tableMap[$documentType]}
+             WHERE CONVERT({$numberColumn} USING utf8mb4) COLLATE utf8mb4_unicode_ci
+                 LIKE CONVERT(CONCAT(?, '-%') USING utf8mb4) COLLATE utf8mb4_unicode_ci"
+        );
         $maxStatement->execute([$seriesCode]);
         $nextNumber = max($nextNumber, (int) $maxStatement->fetchColumn() + 1);
     }
