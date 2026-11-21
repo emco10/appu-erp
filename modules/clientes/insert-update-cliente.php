@@ -24,7 +24,6 @@ $contact1Name = trim((string) ($_POST['cliente_nomcont_1'] ?? ''));
 $contact1Phone = trim((string) ($_POST['cliente_celcont_1'] ?? ''));
 $contact2Name = trim((string) ($_POST['cliente_nomcont_2'] ?? ''));
 $contact2Phone = trim((string) ($_POST['cliente_celcont_2'] ?? ''));
-$commission = filter_var($_POST['cliente_pagocomision'] ?? 0, FILTER_VALIDATE_FLOAT);
 $defaultCurrency = strtoupper(trim((string) ($_POST['cliente_moneda'] ?? 'PEN')));
 $paymentDays = filter_var($_POST['cliente_dias_pago'] ?? 0, FILTER_VALIDATE_INT);
 $creditLimit = filter_var($_POST['cliente_limite_credito'] ?? 0, FILTER_VALIDATE_FLOAT);
@@ -39,7 +38,6 @@ try {
     if (!preg_match('/^(?:\d{8}|\d{11})$/', $ruc)) throw new InvalidArgumentException('El documento debe ser un DNI de 8 dígitos o un RUC de 11 dígitos.');
     if ($businessName === '' || $address === '' || $department === '' || $province === '' || $district === '') throw new InvalidArgumentException('Completa los datos obligatorios del cliente.');
     if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) throw new InvalidArgumentException('El correo electrónico no es válido.');
-    if ($commission === false || $commission < 0) throw new InvalidArgumentException('La comisión no puede ser negativa.');
     if (!in_array($defaultCurrency, ['PEN','USD','EUR'], true)) throw new InvalidArgumentException('Moneda predeterminada no valida.');
     if ($paymentDays === false || $paymentDays < 0 || $paymentDays > 3650) throw new InvalidArgumentException('Dias de pago no validos.');
     if ($creditLimit === false || $creditLimit < 0) throw new InvalidArgumentException('Limite de credito no valido.');
@@ -59,16 +57,16 @@ try {
     if ($duplicate->fetchColumn()) { $pdo->rollBack(); echo 'EXISTE'; exit; }
 
     if (!$normalizedId) {
-        $statement = $pdo->prepare('INSERT INTO tbl_customer (ruc,business_name,trade_name,email,phone,cellphone,address,department_id,province_id,district_id,contact1_name,contact1_phone,contact2_name,contact2_phone,commission,default_currency,payment_days,credit_limit,price_list_id,sales_employee_id,registration_date,active_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
-        $statement->execute([$ruc,$businessName,$tradeName,$email,$phone,$cellphone,$address,$department,$province,$district,$contact1Name,$contact1Phone,$contact2Name,$contact2Phone,$commission,$defaultCurrency,$paymentDays,$creditLimit,$priceListId,$salesEmployeeId,$registrationDate,1]);
+        $statement = $pdo->prepare('INSERT INTO tbl_customer (ruc,business_name,trade_name,email,phone,cellphone,address,department_id,province_id,district_id,contact1_name,contact1_phone,contact2_name,contact2_phone,commission,default_currency,payment_days,credit_limit,price_list_id,sales_employee_id,registration_date,active_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?,?,?,?,?)');
+        $statement->execute([$ruc,$businessName,$tradeName,$email,$phone,$cellphone,$address,$department,$province,$district,$contact1Name,$contact1Phone,$contact2Name,$contact2Phone,$defaultCurrency,$paymentDays,$creditLimit,$priceListId,$salesEmployeeId,$registrationDate,1]);
         $normalizedId = (int) $pdo->lastInsertId();
         $result = 'OK_INSERT';
     } else {
         $exists = $pdo->prepare('SELECT client_id FROM tbl_customer WHERE client_id=? LIMIT 1');
         $exists->execute([$normalizedId]);
         if (!$exists->fetchColumn()) throw new InvalidArgumentException('El cliente que intentas editar ya no existe.');
-        $statement = $pdo->prepare('UPDATE tbl_customer SET ruc=?,business_name=?,trade_name=?,email=?,phone=?,cellphone=?,address=?,department_id=?,province_id=?,district_id=?,contact1_name=?,contact1_phone=?,contact2_name=?,contact2_phone=?,commission=?,default_currency=?,payment_days=?,credit_limit=?,price_list_id=?,sales_employee_id=?,registration_date=?,active_status=? WHERE client_id=?');
-        $statement->execute([$ruc,$businessName,$tradeName,$email,$phone,$cellphone,$address,$department,$province,$district,$contact1Name,$contact1Phone,$contact2Name,$contact2Phone,$commission,$defaultCurrency,$paymentDays,$creditLimit,$priceListId,$salesEmployeeId,$registrationDate,$active,$normalizedId]);
+        $statement = $pdo->prepare('UPDATE tbl_customer SET ruc=?,business_name=?,trade_name=?,email=?,phone=?,cellphone=?,address=?,department_id=?,province_id=?,district_id=?,contact1_name=?,contact1_phone=?,contact2_name=?,contact2_phone=?,default_currency=?,payment_days=?,credit_limit=?,price_list_id=?,sales_employee_id=?,registration_date=?,active_status=? WHERE client_id=?');
+        $statement->execute([$ruc,$businessName,$tradeName,$email,$phone,$cellphone,$address,$department,$province,$district,$contact1Name,$contact1Phone,$contact2Name,$contact2Phone,$defaultCurrency,$paymentDays,$creditLimit,$priceListId,$salesEmployeeId,$registrationDate,$active,$normalizedId]);
         $result = 'OK_UPDATE';
     }
     app_save_custom_fields($pdo, 'customer', $normalizedId, $customValues);

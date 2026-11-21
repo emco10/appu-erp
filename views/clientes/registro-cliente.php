@@ -142,7 +142,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Correo Electrónico</label>
                                         <div class="input-group mb-3">
@@ -152,19 +152,6 @@
                                                 </span>
                                             </div>
                                             <input type="email" class="form-control" placeholder="Ingrese un correo electrónico" name="cliente_correo">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Pago de Comisión</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="fas fa-dollar-sign"></i>
-                                                </span>
-                                            </div>
-                                            <input type="number" class="form-control" placeholder="Ingrese pago de comisión" name="cliente_pagocomision">
                                         </div>
                                     </div>
                                 </div>
