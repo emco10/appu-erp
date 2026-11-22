@@ -144,7 +144,7 @@
                                                     <i class="fas fa-box"></i>
                                                 </span>
                                             </div>
-                                            <input type="number" min="0" class="form-control" name="producto_cantidad" placeholder="Cantidad del producto" value="1" required>
+                                            <input type="number" min="0" class="form-control" name="producto_cantidad" placeholder="Cantidad inicial informativa" value="0">
                                         </div>
                                     </div>
                                 </div>

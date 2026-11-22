@@ -3,6 +3,7 @@ require '../../global/connection.php';
 require_once '../../global/document-history.php';
 require_once '../../global/master-data-validation.php';
 require_once '../../global/document-numbering.php';
+require_once '../../global/commercial-line-dimensions.php';
 
 header('Content-Type: application/json; charset=utf-8');
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
@@ -82,12 +83,14 @@ try {
         $productId = filter_var($detail['product_id'] ?? 0, FILTER_VALIDATE_INT); $productId = $productId === false ? 0 : $productId;
         $quantity = filter_var($detail['quantity'] ?? null, FILTER_VALIDATE_INT);
         $price = filter_var($detail['estimated_unit_price'] ?? 0, FILTER_VALIDATE_FLOAT); $price = $price === false ? 0 : $price;
+        $discount = filter_var(($detail['discount_rate'] ?? '') === '' ? 0 : $detail['discount_rate'], FILTER_VALIDATE_FLOAT);
         $name = trim((string)($detail['item_name'] ?? ''));
-        if ($productId < 1 || $name === '' || $quantity === false || $quantity <= 0 || $price < 0) throw new InvalidArgumentException('Detalle de solicitud inválido.');
+        if ($productId < 1 || $name === '' || $quantity === false || $quantity <= 0 || $price < 0 || $discount === false || $discount < 0 || $discount > 100) throw new InvalidArgumentException('Detalle de solicitud inválido.');
         if(isset($seenProducts[$productId]))throw new InvalidArgumentException('No repitas un articulo; consolida la cantidad en una sola linea.');$seenProducts[$productId]=true;
         app_validate_product_reference($pdo, $productId);$productStatement->execute([$productId]);$product=$productStatement->fetch();
-        $line = $quantity * $price; $total += $line;
-        $normalized[] = [$productId, (string)$product['code'], (string)$product['name'], (string)$product['description'], $quantity, $price, $line];
+        $dimensions=app_commercial_line_dimensions($detail,'Línea de solicitud');
+        $line = round($quantity * $price * (1-(float)$discount/100),2); $total += $line;
+        $normalized[] = [$productId, (string)$product['code'], (string)$product['name'], (string)$product['description'], $quantity, $price, (float)$discount, $line, $dimensions['project_code'], $dimensions['cost_center_code'], $dimensions['lot_number'], $dimensions['serial_number'], $dimensions['expiration_date']];
     }
     $pdo->beginTransaction();
     if ($id === false || $id === null || $id < 1) {
@@ -104,7 +107,7 @@ try {
         $pdo->prepare('UPDATE tbl_purchase_request SET requester_id=?,issue_date=?,required_date=?,currency=?,observation=?,total_estimate=?,last_update=NOW() WHERE id=?')->execute([$requesterId ?: 0, $issueDate, $requiredDate, $currency, $observation, $total, $id]);
         $pdo->prepare('DELETE FROM tbl_purchase_request_detail WHERE request_id = ?')->execute([$id]);
     }
-    $insert = $pdo->prepare('INSERT INTO tbl_purchase_request_detail (request_id,product_id,item_code,item_name,description,quantity,estimated_unit_price,line_total) VALUES (?,?,?,?,?,?,?,?)');
+    $insert = $pdo->prepare('INSERT INTO tbl_purchase_request_detail (request_id,product_id,item_code,item_name,description,quantity,estimated_unit_price,discount_rate,line_total,project_code,cost_center_code,lot_number,serial_number,expiration_date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
     foreach ($normalized as $row) $insert->execute(array_merge([$id], $row));
     app_save_custom_fields($pdo, 'purchase_request', (int) $id, is_array($_POST['custom_field'] ?? null) ? $_POST['custom_field'] : []);
     if ($previous === '') app_record_document_status($pdo, 'purchase_request', (int)$id, $number, '', 'Pendiente', 'Creacion', (int)$_SESSION['loggedInUser']['USERID'], 'Solicitud creada.');

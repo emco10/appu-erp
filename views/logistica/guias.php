@@ -81,7 +81,7 @@
                 <div class="form-group">
                     <label class="mb-1">Productos a trasladar</label>
                     <div class="small text-muted mb-2">Puedes generar varias guias para el mismo documento. Indica solo la cantidad que saldra en esta entrega.</div>
-                    <div class="table-responsive"><table id="guide-items" class="table table-bordered table-sm mb-3"><thead><tr><th>Codigo</th><th>Descripcion</th><th>Solicitado</th><th>Entregado</th><th>Pendiente</th><th style="width:150px">Trasladar ahora</th></tr></thead><tbody><tr><td colspan="6" class="text-center text-muted">Selecciona un documento de origen.</td></tr></tbody></table></div>
+                    <div class="table-responsive"><table id="guide-items" class="table table-bordered table-sm mb-3"><thead><tr><th>Código</th><th>Descripción</th><th>Solicitado</th><th>Entregado</th><th>Pendiente</th><th style="width:150px">Trasladar ahora</th><th>Proyecto</th><th>Centro costo</th><th>Lote</th><th>Serie</th><th>Vencimiento</th></tr></thead><tbody><tr><td colspan="11" class="text-center text-muted">Selecciona un documento de origen.</td></tr></tbody></table></div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-3"><label>Ubigeo partida</label><input name="origin_ubigeo" class="form-control" maxlength="6"></div>
@@ -123,7 +123,7 @@
           <div class="form-group col-md-3"><label for="delivery-billing-date">Fecha documento</label><input id="delivery-billing-date" name="document_date" type="date" class="form-control"></div>
           <div class="form-group col-md-6"><label for="delivery-billing-reference">Referencia</label><input id="delivery-billing-reference" name="reference" maxlength="300" class="form-control"></div>
         </div>
-        <div class="table-responsive"><table class="table table-bordered"><thead><tr><th>Entrega</th><th>Artículo</th><th>Pendiente de facturar</th><th>Precio sin IGV</th><th>Facturar</th></tr></thead><tbody id="delivery-billing-lines"></tbody></table></div>
+        <div class="table-responsive"><table class="table table-bordered"><thead><tr><th>Entrega</th><th>Artículo</th><th>Pendiente de facturar</th><th>Precio neto sin IGV</th><th>Facturar</th></tr></thead><tbody id="delivery-billing-lines"></tbody></table></div>
         <div id="delivery-billing-custom-fields"></div>
         <div id="delivery-billing-total" class="text-right font-weight-bold mb-3"></div>
         <div id="delivery-billing-result" role="status"></div>
@@ -136,7 +136,7 @@
 <div class="modal fade" id="guide-preview-modal" tabindex="-1" role="dialog" aria-hidden="true" data-document-mode="VIEW">
   <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document"><div class="modal-content">
     <div class="modal-header"><h5 class="modal-title">Consulta de entrega</h5><button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button></div>
-    <div class="modal-body"><div id="guide-preview-header" role="status"></div><div class="table-responsive"><table class="table table-bordered"><thead><tr><th>Código</th><th>Descripción</th><th>Unidad</th><th>Cantidad</th></tr></thead><tbody id="guide-preview-lines"></tbody></table></div></div>
+    <div class="modal-body"><div id="guide-preview-header" role="status"></div><div class="table-responsive"><table class="table table-bordered"><thead><tr><th>Código</th><th>Descripción</th><th>Unidad</th><th>Cantidad</th><th>Proyecto</th><th>Centro costo</th><th>Lote</th><th>Serie</th><th>Vencimiento</th></tr></thead><tbody id="guide-preview-lines"></tbody></table></div></div>
     <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button><button type="button" id="guide-preview-print" class="btn btn-primary">Imprimir</button></div>
   </div></div>
 </div>

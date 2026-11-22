@@ -284,6 +284,7 @@ var tbl_prodordcompra = $("#table-ord-compras").DataTable({
   columnDefs: [{ targets: '_all', render: $.fn.dataTable.render.text() }],
   "language": {"url": "../../plugins/datatables/Spanish.json"}
 });
+tbl_prodordcompra.columns([9]).visible(false);
 
 var total_temporal = 0;
 
@@ -332,7 +333,13 @@ $('#purchase-order-source').on('change', function () {
           5: Number(item.UNIT_PRICE || 0).toFixed(2),
           6: Number(item.QUANTITY || 0),
           7: Number(item.DISCOUNT_RATE || 0).toFixed(2),
-          8: Number(item.DISCOUNTED_TOTAL || 0).toFixed(2)
+          8: Number(item.DISCOUNTED_TOTAL || 0).toFixed(2),
+          9: Number(item.ITEM_ID || 0),
+          10: item.PROJECT_CODE || '',
+          11: item.COST_CENTER_CODE || '',
+          12: item.LOT_NUMBER || '',
+          13: item.SERIAL_NUMBER || '',
+          14: item.EXPIRATION_DATE || ''
         });
       });
       tbl_prodordcompra.draw();
@@ -381,7 +388,13 @@ $("#btn-add-prodtporden").click(function(e) {
           5: unit_price,
           6: quantity,
           7: discount_rate,
-          8: discounted_total
+          8: discounted_total,
+          9: Number($('select[name="orden_producto_select"]').val()),
+          10: $.trim($('input[name="orden_proyecto"]').val()),
+          11: $.trim($('input[name="orden_centro_costo"]').val()),
+          12: $.trim($('input[name="orden_lote"]').val()),
+          13: $.trim($('input[name="orden_serie_articulo"]').val()),
+          14: $('input[name="orden_vencimiento"]').val() || ''
         }
       ])
       .draw();
@@ -413,6 +426,7 @@ $("#btn-add-prodtporden").click(function(e) {
     $('input[name="orden_porcdscto"]').val(0);
     $('input[name="orden_valordscto"]').val(0);
     $('input[name="orden_valorigv"]').val(0);
+    $('input[name="orden_proyecto"],input[name="orden_centro_costo"],input[name="orden_lote"],input[name="orden_serie_articulo"],input[name="orden_vencimiento"]').val("");
 
     $('input[name="orden_totcompra"]').val(total_compra_actual.toFixed(2));
     $('input[name="orden_igv"]').val(igv.toFixed(2));
@@ -639,7 +653,13 @@ $("#btn-select-orden").click(function() {
                     5: (detaorden_json[i]["UNIT_PRICE"] * 1).toFixed(2),
                     6: detaorden_json[i]["QUANTITY"],
                     7: (detaorden_json[i]["DISCOUNT_RATE"] * 1).toFixed(2),
-                    8: (detaorden_json[i]["DISCOUNTED_TOTAL"] * 1).toFixed(2)
+                    8: (detaorden_json[i]["DISCOUNTED_TOTAL"] * 1).toFixed(2),
+                    9: Number(detaorden_json[i]["ITEM_ID"] || 0),
+                    10: detaorden_json[i]["PROJECT_CODE"] || "",
+                    11: detaorden_json[i]["COST_CENTER_CODE"] || "",
+                    12: detaorden_json[i]["LOT_NUMBER"] || "",
+                    13: detaorden_json[i]["SERIAL_NUMBER"] || "",
+                    14: detaorden_json[i]["EXPIRATION_DATE"] || ""
                   }
                 ])
                 .draw();

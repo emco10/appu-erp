@@ -1,6 +1,18 @@
 <?php
 require_once __DIR__.'/validation.php';
 
+function app_purchase_product_rows_from_ui(array $rows):array
+{
+    foreach($rows as &$row){
+        if(!is_array($row))throw new DomainException('El detalle de compra no es válido.');
+        $candidate=array_key_exists(9,$row)?$row[9]:($row[0]??null);
+        $productId=filter_var($candidate,FILTER_VALIDATE_INT);
+        if($productId===false||$productId<1)throw new DomainException('Vuelve a seleccionar los artículos de la compra.');
+        $row[0]=(int)$productId;
+    }
+    unset($row);return $rows;
+}
+
 function app_validate_purchase_input(array $data,array $rows,bool $services=false):void
 {
     $errors=[];
@@ -33,11 +45,11 @@ function app_validate_purchase_order_document(PDO $pdo, int $orderId, int $provi
     if(strcasecmp((string)$order['currency'],$currency)!==0) throw new DomainException('La moneda no coincide con la orden de compra.');
     $linked=$pdo->prepare("SELECT COUNT(*) FROM tbl_purchase WHERE purchase_order_id=? AND id<>? AND status NOT IN ('Anulado','Anulada','Cancelada')"); $linked->execute([$orderId,$currentPurchaseId]);
     if((int)$linked->fetchColumn()>0) throw new DomainException('La orden de compra ya tiene una factura de proveedor activa.');
-    $details=$pdo->prepare('SELECT item_id,item_quantity,item_unit_price FROM tbl_order_detail WHERE order_id=? ORDER BY item_id'); $details->execute([$orderId]);
-    $expected=[]; foreach($details->fetchAll() as $row){$id=(int)$row['item_id'];if($id<1||isset($expected[$id]))throw new DomainException('La orden contiene articulos invalidos o duplicados.');$expected[$id]=['quantity'=>(float)$row['item_quantity'],'price'=>(float)$row['item_unit_price']];}
-    $received=[]; foreach($postedRows as $row){$id=filter_var($row[0]??null,FILTER_VALIDATE_INT);$price=filter_var($row[5]??null,FILTER_VALIDATE_FLOAT);$quantity=filter_var($row[6]??null,FILTER_VALIDATE_FLOAT);if($id===false||$price===false||$quantity===false||isset($received[(int)$id]))throw new DomainException('El detalle de compra no coincide con la orden.');$received[(int)$id]=['quantity'=>(float)$quantity,'price'=>(float)$price];}
+    $details=$pdo->prepare('SELECT item_id,item_quantity,item_unit_price,item_discount_rate,project_code,cost_center_code,lot_number,serial_number,expiration_date FROM tbl_order_detail WHERE order_id=? ORDER BY item_id'); $details->execute([$orderId]);
+    $expected=[]; foreach($details->fetchAll() as $row){$id=(int)$row['item_id'];if($id<1||isset($expected[$id]))throw new DomainException('La orden contiene articulos invalidos o duplicados.');$expected[$id]=['quantity'=>(float)$row['item_quantity'],'price'=>(float)$row['item_unit_price'],'discount'=>(float)$row['item_discount_rate'],'project'=>(string)$row['project_code'],'cost_center'=>(string)$row['cost_center_code'],'lot'=>(string)$row['lot_number'],'serial'=>(string)$row['serial_number'],'expiration'=>(string)($row['expiration_date']??'')];}
+    $received=[]; foreach($postedRows as $row){$id=filter_var($row[0]??null,FILTER_VALIDATE_INT);$price=filter_var($row[5]??null,FILTER_VALIDATE_FLOAT);$quantity=filter_var($row[6]??null,FILTER_VALIDATE_FLOAT);if($id===false||$price===false||$quantity===false||isset($received[(int)$id]))throw new DomainException('El detalle de compra no coincide con la orden.');$received[(int)$id]=['quantity'=>(float)$quantity,'price'=>(float)$price,'discount'=>(float)($row[7]??0),'project'=>(string)($row[10]??''),'cost_center'=>(string)($row[11]??''),'lot'=>(string)($row[12]??''),'serial'=>(string)($row[13]??''),'expiration'=>(string)($row[14]??'')];}
     ksort($expected);ksort($received);if(array_keys($expected)!==array_keys($received))throw new DomainException('Los articulos no coinciden con la orden de compra.');
-    foreach($expected as $id=>$line){if(abs($line['quantity']-$received[$id]['quantity'])>0.000001||abs($line['price']-$received[$id]['price'])>0.009)throw new DomainException('Las cantidades o precios no coinciden con la orden de compra.');}
+    foreach($expected as $id=>$line){$posted=$received[$id];if(abs($line['quantity']-$posted['quantity'])>0.000001||abs($line['price']-$posted['price'])>0.009||abs($line['discount']-$posted['discount'])>.0001||$line['project']!==$posted['project']||$line['cost_center']!==$posted['cost_center']||$line['lot']!==$posted['lot']||$line['serial']!==$posted['serial']||$line['expiration']!==$posted['expiration'])throw new DomainException('Las cantidades, precios, descuentos o dimensiones no coinciden con la orden de compra.');}
     if(abs((float)$order['total_purchase']-$subtotal)>0.01||abs((float)$order['total_tax']-$tax)>0.01||abs((float)$order['total_net']-$total)>0.01)throw new DomainException('Los totales no coinciden con la orden de compra.');
     return $order;
 }

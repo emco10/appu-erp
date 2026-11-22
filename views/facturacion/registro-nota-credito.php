@@ -250,12 +250,20 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-8">
                                     <div class="form-group">
                                         <label>Descripción</label>
                                         <input type="text" class="form-control" name="facturacion_proddesc" placeholder="Descripción de producto" readonly>
                                     </div>
                                 </div>
+                                <div class="col-md-2"><div class="form-group"><label>Descuento de línea %</label><input type="number" min="0" max="100" step="0.01" value="0" class="form-control" name="facturacion_proddescuento"></div></div>
+                                <div class="col-md-2"><div class="form-group"><label>Vencimiento</label><input type="date" class="form-control" name="facturacion_prodvencimiento"></div></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3"><div class="form-group"><label>Proyecto</label><input type="text" maxlength="50" class="form-control" name="facturacion_prodproyecto" placeholder="Opcional"></div></div>
+                                <div class="col-md-3"><div class="form-group"><label>Centro de costo</label><input type="text" maxlength="50" class="form-control" name="facturacion_prodcentrocosto" placeholder="Opcional"></div></div>
+                                <div class="col-md-3"><div class="form-group"><label>Lote</label><input type="text" maxlength="80" class="form-control" name="facturacion_prodlote" placeholder="Opcional"></div></div>
+                                <div class="col-md-3"><div class="form-group"><label>Serie</label><input type="text" maxlength="100" class="form-control" name="facturacion_prodserie" placeholder="Opcional"></div></div>
                             </div>
                             <input type="hidden" name="facturacion_stockprod">
                             <div class="row mt-3">
@@ -281,6 +289,13 @@
                                             <th>Precio Unitario</th>
                                             <th>Cantidad</th>
                                             <th>Importe</th>
+                                            <th>Afectación</th>
+                                            <th>Desc. %</th>
+                                            <th>Proyecto</th>
+                                            <th>Centro de costo</th>
+                                            <th>Lote</th>
+                                            <th>Serie</th>
+                                            <th>Vencimiento</th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>

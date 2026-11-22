@@ -2,6 +2,7 @@
 if(PHP_SAPI!=='cli'){http_response_code(404);exit;}
 $root=dirname(__DIR__);require $root.'/global/config.php';session_set_save_handler(fn()=>true,fn()=>true,fn($id)=>'',fn($id,$data)=>true,fn($id)=>true,fn($max)=>0);app_start_session();require $root.'/global/connection.php';
 require_once $root.'/global/purchase-document-validation.php';require_once $root.'/global/purchase-request-validation.php';require_once $root.'/global/master-data-validation.php';require_once $root.'/global/purchase-receipt.php';require_once $root.'/modules/finanzas/sync.php';
+$mappedPurchaseRows=app_purchase_product_rows_from_ui([[0=>1,1=>'P',2=>'Artículo',3=>'',4=>'UND',5=>10,6=>1,7=>0,8=>10,9=>987]]);if((int)$mappedPurchaseRows[0][0]!==987)throw new RuntimeException('La factura de proveedor sigue confundiendo el número de fila con el ID del artículo.');
 $pdo->beginTransaction();
 try{
  $userId=(int)$pdo->query('SELECT id FROM tbl_user ORDER BY id LIMIT 1')->fetchColumn();$warehouseId=(int)$pdo->query('SELECT id FROM tbl_warehouse WHERE active_status=1 ORDER BY id LIMIT 1')->fetchColumn();if(!$userId||!$warehouseId)throw new RuntimeException('Faltan datos base.');

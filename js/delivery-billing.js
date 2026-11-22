@@ -7,7 +7,7 @@ $(function () {
   function recalculate() {
     if (!preview) return;
     var subtotal = 0, context = preview.billing_context, quantities = Object.assign({}, context && context.billed_quantities || {});
-    $form.find('.billing-line-quantity').each(function () { var line = $(this).data('line'), quantity = Math.max(0, Number(this.value) || 0); subtotal += Math.round(quantity * Number(line.unit_price) * 100) / 100; quantities[line.order_line_id] = Number(quantities[line.order_line_id] || 0) + quantity; });
+    $form.find('.billing-line-quantity').each(function () { var line = $(this).data('line'), quantity = Math.max(0, Number(this.value) || 0), netUnit = line.net_unit_value == null ? line.unit_price : line.net_unit_value; subtotal += Math.round(quantity * Number(netUnit) * 100) / 100; quantities[line.order_line_id] = Number(quantities[line.order_line_id] || 0) + quantity; });
     var tax = Math.round(subtotal * 18) / 100, discount = Math.round((subtotal + tax) * Number(preview.order.discount_rate || 0)) / 100;
     var rounding = context && Object.keys(context.ordered_quantities).every(function (line) { return Number(quantities[line] || 0) + .000001 >= Number(context.ordered_quantities[line]); }) ? Math.round((Number(preview.order.total_net) - context.previous_total - (subtotal + tax - discount)) * 100) / 100 : 0;
     $('#delivery-billing-total').text('Subtotal: ' + subtotal.toFixed(2) + ' · IGV: ' + tax.toFixed(2) + ' · Descuento: ' + discount.toFixed(2) + (rounding ? ' · Ajuste de redondeo: ' + rounding.toFixed(2) : '') + ' · Total: ' + (subtotal + tax - discount + rounding).toFixed(2) + ' ' + preview.order.currency);
@@ -27,7 +27,7 @@ $(function () {
         (data.lines || []).forEach(function (line, index) {
           var $row = $('<tr>').appendTo($('#delivery-billing-lines'));
           $('<td>').text(line.guide_number).appendTo($row); $('<td>').text(line.item_code + ' · ' + line.item_name).appendTo($row);
-          $('<td>').text(line.open_quantity).appendTo($row); $('<td>').text(line.unit_price.toFixed(2)).appendTo($row);
+          $('<td>').text(line.open_quantity).appendTo($row); $('<td>').text(Number(line.net_unit_value == null ? line.unit_price : line.net_unit_value).toFixed(2)).appendTo($row);
           $('<input type="number" min="0" step="1" class="form-control billing-line-quantity" aria-label="Cantidad a facturar">').attr({ max: line.open_quantity, 'data-field-path': 'lines[' + index + '].quantity' }).val(line.open_quantity).prop('disabled', line.open_quantity <= 0).data('line', line).appendTo($('<td>').appendTo($row));
         });
         appuRenderCustomFields($('#delivery-billing-custom-fields'), data.custom_fields, data.custom_values, 'delivery-billing-custom-');

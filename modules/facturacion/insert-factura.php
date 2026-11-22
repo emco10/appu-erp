@@ -137,7 +137,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         $sqlStatement->execute([$f_series,$f_faccod, $f_estado, $f_document_subtype, $f_document_subtype === 'ADVANCE' ? $f_advance_percentage : null, $f_selectcotizid, $f_sales_order_id, $f_cliid, $f_warehouse_id, $billingAddress['id'], $shippingAddress['id'], $f_cli_ruc, $f_clinom, $f_clidirecc, $shippingAddress['address_line'], $f_clirefer, $f_diaspag, $f_fecha, $f_clifecentreg, $f_currency, $f_porcdesc, $f_valdesc, $f_subtotal, $f_taxigv, $f_totalneto, $f_seller_id, $f_user_id, $f_fecreg, $f_fecreg]);
         $id_facturacion = (int) $pdo->lastInsertId();
 
-        $insertDetail = $pdo->prepare('INSERT INTO tbl_invoice_detail (item_description,item_id,item_code,item_name,item_quantity,item_unit_price,invoice_id) VALUES (?,?,?,?,?,?,?)');
+        $insertDetail = $pdo->prepare('INSERT INTO tbl_invoice_detail (item_description,item_id,item_code,item_name,item_quantity,item_unit_price,item_discount_rate,item_discounted_total,project_code,cost_center_code,lot_number,serial_number,expiration_date,invoice_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
         $affectsStock = (int) $f_estado !== 2 && $f_document_subtype === 'STANDARD';
         if($affectsStock && $salesOrder!==null)app_release_order_for_billing($pdo,(int)$f_sales_order_id,$salesOrderWarehouseId);
         $documentReference = $f_series . '-' . $f_faccod;
@@ -149,13 +149,15 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             $desc_prod = trim((string) ($product[3] ?? ''));
             $prec_prod = filter_var($product[4] ?? null, FILTER_VALIDATE_FLOAT);
             $cant_prod = filter_var($product[5] ?? null, FILTER_VALIDATE_FLOAT);
+            $line_discount = (float)($product[8] ?? 0);$line_total=(float)($product[6] ?? 0);
 
             if ($id_prod === false || $prec_prod === false || $prec_prod < 0 || $cant_prod === false || $cant_prod <= 0) {
                 throw new InvalidArgumentException('La factura contiene un producto inválido.');
             }
 
             $storedPrice = $f_document_subtype === 'ADVANCE' ? round((float)$prec_prod * ($f_advance_percentage / 100), 6) : $prec_prod;
-            $insertDetail->execute([$desc_prod, $id_prod, $cod_prod, $nom_prod, $cant_prod, $storedPrice, $id_facturacion]);
+            $storedTotal = $f_document_subtype === 'ADVANCE' ? round($line_total * ($f_advance_percentage / 100), 4) : $line_total;
+            $insertDetail->execute([$desc_prod, $id_prod, $cod_prod, $nom_prod, $cant_prod, $storedPrice, $line_discount, $storedTotal, (string)($product[9]??''), (string)($product[10]??''), (string)($product[11]??''), (string)($product[12]??''), ($product[13]??'') ?: null, $id_facturacion]);
             $invoiceLineId=(int)$pdo->lastInsertId();
             if($salesOrder!==null && $f_document_subtype!=='ADVANCE')app_record_order_billing_line($pdo,(int)$f_sales_order_id,(int)$id_prod,'invoice',$id_facturacion,$invoiceLineId,(float)$cant_prod,(int)$f_user_id,$f_document_subtype==='STANDARD');
 

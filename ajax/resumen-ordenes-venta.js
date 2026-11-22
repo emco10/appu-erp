@@ -53,17 +53,23 @@ function salesOrderPathFields() {
     $(this).find('.sales-order-product').attr('data-field-path', 'details[' + index + '].product_id');
     $(this).find('.sales-order-quantity').attr('data-field-path', 'details[' + index + '].quantity');
     $(this).find('.sales-order-price').attr('data-field-path', 'details[' + index + '].unit_price');
+    $(this).find('.sales-order-discount').attr('data-field-path', 'details[' + index + '].discount_rate');
+    $(this).find('.sales-order-project').attr('data-field-path', 'details[' + index + '].project_code');
+    $(this).find('.sales-order-cost-center').attr('data-field-path', 'details[' + index + '].cost_center_code');
+    $(this).find('.sales-order-lot').attr('data-field-path', 'details[' + index + '].lot_number');
+    $(this).find('.sales-order-serial').attr('data-field-path', 'details[' + index + '].serial_number');
+    $(this).find('.sales-order-expiration').attr('data-field-path', 'details[' + index + '].expiration_date');
   });
 }
 function addSalesOrderLine(detail) {
-  var $line = $('<div class="row sales-order-line mb-2"><div class="col-md-6"><select class="form-control sales-order-product" aria-label="Artículo"></select></div><div class="col-md-2"><input class="form-control sales-order-quantity" aria-label="Cantidad" type="number" min="1" step="1" value="1"></div><div class="col-md-3"><input class="form-control sales-order-price" aria-label="Precio sin IGV" type="number" min="0" step="0.01" value="0"></div><div class="col-md-1"><button type="button" class="btn btn-outline-danger sales-order-remove" title="Quitar línea"><i class="fas fa-times"></i></button></div></div>');
+  var $line = $('<div class="row sales-order-line mb-3"><div class="col-md-5"><select class="form-control sales-order-product" aria-label="Artículo"></select></div><div class="col-md-1"><input class="form-control sales-order-quantity" aria-label="Cantidad" type="number" min="1" step="1" value="1"></div><div class="col-md-2"><input class="form-control sales-order-price" aria-label="Precio sin IGV" type="number" min="0" step="0.01" value="0"></div><div class="col-md-2"><input class="form-control sales-order-discount" aria-label="Descuento por ciento" type="number" min="0" max="100" step="0.01" value="0"></div><div class="col-md-1"><button type="button" class="btn btn-outline-danger sales-order-remove" title="Quitar línea"><i class="fas fa-times"></i></button></div><div class="col-12 mt-2"><div class="form-row"><div class="col-md-3"><input class="form-control form-control-sm sales-order-project" maxlength="50" placeholder="Proyecto (opcional)"></div><div class="col-md-3"><input class="form-control form-control-sm sales-order-cost-center" maxlength="50" placeholder="Centro de costo (opcional)"></div><div class="col-md-2"><input class="form-control form-control-sm sales-order-lot" maxlength="80" placeholder="Lote (opcional)"></div><div class="col-md-2"><input class="form-control form-control-sm sales-order-serial" maxlength="100" placeholder="Serie (opcional)"></div><div class="col-md-2"><input class="form-control form-control-sm sales-order-expiration" aria-label="Vencimiento opcional" type="date"></div></div></div></div>');
   var $select = $line.find('select').append($('<option>').val('').text('Seleccione artículo'));
   (salesOrderCatalog.products || []).forEach(function (p) { $select.append($('<option>').val(p.id).text(p.code + ' - ' + p.name).attr('data-price', p.unit_price)); });
   if (detail && !$select.find('option').filter(function () { return String(this.value) === String(detail.item_id); }).length) $select.append($('<option>').val(detail.item_id).text(detail.item_code + ' - ' + detail.item_name + ' (inactivo)'));
   $('#sales-order-lines').append($line);
   if (detail && detail.open_quantity != null) $('<small class="text-muted col-12">').text('Cantidad atendida: ' + (detail.processed_quantity || 0) + ' · Pendiente de entrega: ' + detail.open_quantity).appendTo($line);
   $select.select2({ dropdownParent: $salesOrderModal, width: '100%' });
-  if (detail) { $select.val(String(detail.item_id)).trigger('change.select2'); $line.find('.sales-order-quantity').val(detail.item_quantity); $line.find('.sales-order-price').val(detail.item_unit_price); }
+  if (detail) { $select.val(String(detail.item_id)).trigger('change.select2'); $line.find('.sales-order-quantity').val(detail.item_quantity); $line.find('.sales-order-price').val(detail.item_unit_price); $line.find('.sales-order-discount').val(detail.item_discount_rate || 0); $line.find('.sales-order-project').val(detail.project_code || ''); $line.find('.sales-order-cost-center').val(detail.cost_center_code || ''); $line.find('.sales-order-lot').val(detail.lot_number || ''); $line.find('.sales-order-serial').val(detail.serial_number || ''); $line.find('.sales-order-expiration').val(detail.expiration_date || ''); }
   $select.on('change', function () { $line.find('.sales-order-price').val((Number($select.find('option:selected').attr('data-price') || 0) * salesOrderPriceFactor).toFixed(2)); recalcSalesOrderTotal(); });
   $line.find('input').on('input', recalcSalesOrderTotal);
   $line.find('.sales-order-remove').on('click', function () { $line.remove(); salesOrderPathFields(); recalcSalesOrderTotal(); appuMarkDirty(); });
@@ -71,7 +77,7 @@ function addSalesOrderLine(detail) {
 }
 function recalcSalesOrderTotal() {
   var subtotal = 0;
-  $('.sales-order-line').each(function () { subtotal += Math.round(Number($(this).find('.sales-order-quantity').val() || 0) * Number($(this).find('.sales-order-price').val() || 0) * 100) / 100; });
+  $('.sales-order-line').each(function () { var gross=Number($(this).find('.sales-order-quantity').val() || 0) * Number($(this).find('.sales-order-price').val() || 0), discount=Math.min(100,Math.max(0,Number($(this).find('.sales-order-discount').val() || 0))); subtotal += Math.round(gross * (1-discount/100) * 100) / 100; });
   $('#sales-order-total').text((subtotal + Math.round(subtotal * 18) / 100).toFixed(2));
 }
 function renderSalesOrderCustomFields(values) {
@@ -170,7 +176,7 @@ $salesOrderForm.on('submit', function (event) {
   if (salesOrderSaving || !['CREATE', 'EDIT'].includes(salesOrderState.get())) return;
   var mode = salesOrderState.get(), behavior = event.originalEvent && event.originalEvent.submitter ? event.originalEvent.submitter.value : 'view';
   var details = [];
-  $('.sales-order-line').each(function () { details.push({ product_id: $(this).find('.sales-order-product').val(), quantity: $(this).find('.sales-order-quantity').val(), unit_price: $(this).find('.sales-order-price').val() }); });
+  $('.sales-order-line').each(function () { details.push({ product_id: $(this).find('.sales-order-product').val(), quantity: $(this).find('.sales-order-quantity').val(), unit_price: $(this).find('.sales-order-price').val(), discount_rate: $(this).find('.sales-order-discount').val(), project_code: $(this).find('.sales-order-project').val(), cost_center_code: $(this).find('.sales-order-cost-center').val(), lot_number: $(this).find('.sales-order-lot').val(), serial_number: $(this).find('.sales-order-serial').val(), expiration_date: $(this).find('.sales-order-expiration').val() }); });
   var data = $salesOrderForm.serializeArray();
   data.push({ name: 'action', value: mode === 'EDIT' ? 'update' : 'create_direct' }, { name: 'details', value: JSON.stringify(details) });
   if (mode === 'EDIT') data.push({ name: 'order_id', value: salesOrderCurrent.order.id }, { name: 'version', value: salesOrderCurrent.version });

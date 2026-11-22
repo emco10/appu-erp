@@ -233,7 +233,10 @@ $("#btn-add-prodtofactura").click(function() {
   descripcion = $('input[name="facturacion_proddesc"]').val();
   precio = parseFloat($('input[name="facturacion_prodprecio"]').val());
   cantidad = parseInt($('input[name="facturacion_prodcant"]').val());
-  importe = precio * cantidad;
+  var descuentoLinea = Math.min(100, Math.max(0, Number($('input[name="facturacion_proddescuento"]').val() || 0)));
+  var proyecto = String($('input[name="facturacion_prodproyecto"]').val() || '').trim(), centroCosto = String($('input[name="facturacion_prodcentrocosto"]').val() || '').trim();
+  var lote = String($('input[name="facturacion_prodlote"]').val() || '').trim(), serie = String($('input[name="facturacion_prodserie"]').val() || '').trim(), vencimiento = String($('input[name="facturacion_prodvencimiento"]').val() || '');
+  importe = Math.round(precio * cantidad * (1 - descuentoLinea / 100) * 100) / 100;
   var importe_actual = importe;
 
   if (idprod != "" && cantidad != "" && cantidad > 0) {
@@ -261,7 +264,8 @@ $("#btn-add-prodtofactura").click(function() {
           4: precio.toFixed(2),
           5: cantidad,
           6: importe.toFixed(2),
-          7: selected_tax_affectation
+          7: selected_tax_affectation,
+          8: descuentoLinea.toFixed(2), 9: proyecto, 10: centroCosto, 11: lote, 12: serie, 13: vencimiento
         }
       ])
       .draw();
@@ -474,7 +478,7 @@ $("#btn-select-factura").click(function() {
                       3: detafact_prods[i]["DESCRIP"],
                       4: precio,
                       5: detafact_prods[i]["CANTIDAD"],
-                      6: importe
+                      6: importe, 7: "10", 8: Number(detafact_prods[i]["DESCUENTO_LINEA"] || 0).toFixed(2), 9: detafact_prods[i]["PROYECTO"] || '', 10: detafact_prods[i]["CENTRO_COSTO"] || '', 11: detafact_prods[i]["LOTE"] || '', 12: detafact_prods[i]["SERIE"] || '', 13: detafact_prods[i]["VENCIMIENTO"] || ''
                     }
                   ])
                   .draw();
@@ -596,7 +600,7 @@ $("#btn-select-cotizacion").click(function() {
                     3: detallefac_json[i]["DESCRIP"],
                     4: precio,
                     5: detallefac_json[i]["CANTIDAD"],
-                    6: importe
+                    6: importe, 7: "10", 8: Number(detallefac_json[i]["DESCUENTO_LINEA"] || 0).toFixed(2), 9: detallefac_json[i]["PROYECTO"] || '', 10: detallefac_json[i]["CENTRO_COSTO"] || '', 11: detallefac_json[i]["LOTE"] || '', 12: detallefac_json[i]["SERIE"] || '', 13: detallefac_json[i]["VENCIMIENTO"] || ''
                   }
                 ])
                 .draw();

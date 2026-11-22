@@ -250,7 +250,10 @@ $("#btn-add-prodtofactura").click(function() {
   descripcion = $('input[name="facturacion_proddesc"]').val();
   precio = parseFloat($('input[name="facturacion_prodprecio"]').val());
   cantidad = parseInt($('input[name="facturacion_prodcant"]').val());
-  importe = precio * cantidad;
+  var descuentoLinea = Math.min(100, Math.max(0, Number($('input[name="facturacion_proddescuento"]').val() || 0)));
+  var proyecto = String($('input[name="facturacion_prodproyecto"]').val() || '').trim(), centroCosto = String($('input[name="facturacion_prodcentrocosto"]').val() || '').trim();
+  var lote = String($('input[name="facturacion_prodlote"]').val() || '').trim(), serie = String($('input[name="facturacion_prodserie"]').val() || '').trim(), vencimiento = String($('input[name="facturacion_prodvencimiento"]').val() || '');
+  importe = Math.round(precio * cantidad * (1 - descuentoLinea / 100) * 100) / 100;
   var importe_actual = importe;
 
   if (idprod != "" && cantidad != "" && cantidad > 0) {
@@ -278,7 +281,8 @@ $("#btn-add-prodtofactura").click(function() {
           4: precio.toFixed(2),
           5: cantidad,
           6: importe.toFixed(2),
-          7: selected_tax_affectation
+          7: selected_tax_affectation,
+          8: descuentoLinea.toFixed(2), 9: proyecto, 10: centroCosto, 11: lote, 12: serie, 13: vencimiento
         }
       ])
       .draw();
@@ -479,7 +483,7 @@ $("#btn-select-factura").click(function() {
                       3: detafact_prods[i]["DESCRIP"],
                       4: precio,
                       5: detafact_prods[i]["CANTIDAD"],
-                      6: importe
+                      6: importe, 7: "10", 8: Number(detafact_prods[i]["DESCUENTO_LINEA"] || 0).toFixed(2), 9: detafact_prods[i]["PROYECTO"] || '', 10: detafact_prods[i]["CENTRO_COSTO"] || '', 11: detafact_prods[i]["LOTE"] || '', 12: detafact_prods[i]["SERIE"] || '', 13: detafact_prods[i]["VENCIMIENTO"] || ''
                     }
                   ])
                   .draw();
@@ -585,7 +589,7 @@ $("#btn-select-cotizacion").click(function() {
                     3: detacotiz_json[i]["DESCRIP"],
                     4: precio,
                     5: detacotiz_json[i]["CANTIDAD"],
-                    6: importe
+                    6: importe, 7: "10", 8: Number(detacotiz_json[i]["DESCUENTO_LINEA"] || 0).toFixed(2), 9: detacotiz_json[i]["PROYECTO"] || '', 10: detacotiz_json[i]["CENTRO_COSTO"] || '', 11: detacotiz_json[i]["LOTE"] || '', 12: detacotiz_json[i]["SERIE"] || '', 13: detacotiz_json[i]["VENCIMIENTO"] || ''
                   }
                 ])
                 .draw();
@@ -631,7 +635,7 @@ $("#btn-select-orden-venta").click(function() {
     total_temporal = order.total_net;
     tbl_prodfactura.clear();
     (response.details || []).forEach(function(detail) {
-      tbl_prodfactura.rows.add([{ 0: detail.item_id, 1: detail.item_code, 2: detail.item_name, 3: detail.item_description, 4: parseFloat(detail.item_unit_price).toFixed(2), 5: detail.item_quantity, 6: parseFloat(detail.item_total).toFixed(2), 7: detail.tax_affectation_code || "10" }]);
+      tbl_prodfactura.rows.add([{ 0: detail.item_id, 1: detail.item_code, 2: detail.item_name, 3: detail.item_description, 4: parseFloat(detail.item_unit_price).toFixed(2), 5: detail.item_quantity, 6: parseFloat(detail.item_discounted_total != null ? detail.item_discounted_total : detail.item_total).toFixed(2), 7: detail.tax_affectation_code || "10", 8: Number(detail.item_discount_rate || 0).toFixed(2), 9: detail.project_code || '', 10: detail.cost_center_code || '', 11: detail.lot_number || '', 12: detail.serial_number || '', 13: detail.expiration_date || '' }]);
     });
     tbl_prodfactura.draw();
     $("#btn-save-facturaprod").prop("disabled", false);

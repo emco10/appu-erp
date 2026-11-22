@@ -154,6 +154,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     if ($c_lst_prods != "") {
         if (count($c_lst_prods) > 0) {
             foreach ($c_lst_prods as $key => $value) {
+                $discount_prod=0;$import_prod=0;$project_code='';$cost_center_code='';$lot_number='';$serial_number='';$expiration_date='';
                 foreach ($value as $k => $v) {
                     switch ($k) {
                         case "0":
@@ -172,12 +173,30 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                             $cant_prod = $v;
                             break;
                         case "5":
+                            $discount_prod = $v;
+                            break;
+                        case "6":
                             $import_prod = $v;
+                            break;
+                        case "7":
+                            $project_code = $v;
+                            break;
+                        case "8":
+                            $cost_center_code = $v;
+                            break;
+                        case "9":
+                            $lot_number = $v;
+                            break;
+                        case "10":
+                            $serial_number = $v;
+                            break;
+                        case "11":
+                            $expiration_date = $v;
                             break;
                     }
                 }
-                $sqlStatement = $pdo->prepare("INSERT INTO tbl_quotation_detail (item_description,item_id,item_name,item_quantity,item_unit_price,quotation_id) VALUES (?,?,?,?,?,?)");
-                $sqlStatement->execute([$desc_prod, $id_prod, $nom_prod, $cant_prod, $prec_prod, $cotizacion_id]);
+                $sqlStatement = $pdo->prepare("INSERT INTO tbl_quotation_detail (item_description,item_id,item_name,item_quantity,item_unit_price,item_discount_rate,item_discounted_total,project_code,cost_center_code,lot_number,serial_number,expiration_date,quotation_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                $sqlStatement->execute([$desc_prod, $id_prod, $nom_prod, $cant_prod, $prec_prod, $discount_prod, $import_prod, $project_code, $cost_center_code, $lot_number, $serial_number, $expiration_date ?: null, $cotizacion_id]);
             }
         }
     }

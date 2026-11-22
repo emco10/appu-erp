@@ -17,13 +17,13 @@ try {
     $pdo->prepare("INSERT INTO tbl_custom_field_definition(entity,field_key,label,field_type,required_status) VALUES ('sales_order',?,'Canal obligatorio QA','text',1)")->execute([$key]);
     $field = (int) $pdo->lastInsertId();
     try {
-        app_validate_sales_order_input($pdo, ['customer_id' => '', 'warehouse_id' => '', 'delivery_date' => '2026-02-30', 'currency' => 'BAD', 'details' => [['product_id' => 0, 'quantity' => '1.5', 'unit_price' => -1]]]);
+        app_validate_sales_order_input($pdo, ['customer_id' => '', 'warehouse_id' => '', 'delivery_date' => '2026-02-30', 'currency' => 'BAD', 'details' => [['product_id' => 0, 'quantity' => '1.5', 'unit_price' => -1, 'discount_rate' => 101, 'expiration_date' => '30/10/2026']]]);
         throw new RuntimeException('Se aceptó un documento inválido.');
     } catch (AppValidationException $expected) {
         $paths = array_column($expected->errors, 'path');
-        foreach (['customer_id','warehouse_id','delivery_date','currency','details[0].product_id','details[0].quantity','details[0].unit_price',"custom_field[$field]"] as $path) orderAssert(in_array($path, $paths), 'Falta error: ' . $path);
+        foreach (['customer_id','warehouse_id','delivery_date','currency','details[0].product_id','details[0].quantity','details[0].unit_price','details[0].discount_rate','details[0]',"custom_field[$field]"] as $path) orderAssert(in_array($path, $paths), 'Falta error: ' . $path);
     }
-    $input = ['customer_id' => $customer, 'warehouse_id' => $warehouse, 'delivery_date' => '2026-10-30', 'currency' => 'PEN', 'reference' => 'QA original', 'details' => [['product_id' => $product, 'quantity' => 3, 'unit_price' => '10.25']], 'custom_field' => [$field => 'Marketplace']];
+    $input = ['customer_id' => $customer, 'warehouse_id' => $warehouse, 'delivery_date' => '2026-10-30', 'currency' => 'PEN', 'reference' => 'QA original', 'details' => [['product_id' => $product, 'quantity' => 3, 'unit_price' => '10.25', 'discount_rate' => '10', 'project_code' => 'PR-ERP', 'cost_center_code' => 'CC-LIMA', 'lot_number' => 'L-2026', 'serial_number' => 'S-001', 'expiration_date' => '2030-12-31']], 'custom_field' => [$field => 'Marketplace']];
     // Supply any pre-existing required metadata as well.
     $defs = $pdo->query("SELECT * FROM tbl_custom_field_definition WHERE entity='sales_order' AND active_status=1 AND required_status=1")->fetchAll();
     foreach ($defs as $def) {
@@ -36,7 +36,8 @@ try {
     }
     $created = app_save_sales_order_document($pdo, $input, $user);
     $id = $created['order_id']; $before = app_sales_order_snapshot($pdo, $id, true);
-    orderAssert(abs((float) $before['order']['total_net'] - 36.29) < .001, 'Total autoritativo incorrecto.');
+    orderAssert(abs((float) $before['order']['total_net'] - 32.66) < .001, 'Total autoritativo con descuento de línea incorrecto.');
+    orderAssert((float)$before['details'][0]['item_discount_rate'] === 10.0 && $before['details'][0]['project_code'] === 'PR-ERP' && $before['details'][0]['cost_center_code'] === 'CC-LIMA' && $before['details'][0]['expiration_date'] === '2030-12-31', 'Las dimensiones opcionales de línea no se persistieron.');
     orderAssert($before['order']['status'] === 'Pendiente', 'La creación debe ser pendiente sin efectos.');
     orderAssert($before['custom_fields']->$field === 'Marketplace', 'El UDF no permanece al consultar.');
     $input['version'] = $before['version']; $input['reference'] = 'QA editada';

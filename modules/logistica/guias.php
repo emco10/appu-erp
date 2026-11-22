@@ -7,6 +7,7 @@ require_once '../../global/document-numbering.php';
 require_once '../../global/sales-delivery.php';
 require_once '../../global/sales-fulfillment.php';
 require_once '../inventory/stock.php';
+require_once '../../global/commercial-line-dimensions.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
@@ -83,7 +84,8 @@ $loadSource = static function (PDO $pdo, string $sourceType, int $sourceId, arra
                 detail.item_id AS product_id,
                 product.code AS item_code,
                 COALESCE(NULLIF(detail.item_description, ''), detail.item_name, product.name) AS description,
-                detail.item_quantity AS quantity
+                detail.item_quantity AS quantity,
+                detail.project_code,detail.cost_center_code,detail.lot_number,detail.serial_number,detail.expiration_date
          FROM {$sourceConfig['detail_table']} detail
          JOIN tbl_product product ON product.id = detail.item_id
          WHERE detail.{$sourceConfig['detail_key']} = ?
@@ -248,14 +250,20 @@ if (is_string($requestedItems)) $requestedItems=json_decode($requestedItems,true
 if (!is_array($requestedItems) || !array_is_list($requestedItems) || !$requestedItems) {
     $errors[]=app_field_error('items','REQUIRED','Seleccione al menos un producto y una cantidad.'); $requestedItems=[];
 }
-$requestedQuantities=[];
+$requestedQuantities=[];$requestedLineData=[];
 foreach ($requestedItems as $index=>$item) {
     $item=is_array($item)?$item:[];
     $line=filter_var($item['source_detail_id']??null,FILTER_VALIDATE_INT);
     $quantity=filter_var($item['quantity']??null,FILTER_VALIDATE_FLOAT);
     if (!$line || $line<1) $errors[]=app_field_error('items['.$index.'].source_detail_id','INVALID_REFERENCE','Seleccione una linea de origen valida.');
     if ($quantity===false || !is_finite((float)$quantity) || $quantity<=0 || $quantity>999999999) $errors[]=app_field_error('lines['.($line?:0).'].quantity','MIN','La cantidad debe ser mayor que cero y estar dentro del rango permitido.');
-    else $requestedQuantities[$line]=($requestedQuantities[$line]??0)+(float)$quantity;
+    else {
+        if(isset($requestedQuantities[$line]))$errors[]=app_field_error('lines['.$line.'].quantity','DUPLICATE','No repita una línea del documento de origen.');
+        else {
+            try{$requestedLineData[$line]=app_commercial_line_dimensions($item,'Línea de guía');}catch(InvalidArgumentException $dimensionError){$errors[]=app_field_error('lines['.$line.']','INVALID_VALUE',$dimensionError->getMessage());}
+            $requestedQuantities[$line]=(float)$quantity;
+        }
+    }
 }
 if ($errors) { app_api_error(new AppValidationException($errors),'No se pudo validar la entrega.'); exit; }
 
@@ -359,15 +367,16 @@ try {
     }
     $detailInsert = $pdo->prepare(
         'INSERT INTO tbl_remission_guide_detail
-            (remission_guide_id, source_detail_id, product_id, item_code, description, unit_code, quantity)
-         VALUES (?, ?, ?, ?, ?, ?, ?)'
+            (remission_guide_id, source_detail_id, product_id, item_code, description, unit_code, quantity,project_code,cost_center_code,lot_number,serial_number,expiration_date)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
     );
     foreach ($requestedQuantities as $sourceDetailId => $quantity) {
         $detail = $detailsBySourceId[$sourceDetailId];
         if ((int) $detail['product_id'] <= 0 || $quantity <= 0) {
             throw new DomainException('La guia contiene un producto invalido.');
         }
-        $detailInsert->execute([$guideId, $sourceDetailId, (int) $detail['product_id'], (string) $detail['item_code'], (string) $detail['description'], 'NIU', $quantity]);
+        $dimensions=$requestedLineData[$sourceDetailId]??app_commercial_line_dimensions($detail,'Línea de guía');
+        $detailInsert->execute([$guideId, $sourceDetailId, (int) $detail['product_id'], (string) $detail['item_code'], (string) $detail['description'], 'NIU', $quantity,$dimensions['project_code'],$dimensions['cost_center_code'],$dimensions['lot_number'],$dimensions['serial_number'],$dimensions['expiration_date']]);
     }
 
     $reserveSalesOrderId = $sourceType === 'invoice' && ($source['document_subtype'] ?? 'STANDARD') === 'RESERVE'

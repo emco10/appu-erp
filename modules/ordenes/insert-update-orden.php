@@ -5,6 +5,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     require_once '../../global/document-history.php';
     require_once '../../global/master-data-validation.php';
     require_once '../../global/document-numbering.php';
+require_once '../../global/commercial-line-dimensions.php';
     require_once '../../global/business-partner-details.php';
     require_once '../../global/purchase-request-validation.php';
     require_once '../../global/purchase-document-validation.php';
@@ -173,9 +174,10 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                     throw new InvalidArgumentException('El detalle de un artículo tiene cantidad, precio o descuento inválido. Revisa las líneas de la orden.');
                 }
 
-                $sqlStatement = $pdo->prepare("INSERT INTO tbl_order_detail(order_id,item_id,item_code,item_description,item_gloss,item_unit_value,item_unit_price,item_quantity,item_discount_rate,item_discounted_total) VALUES(?,?,?,?,?,?,?,?,?,?)");
+                $dimensions=app_commercial_line_dimensions(['project_code'=>$value[10]??'','cost_center_code'=>$value[11]??'','lot_number'=>$value[12]??'','serial_number'=>$value[13]??'','expiration_date'=>$value[14]??''],'Línea de orden');
+                $sqlStatement = $pdo->prepare("INSERT INTO tbl_order_detail(order_id,item_id,item_code,item_description,item_gloss,item_unit_value,item_unit_price,item_quantity,item_discount_rate,item_discounted_total,project_code,cost_center_code,lot_number,serial_number,expiration_date) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-                $sqlStatement->execute([$ord_id, $item_id, $item_code, $item_desc, $item_glosa, $item_unitval, $item_prec, $item_cant, $item_descpor, $item_descval]);
+                $sqlStatement->execute([$ord_id, $item_id, $item_code, $item_desc, $item_glosa, $item_unitval, $item_prec, $item_cant, $item_descpor, $item_descval, $dimensions['project_code'],$dimensions['cost_center_code'],$dimensions['lot_number'],$dimensions['serial_number'],$dimensions['expiration_date']]);
                 
             }
         }
