@@ -186,11 +186,11 @@ $(function () {
         $("<td class='text-right font-weight-bold'>").text(pending).appendTo($row);
         var $cell = $("<td>").appendTo($row);
         $("<input>").attr({ type: "number", min: 0, max: pending, step: parts[0] === 'sales_order' ? '1' : '0.001', "data-source-detail-id": detail.source_detail_id, 'data-field-path': 'lines[' + detail.source_detail_id + '].quantity', 'aria-label': 'Cantidad a entregar', class: "form-control form-control-sm js-guide-quantity" }).val(0).prop("disabled", pending <= 0).appendTo($cell);
-        $("<td>").append($("<input>").attr({maxlength:50,class:"form-control form-control-sm js-guide-project"}).val(detail.project_code||"")).appendTo($row);
-        $("<td>").append($("<input>").attr({maxlength:50,class:"form-control form-control-sm js-guide-cost-center"}).val(detail.cost_center_code||"")).appendTo($row);
-        $("<td>").append($("<input>").attr({maxlength:80,class:"form-control form-control-sm js-guide-lot"}).val(detail.lot_number||"")).appendTo($row);
-        $("<td>").append($("<input>").attr({maxlength:100,class:"form-control form-control-sm js-guide-serial"}).val(detail.serial_number||"")).appendTo($row);
-        $("<td>").append($("<input>").attr({type:"date",class:"form-control form-control-sm js-guide-expiration"}).val(detail.expiration_date||"")).appendTo($row);
+        $("<input>").attr({maxlength:50,class:"form-control form-control-sm js-guide-project"}).val(detail.project_code||"").appendTo($("<td>").appendTo($row));
+        $("<input>").attr({maxlength:50,class:"form-control form-control-sm js-guide-cost-center"}).val(detail.cost_center_code||"").appendTo($("<td>").appendTo($row));
+        $("<input>").attr({maxlength:80,class:"form-control form-control-sm js-guide-lot"}).val(detail.lot_number||"").appendTo($("<td>").appendTo($row));
+        $("<input>").attr({maxlength:100,class:"form-control form-control-sm js-guide-serial"}).val(detail.serial_number||"").appendTo($("<td>").appendTo($row));
+        $("<input>").attr({type:"date",class:"form-control form-control-sm js-guide-expiration"}).val(detail.expiration_date||"").appendTo($("<td>").appendTo($row));
       });
       if (!(response.details || []).length) $body.html('<tr><td colspan="11" class="text-center text-muted">No hay productos disponibles.</td></tr>');
     }).fail(function (xhr) {

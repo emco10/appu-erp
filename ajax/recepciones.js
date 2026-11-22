@@ -17,6 +17,11 @@ $(function () {
       maximumFractionDigits: 2,
     });
   }
+  function inputCell($input) {
+    var cell = document.createElement("td");
+    cell.appendChild($input[0]);
+    return cell;
+  }
   $(
     '<br><strong>Valor de inventario: </strong><span id="goods-receipt-base-total">0.00</span>',
   ).appendTo($("#goods-receipt-total").parent());
@@ -142,12 +147,14 @@ $(function () {
   function renderHistory(rows) {
     var $b = $("#goods-receipt-history tbody").empty();
     (rows || []).forEach(function (x) {
-      var action =
-        x.status === "Registrado"
-          ? '<button type="button" class="btn btn-xs btn-outline-danger js-cancel-receipt" data-id="' +
-            x.id +
-            '" title="Anular"><i class="fas fa-ban"></i></button>'
-          : "";
+      var $actionCell = $('<td class="text-right">');
+      if (x.status === "Registrado") {
+        var $button = $('<button type="button" class="btn btn-xs btn-outline-danger js-cancel-receipt" title="Anular">').data("id", Number(x.id));
+        var icon = document.createElement("i");
+        icon.className = "fas fa-ban";
+        $button[0].appendChild(icon);
+        $button.appendTo($actionCell);
+      }
       $("<tr>")
         .append(
           $("<td>").text(x.number),
@@ -157,7 +164,7 @@ $(function () {
           $("<td>").html(
             window.appuStatusBadge ? appuStatusBadge(x.status) : x.status,
           ),
-          $('<td class="text-right">').html(action),
+          $actionCell,
         )
         .appendTo($b);
     });
@@ -210,26 +217,26 @@ $(function () {
               ),
               $('<td class="text-right">').text(pending.toFixed(3)),
               $('<td class="text-right">').text(money(x.item_unit_price)),
-              $("<td>").append(
+              inputCell(
                 $(
                   '<input type="number" min="0" step="1" class="form-control form-control-sm receipt-quantity">',
                 )
                   .attr("max", pending)
                   .val(pending),
               ),
-              $("<td>").append(
+              inputCell(
                 $('<input maxlength="50" class="form-control form-control-sm receipt-project">').val(x.project_code || ""),
               ),
-              $("<td>").append(
+              inputCell(
                 $('<input maxlength="50" class="form-control form-control-sm receipt-cost-center">').val(x.cost_center_code || ""),
               ),
-              $("<td>").append(
+              inputCell(
                 $('<input maxlength="80" class="form-control form-control-sm receipt-lot">').val(x.lot_number || ""),
               ),
-              $("<td>").append(
+              inputCell(
                 $('<input maxlength="100" class="form-control form-control-sm receipt-serial">').val(x.serial_number || ""),
               ),
-              $("<td>").append(
+              inputCell(
                 $('<input type="date" class="form-control form-control-sm receipt-expiration">').val(x.expiration_date || ""),
               ),
             )

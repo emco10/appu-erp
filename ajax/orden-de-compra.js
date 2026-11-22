@@ -603,8 +603,9 @@ $("#btn-select-orden").click(function() {
         $('select[name="orden_proveedor"]').val(data_json[0]["PROVID"]);
         $('select[name="orden_proveedor"]').trigger("change");
         cargarDireccionesProveedor(data_json[0]["PROVID"], data_json[0]["PROVIDER_ADDRESS_ID"], data_json[0]["PROVIDER_ADDRESS"]);
-        var requestId=data_json[0]["REQUESTID"] || "", $requestSelect=$('select[name="orden_solicitud_compra"]');
-        if(requestId && !$requestSelect.find('option[value="'+requestId+'"]').length)$requestSelect.append(new Option('Solicitud vinculada · '+requestId,requestId));
+        var requestId=Number(data_json[0]["REQUESTID"]) || "", $requestSelect=$('select[name="orden_solicitud_compra"]');
+        var requestExists=Array.from($requestSelect[0].options).some(function(option){return option.value===String(requestId);});
+        if(requestId&&!requestExists)$requestSelect[0].add(new Option('Solicitud vinculada · '+requestId,String(requestId)));
         $requestSelect.val(requestId).trigger("change");
 
         $('input[name="orden_provruc"]').val();
