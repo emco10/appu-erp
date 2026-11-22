@@ -357,6 +357,13 @@
 	                                    <input type="hidden" name="orden_nameprod">
 	                                    <input type="hidden" name="orden_stockprod">
 	                                </div>
+	                                <div class="row">
+	                                    <div class="col-md-2"><div class="form-group"><label>Proyecto</label><input name="orden_proyecto" maxlength="50" class="form-control" placeholder="Opcional"></div></div>
+	                                    <div class="col-md-2"><div class="form-group"><label>Centro de costo</label><input name="orden_centro_costo" maxlength="50" class="form-control" placeholder="Opcional"></div></div>
+	                                    <div class="col-md-2"><div class="form-group"><label>Lote</label><input name="orden_lote" maxlength="80" class="form-control" placeholder="Opcional"></div></div>
+	                                    <div class="col-md-2"><div class="form-group"><label>Serie</label><input name="orden_serie_articulo" maxlength="100" class="form-control" placeholder="Opcional"></div></div>
+	                                    <div class="col-md-2"><div class="form-group"><label>Vencimiento</label><input type="date" name="orden_vencimiento" class="form-control"></div></div>
+	                                </div>
 	                                <div class="mt-3">
 	                                    <button id="btn-add-prodtporden" class="btn btn-primary btn-block"><i class="fa fa-plus fa-1x"></i> Añadir Artículo</button>
 	                                </div>
@@ -387,6 +394,11 @@
 		                                        <th>% Dscto.</th>
 		                                        <th>Valor Dscto.</th>
                                             <th>ID artículo</th>
+		                                        <th>Proyecto</th>
+		                                        <th>Centro costo</th>
+		                                        <th>Lote</th>
+		                                        <th>Serie</th>
+		                                        <th>Vencimiento</th>
 		                                    </tr>
 		                                </thead>
 		                                <tbody></tbody>

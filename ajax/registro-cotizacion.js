@@ -301,20 +301,27 @@ $("#btn-add-prodtocotiz").click(function() {
   descripcion = $('input[name="cotizacion_proddesc"]').val();
   precio = parseFloat($('input[name="cotizacion_prodprecio"]').val());
   cantidad = parseInt($('input[name="cotizacion_prodcant"]').val());
-  importe = precio * cantidad;
+  var descuentoLinea = Math.min(100, Math.max(0, Number($('input[name="cotizacion_proddescuento"]').val() || 0)));
+  var proyecto = String($('input[name="cotizacion_prodproyecto"]').val() || '').trim();
+  var centroCosto = String($('input[name="cotizacion_prodcentrocosto"]').val() || '').trim();
+  var lote = String($('input[name="cotizacion_prodlote"]').val() || '').trim();
+  var serie = String($('input[name="cotizacion_prodserie"]').val() || '').trim();
+  var vencimiento = String($('input[name="cotizacion_prodvencimiento"]').val() || '');
+  importe = Math.round(precio * cantidad * (1 - descuentoLinea / 100) * 100) / 100;
   var importe_actual = importe;
 
   if (idprod != "" && cantidad != "" && cantidad > 0) {
     $("#btn-add-prodtocotiz").prop("disabled", true);
     tbl_prodcotiz
       .rows(function(idx, data, node) {
-        old_importe = data[5];
+        old_importe = data[6];
         old_cantidad = parseInt(data[4]);
-        if (data[1] === producto) {
+        var sameLine = data[1] === producto && Number(data[5] || 0) === descuentoLinea && String(data[7] || '') === proyecto && String(data[8] || '') === centroCosto && String(data[9] || '') === lote && String(data[10] || '') === serie && String(data[11] || '') === vencimiento;
+        if (sameLine) {
           importe += old_importe;
           cantidad += old_cantidad;
         }
-        return data[1] === producto;
+        return sameLine;
       })
       .remove()
       .draw();
@@ -327,7 +334,13 @@ $("#btn-add-prodtocotiz").click(function() {
           2: descripcion,
           3: precio.toFixed(2),
           4: cantidad,
-          5: importe.toFixed(2)
+          5: descuentoLinea.toFixed(2),
+          6: importe.toFixed(2),
+          7: proyecto,
+          8: centroCosto,
+          9: lote,
+          10: serie,
+          11: vencimiento
         }
       ])
       .draw();
@@ -488,7 +501,13 @@ $("#btn-select-cotizacion").click(function() {
                     2: detacotiz_json[i]["DESCRIP"],
                     3: precio,
                     4: detacotiz_json[i]["CANTIDAD"],
-                    5: importe
+                    5: Number(detacotiz_json[i]["DESCUENTO_LINEA"] || 0).toFixed(2),
+                    6: importe,
+                    7: detacotiz_json[i]["PROYECTO"] || '',
+                    8: detacotiz_json[i]["CENTRO_COSTO"] || '',
+                    9: detacotiz_json[i]["LOTE"] || '',
+                    10: detacotiz_json[i]["SERIE"] || '',
+                    11: detacotiz_json[i]["VENCIMIENTO"] || ''
                   }
                 ])
                 .draw();
@@ -509,7 +528,7 @@ $("#btn-select-cotizacion").click(function() {
 $("#table-productscotiz").on("dblclick", "tr", function() {
   var data_row = tbl_prodcotiz.row(this).data();
   var row_id = data_row[0];
-  var importe_prod = data_row[5];
+  var importe_prod = data_row[6];
 
   opergrab =
     $('input[name="cotizacion_opergrab"]').val() != ""

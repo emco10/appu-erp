@@ -116,7 +116,7 @@ $(function () {
     appuClearValidation($guideForm); guideState.set('CREATE');
     $("#guide-source").val("").trigger("change");
     $("#remission-guide-form [name='source_type'], #remission-guide-form [name='source_id']").val("");
-    $("#guide-items tbody").html('<tr><td colspan="6" class="text-center text-muted">Selecciona un documento de origen.</td></tr>');
+    $("#guide-items tbody").html('<tr><td colspan="11" class="text-center text-muted">Selecciona un documento de origen.</td></tr>');
     $("#remission-guide-modal").modal("show");
     appuMarkSaved();
   }
@@ -131,13 +131,13 @@ $(function () {
     var popup = window.open("", "_blank", "width=950,height=750");
     if (!popup) { toastr.error("Permite ventanas emergentes para imprimir la guia."); return; }
     var rows = (details || []).map(function (detail) {
-      return "<tr><td>" + escapeHtml(detail.item_code) + "</td><td>" + escapeHtml(detail.description) + "</td><td>" + escapeHtml(detail.unit_code) + "</td><td>" + escapeHtml(detail.quantity) + "</td></tr>";
+      return "<tr><td>" + escapeHtml(detail.item_code) + "</td><td>" + escapeHtml(detail.description) + "</td><td>" + escapeHtml(detail.unit_code) + "</td><td>" + escapeHtml(detail.quantity) + "</td><td>" + escapeHtml(detail.project_code||'-') + "</td><td>" + escapeHtml(detail.cost_center_code||'-') + "</td><td>" + escapeHtml(detail.lot_number||'-') + "</td><td>" + escapeHtml(detail.serial_number||'-') + "</td><td>" + escapeHtml(detail.expiration_date||'-') + "</td></tr>";
     }).join("");
     var html = "<!doctype html><html lang='es'><head><meta charset='utf-8'><title>" + escapeHtml(guide.number) + "</title><style>body{font:13px Arial;margin:35px;color:#222}h1{font-size:22px}h2{font-size:15px;border-bottom:1px solid #777;padding-bottom:5px;margin-top:24px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.box{border:1px solid #aaa;padding:10px}table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid #aaa;padding:7px;text-align:left}th{background:#eee}.notice{background:#fff3cd;border:1px solid #e0b84c;padding:10px;font-weight:bold}</style></head><body>";
     html += "<h1>Guia de Remision " + escapeHtml(guide.number) + "</h1><div class='notice'>Documento operativo. No es una GRE electronica ni se envia a SUNAT.</div>";
     html += "<div class='grid'><div class='box'><b>Origen</b><br>" + escapeHtml(guide.origin_address) + "<br>Ubigeo: " + escapeHtml(guide.origin_ubigeo) + "</div><div class='box'><b>Destino</b><br>" + escapeHtml(guide.destination_address) + "<br>Ubigeo: " + escapeHtml(guide.destination_ubigeo) + "</div></div>";
     html += "<h2>Datos del traslado</h2><div class='grid'><div>Motivo: " + escapeHtml(guide.transfer_reason) + "</div><div>Modalidad: " + escapeHtml(guide.transport_mode) + "</div><div>Almacén: " + escapeHtml(guide.warehouse_code || guide.warehouse_name || "-") + "</div><div>Fecha: " + escapeHtml(guide.transfer_date) + "</div><div>Estado: " + escapeHtml(guide.status) + "</div><div>Remitente: " + escapeHtml(guide.sender_name) + "</div><div>Destinatario: " + escapeHtml(guide.recipient_name) + "</div><div>Vehiculo: " + escapeHtml(guide.vehicle_plate || "-") + "</div><div>Conductor: " + escapeHtml(guide.driver_name || "-") + "</div></div>";
-    html += "<h2>Bienes trasladados</h2><table><thead><tr><th>Codigo</th><th>Descripcion</th><th>Unidad</th><th>Cantidad</th></tr></thead><tbody>" + rows + "</tbody></table><p>Origen del documento: " + escapeHtml(guide.source_type) + " #" + escapeHtml(guide.source_id) + "</p><script>window.onload=function(){window.print()}<\/script></body></html>";
+    html += "<h2>Bienes trasladados</h2><table><thead><tr><th>Código</th><th>Descripción</th><th>Unidad</th><th>Cantidad</th><th>Proyecto</th><th>Centro costo</th><th>Lote</th><th>Serie</th><th>Vencimiento</th></tr></thead><tbody>" + rows + "</tbody></table><p>Origen del documento: " + escapeHtml(guide.source_type) + " #" + escapeHtml(guide.source_id) + "</p><script>window.onload=function(){window.print()}<\/script></body></html>";
     popup.document.open(); popup.document.write(html); popup.document.close();
   }
 
@@ -148,7 +148,7 @@ $(function () {
       if (request !== guideViewEpoch) return;
       guidePreview = data; var guide = data.guide, $header = $('#guide-preview-header').empty();
       [['Número', guide.number], ['Documento origen', guide.source_number], ['Estado', guide.status], ['Fecha de traslado', guide.transfer_date], ['Destinatario', guide.recipient_name], ['Destino', guide.destination_address], ['Inventario', Number(guide.inventory_posted) ? (guide.status === 'Anulada' ? 'Salida física revertida' : 'Salida física registrada') : 'Sin otra salida física']].forEach(function (entry) { $('<p class="mb-1">').append($('<strong>').text(entry[0] + ': ')).append(document.createTextNode(entry[1] || '')).appendTo($header); });
-      (data.details || []).forEach(function (line) { var $row = $('<tr>').appendTo($('#guide-preview-lines')); [line.item_code,line.description,line.unit_code,line.quantity].forEach(function (value) { $('<td>').text(value).appendTo($row); }); });
+      (data.details || []).forEach(function (line) { var $row = $('<tr>').appendTo($('#guide-preview-lines')); [line.item_code,line.description,line.unit_code,line.quantity,line.project_code||'-',line.cost_center_code||'-',line.lot_number||'-',line.serial_number||'-',line.expiration_date||'-'].forEach(function (value) { $('<td>').text(value).appendTo($row); }); });
       $('#guide-preview-print').prop('disabled', false);
     }).fail(function (xhr) { if (request === guideViewEpoch) $('#guide-preview-header').text(guideError(xhr, 'No se pudo consultar la entrega.')); });
   }
@@ -186,11 +186,16 @@ $(function () {
         $("<td class='text-right font-weight-bold'>").text(pending).appendTo($row);
         var $cell = $("<td>").appendTo($row);
         $("<input>").attr({ type: "number", min: 0, max: pending, step: parts[0] === 'sales_order' ? '1' : '0.001', "data-source-detail-id": detail.source_detail_id, 'data-field-path': 'lines[' + detail.source_detail_id + '].quantity', 'aria-label': 'Cantidad a entregar', class: "form-control form-control-sm js-guide-quantity" }).val(0).prop("disabled", pending <= 0).appendTo($cell);
+        $("<input>").attr({maxlength:50,class:"form-control form-control-sm js-guide-project"}).val(detail.project_code||"").appendTo($("<td>").appendTo($row));
+        $("<input>").attr({maxlength:50,class:"form-control form-control-sm js-guide-cost-center"}).val(detail.cost_center_code||"").appendTo($("<td>").appendTo($row));
+        $("<input>").attr({maxlength:80,class:"form-control form-control-sm js-guide-lot"}).val(detail.lot_number||"").appendTo($("<td>").appendTo($row));
+        $("<input>").attr({maxlength:100,class:"form-control form-control-sm js-guide-serial"}).val(detail.serial_number||"").appendTo($("<td>").appendTo($row));
+        $("<input>").attr({type:"date",class:"form-control form-control-sm js-guide-expiration"}).val(detail.expiration_date||"").appendTo($("<td>").appendTo($row));
       });
-      if (!(response.details || []).length) $body.html('<tr><td colspan="6" class="text-center text-muted">No hay productos disponibles.</td></tr>');
+      if (!(response.details || []).length) $body.html('<tr><td colspan="11" class="text-center text-muted">No hay productos disponibles.</td></tr>');
     }).fail(function (xhr) {
       if (epoch !== guideEpoch || sourceEpoch !== guideSourceEpoch) return;
-      $("#guide-items tbody").html('<tr><td colspan="6" class="text-center text-danger">No se pudo cargar el detalle del documento.</td></tr>');
+      $("#guide-items tbody").html('<tr><td colspan="11" class="text-center text-danger">No se pudo cargar el detalle del documento.</td></tr>');
       appuShowValidation($guideForm, { message: guideError(xhr, 'No se pudo cargar el origen. Selecciona otro documento o vuelve a intentarlo.') });
     }).always(function () { if (epoch === guideEpoch && sourceEpoch === guideSourceEpoch) { guideLoading = false; $guideForm.find('[type=submit]').prop('disabled', false); } });
   });
@@ -201,7 +206,7 @@ $(function () {
     var items = [];
     $(".js-guide-quantity:not(:disabled)").each(function () {
       var quantity = Number($(this).val() || 0);
-      if (quantity !== 0 || String(this.value).trim() === '') items.push({ source_detail_id: Number($(this).data("source-detail-id")), quantity: this.value });
+      if (quantity !== 0 || String(this.value).trim() === '') { var $row=$(this).closest('tr'); items.push({ source_detail_id: Number($(this).data("source-detail-id")), quantity: this.value, project_code:$row.find('.js-guide-project').val(), cost_center_code:$row.find('.js-guide-cost-center').val(), lot_number:$row.find('.js-guide-lot').val(), serial_number:$row.find('.js-guide-serial').val(), expiration_date:$row.find('.js-guide-expiration').val() }); }
     });
     var data = $(this).serializeArray();
     data.push({ name: "items", value: JSON.stringify(items) });

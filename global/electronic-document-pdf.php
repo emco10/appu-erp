@@ -2,6 +2,12 @@
 require_once __DIR__.'/../plugins/fpdf/fpdf.php';
 require_once __DIR__.'/../plugins/phpqrcode/phpqrcode.php';
 
+function appu_electronic_line_total(array $line):float
+{
+ $stored=$line['item_discounted_total']??null;
+ return $stored!==null&&$stored!==''?(float)$stored:round((float)($line['item_quantity']??0)*(float)($line['item_unit_price']??0)*(1-(float)($line['item_discount_rate']??0)/100),2);
+}
+
 final class AppuElectronicDocumentPdf extends FPDF {
  private array $company; private array $doc; private string $label; private string $logo; private array $widths=[12,22,20,77,28,29];
  function __construct(array $company,array $doc,string $label,string $logo){parent::__construct('P','mm','A4');$this->company=$company;$this->doc=$doc;$this->label=$label;$this->logo=$logo;$this->SetMargins(11,12,11);$this->SetAutoPageBreak(true,18);}
@@ -27,7 +33,7 @@ final class AppuElectronicDocumentPdf extends FPDF {
  private function row(array $line):void{
   $description=trim((string)(($line['item_description']??'')?:($line['item_name']??'')));$height=max(7,$this->wrappedLines($this->widths[3],$description)*4.2);
   if($this->GetY()+$height>248){$this->AddPage();$this->tableHeader();}
-  $x=$this->GetX();$y=$this->GetY();$values=[number_format((float)$line['item_quantity'],2),$line['sunat_unit_code']?:'NIU',$line['item_code'],'',number_format((float)$line['item_unit_price'],2),number_format((float)$line['item_quantity']*(float)$line['item_unit_price'],2)];
+  $x=$this->GetX();$y=$this->GetY();$values=[number_format((float)$line['item_quantity'],2),$line['sunat_unit_code']?:'NIU',$line['item_code'],'',number_format((float)$line['item_unit_price'],2),number_format(appu_electronic_line_total($line),2)];
   foreach($values as $i=>$value){
    $cellX=$x+array_sum(array_slice($this->widths,0,$i));$this->Rect($cellX,$y,$this->widths[$i],$height);$this->SetXY($cellX,$y);
    if($i===3)$this->MultiCell($this->widths[$i],4.2,$this->pdfText($description),0,'L');
@@ -64,5 +70,5 @@ final class AppuElectronicDocumentPdf extends FPDF {
 function appu_load_electronic_document(PDO $pdo,string $type,int $id):array{
  $defs=['invoice'=>['tbl_invoice','tbl_invoice_detail','invoice_id','FACTURA'],'receipt'=>['tbl_receipt','tbl_receipt_detail','receipt_id','BOLETA DE VENTA'],'credit-note'=>['tbl_credit_note','tbl_credit_note_detail','credit_note_id','NOTA DE CREDITO']];if(!isset($defs[$type])||$id<1)throw new InvalidArgumentException('El documento solicitado no es válido.');[$table,$detail,$foreign,$label]=$defs[$type];
  $q=$pdo->prepare("SELECT * FROM $table WHERE id=?");$q->execute([$id]);$document=$q->fetch();if(!$document)throw new RuntimeException('No se encontró el documento.');$q=$pdo->prepare("SELECT d.*,COALESCE(p.sunat_unit_code,'NIU') sunat_unit_code,COALESCE(p.tax_affectation_code,'10') tax_affectation_code FROM $detail d LEFT JOIN tbl_product p ON p.id=d.item_id WHERE d.$foreign=? ORDER BY d.id");$q->execute([$id]);$lines=$q->fetchAll();$company=$pdo->query('SELECT * FROM tbl_company_settings WHERE id=1')->fetch()?:[];$sunat=null;try{$q=$pdo->prepare('SELECT status,sunat_code,sunat_description,digest_value FROM tbl_sunat_document WHERE source_type=? AND source_id=?');$q->execute([$type,$id]);$sunat=$q->fetch()?:null;}catch(Throwable $ignored){}
- $taxes=['Op. gravadas'=>0.0,'Op. exoneradas'=>0.0,'Op. inafectas'=>0.0];foreach($lines as $line){$value=$line['item_quantity']*$line['item_unit_price'];$code=(string)$line['tax_affectation_code'];$taxes[$code==='10'?'Op. gravadas':($code==='20'?'Op. exoneradas':'Op. inafectas')]+=$value;}$taxes['IGV']=(float)$document['total_tax'];if((float)$document['discount_value'])$taxes['Descuento']=(float)$document['discount_value'];$taxes=array_filter($taxes,fn($value)=>abs($value)>.0001);$usd=in_array(strtoupper($document['currency']),['ME','USD'],true);$document['currency_label']=$usd?'DÓLARES AMERICANOS':'SOLES';$document['currency_symbol']=$usd?'US$':'S/';$days=(int)$document['payment_days'];$document['payment_label']=$days?'Crédito a '.$days.' días':'Contado';return compact('company','document','lines','sunat','taxes','label');
+ $taxes=['Op. gravadas'=>0.0,'Op. exoneradas'=>0.0,'Op. inafectas'=>0.0];foreach($lines as $line){$value=appu_electronic_line_total($line);$code=(string)$line['tax_affectation_code'];$taxes[$code==='10'?'Op. gravadas':($code==='20'?'Op. exoneradas':'Op. inafectas')]+=$value;}$taxes['IGV']=(float)$document['total_tax'];if((float)$document['discount_value'])$taxes['Descuento']=(float)$document['discount_value'];$taxes=array_filter($taxes,fn($value)=>abs($value)>.0001);$usd=in_array(strtoupper($document['currency']),['ME','USD'],true);$document['currency_label']=$usd?'DÓLARES AMERICANOS':'SOLES';$document['currency_symbol']=$usd?'US$':'S/';$days=(int)$document['payment_days'];$document['payment_label']=$days?'Crédito a '.$days.' días':'Contado';return compact('company','document','lines','sunat','taxes','label');
 }

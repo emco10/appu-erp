@@ -3,7 +3,8 @@ require '../../global/connection.php';
 $ID_ORDEN = $_POST["IDORDEN"];
 
 $sqlStatement = $pdo->prepare("SELECT item_id AS ITEM_ID, item_code AS CODE, item_description AS DESCRIPTION, item_gloss AS GLOSS, item_unit_value AS UNIT_VALUE, item_unit_price AS UNIT_PRICE, item_quantity AS QUANTITY, item_discount_rate AS DISCOUNT_RATE, 
-    item_discounted_total AS DISCOUNTED_TOTAL
+    item_discounted_total AS DISCOUNTED_TOTAL, project_code AS PROJECT_CODE, cost_center_code AS COST_CENTER_CODE,
+    lot_number AS LOT_NUMBER, serial_number AS SERIAL_NUMBER, expiration_date AS EXPIRATION_DATE
     FROM tbl_order_detail
     WHERE order_id =:ORDID");
 
@@ -26,6 +27,11 @@ if ($rowsNumber > 0) {
         $ROWDATA['QUANTITY'] = $ROW["QUANTITY"];
         $ROWDATA['DISCOUNT_RATE'] = $ROW["DISCOUNT_RATE"];
         $ROWDATA['DISCOUNTED_TOTAL'] = $ROW["DISCOUNTED_TOTAL"];
+        $ROWDATA['PROJECT_CODE'] = $ROW["PROJECT_CODE"];
+        $ROWDATA['COST_CENTER_CODE'] = $ROW["COST_CENTER_CODE"];
+        $ROWDATA['LOT_NUMBER'] = $ROW["LOT_NUMBER"];
+        $ROWDATA['SERIAL_NUMBER'] = $ROW["SERIAL_NUMBER"];
+        $ROWDATA['EXPIRATION_DATE'] = $ROW["EXPIRATION_DATE"];
         array_push($json_data, $ROWDATA);
     }
 }

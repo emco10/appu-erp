@@ -50,7 +50,6 @@ if ($FILTER_CLI == "ALL") {
             $ROWDATA['CELCON_1'] = $ROW["contact1_phone"];
             $ROWDATA['NOMCON_2'] = $ROW["contact2_name"];
             $ROWDATA['CELCON_2'] = $ROW["contact2_phone"];
-            $ROWDATA['PAGCOM'] = $ROW["commission"];
             $ROWDATA['ESTADO'] = (int) $ROW['active_status'] === 1 ? 'Activo' : 'Inactivo';
             $ROWDATA['ACTIVE_STATUS'] = (int) $ROW['active_status'];
             $ROWDATA['DEFAULT_CURRENCY'] = $ROW['default_currency'];

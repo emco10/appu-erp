@@ -100,11 +100,11 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         $accountStatement->execute([$f_referenced_doc_type===2?'receipt':'invoice',$f_selectcotizid]);$paidAmount=(float)($accountStatement->fetchColumn()?:0);
         if ($alreadyCredited + (float)$f_totalneto > (float)$sourceDocument['total_net'] - $paidAmount + 0.01) throw new DomainException('La nota supera el saldo no cobrado; primero reversa los cobros relacionados.');
 
-        $sourceLines=$pdo->prepare("SELECT item_id,SUM(item_quantity) quantity,MAX(item_unit_price) unit_price FROM {$sourceDetailTable} WHERE {$sourceDetailKey}=? GROUP BY item_id");
-        $sourceLines->execute([$f_selectcotizid]); $available=[]; foreach($sourceLines->fetchAll() as $line){$available[(int)$line['item_id']]=['quantity'=>(float)$line['quantity'],'price'=>(float)$line['unit_price']];}
+        $sourceLines=$pdo->prepare("SELECT item_id,item_quantity quantity,item_unit_price unit_price,item_discount_rate,project_code,cost_center_code,lot_number,serial_number,expiration_date FROM {$sourceDetailTable} WHERE {$sourceDetailKey}=? ORDER BY id");
+        $sourceLines->execute([$f_selectcotizid]); $available=[]; foreach($sourceLines->fetchAll() as $line){$productId=(int)$line['item_id'];if(isset($available[$productId]))throw new DomainException('El documento de origen contiene líneas duplicadas que deben regularizarse antes de emitir la nota.');$available[$productId]=['quantity'=>(float)$line['quantity'],'price'=>(float)$line['unit_price'],'discount'=>(float)$line['item_discount_rate'],'project'=>(string)$line['project_code'],'cost_center'=>(string)$line['cost_center_code'],'lot'=>(string)$line['lot_number'],'serial'=>(string)$line['serial_number'],'expiration'=>(string)($line['expiration_date']??'')];}
         $creditedLines=$pdo->prepare('SELECT detail.item_id,SUM(detail.item_quantity) quantity FROM tbl_credit_note_detail detail INNER JOIN tbl_credit_note note ON note.id=detail.credit_note_id WHERE note.referenced_doc_id=? AND note.referenced_doc_type_id=? AND note.status NOT IN (2,4) GROUP BY detail.item_id');
         $creditedLines->execute([$f_selectcotizid,$f_referenced_doc_type]); foreach($creditedLines->fetchAll() as $line){if(isset($available[(int)$line['item_id']]))$available[(int)$line['item_id']]['quantity']-=(float)$line['quantity'];}
-        foreach($f_lst_prods as $product){$productId=(int)($product[0]??0);$price=(float)($product[4]??-1);$quantity=(float)($product[5]??0);if(!isset($available[$productId])||$quantity<=0||$quantity>$available[$productId]['quantity']+0.000001||abs($price-$available[$productId]['price'])>0.01)throw new DomainException('Los articulos, cantidades o precios superan lo disponible en el documento de origen.');$available[$productId]['quantity']-=$quantity;}
+        foreach($f_lst_prods as $product){$productId=(int)($product[0]??0);$price=(float)($product[4]??-1);$quantity=(float)($product[5]??0);$source=$available[$productId]??null;if(!$source||$quantity<=0||$quantity>$source['quantity']+0.000001||abs($price-$source['price'])>0.01||abs((float)($product[8]??0)-$source['discount'])>.0001||(string)($product[9]??'')!==$source['project']||(string)($product[10]??'')!==$source['cost_center']||(string)($product[11]??'')!==$source['lot']||(string)($product[12]??'')!==$source['serial']||(string)($product[13]??'')!==$source['expiration'])throw new DomainException('Los artículos, cantidades, precios, descuentos o dimensiones no coinciden con el documento de origen.');$available[$productId]['quantity']-=$quantity;}
         $warehouseStatement = $pdo->prepare('SELECT id FROM tbl_warehouse WHERE id = ? AND active_status = 1');
         $warehouseStatement->execute([$f_warehouse_id]);
         if (!$warehouseStatement->fetchColumn()) {
@@ -114,7 +114,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         $sqlStatement->execute([$f_series,$f_faccod, $f_estado, $f_selectcotizid, $f_referenced_doc_type, $f_cliid, $f_warehouse_id, $f_cli_ruc, $f_clinom, $f_clidirecc, $f_clirefer, $f_diaspag, $f_fecha, $f_clifecentreg, $f_currency, $f_reason, $f_porcdesc, $f_valdesc, $f_subtotal, $f_taxigv, $f_totalneto, $f_seller_id, $f_user_id, $f_fecreg, $f_fecreg]);
         $id_facturacion = (int) $pdo->lastInsertId();
 
-        $insertDetail = $pdo->prepare('INSERT INTO tbl_credit_note_detail (item_description,item_id,item_code,item_name,item_quantity,item_unit_price,credit_note_id) VALUES (?,?,?,?,?,?,?)');
+        $insertDetail = $pdo->prepare('INSERT INTO tbl_credit_note_detail (item_description,item_id,item_code,item_name,item_quantity,item_unit_price,item_discount_rate,item_discounted_total,project_code,cost_center_code,lot_number,serial_number,expiration_date,credit_note_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
         $returnsStock = (int) $f_estado !== 2 && warehouse_credit_note_returns_stock($f_reason);
         $documentReference = $f_series . '-' . $f_faccod;
 
@@ -130,7 +130,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                 throw new InvalidArgumentException('La nota de crédito contiene un producto inválido.');
             }
 
-            $insertDetail->execute([$desc_prod, $id_prod, $cod_prod, $nom_prod, $cant_prod, $prec_prod, $id_facturacion]);
+            $insertDetail->execute([$desc_prod, $id_prod, $cod_prod, $nom_prod, $cant_prod, $prec_prod, (float)($product[8]??0), (float)($product[6]??0), (string)($product[9]??''), (string)($product[10]??''), (string)($product[11]??''), (string)($product[12]??''), ($product[13]??'') ?: null, $id_facturacion]);
 
             if ($returnsStock) {
                 warehouse_apply_stock_delta(

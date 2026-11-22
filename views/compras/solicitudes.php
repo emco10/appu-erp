@@ -25,11 +25,17 @@
                 <div class="form-group col-md-3"><label>Cantidad</label><input id="purchase-request-quantity" type="number" min="1" step="1" class="form-control" value="1"></div>
                 <div class="form-group col-md-8"><label>Descripción</label><input id="purchase-request-product-description" class="form-control" readonly></div>
                 <div class="form-group col-md-2"><label>Precio estimado</label><input id="purchase-request-price" type="number" min="0" step="0.01" class="form-control" value="0"></div>
+                <div class="form-group col-md-2"><label>Descuento %</label><input id="purchase-request-discount" type="number" min="0" max="100" step="0.01" class="form-control" value="0"></div>
+                <div class="form-group col-md-2"><label>Proyecto</label><input id="purchase-request-project" maxlength="50" class="form-control" placeholder="Opcional"></div>
+                <div class="form-group col-md-2"><label>Centro de costo</label><input id="purchase-request-cost-center" maxlength="50" class="form-control" placeholder="Opcional"></div>
+                <div class="form-group col-md-2"><label>Lote</label><input id="purchase-request-lot" maxlength="80" class="form-control" placeholder="Opcional"></div>
+                <div class="form-group col-md-2"><label>Serie</label><input id="purchase-request-serial" maxlength="100" class="form-control" placeholder="Opcional"></div>
+                <div class="form-group col-md-2"><label>Vencimiento</label><input id="purchase-request-expiration" type="date" class="form-control"></div>
                 <div class="form-group col-md-2 d-flex align-items-end"><button type="button" id="purchase-request-add" class="btn btn-primary btn-block" disabled><i class="fas fa-plus mr-1"></i>Agregar artículo</button></div>
               </div>
             </div>
           </div>
-          <div class="table-responsive"><table class="table table-sm table-bordered" id="purchase-request-detail-table"><thead><tr><th>Código</th><th>Artículo</th><th>Descripción</th><th class="text-right">Cantidad</th><th class="text-right">Precio estimado</th><th class="text-right">Total</th><th></th></tr></thead><tbody><tr class="empty-row"><td colspan="7" class="text-center text-muted">Aún no hay artículos agregados.</td></tr></tbody></table></div>
+          <div class="table-responsive"><table class="table table-sm table-bordered" id="purchase-request-detail-table"><thead><tr><th>Código</th><th>Artículo</th><th>Descripción</th><th class="text-right">Cantidad</th><th class="text-right">Precio</th><th class="text-right">Dscto. %</th><th class="text-right">Total</th><th>Proyecto</th><th>Centro costo</th><th>Lote</th><th>Serie</th><th>Vencimiento</th><th></th></tr></thead><tbody><tr class="empty-row"><td colspan="13" class="text-center text-muted">Aún no hay artículos agregados.</td></tr></tbody></table></div>
           <div class="text-right font-weight-bold mb-3">Total estimado: <span id="purchase-request-total">0.00</span></div>
           <button type="submit" id="btn-save-purchase-request" class="btn btn-success btn-block"><i class="fas fa-save mr-1"></i>Guardar solicitud</button>
         </form>

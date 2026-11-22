@@ -9,6 +9,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     require_once '../../global/business-partner-details.php';
     require_once '../../global/purchase-receipt.php';
     require_once '../../global/validation.php';
+    require_once '../../global/commercial-line-dimensions.php';
 
     $supplierReference = trim((string) ($_POST['orden_nro'] ?? ''));
     if ($supplierReference === '' || mb_strlen($supplierReference) > 100) {
@@ -60,6 +61,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             //$ord_code = "CI-";
             $ord_lstprods = $_POST['orden_lstprods'];
             $ord_lstprods = json_decode($ord_lstprods, true);
+            if(is_array($ord_lstprods))$ord_lstprods=app_purchase_product_rows_from_ui($ord_lstprods);
             break;
         case 'SERVICIO':
             $ord_tipo = 2;
@@ -228,9 +230,10 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                     throw new UnexpectedValueException('Detalle de producto invalido.');
                 }
 
-                $sqlStatement = $pdo->prepare("INSERT INTO tbl_purchase_detail(purchase_id,item_id,item_code,item_description,item_gloss,item_unit_value,item_unit_price,item_quantity,item_discount_rate,item_discounted_total) VALUES(?,?,?,?,?,?,?,?,?,?)");
+                $dimensions=app_commercial_line_dimensions(['project_code'=>$value[10]??'','cost_center_code'=>$value[11]??'','lot_number'=>$value[12]??'','serial_number'=>$value[13]??'','expiration_date'=>$value[14]??''],'Línea de compra');
+                $sqlStatement = $pdo->prepare("INSERT INTO tbl_purchase_detail(purchase_id,item_id,item_code,item_description,item_gloss,item_unit_value,item_unit_price,item_quantity,item_discount_rate,item_discounted_total,project_code,cost_center_code,lot_number,serial_number,expiration_date) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-                $sqlStatement->execute([$ord_id, $item_id, $item_code, $item_desc, $item_glosa, $item_unitval, $item_prec, $item_cant, $item_descpor, $item_descval]);
+                $sqlStatement->execute([$ord_id, $item_id, $item_code, $item_desc, $item_glosa, $item_unitval, $item_prec, $item_cant, $item_descpor, $item_descval,$dimensions['project_code'],$dimensions['cost_center_code'],$dimensions['lot_number'],$dimensions['serial_number'],$dimensions['expiration_date']]);
                 
             }
         }

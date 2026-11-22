@@ -15,7 +15,13 @@ if ($rowsNumber > 0) {
         $ROWDATA['DESCRIP'] = $ROW["item_description"];
         $ROWDATA['PRECIOUNIT'] = $ROW["item_unit_price"];
         $ROWDATA['CANTIDAD'] = $ROW["item_quantity"];
-        $ROWDATA['IMPORTE'] = $ROW["item_unit_price"] * $ROW["item_quantity"];
+        $ROWDATA['IMPORTE'] = $ROW["item_discounted_total"];
+        $ROWDATA['DESCUENTO_LINEA'] = $ROW["item_discount_rate"];
+        $ROWDATA['PROYECTO'] = $ROW["project_code"];
+        $ROWDATA['CENTRO_COSTO'] = $ROW["cost_center_code"];
+        $ROWDATA['LOTE'] = $ROW["lot_number"];
+        $ROWDATA['SERIE'] = $ROW["serial_number"];
+        $ROWDATA['VENCIMIENTO'] = $ROW["expiration_date"];
         array_push($json_data, $ROWDATA);
     }
 }

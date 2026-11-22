@@ -1,22 +1,22 @@
 {
   "schema_version": 1,
-  "analysis_run": 42393727377,
-  "analyzed_commit": "9bfb43c093c4f9ddf8343c79a1f751ee15e36715",
-  "reviewed_source_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+  "analysis_run": 45061843630,
+  "analyzed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+  "reviewed_source_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
   "approval_status": "approved",
   "findings": [
     {
       "engine": "semgrep",
       "rule_id": "security-rules.php.lang.security.unlink-use",
       "path": "global/electronic-document-pdf.php",
-      "fingerprint": "e861bf7902a85a96fe887ef602f7b0122f26967176850ac3ad1b767817fb64ff",
-      "source_sha256": "e660dc198db146df24b94bbccf06eff5d1e14f974b3d7dc702d19612f3accdaa",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "fingerprint": "c8238fa38b03422efc95e0112a0e31c7e0b11f7f90b2acd028519c02e1af295b",
+      "source_sha256": "49014f4312bf1f56557e2b5deaf77e3502571661862306e7efca566fa5d6c1b8",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "scanner_version": "1.184.0",
       "id": "php-final-001",
       "disposition": "reviewed_audit",
-      "reviewer": "Codex /root/audit_erp independent source review; /root/security_finalize verification; /root final approval",
-      "reviewed_on": "2026-11-07",
+      "reviewer": "Codex /root/audit_erp independent source review; /root/security_finalize verification; /root final approval; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "The unlink target is not selected by the request. A separate local race was hardened by retaining the tempnam-reserved file for QR output, explicit PNG type, and finally cleanup; no unreserved sibling path is used now.",
       "dependencies": [
         {
@@ -2600,13 +2600,13 @@
       "rule_id": "security-rules.php.lang.security.injection.echoed-request",
       "path": "modules/reportes/cargar-reporte-ventas-x-periodo.php",
       "fingerprint": "b69552e66f28e2e60a3939223599a14c7ad4c63786550cc76b67386b5d032e58",
-      "source_sha256": "8fca1ab128f72f52508278e6f72a01fbb2e7f4d6a2c5a82d0abb795be02219d6",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "source_sha256": "0c753bb15842ac23fd05084a41c12fd655492076efc019412273ed8be616052b",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "scanner_version": "1.184.0",
       "id": "php-final-080",
       "disposition": "false_positive",
-      "reviewer": "Codex /root/audit_erp independent source review; /root/security_finalize verification; /root final approval",
-      "reviewed_on": "2026-11-07",
+      "reviewer": "Codex /root/audit_erp independent source review; /root/security_finalize verification; /root final approval; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "The sink emits JSON under Content-Type application/json; the real global connection sends nosniff. The attacker text remains JSON data. Client-side DOM sinks are reviewed separately; json_encode alone is not the XSS safety argument.",
       "dependencies": [
         {
@@ -3367,13 +3367,13 @@
       "rule_id": "security-rules.php.lang.security.injection.echoed-request",
       "path": "modules/ventas/ordenes.php",
       "fingerprint": "2f81e8d2a140ea3fa5a6998e7ad08b4bd4d83b74933ee95884a6aa923ad1a088",
-      "source_sha256": "8beb521b6bb0c10f49a01b79337d5efea8c91dc04a28db760986b31547fec3e4",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "source_sha256": "fb8bc1ce0bd127ea9c60119a3476b2fa05c09ca7aa0e9a6cb13aff7ba51e7ac0",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "scanner_version": "1.184.0",
       "id": "php-final-100",
       "disposition": "false_positive",
-      "reviewer": "Codex /root/audit_erp independent source review; /root/security_finalize verification; /root final approval",
-      "reviewed_on": "2026-11-07",
+      "reviewer": "Codex /root/audit_erp independent source review; /root/security_finalize verification; /root final approval; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "The sink emits JSON under Content-Type application/json; the real global connection sends nosniff. The attacker text remains JSON data. Client-side DOM sinks are reviewed separately; json_encode alone is not the XSS safety argument.",
       "dependencies": [
         {
@@ -3408,14 +3408,14 @@
       "engine": "semgrep",
       "rule_id": "security-rules.php.lang.security.injection.echoed-request",
       "path": "modules/ventas/ordenes.php",
-      "fingerprint": "266840abd2ae21b5b0f8272a1f9778d06fc16c5a7ed70b7a7b08b3ba36cc9bda",
-      "source_sha256": "8beb521b6bb0c10f49a01b79337d5efea8c91dc04a28db760986b31547fec3e4",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "fingerprint": "b860318b3c63c54224d3f056f4cf26b8a2af63e601bcee84038baf6d5bb5f7c6",
+      "source_sha256": "fb8bc1ce0bd127ea9c60119a3476b2fa05c09ca7aa0e9a6cb13aff7ba51e7ac0",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "scanner_version": "1.184.0",
       "id": "php-final-101",
       "disposition": "false_positive",
-      "reviewer": "Codex /root/audit_erp independent source review; /root/security_finalize verification; /root final approval",
-      "reviewed_on": "2026-11-07",
+      "reviewer": "Codex /root/audit_erp independent source review; /root/security_finalize verification; /root final approval; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "The sink emits JSON under Content-Type application/json; the real global connection sends nosniff. The attacker text remains JSON data. Client-side DOM sinks are reviewed separately; json_encode alone is not the XSS safety argument.",
       "dependencies": [
         {
@@ -3450,14 +3450,14 @@
       "engine": "semgrep",
       "rule_id": "security-rules.php.lang.security.injection.echoed-request",
       "path": "modules/ventas/ordenes.php",
-      "fingerprint": "a278c467a48c46e304488c413fdbf937222c0fab6cf9baa9b6b532a5cd4074d7",
-      "source_sha256": "8beb521b6bb0c10f49a01b79337d5efea8c91dc04a28db760986b31547fec3e4",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "fingerprint": "6918a9f64903085e33b321fd517ade70b9d541729ad1f16c562ba473576347ef",
+      "source_sha256": "fb8bc1ce0bd127ea9c60119a3476b2fa05c09ca7aa0e9a6cb13aff7ba51e7ac0",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "scanner_version": "1.184.0",
       "id": "php-final-102",
       "disposition": "false_positive",
-      "reviewer": "Codex /root/audit_erp independent source review; /root/security_finalize verification; /root final approval",
-      "reviewed_on": "2026-11-07",
+      "reviewer": "Codex /root/audit_erp independent source review; /root/security_finalize verification; /root final approval; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "The sink emits JSON under Content-Type application/json; the real global connection sends nosniff. The attacker text remains JSON data. Client-side DOM sinks are reviewed separately; json_encode alone is not the XSS safety argument.",
       "dependencies": [
         {
@@ -4931,10 +4931,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/guias.js",
       "fingerprint": "1d34d558f39134072c52261b21de671c7c7f948a9a52c23c617eac3d11c9c083",
-      "source_sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea",
+      "source_sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f",
       "scanner_version": "1.184.0",
       "id": "js-audit-1d34d558f3913407",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -4946,14 +4946,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
-      "rationale": "ajax/guias.js:22: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Warehouse/source options and guide labels are DOM nodes with val()/text(), and the summary uses document.createTextNode(). DataTables data columns have a text renderer; status/controls retain only locally constructed markup.",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
+      "rationale": "External warehouse, source and guide values are assigned with text(), val(), or explicit escapeHtml. The new project, cost-center, lot, serial and expiration controls are constructed DOM nodes; no provider value is parsed as HTML.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/guias.js",
-          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea",
+          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
@@ -4968,10 +4968,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/guias.js",
       "fingerprint": "fb609cbdca405f6ab81ef667ffd73b565baa215503b63f060bc8dc8a7f63a9c1",
-      "source_sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea",
+      "source_sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f",
       "scanner_version": "1.184.0",
       "id": "js-audit-fb609cbdca405f6a",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -4983,14 +4983,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
-      "rationale": "ajax/guias.js:26: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Warehouse/source options and guide labels are DOM nodes with val()/text(), and the summary uses document.createTextNode(). DataTables data columns have a text renderer; status/controls retain only locally constructed markup.",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
+      "rationale": "External warehouse, source and guide values are assigned with text(), val(), or explicit escapeHtml. The new project, cost-center, lot, serial and expiration controls are constructed DOM nodes; no provider value is parsed as HTML.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/guias.js",
-          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea",
+          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
@@ -5005,10 +5005,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/guias.js",
       "fingerprint": "fa6d0f01486a3f97edbc8648a1407bfc1bdfb34b115606179cf6e4d770153c62",
-      "source_sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea",
+      "source_sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f",
       "scanner_version": "1.184.0",
       "id": "js-audit-fa6d0f01486a3f97",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -5020,14 +5020,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
-      "rationale": "ajax/guias.js:99: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Warehouse/source options and guide labels are DOM nodes with val()/text(), and the summary uses document.createTextNode(). DataTables data columns have a text renderer; status/controls retain only locally constructed markup.",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
+      "rationale": "External warehouse, source and guide values are assigned with text(), val(), or explicit escapeHtml. The new project, cost-center, lot, serial and expiration controls are constructed DOM nodes; no provider value is parsed as HTML.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/guias.js",
-          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea",
+          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
@@ -5042,10 +5042,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/guias.js",
       "fingerprint": "9e806083d6674e6049d431be715a43485a6eb862a8e7b97245e0fed6bd1f241e",
-      "source_sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea",
+      "source_sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f",
       "scanner_version": "1.184.0",
       "id": "js-audit-9e806083d6674e60",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -5057,14 +5057,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
-      "rationale": "ajax/guias.js:150: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Warehouse/source options and guide labels are DOM nodes with val()/text(), and the summary uses document.createTextNode(). DataTables data columns have a text renderer; status/controls retain only locally constructed markup.",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
+      "rationale": "External warehouse, source and guide values are assigned with text(), val(), or explicit escapeHtml. The new project, cost-center, lot, serial and expiration controls are constructed DOM nodes; no provider value is parsed as HTML.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/guias.js",
-          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea",
+          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
@@ -6097,38 +6097,6 @@
     {
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
-      "path": "ajax/orden-de-compra.js",
-      "fingerprint": "10630d13d085c9dd949e68c1056a038861eeadc09dac4992fce579936c97ba5e",
-      "source_sha256": "0bbdd65fdb1c9f76e3f2fd85da50c43c42388a0cc37ec0cccb8c91137aa17881",
-      "scanner_version": "1.184.0",
-      "id": "js-audit-10630d13d085c9dd",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
-      "dependencies": [
-        {
-          "path": "views/template/footer.php",
-          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
-        },
-        {
-          "path": "js/footer-functions.js",
-          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
-        }
-      ],
-      "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
-      "rationale": "ajax/orden-de-compra.js:595: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. The appended request option is a native new Option(label,value), which assigns text/value properties; the request ID originates from the typed saved sales/purchase document relation. DataTables line display uses render.text().",
-      "disposition": "reviewed_audit",
-      "evidence": [
-        {
-          "path": "ajax/orden-de-compra.js",
-          "sha256": "0bbdd65fdb1c9f76e3f2fd85da50c43c42388a0cc37ec0cccb8c91137aa17881",
-          "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
-        }
-      ]
-    },
-    {
-      "engine": "semgrep",
-      "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/orden-de-servicio.js",
       "fingerprint": "bc15863818362e0871460724310de3b5eed35d32f6747a750ddb0df810199f7f",
       "source_sha256": "9afb14302fc85627071ab196160a2e615f16f043a194097995f89df813a4ceb6",
@@ -6450,11 +6418,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/recepciones.js",
-      "fingerprint": "3a2348517849181a9fa25000e0e5f776c93ef30f61a67d2903d3c3f59a166e0d",
-      "source_sha256": "428c571dbd14fba4db3da468a60f7d1fc4fea77d4ed7df4d83d7e9cc68a106ab",
+      "fingerprint": "be6c6db65da8f7e097af812b3437d1b658da4a6229268668d72be506fa9eb03e",
+      "source_sha256": "cb025df48e0f72c30836068f236d22910ff326c814f2452c434ad1d17fb2e1d4",
       "scanner_version": "1.184.0",
       "id": "js-audit-3a2348517849181a",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6466,18 +6434,18 @@
         },
         {
           "path": "modules/compras/goods-receipts.php",
-          "sha256": "7e2a4933a3c56eb07929638de2ec155041ab6d84fd07e371c5a88964b5c844e9"
+          "sha256": "218947654c7354ae0defa61ad81659bd244686eb2522fe920c20db022ef6af32"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
-      "rationale": "ajax/recepciones.js:17: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. History and detail values are text()/val() properties. Status markup uses appuStatusBadge. The cancel control is a literal template with an integer database receipt primary key, and warehouses/options are text nodes.",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
+      "rationale": "External receipt, warehouse and item values are assigned with text() or val(). Editable inputs and the cancel button are constructed as DOM nodes; the database id is coerced to Number. The only reviewed HTML sink is appuStatusBadge, which escapes the status and selects its CSS tone from a fixed allowlist.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/recepciones.js",
-          "sha256": "428c571dbd14fba4db3da468a60f7d1fc4fea77d4ed7df4d83d7e9cc68a106ab",
+          "sha256": "cb025df48e0f72c30836068f236d22910ff326c814f2452c434ad1d17fb2e1d4",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -6486,11 +6454,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/recepciones.js",
-      "fingerprint": "b15d5df21f72c0b1191f7381f49242b0dcbd217738b2c4123f7c8b468da3f12f",
-      "source_sha256": "428c571dbd14fba4db3da468a60f7d1fc4fea77d4ed7df4d83d7e9cc68a106ab",
+      "fingerprint": "8724b6b1c333356d125723bec2571082796e9859ea94a3384499b5e9331a1b43",
+      "source_sha256": "cb025df48e0f72c30836068f236d22910ff326c814f2452c434ad1d17fb2e1d4",
       "scanner_version": "1.184.0",
       "id": "js-audit-b15d5df21f72c0b1",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6502,18 +6470,18 @@
         },
         {
           "path": "modules/compras/goods-receipts.php",
-          "sha256": "7e2a4933a3c56eb07929638de2ec155041ab6d84fd07e371c5a88964b5c844e9"
+          "sha256": "218947654c7354ae0defa61ad81659bd244686eb2522fe920c20db022ef6af32"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
-      "rationale": "ajax/recepciones.js:17: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. History and detail values are text()/val() properties. Status markup uses appuStatusBadge. The cancel control is a literal template with an integer database receipt primary key, and warehouses/options are text nodes.",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
+      "rationale": "External receipt, warehouse and item values are assigned with text() or val(). Editable inputs and the cancel button are constructed as DOM nodes; the database id is coerced to Number. The only reviewed HTML sink is appuStatusBadge, which escapes the status and selects its CSS tone from a fixed allowlist.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/recepciones.js",
-          "sha256": "428c571dbd14fba4db3da468a60f7d1fc4fea77d4ed7df4d83d7e9cc68a106ab",
+          "sha256": "cb025df48e0f72c30836068f236d22910ff326c814f2452c434ad1d17fb2e1d4",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -6522,11 +6490,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.prohibit-jquery-html",
       "path": "ajax/recepciones.js",
-      "fingerprint": "c15d7c9fd0a147c8cbe6fd8cd2e3a071e02282e21d61aa621ecda2a519e67710",
-      "source_sha256": "428c571dbd14fba4db3da468a60f7d1fc4fea77d4ed7df4d83d7e9cc68a106ab",
+      "fingerprint": "3aee11898de75583f954f4b415650a66d36bcd3e85373b685fdcda921a4252cc",
+      "source_sha256": "cb025df48e0f72c30836068f236d22910ff326c814f2452c434ad1d17fb2e1d4",
       "scanner_version": "1.184.0",
       "id": "js-audit-c15d7c9fd0a147c8",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6538,126 +6506,18 @@
         },
         {
           "path": "modules/compras/goods-receipts.php",
-          "sha256": "7e2a4933a3c56eb07929638de2ec155041ab6d84fd07e371c5a88964b5c844e9"
+          "sha256": "218947654c7354ae0defa61ad81659bd244686eb2522fe920c20db022ef6af32"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
-      "rationale": "ajax/recepciones.js:17: The presence of html() requires a context review, not an exploit conclusion. The flagged value is a fixed template or is built from escaped/status-helper output under the dependencies below. History and detail values are text()/val() properties. Status markup uses appuStatusBadge. The cancel control is a literal template with an integer database receipt primary key, and warehouses/options are text nodes.",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
+      "rationale": "External receipt, warehouse and item values are assigned with text() or val(). Editable inputs and the cancel button are constructed as DOM nodes; the database id is coerced to Number. The only reviewed HTML sink is appuStatusBadge, which escapes the status and selects its CSS tone from a fixed allowlist.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/recepciones.js",
-          "sha256": "428c571dbd14fba4db3da468a60f7d1fc4fea77d4ed7df4d83d7e9cc68a106ab",
-          "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
-        }
-      ]
-    },
-    {
-      "engine": "semgrep",
-      "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
-      "path": "ajax/recepciones.js",
-      "fingerprint": "53dd977f35d41fda053d812a7bd1dd3ce1e15f7b83a52ff944b3010fbe040b4d",
-      "source_sha256": "428c571dbd14fba4db3da468a60f7d1fc4fea77d4ed7df4d83d7e9cc68a106ab",
-      "scanner_version": "1.184.0",
-      "id": "js-audit-53dd977f35d41fda",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
-      "dependencies": [
-        {
-          "path": "views/template/footer.php",
-          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
-        },
-        {
-          "path": "js/footer-functions.js",
-          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
-        },
-        {
-          "path": "modules/compras/goods-receipts.php",
-          "sha256": "7e2a4933a3c56eb07929638de2ec155041ab6d84fd07e371c5a88964b5c844e9"
-        }
-      ],
-      "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
-      "rationale": "ajax/recepciones.js:17: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. History and detail values are text()/val() properties. Status markup uses appuStatusBadge. The cancel control is a literal template with an integer database receipt primary key, and warehouses/options are text nodes.",
-      "disposition": "reviewed_audit",
-      "evidence": [
-        {
-          "path": "ajax/recepciones.js",
-          "sha256": "428c571dbd14fba4db3da468a60f7d1fc4fea77d4ed7df4d83d7e9cc68a106ab",
-          "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
-        }
-      ]
-    },
-    {
-      "engine": "semgrep",
-      "rule_id": "security-rules.javascript.jquery.security.audit.prohibit-jquery-html",
-      "path": "ajax/recepciones.js",
-      "fingerprint": "538ca30323c33c95561baad21d6f3db091889d75c2e65e52668886770105c48b",
-      "source_sha256": "428c571dbd14fba4db3da468a60f7d1fc4fea77d4ed7df4d83d7e9cc68a106ab",
-      "scanner_version": "1.184.0",
-      "id": "js-audit-538ca30323c33c95",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
-      "dependencies": [
-        {
-          "path": "views/template/footer.php",
-          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
-        },
-        {
-          "path": "js/footer-functions.js",
-          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
-        },
-        {
-          "path": "modules/compras/goods-receipts.php",
-          "sha256": "7e2a4933a3c56eb07929638de2ec155041ab6d84fd07e371c5a88964b5c844e9"
-        }
-      ],
-      "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
-      "rationale": "ajax/recepciones.js:17: The presence of html() requires a context review, not an exploit conclusion. The flagged value is a fixed template or is built from escaped/status-helper output under the dependencies below. History and detail values are text()/val() properties. Status markup uses appuStatusBadge. The cancel control is a literal template with an integer database receipt primary key, and warehouses/options are text nodes.",
-      "disposition": "reviewed_audit",
-      "evidence": [
-        {
-          "path": "ajax/recepciones.js",
-          "sha256": "428c571dbd14fba4db3da468a60f7d1fc4fea77d4ed7df4d83d7e9cc68a106ab",
-          "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
-        }
-      ]
-    },
-    {
-      "engine": "semgrep",
-      "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
-      "path": "ajax/recepciones.js",
-      "fingerprint": "e952e0aa99da68fc549a48c8117ea70293dd573627261436016f79ccfa30130d",
-      "source_sha256": "428c571dbd14fba4db3da468a60f7d1fc4fea77d4ed7df4d83d7e9cc68a106ab",
-      "scanner_version": "1.184.0",
-      "id": "js-audit-e952e0aa99da68fc",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
-      "dependencies": [
-        {
-          "path": "views/template/footer.php",
-          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
-        },
-        {
-          "path": "js/footer-functions.js",
-          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
-        },
-        {
-          "path": "modules/compras/goods-receipts.php",
-          "sha256": "7e2a4933a3c56eb07929638de2ec155041ab6d84fd07e371c5a88964b5c844e9"
-        }
-      ],
-      "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
-      "rationale": "ajax/recepciones.js:18: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. History and detail values are text()/val() properties. Status markup uses appuStatusBadge. The cancel control is a literal template with an integer database receipt primary key, and warehouses/options are text nodes.",
-      "disposition": "reviewed_audit",
-      "evidence": [
-        {
-          "path": "ajax/recepciones.js",
-          "sha256": "428c571dbd14fba4db3da468a60f7d1fc4fea77d4ed7df4d83d7e9cc68a106ab",
+          "sha256": "cb025df48e0f72c30836068f236d22910ff326c814f2452c434ad1d17fb2e1d4",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -6667,10 +6527,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/registro-boleta.js",
       "fingerprint": "16e240a6b23aa670fbe599ec4646ce8f1766d3485b3da26f96b289df37397492",
-      "source_sha256": "60032e4b8593d00b4b741fe99d0f018dc1ad112bf8055836c6a1aba0a13cd82a",
+      "source_sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40",
       "scanner_version": "1.184.0",
       "id": "js-audit-16e240a6b23aa670",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6682,14 +6542,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/registro-boleta.js:6: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Series and warehouse append arguments are literal option nodes with val()/text(); user-visible names cannot become HTML. Saved line data are displayed with DataTables render.text() and remain original values for submission.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "60032e4b8593d00b4b741fe99d0f018dc1ad112bf8055836c6a1aba0a13cd82a",
+          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -6699,10 +6559,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/registro-boleta.js",
       "fingerprint": "e7f8d29e32b8ae809bae008f8e6b5920f74e33faccbf2d497ce8b26842e1c091",
-      "source_sha256": "60032e4b8593d00b4b741fe99d0f018dc1ad112bf8055836c6a1aba0a13cd82a",
+      "source_sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40",
       "scanner_version": "1.184.0",
       "id": "js-audit-e7f8d29e32b8ae80",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6714,14 +6574,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/registro-boleta.js:7: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Series and warehouse append arguments are literal option nodes with val()/text(); user-visible names cannot become HTML. Saved line data are displayed with DataTables render.text() and remain original values for submission.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "60032e4b8593d00b4b741fe99d0f018dc1ad112bf8055836c6a1aba0a13cd82a",
+          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -6731,10 +6591,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "ajax/registro-cliente.js",
       "fingerprint": "b50be2e3b18481769dee1bc6819f941afb6843324a24e44fbe99a93b6ecf9626",
-      "source_sha256": "c896eab0ebc9bd4563bb35b6242442f113140a12ed0915b95dddba602ed91d61",
+      "source_sha256": "967bebd73b3aeb52109fdcef8d3295070f489868c9937358ac776b001f9f1a6a",
       "scanner_version": "1.184.0",
       "id": "js-audit-b50be2e3b1848176",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6746,14 +6606,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/registro-cliente.js:5: This audit rule flags a jQuery argument but the reviewed argument is an existing DOM reference, a fixed selector/configuration, or a fixed selector prefix; it is not an attacker-controlled HTML string. field(name) is called with local fixed suffixes for the known client fields; the fixed name-selector prefix prevents interpreting it as HTML. Ubigeo options use literal option nodes and text()/val().",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/registro-cliente.js",
-          "sha256": "c896eab0ebc9bd4563bb35b6242442f113140a12ed0915b95dddba602ed91d61",
+          "sha256": "967bebd73b3aeb52109fdcef8d3295070f489868c9937358ac776b001f9f1a6a",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -6763,10 +6623,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/registro-cotizacion.js",
       "fingerprint": "ae0d521300937763ca01113d8f3b216dedd6b81af56e59a3b1174e20aba7d695",
-      "source_sha256": "4206013d35f7e84327852fe130c199c872c20f8197e321545b39204685308432",
+      "source_sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945",
       "scanner_version": "1.184.0",
       "id": "js-audit-ae0d521300937763",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6778,14 +6638,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/registro-cotizacion.js:16: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Warehouse/address option values and labels use val()/text(), and cloned options remain DOM nodes. Quotation line DataTables values have render.text() without changing submitted data.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "4206013d35f7e84327852fe130c199c872c20f8197e321545b39204685308432",
+          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -6795,10 +6655,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/registro-cotizacion.js",
       "fingerprint": "feda329dec08609b32c482892ed03d9c571b52ab1a502f9b56588b78a01a0f2e",
-      "source_sha256": "4206013d35f7e84327852fe130c199c872c20f8197e321545b39204685308432",
+      "source_sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945",
       "scanner_version": "1.184.0",
       "id": "js-audit-feda329dec08609b",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6810,14 +6670,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/registro-cotizacion.js:101: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Warehouse/address option values and labels use val()/text(), and cloned options remain DOM nodes. Quotation line DataTables values have render.text() without changing submitted data.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "4206013d35f7e84327852fe130c199c872c20f8197e321545b39204685308432",
+          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -6827,10 +6687,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/registro-cotizacion.js",
       "fingerprint": "430f6f11732add4d06235145920983c9adbb9d90221ffefa3118177e07b46092",
-      "source_sha256": "4206013d35f7e84327852fe130c199c872c20f8197e321545b39204685308432",
+      "source_sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945",
       "scanner_version": "1.184.0",
       "id": "js-audit-430f6f11732add4d",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6842,14 +6702,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/registro-cotizacion.js:101: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Warehouse/address option values and labels use val()/text(), and cloned options remain DOM nodes. Quotation line DataTables values have render.text() without changing submitted data.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "4206013d35f7e84327852fe130c199c872c20f8197e321545b39204685308432",
+          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -6859,10 +6719,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/registro-factura.js",
       "fingerprint": "e6e1213f8e443a2fbaea64785ef66d24778453701f26de4282f6c2fe57ee16bd",
-      "source_sha256": "e6e9fee54104f9aced4feb113568d8f0838731ea1c4c6867985b4e1e39552c78",
+      "source_sha256": "a624eda21bd1e7bad4a1fe3a82e2fbbb1ed710910e82bbb9b0ed284b640effa4",
       "scanner_version": "1.184.0",
       "id": "js-audit-e6e1213f8e443a2f",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6874,14 +6734,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/registro-factura.js:10: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Series and warehouse values are assigned through literal option nodes with val()/text(). Invoice line table values have render.text(); no response label is concatenated as an option tag.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/registro-factura.js",
-          "sha256": "e6e9fee54104f9aced4feb113568d8f0838731ea1c4c6867985b4e1e39552c78",
+          "sha256": "a624eda21bd1e7bad4a1fe3a82e2fbbb1ed710910e82bbb9b0ed284b640effa4",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -6891,10 +6751,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/registro-factura.js",
       "fingerprint": "9452e3df2b12880d435f95aa54a246f1c7fdc0a2b549a3e0df801e557aa9c09b",
-      "source_sha256": "e6e9fee54104f9aced4feb113568d8f0838731ea1c4c6867985b4e1e39552c78",
+      "source_sha256": "a624eda21bd1e7bad4a1fe3a82e2fbbb1ed710910e82bbb9b0ed284b640effa4",
       "scanner_version": "1.184.0",
       "id": "js-audit-9452e3df2b12880d",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6906,14 +6766,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/registro-factura.js:11: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Series and warehouse values are assigned through literal option nodes with val()/text(). Invoice line table values have render.text(); no response label is concatenated as an option tag.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/registro-factura.js",
-          "sha256": "e6e9fee54104f9aced4feb113568d8f0838731ea1c4c6867985b4e1e39552c78",
+          "sha256": "a624eda21bd1e7bad4a1fe3a82e2fbbb1ed710910e82bbb9b0ed284b640effa4",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -6923,10 +6783,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/registro-nota-credito.js",
       "fingerprint": "065363e253f5c1dece34f4af0af5e33f0f411f1c0756f951875fe545b156eae1",
-      "source_sha256": "1bb3514418a8fef80967e59679ac40457b5902be6f09a4ee901b7fe67201cb38",
+      "source_sha256": "8ba65d012f2f7423794a68b2cfc8ff24fde27d60de7c420a15956fca05ff8109",
       "scanner_version": "1.184.0",
       "id": "js-audit-065363e253f5c1de",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6938,14 +6798,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/registro-nota-credito.js:4: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Series and warehouse values are assigned through literal option nodes with val()/text(). Credit-note line values have render.text(); controls/actions are separate literal markup.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/registro-nota-credito.js",
-          "sha256": "1bb3514418a8fef80967e59679ac40457b5902be6f09a4ee901b7fe67201cb38",
+          "sha256": "8ba65d012f2f7423794a68b2cfc8ff24fde27d60de7c420a15956fca05ff8109",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -6955,10 +6815,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/registro-nota-credito.js",
       "fingerprint": "871fe50b6b0fbb6232d76247ab57acec943385a435d5410a40e5050a33fa1d06",
-      "source_sha256": "1bb3514418a8fef80967e59679ac40457b5902be6f09a4ee901b7fe67201cb38",
+      "source_sha256": "8ba65d012f2f7423794a68b2cfc8ff24fde27d60de7c420a15956fca05ff8109",
       "scanner_version": "1.184.0",
       "id": "js-audit-871fe50b6b0fbb62",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6970,14 +6830,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/registro-nota-credito.js:5: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Series and warehouse values are assigned through literal option nodes with val()/text(). Credit-note line values have render.text(); controls/actions are separate literal markup.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/registro-nota-credito.js",
-          "sha256": "1bb3514418a8fef80967e59679ac40457b5902be6f09a4ee901b7fe67201cb38",
+          "sha256": "8ba65d012f2f7423794a68b2cfc8ff24fde27d60de7c420a15956fca05ff8109",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -7172,10 +7032,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "ajax/resumen-ordenes-venta.js",
       "fingerprint": "0b431c734473d20ca52995a34f461e8cfc004ee103e00c5409b218c65f4edbc0",
-      "source_sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713",
+      "source_sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
       "scanner_version": "1.184.0",
       "id": "js-audit-0b431c734473d20c",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7187,14 +7047,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/resumen-ordenes-venta.js:23: This audit rule flags a jQuery argument but the reviewed argument is an existing DOM reference, a fixed selector/configuration, or a fixed selector prefix; it is not an attacker-controlled HTML string. The selected status HTML comes from appuStatusBadge; labels/options/line fields are text()/val() nodes. The entry selectors and navigation action suffixes are local fixed arrays, not API-provided selectors.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713",
+          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
@@ -7208,11 +7068,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/resumen-ordenes-venta.js",
-      "fingerprint": "bcdafc4100f30d7f99d38de5b39194e6f308c989e3215c8ba5e251a2eddb5036",
-      "source_sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713",
+      "fingerprint": "1ba25889aed62c3a67cccb9a31afb8fe19f4333ca6a315d1efbfd4b7211b371d",
+      "source_sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
       "scanner_version": "1.184.0",
       "id": "js-audit-bcdafc4100f30d7f",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7224,14 +7084,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/resumen-ordenes-venta.js:63: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. The selected status HTML comes from appuStatusBadge; labels/options/line fields are text()/val() nodes. The entry selectors and navigation action suffixes are local fixed arrays, not API-provided selectors.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713",
+          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
@@ -7245,11 +7105,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "ajax/resumen-ordenes-venta.js",
-      "fingerprint": "abf64ca3983540c9554bc65e27562f21249497643c8505c92c1f9d6fdc960382",
-      "source_sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713",
+      "fingerprint": "b4f3530e2c75006c57b7b6e9a8bfc851e1b2edecd887e81ce9209e9b68eb88e2",
+      "source_sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
       "scanner_version": "1.184.0",
       "id": "js-audit-abf64ca3983540c9",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7261,14 +7121,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/resumen-ordenes-venta.js:118: This audit rule flags a jQuery argument but the reviewed argument is an existing DOM reference, a fixed selector/configuration, or a fixed selector prefix; it is not an attacker-controlled HTML string. The selected status HTML comes from appuStatusBadge; labels/options/line fields are text()/val() nodes. The entry selectors and navigation action suffixes are local fixed arrays, not API-provided selectors.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713",
+          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
@@ -7282,11 +7142,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/resumen-ordenes-venta.js",
-      "fingerprint": "7ccd52fe3df0e5c258ee29f93c3c4e6f59da2eb0927792ce92d86bbd2183ae6b",
-      "source_sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713",
+      "fingerprint": "6fb10d3aa0dd7c7f022affc1a377256c0778c18904242776dcbd1d0f7cc129db",
+      "source_sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
       "scanner_version": "1.184.0",
       "id": "js-audit-7ccd52fe3df0e5c2",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7298,14 +7158,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/resumen-ordenes-venta.js:246: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. The selected status HTML comes from appuStatusBadge; labels/options/line fields are text()/val() nodes. The entry selectors and navigation action suffixes are local fixed arrays, not API-provided selectors.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713",
+          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
@@ -7319,11 +7179,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/resumen-ordenes-venta.js",
-      "fingerprint": "ffbfd6cfc6e2cb35ceb94f9e67b2930f5957c765cae21b3d78582c234898fcd5",
-      "source_sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713",
+      "fingerprint": "d15c56cf6f8ddfd2af3dcb6bca4d3157438a71262adf6e4cacff6ef1cfd3ba8e",
+      "source_sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
       "scanner_version": "1.184.0",
       "id": "js-audit-ffbfd6cfc6e2cb35",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7335,14 +7195,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/resumen-ordenes-venta.js:254: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. The selected status HTML comes from appuStatusBadge; labels/options/line fields are text()/val() nodes. The entry selectors and navigation action suffixes are local fixed arrays, not API-provided selectors.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713",
+          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
@@ -7727,10 +7587,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/solicitudes.js",
       "fingerprint": "3051f8267897ce8298a21588363a619491a1918946aed46acfda65732b958226",
-      "source_sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
+      "source_sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
       "scanner_version": "1.184.0",
       "id": "js-audit-3051f8267897ce82",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7742,14 +7602,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/solicitudes.js:17: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Request/item labels are text()/val() nodes and status uses the escaped shared badge helper. Dynamic navigation class suffixes are fixed first/prev/next/last values; appended requester options are literal nodes, not strings.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/solicitudes.js",
-          "sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
+          "sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -7759,10 +7619,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/solicitudes.js",
       "fingerprint": "857a291c214d9dbd29fa51580eef276f98388ddf94ac7c57bcd87a965b320bb0",
-      "source_sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
+      "source_sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
       "scanner_version": "1.184.0",
       "id": "js-audit-857a291c214d9dbd",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7774,14 +7634,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/solicitudes.js:31: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Request/item labels are text()/val() nodes and status uses the escaped shared badge helper. Dynamic navigation class suffixes are fixed first/prev/next/last values; appended requester options are literal nodes, not strings.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/solicitudes.js",
-          "sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
+          "sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -7790,11 +7650,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/solicitudes.js",
-      "fingerprint": "d85155bfef7493c39b730c5cf7b40c632166bb680c47dc9d5547cacde41fa3c9",
-      "source_sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
+      "fingerprint": "d9f83e44daec0b5669cba9fe8501ede39cb64440b097ac3395ad28f9c03e893e",
+      "source_sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
       "scanner_version": "1.184.0",
       "id": "js-audit-d85155bfef7493c3",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7806,14 +7666,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/solicitudes.js:31: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Request/item labels are text()/val() nodes and status uses the escaped shared badge helper. Dynamic navigation class suffixes are fixed first/prev/next/last values; appended requester options are literal nodes, not strings.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/solicitudes.js",
-          "sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
+          "sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -7823,10 +7683,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/solicitudes.js",
       "fingerprint": "ff7bc21bec5965005269ac2bc95bcb21d2e943c22fb7a74fb1945a3c0575edc9",
-      "source_sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
+      "source_sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
       "scanner_version": "1.184.0",
       "id": "js-audit-ff7bc21bec596500",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7838,14 +7698,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/solicitudes.js:35: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Request/item labels are text()/val() nodes and status uses the escaped shared badge helper. Dynamic navigation class suffixes are fixed first/prev/next/last values; appended requester options are literal nodes, not strings.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/solicitudes.js",
-          "sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
+          "sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -7854,11 +7714,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/solicitudes.js",
-      "fingerprint": "0281890fe6a553d3401ffb43e93f3ec3cb8ba6436446ee26015bdf1977eebd61",
-      "source_sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
+      "fingerprint": "fc2d6457aeb72c92189087e31a9993f2dedd560644194d294e2b93df4bc1b129",
+      "source_sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
       "scanner_version": "1.184.0",
       "id": "js-audit-0281890fe6a553d3",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7870,14 +7730,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/solicitudes.js:93: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Request/item labels are text()/val() nodes and status uses the escaped shared badge helper. Dynamic navigation class suffixes are fixed first/prev/next/last values; appended requester options are literal nodes, not strings.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/solicitudes.js",
-          "sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
+          "sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -7886,11 +7746,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/solicitudes.js",
-      "fingerprint": "8c71c4b19f65fea2054b321c6cf6b5838e281f9400da1ca43bdac7791985c5aa",
-      "source_sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
+      "fingerprint": "5100b5ef79220d0dc96c1a92909a27a192478c5a2c98d55398f848e4a7b91c68",
+      "source_sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
       "scanner_version": "1.184.0",
       "id": "js-audit-8c71c4b19f65fea2",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7902,14 +7762,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/solicitudes.js:93: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Request/item labels are text()/val() nodes and status uses the escaped shared badge helper. Dynamic navigation class suffixes are fixed first/prev/next/last values; appended requester options are literal nodes, not strings.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/solicitudes.js",
-          "sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
+          "sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -7918,11 +7778,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.prohibit-jquery-html",
       "path": "ajax/solicitudes.js",
-      "fingerprint": "762aab18fefa11a6d87546a5a09caef2e3fe16df0436d61626f3274c916bfea6",
-      "source_sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
+      "fingerprint": "5fd2b1445e19a9fe4143dbd382faf22870bdace6f0bacb39c87a244c7aa78f82",
+      "source_sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
       "scanner_version": "1.184.0",
       "id": "js-audit-762aab18fefa11a6",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7934,14 +7794,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/solicitudes.js:93: The presence of html() requires a context review, not an exploit conclusion. The flagged value is a fixed template or is built from escaped/status-helper output under the dependencies below. Request/item labels are text()/val() nodes and status uses the escaped shared badge helper. Dynamic navigation class suffixes are fixed first/prev/next/last values; appended requester options are literal nodes, not strings.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/solicitudes.js",
-          "sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
+          "sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -7950,11 +7810,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "ajax/solicitudes.js",
-      "fingerprint": "d2ceecd9ea69b03a451141bbfd15536ac0ab0ca6743f478a9bd717dd68f15c35",
-      "source_sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
+      "fingerprint": "d5e0086aad7a9c93604480e24f6a265cdfc782eb437e7f351de2c04683f839dd",
+      "source_sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
       "scanner_version": "1.184.0",
       "id": "js-audit-d2ceecd9ea69b03a",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7966,14 +7826,14 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "ajax/solicitudes.js:119: This audit rule flags a jQuery argument but the reviewed argument is an existing DOM reference, a fixed selector/configuration, or a fixed selector prefix; it is not an attacker-controlled HTML string. Request/item labels are text()/val() nodes and status uses the escaped shared badge helper. Dynamic navigation class suffixes are fixed first/prev/next/last values; appended requester options are literal nodes, not strings.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/solicitudes.js",
-          "sha256": "fbb681d732ef5ebb7a4d5c0612d9f8e313cc1bd4250601ba5da6a5ecdb7b0895",
+          "sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -8783,7 +8643,7 @@
       "source_sha256": "4170d43a80ce7d9e9f935a613a51ae95d1c9fd514838de75324888a0623179a7",
       "scanner_version": "1.184.0",
       "id": "js-audit-bd9b1f84d4933eae",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8795,7 +8655,7 @@
         },
         {
           "path": "ajax/registro-cliente.js",
-          "sha256": "c896eab0ebc9bd4563bb35b6242442f113140a12ed0915b95dddba602ed91d61"
+          "sha256": "967bebd73b3aeb52109fdcef8d3295070f489868c9937358ac776b001f9f1a6a"
         },
         {
           "path": "ajax/registro-proveedor.js",
@@ -8803,8 +8663,8 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "js/identity-lookup.js:5: This audit rule flags a jQuery argument but the reviewed argument is an existing DOM reference, a fixed selector/configuration, or a fixed selector prefix; it is not an attacker-controlled HTML string. options.form/documentField are fixed first-party master adapter configuration. Profile labels/values use text(), val(), and createTextNode(); appends receive constructed nodes, not provider HTML.",
       "disposition": "reviewed_audit",
       "evidence": [
@@ -8828,7 +8688,7 @@
       "source_sha256": "4170d43a80ce7d9e9f935a613a51ae95d1c9fd514838de75324888a0623179a7",
       "scanner_version": "1.184.0",
       "id": "js-audit-ecb24ae5ee7347b6",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8840,7 +8700,7 @@
         },
         {
           "path": "ajax/registro-cliente.js",
-          "sha256": "c896eab0ebc9bd4563bb35b6242442f113140a12ed0915b95dddba602ed91d61"
+          "sha256": "967bebd73b3aeb52109fdcef8d3295070f489868c9937358ac776b001f9f1a6a"
         },
         {
           "path": "ajax/registro-proveedor.js",
@@ -8848,8 +8708,8 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "js/identity-lookup.js:14: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. options.form/documentField are fixed first-party master adapter configuration. Profile labels/values use text(), val(), and createTextNode(); appends receive constructed nodes, not provider HTML.",
       "disposition": "reviewed_audit",
       "evidence": [
@@ -8873,7 +8733,7 @@
       "source_sha256": "4170d43a80ce7d9e9f935a613a51ae95d1c9fd514838de75324888a0623179a7",
       "scanner_version": "1.184.0",
       "id": "js-audit-b082ef57c5f78975",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8885,7 +8745,7 @@
         },
         {
           "path": "ajax/registro-cliente.js",
-          "sha256": "c896eab0ebc9bd4563bb35b6242442f113140a12ed0915b95dddba602ed91d61"
+          "sha256": "967bebd73b3aeb52109fdcef8d3295070f489868c9937358ac776b001f9f1a6a"
         },
         {
           "path": "ajax/registro-proveedor.js",
@@ -8893,8 +8753,8 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "js/identity-lookup.js:57: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. options.form/documentField are fixed first-party master adapter configuration. Profile labels/values use text(), val(), and createTextNode(); appends receive constructed nodes, not provider HTML.",
       "disposition": "reviewed_audit",
       "evidence": [
@@ -8918,7 +8778,7 @@
       "source_sha256": "4170d43a80ce7d9e9f935a613a51ae95d1c9fd514838de75324888a0623179a7",
       "scanner_version": "1.184.0",
       "id": "js-audit-a6da9dd8dc252ff5",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8930,7 +8790,7 @@
         },
         {
           "path": "ajax/registro-cliente.js",
-          "sha256": "c896eab0ebc9bd4563bb35b6242442f113140a12ed0915b95dddba602ed91d61"
+          "sha256": "967bebd73b3aeb52109fdcef8d3295070f489868c9937358ac776b001f9f1a6a"
         },
         {
           "path": "ajax/registro-proveedor.js",
@@ -8938,8 +8798,8 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "js/identity-lookup.js:58: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. options.form/documentField are fixed first-party master adapter configuration. Profile labels/values use text(), val(), and createTextNode(); appends receive constructed nodes, not provider HTML.",
       "disposition": "reviewed_audit",
       "evidence": [
@@ -8963,7 +8823,7 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-27fbdda3ba939675",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8975,7 +8835,7 @@
         },
         {
           "path": "ajax/registro-cliente.js",
-          "sha256": "c896eab0ebc9bd4563bb35b6242442f113140a12ed0915b95dddba602ed91d61"
+          "sha256": "967bebd73b3aeb52109fdcef8d3295070f489868c9937358ac776b001f9f1a6a"
         },
         {
           "path": "ajax/registro-proveedor.js",
@@ -8991,8 +8851,8 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "js/legacy-master-workspace.js:6: This audit rule flags a jQuery argument but the reviewed argument is an existing DOM reference, a fixed selector/configuration, or a fixed selector prefix; it is not an attacker-controlled HTML string. All selector options are fixed first-party master adapter configuration, not record fields. Search result cells are created with text(), the select button is a literal node with attr(), and list columns use DataTables render.text().",
       "disposition": "reviewed_audit",
       "evidence": [
@@ -9016,7 +8876,7 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-4da990a6dc465971",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9028,7 +8888,7 @@
         },
         {
           "path": "ajax/registro-cliente.js",
-          "sha256": "c896eab0ebc9bd4563bb35b6242442f113140a12ed0915b95dddba602ed91d61"
+          "sha256": "967bebd73b3aeb52109fdcef8d3295070f489868c9937358ac776b001f9f1a6a"
         },
         {
           "path": "ajax/registro-proveedor.js",
@@ -9044,8 +8904,8 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "js/legacy-master-workspace.js:6: This audit rule flags a jQuery argument but the reviewed argument is an existing DOM reference, a fixed selector/configuration, or a fixed selector prefix; it is not an attacker-controlled HTML string. All selector options are fixed first-party master adapter configuration, not record fields. Search result cells are created with text(), the select button is a literal node with attr(), and list columns use DataTables render.text().",
       "disposition": "reviewed_audit",
       "evidence": [
@@ -9069,7 +8929,7 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-e0e46a43aab2ac50",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9081,7 +8941,7 @@
         },
         {
           "path": "ajax/registro-cliente.js",
-          "sha256": "c896eab0ebc9bd4563bb35b6242442f113140a12ed0915b95dddba602ed91d61"
+          "sha256": "967bebd73b3aeb52109fdcef8d3295070f489868c9937358ac776b001f9f1a6a"
         },
         {
           "path": "ajax/registro-proveedor.js",
@@ -9097,8 +8957,8 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "js/legacy-master-workspace.js:6: This audit rule flags a jQuery argument but the reviewed argument is an existing DOM reference, a fixed selector/configuration, or a fixed selector prefix; it is not an attacker-controlled HTML string. All selector options are fixed first-party master adapter configuration, not record fields. Search result cells are created with text(), the select button is a literal node with attr(), and list columns use DataTables render.text().",
       "disposition": "reviewed_audit",
       "evidence": [
@@ -9122,7 +8982,7 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-5a33c029824170dc",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9134,7 +8994,7 @@
         },
         {
           "path": "ajax/registro-cliente.js",
-          "sha256": "c896eab0ebc9bd4563bb35b6242442f113140a12ed0915b95dddba602ed91d61"
+          "sha256": "967bebd73b3aeb52109fdcef8d3295070f489868c9937358ac776b001f9f1a6a"
         },
         {
           "path": "ajax/registro-proveedor.js",
@@ -9150,8 +9010,8 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "js/legacy-master-workspace.js:8: This audit rule flags a jQuery argument but the reviewed argument is an existing DOM reference, a fixed selector/configuration, or a fixed selector prefix; it is not an attacker-controlled HTML string. All selector options are fixed first-party master adapter configuration, not record fields. Search result cells are created with text(), the select button is a literal node with attr(), and list columns use DataTables render.text().",
       "disposition": "reviewed_audit",
       "evidence": [
@@ -9175,7 +9035,7 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-6d4977cb784f3241",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9187,7 +9047,7 @@
         },
         {
           "path": "ajax/registro-cliente.js",
-          "sha256": "c896eab0ebc9bd4563bb35b6242442f113140a12ed0915b95dddba602ed91d61"
+          "sha256": "967bebd73b3aeb52109fdcef8d3295070f489868c9937358ac776b001f9f1a6a"
         },
         {
           "path": "ajax/registro-proveedor.js",
@@ -9203,8 +9063,8 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "js/legacy-master-workspace.js:8: This audit rule flags a jQuery argument but the reviewed argument is an existing DOM reference, a fixed selector/configuration, or a fixed selector prefix; it is not an attacker-controlled HTML string. All selector options are fixed first-party master adapter configuration, not record fields. Search result cells are created with text(), the select button is a literal node with attr(), and list columns use DataTables render.text().",
       "disposition": "reviewed_audit",
       "evidence": [
@@ -9228,7 +9088,7 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-77b40b983b35f2a7",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9240,7 +9100,7 @@
         },
         {
           "path": "ajax/registro-cliente.js",
-          "sha256": "c896eab0ebc9bd4563bb35b6242442f113140a12ed0915b95dddba602ed91d61"
+          "sha256": "967bebd73b3aeb52109fdcef8d3295070f489868c9937358ac776b001f9f1a6a"
         },
         {
           "path": "ajax/registro-proveedor.js",
@@ -9256,8 +9116,8 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "js/legacy-master-workspace.js:67: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. All selector options are fixed first-party master adapter configuration, not record fields. Search result cells are created with text(), the select button is a literal node with attr(), and list columns use DataTables render.text().",
       "disposition": "reviewed_audit",
       "evidence": [
@@ -9281,7 +9141,7 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-ad7e138d742a2fd1",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9293,7 +9153,7 @@
         },
         {
           "path": "ajax/registro-cliente.js",
-          "sha256": "c896eab0ebc9bd4563bb35b6242442f113140a12ed0915b95dddba602ed91d61"
+          "sha256": "967bebd73b3aeb52109fdcef8d3295070f489868c9937358ac776b001f9f1a6a"
         },
         {
           "path": "ajax/registro-proveedor.js",
@@ -9309,8 +9169,8 @@
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "js/legacy-master-workspace.js:68: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. All selector options are fixed first-party master adapter configuration, not record fields. Search result cells are created with text(), the select button is a literal node with attr(), and list columns use DataTables render.text().",
       "disposition": "reviewed_audit",
       "evidence": [
@@ -9992,7 +9852,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.5",
       "id": "vendor-datatables-db05a596880618c2",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10004,11 +9864,11 @@
         },
         {
           "path": "ajax/compra-interna.js",
-          "sha256": "555ccb1791ea9899531393bb85db3bdde4cb47bbe609e40de3296c66ee5b9d56"
+          "sha256": "05c4c65cf4cd3cbcb0715b8e42d35947c23f256766c4f16943f64dc2f25a6324"
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
         },
         {
           "path": "ajax/historial-movimiento.js",
@@ -10024,7 +9884,7 @@
         },
         {
           "path": "ajax/orden-de-compra.js",
-          "sha256": "0bbdd65fdb1c9f76e3f2fd85da50c43c42388a0cc37ec0cccb8c91137aa17881"
+          "sha256": "6e390401ee0eedbe972a65bf9d318cd33a90e207b8253d1b14c6b6ef107c89c3"
         },
         {
           "path": "ajax/orden-de-servicio.js",
@@ -10032,19 +9892,19 @@
         },
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "60032e4b8593d00b4b741fe99d0f018dc1ad112bf8055836c6a1aba0a13cd82a"
+          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40"
         },
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "4206013d35f7e84327852fe130c199c872c20f8197e321545b39204685308432"
+          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945"
         },
         {
           "path": "ajax/registro-factura.js",
-          "sha256": "e6e9fee54104f9aced4feb113568d8f0838731ea1c4c6867985b4e1e39552c78"
+          "sha256": "a624eda21bd1e7bad4a1fe3a82e2fbbb1ed710910e82bbb9b0ed284b640effa4"
         },
         {
           "path": "ajax/registro-nota-credito.js",
-          "sha256": "1bb3514418a8fef80967e59679ac40457b5902be6f09a4ee901b7fe67201cb38"
+          "sha256": "8ba65d012f2f7423794a68b2cfc8ff24fde27d60de7c420a15956fca05ff8109"
         },
         {
           "path": "ajax/resumen-compras.js",
@@ -10056,7 +9916,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10072,8 +9932,8 @@
         }
       ],
       "dependency_review": "These exact first-party initialization/rendering sites determine escape behavior and lack of state/child-row integration; the evidence test also scans all first-party runtime source directories to catch newly added consumers/options.",
-      "reviewer": "Codex /root/security_finalize vendor source review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/security_finalize vendor source review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "Official unmodified DataTables1.13.11 SHA256 ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8, exact occurrence at 1521. Both findings are distinct spans of the same _stripHtml return chain (the complete-tag replace and following incomplete-script replace). The sole call is _htmlNumeric at 1427; its result is checked by _isNumber for column type detection. No sanitized return is used as display HTML. Incomplete stripping is therefore not relied on as an output security boundary.",
       "disposition": "vendor_reviewed",
       "evidence": [
@@ -10097,7 +9957,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.5",
       "id": "vendor-datatables-7337c1c902ec7342",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10109,11 +9969,11 @@
         },
         {
           "path": "ajax/compra-interna.js",
-          "sha256": "555ccb1791ea9899531393bb85db3bdde4cb47bbe609e40de3296c66ee5b9d56"
+          "sha256": "05c4c65cf4cd3cbcb0715b8e42d35947c23f256766c4f16943f64dc2f25a6324"
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
         },
         {
           "path": "ajax/historial-movimiento.js",
@@ -10129,7 +9989,7 @@
         },
         {
           "path": "ajax/orden-de-compra.js",
-          "sha256": "0bbdd65fdb1c9f76e3f2fd85da50c43c42388a0cc37ec0cccb8c91137aa17881"
+          "sha256": "6e390401ee0eedbe972a65bf9d318cd33a90e207b8253d1b14c6b6ef107c89c3"
         },
         {
           "path": "ajax/orden-de-servicio.js",
@@ -10137,19 +9997,19 @@
         },
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "60032e4b8593d00b4b741fe99d0f018dc1ad112bf8055836c6a1aba0a13cd82a"
+          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40"
         },
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "4206013d35f7e84327852fe130c199c872c20f8197e321545b39204685308432"
+          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945"
         },
         {
           "path": "ajax/registro-factura.js",
-          "sha256": "e6e9fee54104f9aced4feb113568d8f0838731ea1c4c6867985b4e1e39552c78"
+          "sha256": "a624eda21bd1e7bad4a1fe3a82e2fbbb1ed710910e82bbb9b0ed284b640effa4"
         },
         {
           "path": "ajax/registro-nota-credito.js",
-          "sha256": "1bb3514418a8fef80967e59679ac40457b5902be6f09a4ee901b7fe67201cb38"
+          "sha256": "8ba65d012f2f7423794a68b2cfc8ff24fde27d60de7c420a15956fca05ff8109"
         },
         {
           "path": "ajax/resumen-compras.js",
@@ -10161,7 +10021,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10177,8 +10037,8 @@
         }
       ],
       "dependency_review": "These exact first-party initialization/rendering sites determine escape behavior and lack of state/child-row integration; the evidence test also scans all first-party runtime source directories to catch newly added consumers/options.",
-      "reviewer": "Codex /root/security_finalize vendor source review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/security_finalize vendor source review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "Official unmodified DataTables1.13.11 SHA256 ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8, exact occurrence at 1521. Both findings are distinct spans of the same _stripHtml return chain (the complete-tag replace and following incomplete-script replace). The sole call is _htmlNumeric at 1427; its result is checked by _isNumber for column type detection. No sanitized return is used as display HTML. Incomplete stripping is therefore not relied on as an output security boundary.",
       "disposition": "vendor_reviewed",
       "evidence": [
@@ -10202,7 +10062,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.5",
       "id": "vendor-datatables-6ae974eda02be810",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10214,11 +10074,11 @@
         },
         {
           "path": "ajax/compra-interna.js",
-          "sha256": "555ccb1791ea9899531393bb85db3bdde4cb47bbe609e40de3296c66ee5b9d56"
+          "sha256": "05c4c65cf4cd3cbcb0715b8e42d35947c23f256766c4f16943f64dc2f25a6324"
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
         },
         {
           "path": "ajax/historial-movimiento.js",
@@ -10234,7 +10094,7 @@
         },
         {
           "path": "ajax/orden-de-compra.js",
-          "sha256": "0bbdd65fdb1c9f76e3f2fd85da50c43c42388a0cc37ec0cccb8c91137aa17881"
+          "sha256": "6e390401ee0eedbe972a65bf9d318cd33a90e207b8253d1b14c6b6ef107c89c3"
         },
         {
           "path": "ajax/orden-de-servicio.js",
@@ -10242,19 +10102,19 @@
         },
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "60032e4b8593d00b4b741fe99d0f018dc1ad112bf8055836c6a1aba0a13cd82a"
+          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40"
         },
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "4206013d35f7e84327852fe130c199c872c20f8197e321545b39204685308432"
+          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945"
         },
         {
           "path": "ajax/registro-factura.js",
-          "sha256": "e6e9fee54104f9aced4feb113568d8f0838731ea1c4c6867985b4e1e39552c78"
+          "sha256": "a624eda21bd1e7bad4a1fe3a82e2fbbb1ed710910e82bbb9b0ed284b640effa4"
         },
         {
           "path": "ajax/registro-nota-credito.js",
-          "sha256": "1bb3514418a8fef80967e59679ac40457b5902be6f09a4ee901b7fe67201cb38"
+          "sha256": "8ba65d012f2f7423794a68b2cfc8ff24fde27d60de7c420a15956fca05ff8109"
         },
         {
           "path": "ajax/resumen-compras.js",
@@ -10266,7 +10126,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10282,8 +10142,8 @@
         }
       ],
       "dependency_review": "These exact first-party initialization/rendering sites determine escape behavior and lack of state/child-row integration; the evidence test also scans all first-party runtime source directories to catch newly added consumers/options.",
-      "reviewer": "Codex /root/security_finalize vendor source review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/security_finalize vendor source review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "Official unmodified DataTables1.13.11 SHA256 ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8, exact occurrence at 5958. _fnGetMaxLenString strips tags only to compare .length and returns maxIdx, an integer row index. _fnGetWidestNode uses the original display renderer for the selected row, not this stripped text. The application data-column renderers escape display output and the DOM sink regression exercises deferred width calculation.",
       "disposition": "vendor_reviewed",
       "evidence": [
@@ -10307,7 +10167,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.5",
       "id": "vendor-datatables-4bd2d1d1f8911717",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10319,11 +10179,11 @@
         },
         {
           "path": "ajax/compra-interna.js",
-          "sha256": "555ccb1791ea9899531393bb85db3bdde4cb47bbe609e40de3296c66ee5b9d56"
+          "sha256": "05c4c65cf4cd3cbcb0715b8e42d35947c23f256766c4f16943f64dc2f25a6324"
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
         },
         {
           "path": "ajax/historial-movimiento.js",
@@ -10339,7 +10199,7 @@
         },
         {
           "path": "ajax/orden-de-compra.js",
-          "sha256": "0bbdd65fdb1c9f76e3f2fd85da50c43c42388a0cc37ec0cccb8c91137aa17881"
+          "sha256": "6e390401ee0eedbe972a65bf9d318cd33a90e207b8253d1b14c6b6ef107c89c3"
         },
         {
           "path": "ajax/orden-de-servicio.js",
@@ -10347,19 +10207,19 @@
         },
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "60032e4b8593d00b4b741fe99d0f018dc1ad112bf8055836c6a1aba0a13cd82a"
+          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40"
         },
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "4206013d35f7e84327852fe130c199c872c20f8197e321545b39204685308432"
+          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945"
         },
         {
           "path": "ajax/registro-factura.js",
-          "sha256": "e6e9fee54104f9aced4feb113568d8f0838731ea1c4c6867985b4e1e39552c78"
+          "sha256": "a624eda21bd1e7bad4a1fe3a82e2fbbb1ed710910e82bbb9b0ed284b640effa4"
         },
         {
           "path": "ajax/registro-nota-credito.js",
-          "sha256": "1bb3514418a8fef80967e59679ac40457b5902be6f09a4ee901b7fe67201cb38"
+          "sha256": "8ba65d012f2f7423794a68b2cfc8ff24fde27d60de7c420a15956fca05ff8109"
         },
         {
           "path": "ajax/resumen-compras.js",
@@ -10371,7 +10231,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10387,8 +10247,8 @@
         }
       ],
       "dependency_review": "These exact first-party initialization/rendering sites determine escape behavior and lack of state/child-row integration; the evidence test also scans all first-party runtime source directories to catch newly added consumers/options.",
-      "reviewer": "Codex /root/security_finalize vendor source review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/security_finalize vendor source review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "Official unmodified DataTables1.13.11 SHA256 ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8, exact occurrence at 6209. _fnSortAria strips header formatting for an accessibility label, then passes the result to th.setAttribute(\"aria-label\", label) at 6235. No HTML parser is involved in setting this attribute. The DOM regression verifies literal malicious-looking header text remains an attribute value and creates no element.",
       "disposition": "vendor_reviewed",
       "evidence": [
@@ -10412,7 +10272,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.5",
       "id": "vendor-datatables-18458a854a6ffdb2",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10424,11 +10284,11 @@
         },
         {
           "path": "ajax/compra-interna.js",
-          "sha256": "555ccb1791ea9899531393bb85db3bdde4cb47bbe609e40de3296c66ee5b9d56"
+          "sha256": "05c4c65cf4cd3cbcb0715b8e42d35947c23f256766c4f16943f64dc2f25a6324"
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
         },
         {
           "path": "ajax/historial-movimiento.js",
@@ -10444,7 +10304,7 @@
         },
         {
           "path": "ajax/orden-de-compra.js",
-          "sha256": "0bbdd65fdb1c9f76e3f2fd85da50c43c42388a0cc37ec0cccb8c91137aa17881"
+          "sha256": "6e390401ee0eedbe972a65bf9d318cd33a90e207b8253d1b14c6b6ef107c89c3"
         },
         {
           "path": "ajax/orden-de-servicio.js",
@@ -10452,19 +10312,19 @@
         },
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "60032e4b8593d00b4b741fe99d0f018dc1ad112bf8055836c6a1aba0a13cd82a"
+          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40"
         },
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "4206013d35f7e84327852fe130c199c872c20f8197e321545b39204685308432"
+          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945"
         },
         {
           "path": "ajax/registro-factura.js",
-          "sha256": "e6e9fee54104f9aced4feb113568d8f0838731ea1c4c6867985b4e1e39552c78"
+          "sha256": "a624eda21bd1e7bad4a1fe3a82e2fbbb1ed710910e82bbb9b0ed284b640effa4"
         },
         {
           "path": "ajax/registro-nota-credito.js",
-          "sha256": "1bb3514418a8fef80967e59679ac40457b5902be6f09a4ee901b7fe67201cb38"
+          "sha256": "8ba65d012f2f7423794a68b2cfc8ff24fde27d60de7c420a15956fca05ff8109"
         },
         {
           "path": "ajax/resumen-compras.js",
@@ -10476,7 +10336,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10492,8 +10352,8 @@
         }
       ],
       "dependency_review": "These exact first-party initialization/rendering sites determine escape behavior and lack of state/child-row integration; the evidence test also scans all first-party runtime source directories to catch newly added consumers/options.",
-      "reviewer": "Codex /root/security_finalize vendor source review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/security_finalize vendor source review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "Official unmodified DataTables1.13.11 SHA256 ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8, exact occurrence at 15057. DataTable.ext.type.search.html formats search-cache text, called via _fnGetCellData(type=filter) at 2831 before _fnFilterData. Application raw-data columns use render.text for display AND filter; prebuilt status/badge values are escaped by the pinned helper. The DOM regression forces html type, entity/malformed/array samples and smart search while instrumenting every Element.innerHTML setter, with zero raw dangerous tags.",
       "disposition": "vendor_reviewed",
       "evidence": [
@@ -10517,7 +10377,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.5",
       "id": "vendor-datatables-f0685907220c2a2c",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10529,11 +10389,11 @@
         },
         {
           "path": "ajax/compra-interna.js",
-          "sha256": "555ccb1791ea9899531393bb85db3bdde4cb47bbe609e40de3296c66ee5b9d56"
+          "sha256": "05c4c65cf4cd3cbcb0715b8e42d35947c23f256766c4f16943f64dc2f25a6324"
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
         },
         {
           "path": "ajax/historial-movimiento.js",
@@ -10549,7 +10409,7 @@
         },
         {
           "path": "ajax/orden-de-compra.js",
-          "sha256": "0bbdd65fdb1c9f76e3f2fd85da50c43c42388a0cc37ec0cccb8c91137aa17881"
+          "sha256": "6e390401ee0eedbe972a65bf9d318cd33a90e207b8253d1b14c6b6ef107c89c3"
         },
         {
           "path": "ajax/orden-de-servicio.js",
@@ -10557,19 +10417,19 @@
         },
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "60032e4b8593d00b4b741fe99d0f018dc1ad112bf8055836c6a1aba0a13cd82a"
+          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40"
         },
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "4206013d35f7e84327852fe130c199c872c20f8197e321545b39204685308432"
+          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945"
         },
         {
           "path": "ajax/registro-factura.js",
-          "sha256": "e6e9fee54104f9aced4feb113568d8f0838731ea1c4c6867985b4e1e39552c78"
+          "sha256": "a624eda21bd1e7bad4a1fe3a82e2fbbb1ed710910e82bbb9b0ed284b640effa4"
         },
         {
           "path": "ajax/registro-nota-credito.js",
-          "sha256": "1bb3514418a8fef80967e59679ac40457b5902be6f09a4ee901b7fe67201cb38"
+          "sha256": "8ba65d012f2f7423794a68b2cfc8ff24fde27d60de7c420a15956fca05ff8109"
         },
         {
           "path": "ajax/resumen-compras.js",
@@ -10581,7 +10441,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10597,8 +10457,8 @@
         }
       ],
       "dependency_review": "These exact first-party initialization/rendering sites determine escape behavior and lack of state/child-row integration; the evidence test also scans all first-party runtime source directories to catch newly added consumers/options.",
-      "reviewer": "Codex /root/security_finalize vendor source review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/security_finalize vendor source review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "Official unmodified DataTables1.13.11 SHA256 ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8, exact occurrence at 15158. The html-pre function returns a lowercase sorting key only. _fnSortData caches it for comparisons and row ordering; it is not returned as cell display output. The pinned DOM regression exercises order and deferred sizing using untrusted-looking values with the actual vendor renderer.",
       "disposition": "vendor_reviewed",
       "evidence": [
@@ -10622,7 +10482,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.5",
       "id": "vendor-datatables-483477a8b7141b75",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10634,11 +10494,11 @@
         },
         {
           "path": "ajax/compra-interna.js",
-          "sha256": "555ccb1791ea9899531393bb85db3bdde4cb47bbe609e40de3296c66ee5b9d56"
+          "sha256": "05c4c65cf4cd3cbcb0715b8e42d35947c23f256766c4f16943f64dc2f25a6324"
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
         },
         {
           "path": "ajax/historial-movimiento.js",
@@ -10654,7 +10514,7 @@
         },
         {
           "path": "ajax/orden-de-compra.js",
-          "sha256": "0bbdd65fdb1c9f76e3f2fd85da50c43c42388a0cc37ec0cccb8c91137aa17881"
+          "sha256": "6e390401ee0eedbe972a65bf9d318cd33a90e207b8253d1b14c6b6ef107c89c3"
         },
         {
           "path": "ajax/orden-de-servicio.js",
@@ -10662,19 +10522,19 @@
         },
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "60032e4b8593d00b4b741fe99d0f018dc1ad112bf8055836c6a1aba0a13cd82a"
+          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40"
         },
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "4206013d35f7e84327852fe130c199c872c20f8197e321545b39204685308432"
+          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945"
         },
         {
           "path": "ajax/registro-factura.js",
-          "sha256": "e6e9fee54104f9aced4feb113568d8f0838731ea1c4c6867985b4e1e39552c78"
+          "sha256": "a624eda21bd1e7bad4a1fe3a82e2fbbb1ed710910e82bbb9b0ed284b640effa4"
         },
         {
           "path": "ajax/registro-nota-credito.js",
-          "sha256": "1bb3514418a8fef80967e59679ac40457b5902be6f09a4ee901b7fe67201cb38"
+          "sha256": "8ba65d012f2f7423794a68b2cfc8ff24fde27d60de7c420a15956fca05ff8109"
         },
         {
           "path": "ajax/resumen-compras.js",
@@ -10686,7 +10546,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10702,8 +10562,8 @@
         }
       ],
       "dependency_review": "These exact first-party initialization/rendering sites determine escape behavior and lack of state/child-row integration; the evidence test also scans all first-party runtime source directories to catch newly added consumers/options.",
-      "reviewer": "Codex /root/security_finalize vendor source review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/security_finalize vendor source review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "Official unmodified DataTables1.13.11 SHA256 ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8, exact occurrence at 4595. word.replace removes a quote for smart-search tokenization after _fnEscapeRegex has escaped the user search (unless the caller explicitly opts into regex). The result is passed to new RegExp, never to an HTML/JavaScript parser; removing every quote is not a necessary XSS boundary. Own callers use ordinary search, not attacker-supplied regex mode.",
       "disposition": "vendor_reviewed",
       "evidence": [
@@ -10727,7 +10587,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.5",
       "id": "vendor-datatables-6bcfbb0871daafc8",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10739,11 +10599,11 @@
         },
         {
           "path": "ajax/compra-interna.js",
-          "sha256": "555ccb1791ea9899531393bb85db3bdde4cb47bbe609e40de3296c66ee5b9d56"
+          "sha256": "05c4c65cf4cd3cbcb0715b8e42d35947c23f256766c4f16943f64dc2f25a6324"
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
         },
         {
           "path": "ajax/historial-movimiento.js",
@@ -10759,7 +10619,7 @@
         },
         {
           "path": "ajax/orden-de-compra.js",
-          "sha256": "0bbdd65fdb1c9f76e3f2fd85da50c43c42388a0cc37ec0cccb8c91137aa17881"
+          "sha256": "6e390401ee0eedbe972a65bf9d318cd33a90e207b8253d1b14c6b6ef107c89c3"
         },
         {
           "path": "ajax/orden-de-servicio.js",
@@ -10767,19 +10627,19 @@
         },
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "60032e4b8593d00b4b741fe99d0f018dc1ad112bf8055836c6a1aba0a13cd82a"
+          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40"
         },
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "4206013d35f7e84327852fe130c199c872c20f8197e321545b39204685308432"
+          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945"
         },
         {
           "path": "ajax/registro-factura.js",
-          "sha256": "e6e9fee54104f9aced4feb113568d8f0838731ea1c4c6867985b4e1e39552c78"
+          "sha256": "a624eda21bd1e7bad4a1fe3a82e2fbbb1ed710910e82bbb9b0ed284b640effa4"
         },
         {
           "path": "ajax/registro-nota-credito.js",
-          "sha256": "1bb3514418a8fef80967e59679ac40457b5902be6f09a4ee901b7fe67201cb38"
+          "sha256": "8ba65d012f2f7423794a68b2cfc8ff24fde27d60de7c420a15956fca05ff8109"
         },
         {
           "path": "ajax/resumen-compras.js",
@@ -10791,7 +10651,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10807,8 +10667,8 @@
         }
       ],
       "dependency_review": "These exact first-party initialization/rendering sites determine escape behavior and lack of state/child-row integration; the evidence test also scans all first-party runtime source directories to catch newly added consumers/options.",
-      "reviewer": "Codex /root/security_finalize vendor source review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
+      "reviewer": "Codex /root/security_finalize vendor source review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "Official unmodified DataTables1.13.11 SHA256 ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8, exact occurrence at 8436. The colon escape is used when restoring loaded.childRows into api.rows(), not jQuery HTML creation. Application first-party sources do not enable stateSave/stateLoad, customize rowId, or invoke row.child. The committed evidence test asserts default bStateSave=false and standard rowId and scans every first-party ajax/js/views/modules/global file so introducing any such integration fails and requires a new review. Even inside the vendor selector path, # IDs first use settings.aIds lookup at8153, then $(existingNodes).filter(selector) at8175; this occurrence does not construct DOM from a string.",
       "disposition": "vendor_reviewed",
       "evidence": [
@@ -10831,10 +10691,10 @@
       "path": "plugins/context-menu/jquery.contextMenu.js",
       "fingerprint": "1895c5c6016f0f492feabff03ac05ed4d0243fff33f4fd1d8f66477106dd09d5",
       "source_sha256": "53040768b35cb59d6af65d42bf663dabeb50e9d5333aa60af19478a1edcb3d6c",
-      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "scanner_version": "2.27.5",
-      "reviewer": "Codex /root/independent_js_review source and real DOM review; /root/security_finalize verification; /root final approval",
-      "reviewed_on": "2026-11-07",
+      "reviewer": "Codex /root/independent_js_review source and real DOM review; /root/security_finalize verification; /root final approval; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "The actual deployed plugin is jquery.contextMenu.min.js. Its equivalent source $.fn.contextMenu wrapper overwrites operation.context with the existing table jQuery collection before calling $.contextMenu(create, operation). All five APPU initializers select literal table IDs and provide only local menu options. At this occurrence o.context is that collection, not provider or record HTML. The review is conditional on these exact callers; the regression scans all first-party directories and rejects new consumers or context/build/position overrides.",
       "disposition": "vendor_reviewed",
       "dependencies": [
@@ -10852,7 +10712,7 @@
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10860,7 +10720,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
         },
         {
           "path": "ajax/resumen-cotizaciones.js",
@@ -10891,10 +10751,10 @@
       "path": "plugins/context-menu/jquery.contextMenu.js",
       "fingerprint": "44cfae4f58c8db99310cf0682d47bc8642888476d25f186b66de4cbb20d45e5a",
       "source_sha256": "53040768b35cb59d6af65d42bf663dabeb50e9d5333aa60af19478a1edcb3d6c",
-      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "scanner_version": "2.27.5",
-      "reviewer": "Codex /root/independent_js_review source and real DOM review; /root/security_finalize verification; /root final approval",
-      "reviewed_on": "2026-11-07",
+      "reviewer": "Codex /root/independent_js_review source and real DOM review; /root/security_finalize verification; /root final approval; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "After the immediately preceding normalization, o.context equals $context.get(0), an existing DOM table node. The jQuery expression here checks that node against document; it does not parse a string. The wrapper/callers and live minified-plugin regression prove the current DOM provenance. No assertion is made that arbitrary untrusted plugin configuration is safe.",
       "disposition": "vendor_reviewed",
       "dependencies": [
@@ -10912,7 +10772,7 @@
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10920,7 +10780,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
         },
         {
           "path": "ajax/resumen-cotizaciones.js",
@@ -10951,10 +10811,10 @@
       "path": "plugins/context-menu/jquery.contextMenu.js",
       "fingerprint": "071a40dade5df8fc6390b22a41b3e65552fe5c101462cfc217f9864421172fe3",
       "source_sha256": "53040768b35cb59d6af65d42bf663dabeb50e9d5333aa60af19478a1edcb3d6c",
-      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "scanner_version": "2.27.5",
-      "reviewer": "Codex /root/independent_js_review source and real DOM review; /root/security_finalize verification; /root final approval",
-      "reviewed_on": "2026-11-07",
+      "reviewer": "Codex /root/independent_js_review source and real DOM review; /root/security_finalize verification; /root final approval; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "The destroy branch captures context from the already-normalized o.context DOM node. The .is(o.selector) predicate compares that existing node with a locally configured selector (tbody tr), not attacker HTML. APPU removes menus through contextMenu(destroy) on an existing DOM collection; actual menu destruction is exercised for all five first-party initializers. New contexts/selectors/callers require re-review.",
       "disposition": "vendor_reviewed",
       "dependencies": [
@@ -10972,7 +10832,7 @@
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10980,7 +10840,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
         },
         {
           "path": "ajax/resumen-cotizaciones.js",
@@ -11011,10 +10871,10 @@
       "path": "plugins/context-menu/jquery.ui.position.js",
       "fingerprint": "05410685be40c470d713f4eace8eab385a1a9c233964750fa24b30efbb84dda9",
       "source_sha256": "8ec6562621d78da9401c2a9e8711798371f91eb4cbd0a64ac238720175a78705",
-      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
+      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
       "scanner_version": "2.27.5",
-      "reviewer": "Codex /root/independent_js_review type-guard and real jQuery review; /root/security_finalize source verification; /root final approval",
-      "reviewed_on": "2026-11-07",
+      "reviewer": "Codex /root/independent_js_review type-guard and real jQuery review; /root/security_finalize source verification; /root final approval; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
+      "reviewed_on": "2026-11-22",
       "rationale": "This is the new line163 occurrence after applying the exact upstream CVE-2021-41184 fix, not the vulnerable former line159 occurrence. options is first copied into a plain local object (line156). The typeof options.of === string branch (161-162) sends every string through $(document).find, so only non-string DOM/jQuery/event/collection values reach $(options.of) at163. jQuery does not parse these non-string values as HTML. The scanner trace carries options.of but omits this branch condition. Real-plugin tests reject HTML-of strings, reproduce the former vulnerable parse path, preserve DOM/jQuery/CSS-selector targets, and exercise the five fixed APPU menu consumers. This review is conditional on the exact upstream patch and pinned callers.",
       "disposition": "false_positive",
       "dependencies": [
@@ -11036,7 +10896,7 @@
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "ed1f398108124330c4f8465e41cc46b8ec3f02b9b8c1f0ed7bd71e48a643ddea"
+          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -11044,7 +10904,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "c1e98860a67827200ab1a687ac5744fc965bb9b8b8e3fda04d491abf081a4713"
+          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
         },
         {
           "path": "ajax/resumen-cotizaciones.js",

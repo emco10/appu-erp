@@ -294,7 +294,8 @@ function appuCopiarSolicitudCompra(requestId, previousRequestId, $select) {
     var rows = request.details.map(function (detail, index) {
       var quantity = Number(detail.quantity);
       var price = Number(detail.estimated_unit_price);
-      var lineTotal = quantity * price;
+      var discount = Number(detail.discount_rate || 0);
+      var lineTotal = quantity * price * (1-discount/100);
       return {
         0: index + 1,
         1: detail.item_code,
@@ -303,9 +304,14 @@ function appuCopiarSolicitudCompra(requestId, previousRequestId, $select) {
         4: detail.unit_value || "-",
         5: price.toFixed(2),
         6: quantity,
-        7: "0.00",
+        7: discount.toFixed(2),
         8: lineTotal.toFixed(2),
-        9: Number(detail.product_id)
+        9: Number(detail.product_id),
+        10: detail.project_code || "",
+        11: detail.cost_center_code || "",
+        12: detail.lot_number || "",
+        13: detail.serial_number || "",
+        14: detail.expiration_date || ""
       };
     });
     if (rows.some(function (row) { return !Number.isInteger(row[9]) || row[9] < 1 || !Number.isInteger(Number(row[6])) || Number(row[6]) < 1 || !Number.isFinite(Number(row[5])) || Number(row[5]) < 0; })) {
@@ -399,7 +405,12 @@ $("#btn-add-prodtporden").click(function(e) {
           6: quantity,
           7: discount_rate,
           8: discounted_total,
-          9: Number($('select[name="orden_producto_select"]').val())
+          9: Number($('select[name="orden_producto_select"]').val()),
+          10: $.trim($('input[name="orden_proyecto"]').val()),
+          11: $.trim($('input[name="orden_centro_costo"]').val()),
+          12: $.trim($('input[name="orden_lote"]').val()),
+          13: $.trim($('input[name="orden_serie_articulo"]').val()),
+          14: $('input[name="orden_vencimiento"]').val() || ""
         }
       ])
       .draw();
@@ -431,6 +442,7 @@ $("#btn-add-prodtporden").click(function(e) {
     $('input[name="orden_porcdscto"]').val(0);
     $('input[name="orden_valordscto"]').val(0);
     $('input[name="orden_valorigv"]').val(0);
+    $('input[name="orden_proyecto"],input[name="orden_centro_costo"],input[name="orden_lote"],input[name="orden_serie_articulo"],input[name="orden_vencimiento"]').val("");
 
     $('input[name="orden_totcompra"]').val(total_compra_actual.toFixed(2));
     $('input[name="orden_igv"]').val(igv.toFixed(2));
@@ -591,8 +603,9 @@ $("#btn-select-orden").click(function() {
         $('select[name="orden_proveedor"]').val(data_json[0]["PROVID"]);
         $('select[name="orden_proveedor"]').trigger("change");
         cargarDireccionesProveedor(data_json[0]["PROVID"], data_json[0]["PROVIDER_ADDRESS_ID"], data_json[0]["PROVIDER_ADDRESS"]);
-        var requestId=data_json[0]["REQUESTID"] || "", $requestSelect=$('select[name="orden_solicitud_compra"]');
-        if(requestId && !$requestSelect.find('option[value="'+requestId+'"]').length)$requestSelect.append(new Option('Solicitud vinculada · '+requestId,requestId));
+        var requestId=Number(data_json[0]["REQUESTID"]) || "", $requestSelect=$('select[name="orden_solicitud_compra"]');
+        var requestExists=Array.from($requestSelect[0].options).some(function(option){return option.value===String(requestId);});
+        if(requestId&&!requestExists)$requestSelect[0].add(new Option('Solicitud vinculada · '+requestId,String(requestId)));
         $requestSelect.val(requestId).trigger("change");
 
         $('input[name="orden_provruc"]').val();
@@ -658,7 +671,12 @@ $("#btn-select-orden").click(function() {
                     6: detaorden_json[i]["QUANTITY"],
                     7: (detaorden_json[i]["DISCOUNT_RATE"] * 1).toFixed(2),
                     8: (detaorden_json[i]["DISCOUNTED_TOTAL"] * 1).toFixed(2),
-                    9: Number(detaorden_json[i]["ITEM_ID"])
+                    9: Number(detaorden_json[i]["ITEM_ID"]),
+                    10: detaorden_json[i]["PROJECT_CODE"] || "",
+                    11: detaorden_json[i]["COST_CENTER_CODE"] || "",
+                    12: detaorden_json[i]["LOT_NUMBER"] || "",
+                    13: detaorden_json[i]["SERIAL_NUMBER"] || "",
+                    14: detaorden_json[i]["EXPIRATION_DATE"] || ""
                   }
                 ])
                 .draw();

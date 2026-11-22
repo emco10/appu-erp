@@ -142,21 +142,21 @@ $invoiceCurrency=app_report_currency_sql('invoice.currency');$receiptCurrency=ap
 $productUnion = "
     SELECT {$invoiceCurrency} currency, detail.item_id AS product_id, detail.item_code AS product_code,
            detail.item_name AS product, detail.item_quantity AS quantity,
-           detail.item_quantity * detail.item_unit_price AS net_amount
+           detail.item_discounted_total AS net_amount
     FROM tbl_invoice_detail detail
     JOIN tbl_invoice invoice ON invoice.id = detail.invoice_id
     WHERE invoice.status NOT IN (2,4) AND invoice.document_subtype<>'ADVANCE' AND invoice.date BETWEEN ? AND ?
     UNION ALL
     SELECT {$receiptCurrency} currency, detail.item_id AS product_id, detail.item_code AS product_code,
            detail.item_name AS product, detail.item_quantity AS quantity,
-           detail.item_quantity * detail.item_unit_price AS net_amount
+           detail.item_discounted_total AS net_amount
     FROM tbl_receipt_detail detail
     JOIN tbl_receipt receipt ON receipt.id = detail.receipt_id
     WHERE receipt.status NOT IN (2,4) AND receipt.date BETWEEN ? AND ?
     UNION ALL
     SELECT {$creditCurrency} currency, detail.item_id AS product_id, detail.item_code AS product_code,
            detail.item_name AS product, -detail.item_quantity AS quantity,
-           -detail.item_quantity * detail.item_unit_price AS net_amount
+           -detail.item_discounted_total AS net_amount
     FROM tbl_credit_note_detail detail
     JOIN tbl_credit_note credit_note ON credit_note.id = detail.credit_note_id
     WHERE credit_note.status NOT IN (2,4) AND credit_note.date BETWEEN ? AND ?

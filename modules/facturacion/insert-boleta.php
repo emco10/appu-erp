@@ -123,7 +123,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         $sqlStatement->execute([$f_series,$f_faccod, $f_estado, $f_selectcotizid, $f_sales_order_id, $f_cliid, $f_warehouse_id, $billingAddress['id'], $shippingAddress['id'], $f_cli_ruc, $f_clinom, $f_clidirecc, $shippingAddress['address_line'], $f_clirefer, $f_diaspag, $f_fecha, $f_clifecentreg, $f_currency, $f_porcdesc, $f_valdesc, $f_subtotal, $f_taxigv, $f_totalneto, $f_seller_id, $f_user_id, $f_fecreg, $f_fecreg]);
         $id_facturacion = (int) $pdo->lastInsertId();
 
-        $insertDetail = $pdo->prepare('INSERT INTO tbl_receipt_detail (item_description,item_id,item_code,item_name,item_quantity,item_unit_price,receipt_id) VALUES (?,?,?,?,?,?,?)');
+        $insertDetail = $pdo->prepare('INSERT INTO tbl_receipt_detail (item_description,item_id,item_code,item_name,item_quantity,item_unit_price,item_discount_rate,item_discounted_total,project_code,cost_center_code,lot_number,serial_number,expiration_date,receipt_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
         $affectsStock = (int) $f_estado !== 2;
         if($affectsStock && $salesOrder!==null)app_release_order_for_billing($pdo,(int)$f_sales_order_id,$salesOrderWarehouseId);
         $documentReference = $f_series . '-' . $f_faccod;
@@ -140,7 +140,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                 throw new InvalidArgumentException('La boleta contiene un producto inválido.');
             }
 
-            $insertDetail->execute([$desc_prod, $id_prod, $cod_prod, $nom_prod, $cant_prod, $prec_prod, $id_facturacion]);
+            $insertDetail->execute([$desc_prod, $id_prod, $cod_prod, $nom_prod, $cant_prod, $prec_prod, (float)($product[8]??0), (float)($product[6]??0), (string)($product[9]??''), (string)($product[10]??''), (string)($product[11]??''), (string)($product[12]??''), ($product[13]??'') ?: null, $id_facturacion]);
             $receiptLineId=(int)$pdo->lastInsertId();
             if($salesOrder!==null)app_record_order_billing_line($pdo,(int)$f_sales_order_id,(int)$id_prod,'receipt',$id_facturacion,$receiptLineId,(float)$cant_prod,(int)$f_user_id);
 

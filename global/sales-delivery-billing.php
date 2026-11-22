@@ -19,7 +19,7 @@ function app_order_billing_context(PDO $pdo,int $orderId):array
 function app_delivery_invoice_totals(array $order,array $lines,array $context):array
 {
     $subtotal=0;$quantities=(array)$context['billed_quantities'];
-    foreach($lines as $line){$subtotal+=round($line['quantity']*$line['unit_price'],2);$quantities[$line['order_line_id']]=($quantities[$line['order_line_id']]??0)+$line['quantity'];}
+    foreach($lines as $line){$subtotal+=round($line['quantity']*($line['net_unit_value']??$line['unit_price']),2);$quantities[$line['order_line_id']]=($quantities[$line['order_line_id']]??0)+$line['quantity'];}
     $subtotal=round($subtotal,2);$tax=round($subtotal*.18,2);$discount=round(($subtotal+$tax)*(float)$order['discount_rate']/100,2);$natural=round($subtotal+$tax-$discount,2);$complete=true;
     foreach((array)$context['ordered_quantities'] as $line=>$ordered)if(($quantities[$line]??0)+.000001<(float)$ordered)$complete=false;
     $rounding=$complete?round((float)$order['total_net']-$context['previous_total']-$natural,2):0.0;
@@ -48,7 +48,8 @@ function app_delivery_billing_preview(PDO $pdo, array $guideIds): array
         foreach (app_document_open_lines($pdo,'remission_guide',$id,'BILLING') as $line) {
             $base = $byId[$line['source_detail_id']] ?? null;
             if (!$base || (int)$base['item_id'] !== (int)$line['product_id']) throw new DomainException('La entrega no conserva una línea válida de la orden.');
-            $lines[] = ['guide_id'=>$id,'guide_number'=>$guide['number'],'guide_line_id'=>(int)$line['id'],'order_line_id'=>(int)$base['id'],'product_id'=>(int)$base['item_id'],'item_code'=>$base['item_code'],'item_name'=>$base['item_name'],'description'=>$base['item_description'],'unit_price'=>(float)$base['item_unit_price'],'quantity'=>(float)$line['original_quantity'],'billed_quantity'=>(float)$line['processed_quantity'],'open_quantity'=>(float)$line['open_quantity']];
+            $ordered=(float)$base['item_quantity'];$discounted=(float)$base['item_discounted_total'];if($discounted==0.0&&(float)$base['item_discount_rate']==0.0&&$ordered*(float)$base['item_unit_price']!=0.0)$discounted=$ordered*(float)$base['item_unit_price'];$netUnit=$ordered>0?$discounted/$ordered:0;
+            $lines[] = ['guide_id'=>$id,'guide_number'=>$guide['number'],'guide_line_id'=>(int)$line['id'],'order_line_id'=>(int)$base['id'],'product_id'=>(int)$base['item_id'],'item_code'=>$base['item_code'],'item_name'=>$base['item_name'],'description'=>$base['item_description'],'unit_price'=>(float)$base['item_unit_price'],'net_unit_value'=>$netUnit,'discount_rate'=>(float)$base['item_discount_rate'],'project_code'=>(string)$base['project_code'],'cost_center_code'=>(string)$base['cost_center_code'],'lot_number'=>(string)$base['lot_number'],'serial_number'=>(string)$base['serial_number'],'expiration_date'=>(string)($base['expiration_date']??''),'quantity'=>(float)$line['original_quantity'],'billed_quantity'=>(float)$line['processed_quantity'],'open_quantity'=>(float)$line['open_quantity']];
         }
         $guides[] = ['id'=>$id,'number'=>$guide['number'],'status'=>$guide['status']];
     }
@@ -110,7 +111,7 @@ function app_invoice_from_deliveries(PDO $pdo, array $input, int $userId): array
         if (!$quantity || $quantity<1) $errors[]=app_field_error('lines['.$index.'].quantity','INTEGER','La cantidad debe ser un entero mayor que cero.');
         elseif ($quantity>$base['open_quantity']+.000001) $errors[]=app_field_error('lines['.$index.'].quantity','OPEN_QUANTITY','Solo quedan '. $base['open_quantity'].' unidades pendientes de facturar.');
         $base['quantity']=$quantity; $normalized[]=$base;
-        $subtotal+=round((float)$quantity*$base['unit_price'],2);
+        $subtotal+=round((float)$quantity*$base['net_unit_value'],2);
     }
     if ($errors) throw new AppValidationException($errors);
     $totals=app_delivery_invoice_totals($order,$normalized,app_order_billing_context($pdo,(int)$order['id']));
@@ -121,9 +122,9 @@ function app_invoice_from_deliveries(PDO $pdo, array $input, int $userId): array
     $q->execute([$series,$number,$order['quotation_id']?:0,$order['id'],$order['customer_id'],$order['warehouse_id'],$order['billing_address_id'],$order['shipping_address_id'],$order['ruc'],$order['customer_name'],$order['address'],$order['shipping_address'],trim((string)($input['reference']??'')),$order['payment_days'],$date,$order['delivery_date'],$order['currency'],$order['discount_rate'],$discount,$subtotal,$tax,$total,$order['seller_id'],$userId]);
     $id=(int)$pdo->lastInsertId();
     $pdo->prepare('UPDATE tbl_invoice SET rounding_adjustment=? WHERE id=?')->execute([$totals['rounding_adjustment'],$id]);
-    $insert=$pdo->prepare("INSERT INTO tbl_invoice_detail(invoice_id,item_id,item_code,item_name,item_description,item_quantity,item_unit_price,base_document_type,base_document_id,base_line_id) VALUES(?,?,?,?,?,?,?,'remission_guide',?,?)");
+    $insert=$pdo->prepare("INSERT INTO tbl_invoice_detail(invoice_id,item_id,item_code,item_name,item_description,item_quantity,item_unit_price,item_discount_rate,item_discounted_total,project_code,cost_center_code,lot_number,serial_number,expiration_date,base_document_type,base_document_id,base_line_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,'remission_guide',?,?)");
     foreach ($normalized as $line) {
-        $insert->execute([$id,$line['product_id'],$line['item_code'],$line['item_name'],$line['description'],$line['quantity'],$line['unit_price'],$line['guide_id'],$line['guide_line_id']]); $lineId=(int)$pdo->lastInsertId();
+        $insert->execute([$id,$line['product_id'],$line['item_code'],$line['item_name'],$line['description'],$line['quantity'],$line['unit_price'],$line['discount_rate'],round($line['quantity']*$line['net_unit_value'],4),$line['project_code'],$line['cost_center_code'],$line['lot_number'],$line['serial_number'],$line['expiration_date']?:null,$line['guide_id'],$line['guide_line_id']]); $lineId=(int)$pdo->lastInsertId();
         app_apply_document_line($pdo,'remission_guide',$line['guide_id'],$line['guide_line_id'],'invoice',$id,$lineId,'BILLING',(float)$line['quantity'],$userId);
         app_record_document_flow($pdo,'remission_guide',$line['guide_id'],'invoice',$id,$userId,'DELIVERY_BILLING');
     }

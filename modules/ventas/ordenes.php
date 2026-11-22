@@ -51,7 +51,10 @@ if ($method === 'GET') {
 
         $detailStatement = $pdo->prepare(
             'SELECT detail.id, detail.item_id, detail.item_code, detail.item_name, detail.item_description,
-                    detail.item_quantity, detail.item_unit_price, detail.item_total,
+                    detail.item_quantity, detail.item_unit_price, detail.item_discount_rate,
+                    detail.item_discounted_total, detail.item_total,
+                    detail.project_code, detail.cost_center_code, detail.lot_number,
+                    detail.serial_number, detail.expiration_date,
                     product.tax_affectation_code
              FROM tbl_sales_order_detail detail
              LEFT JOIN tbl_product product ON product.id=detail.item_id
@@ -119,7 +122,11 @@ try {
         $detailsStatement = $pdo->prepare(
             'SELECT quotation_detail.id AS base_line_id, quotation_detail.item_id, product.code AS item_code,
                     quotation_detail.item_name, quotation_detail.item_description,
-                    quotation_detail.item_quantity, quotation_detail.item_unit_price
+                    quotation_detail.item_quantity, quotation_detail.item_unit_price,
+                    quotation_detail.item_discount_rate, quotation_detail.item_discounted_total,
+                    quotation_detail.project_code, quotation_detail.cost_center_code,
+                    quotation_detail.lot_number, quotation_detail.serial_number,
+                    quotation_detail.expiration_date
              FROM tbl_quotation_detail quotation_detail
              JOIN tbl_product product ON product.id = quotation_detail.item_id
              WHERE quotation_detail.quotation_id = ?
@@ -179,8 +186,9 @@ try {
         $detailInsert = $pdo->prepare(
             'INSERT INTO tbl_sales_order_detail
                 (sales_order_id, item_id, item_code, item_name, item_description,
-                 item_quantity, item_unit_price, item_total)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+                 item_quantity, item_unit_price, item_discount_rate, item_discounted_total,
+                 item_total, project_code, cost_center_code, lot_number, serial_number, expiration_date)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
         );
         foreach ($details as $detail) {
             $quantity = (int) $detail['item_quantity'];
@@ -196,7 +204,14 @@ try {
                 (string) $detail['item_description'],
                 $quantity,
                 $unitPrice,
-                $quantity * $unitPrice,
+                (float) $detail['item_discount_rate'],
+                (float) $detail['item_discounted_total'],
+                (float) $detail['item_discounted_total'],
+                (string) $detail['project_code'],
+                (string) $detail['cost_center_code'],
+                (string) $detail['lot_number'],
+                (string) $detail['serial_number'],
+                $detail['expiration_date'] ?: null,
             ]);
             $targetLineId=(int)$pdo->lastInsertId();
             if (app_document_engine_available($pdo)) app_apply_document_line($pdo,'quotation',(int)$quotationId,(int)$detail['base_line_id'],'sales_order',$orderId,$targetLineId,'CONVERSION',(float)$quantity,$userId);

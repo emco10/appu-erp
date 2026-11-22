@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/document-engine.php';
+require_once __DIR__ . '/commercial-line-dimensions.php';
 
 /** Reglas comunes para los formularios comerciales anteriores al motor agregado. */
 function app_validate_legacy_sales_input(PDO $pdo,array $input,&$rows,string $prefix='facturacion',bool $quotation=false):array
@@ -11,16 +12,24 @@ function app_validate_legacy_sales_input(PDO $pdo,array $input,&$rows,string $pr
     $seller=filter_var($input[$prefix.'_usuarioid']??null,FILTER_VALIDATE_INT);$user=$pdo->prepare('SELECT id FROM tbl_user WHERE id=? AND active_status=1');$user->execute([$seller?:0]);if(!$user->fetchColumn())throw new DomainException('Selecciona un vendedor activo.');
     $discount=filter_var(($input[$prefix.'_porcdesc']??'')===''?0:$input[$prefix.'_porcdesc'],FILTER_VALIDATE_FLOAT);if($discount===false||!is_finite((float)$discount)||$discount<0||$discount>100)throw new DomainException('El descuento debe estar entre 0 y 100 por ciento.');
     if(!is_array($rows)||!array_is_list($rows)||!$rows||count($rows)>500)throw new DomainException('Agrega entre 1 y 500 artículos válidos al documento.');
-    $priceIndex=$quotation?3:4;$qtyIndex=$quotation?4:5;$seen=[];$subtotal=0;$tax=0;
+    $priceIndex=$quotation?3:4;$qtyIndex=$quotation?4:5;$lineDiscountIndex=$quotation?5:8;$dimensionIndex=$quotation?7:9;$seen=[];$subtotal=0;$tax=0;
     $product=$pdo->prepare('SELECT code,name,description,tax_affectation_code FROM tbl_product WHERE id=? AND active_status=1');
     foreach($rows as &$row){
         if(!is_array($row))throw new DomainException('Una línea del documento no es válida.');
-        $id=filter_var($row[0]??null,FILTER_VALIDATE_INT);$price=filter_var($row[$priceIndex]??null,FILTER_VALIDATE_FLOAT);$quantity=filter_var($row[$qtyIndex]??null,FILTER_VALIDATE_INT);
+        // Compatibilidad con clientes en caché anteriores a las dimensiones:
+        // la posición 5 de cotización era el importe calculado, no descuento.
+        if($quotation&&!array_key_exists(6,$row))$row=[$row[0]??null,$row[1]??'',$row[2]??'',$row[3]??null,$row[4]??null,0,$row[5]??0,'','','','',''];
+        $id=filter_var($row[0]??null,FILTER_VALIDATE_INT);$price=filter_var($row[$priceIndex]??null,FILTER_VALIDATE_FLOAT);$quantity=filter_var($row[$qtyIndex]??null,FILTER_VALIDATE_INT);$lineDiscount=filter_var(($row[$lineDiscountIndex]??'')===''?0:$row[$lineDiscountIndex],FILTER_VALIDATE_FLOAT);
         if($id===false||$id<1||$price===false||!is_finite((float)$price)||$price<0||$price>999999999.99||$quantity===false||$quantity<1||$quantity>2147483647)throw new DomainException('Los artículos requieren cantidades enteras positivas y precios dentro del rango permitido.');
+        if($lineDiscount===false||!is_finite((float)$lineDiscount)||$lineDiscount<0||$lineDiscount>100)throw new DomainException('El descuento de línea debe estar entre 0 y 100 por ciento.');
         if(isset($seen[$id]))throw new DomainException('No repitas artículos; consolida su cantidad en una línea.');$seen[$id]=true;
         $product->execute([$id]);$master=$product->fetch();if(!$master)throw new DomainException('Uno de los artículos no existe o está inactivo.');
         if($quotation){$row[1]=$master['name'];$row[2]=$master['description'];}else{$row[1]=$master['code'];$row[2]=$master['name'];$row[3]=$master['description'];}
-        $lineValue=round((float)$price*$quantity,2);
+        $dimensions=app_commercial_line_dimensions(['project_code'=>$row[$dimensionIndex]??'','cost_center_code'=>$row[$dimensionIndex+1]??'','lot_number'=>$row[$dimensionIndex+2]??'','serial_number'=>$row[$dimensionIndex+3]??'','expiration_date'=>$row[$dimensionIndex+4]??'']);
+        foreach(array_values($dimensions) as $offset=>$value)$row[$dimensionIndex+$offset]=$value??'';
+        $row[$lineDiscountIndex]=(float)$lineDiscount;
+        $lineValue=round((float)$price*$quantity*(1-(float)$lineDiscount/100),2);
+        $row[6]=$lineValue;
         $subtotal+=$lineValue;
         $taxCode=trim((string)($master['tax_affectation_code']??''));
         if(!in_array($taxCode,['10','20','30','40'],true))throw new DomainException('Un artículo no tiene una afectación SUNAT soportada (10, 20, 30 o 40).');
@@ -53,8 +62,8 @@ function app_validate_quotation_sale(PDO $pdo,int $id,string $currency,array $ro
     if(!$quote||strcasecmp((string)$quote['currency'],$currency)!==0)throw new DomainException('La moneda no coincide con la cotización.');
     $activeOrder=$pdo->prepare("SELECT id FROM tbl_sales_order WHERE quotation_id=? AND status<>'Anulada' FOR UPDATE");$activeOrder->execute([$id]);if($activeOrder->fetchColumn())throw new DomainException('La cotización ya tiene una orden de venta; utiliza esa orden como documento base.');
     if(app_quotation_has_active_sale($pdo,$id))throw new DomainException('La cotización ya tiene un documento de venta activo.');
-    $q=$pdo->prepare('SELECT item_id,item_quantity,item_unit_price FROM tbl_quotation_detail WHERE quotation_id=? ORDER BY item_id');$q->execute([$id]);$expected=[];foreach($q->fetchAll() as $line)$expected[(int)$line['item_id']]=[(float)$line['item_quantity'],(float)$line['item_unit_price']];
-    $actual=[];foreach($rows as $row)$actual[(int)$row[0]]=[(float)$row[5],(float)$row[4]];ksort($expected);ksort($actual);
+    $q=$pdo->prepare('SELECT item_id,item_quantity,item_unit_price,item_discount_rate,project_code,cost_center_code,lot_number,serial_number,expiration_date FROM tbl_quotation_detail WHERE quotation_id=? ORDER BY item_id');$q->execute([$id]);$expected=[];foreach($q->fetchAll() as $line)$expected[(int)$line['item_id']]=[(float)$line['item_quantity'],(float)$line['item_unit_price'],(float)$line['item_discount_rate'],(string)$line['project_code'],(string)$line['cost_center_code'],(string)$line['lot_number'],(string)$line['serial_number'],(string)($line['expiration_date']??'')];
+    $actual=[];foreach($rows as $row)$actual[(int)$row[0]]=[(float)$row[5],(float)$row[4],(float)($row[8]??0),(string)($row[9]??''),(string)($row[10]??''),(string)($row[11]??''),(string)($row[12]??''),(string)($row[13]??'')];ksort($expected);ksort($actual);
     if($expected!==$actual||abs((float)$quote['total_sub']-$subtotal)>.011||abs((float)$quote['total_tax']-$tax)>.011||abs((float)$quote['total_net']-$total)>.011)throw new DomainException('Las líneas o totales no coinciden con la cotización.');
 }
 
@@ -117,13 +126,18 @@ function app_validate_sales_order_document(PDO $pdo, int $salesOrderId, int $cus
         if ((float)$used->fetchColumn() + $advancePercentage > 100.0001) throw new DomainException('Los anticipos activos no pueden superar el 100% de la orden de venta.');
     }
 
-    $detailStatement = $pdo->prepare('SELECT item_id,item_quantity,item_unit_price FROM tbl_sales_order_detail WHERE sales_order_id=? ORDER BY item_id');
+    $detailStatement = $pdo->prepare('SELECT item_id,item_quantity,item_unit_price,item_discount_rate,project_code,cost_center_code,lot_number,serial_number,expiration_date FROM tbl_sales_order_detail WHERE sales_order_id=? ORDER BY item_id');
     $detailStatement->execute([$salesOrderId]);
     $expected = [];
     foreach ($detailStatement->fetchAll() as $row) {
         $productId = (int) $row['item_id'];
         if (isset($expected[$productId])) throw new DomainException('La orden contiene lineas duplicadas que deben consolidarse antes de facturar.');
-        $expected[$productId] = ['quantity'=>(float)$row['item_quantity'], 'price'=>(float)$row['item_unit_price']];
+        $expected[$productId] = [
+            'quantity'=>(float)$row['item_quantity'], 'price'=>(float)$row['item_unit_price'],
+            'discount'=>(float)$row['item_discount_rate'], 'project'=>(string)$row['project_code'],
+            'cost_center'=>(string)$row['cost_center_code'], 'lot'=>(string)$row['lot_number'],
+            'serial'=>(string)$row['serial_number'], 'expiration'=>(string)($row['expiration_date']??''),
+        ];
     }
     $received = [];
     foreach ($postedRows as $row) {
@@ -133,14 +147,22 @@ function app_validate_sales_order_document(PDO $pdo, int $salesOrderId, int $cus
         if ($productId === false || $price === false || $quantity === false || isset($received[(int)$productId])) {
             throw new DomainException('El detalle del documento no coincide con la orden de venta.');
         }
-        $received[(int)$productId] = ['quantity'=>(float)$quantity, 'price'=>(float)$price];
+        $received[(int)$productId] = [
+            'quantity'=>(float)$quantity, 'price'=>(float)$price, 'discount'=>(float)($row[8]??0),
+            'project'=>(string)($row[9]??''), 'cost_center'=>(string)($row[10]??''),
+            'lot'=>(string)($row[11]??''), 'serial'=>(string)($row[12]??''),
+            'expiration'=>(string)($row[13]??''),
+        ];
     }
     ksort($expected);
     ksort($received);
     if (array_keys($expected) !== array_keys($received)) throw new DomainException('Los articulos no coinciden con la orden de venta.');
     foreach ($expected as $productId => $line) {
-        if (abs($line['quantity'] - $received[$productId]['quantity']) > 0.000001 || abs($line['price'] - $received[$productId]['price']) > 0.009) {
-            throw new DomainException('Las cantidades o precios no coinciden con la orden de venta.');
+        $posted=$received[$productId];
+        if (abs($line['quantity']-$posted['quantity'])>0.000001 || abs($line['price']-$posted['price'])>0.009 || abs($line['discount']-$posted['discount'])>0.0001
+            || $line['project']!==$posted['project'] || $line['cost_center']!==$posted['cost_center'] || $line['lot']!==$posted['lot']
+            || $line['serial']!==$posted['serial'] || $line['expiration']!==$posted['expiration']) {
+            throw new DomainException('Las cantidades, precios, descuentos o dimensiones no coinciden con la orden de venta.');
         }
     }
     if ($documentSubtype !== 'ADVANCE' && (abs((float)$order['total_sub']-$subtotal)>0.01 || abs((float)$order['total_tax']-$tax)>0.01 || abs((float)$order['total_net']-$total)>0.01)) {

@@ -3,6 +3,7 @@
 require_once __DIR__ . '/validation.php';
 require_once __DIR__ . '/document-history.php';
 require_once __DIR__ . '/document-engine.php';
+require_once __DIR__ . '/commercial-line-dimensions.php';
 
 /** A pending order is editable and has no reservation; confirmation posts it. */
 function app_sales_order_snapshot(PDO $pdo, int $id, bool $lock = false): array
@@ -73,10 +74,14 @@ function app_validate_sales_order_input(PDO $pdo, array $input): array
         if (!$quantity || $quantity < 1 || $quantity > 2147483647) $errors[] = app_field_error($path . '.quantity', 'MIN', $prefix . 'la cantidad debe ser un entero mayor que cero.');
         $price = filter_var($row['unit_price'] ?? null, FILTER_VALIDATE_FLOAT);
         if ($price === false || $price === null || !is_finite((float) $price) || $price < 0 || $price > 999999999) $errors[] = app_field_error($path . '.unit_price', 'MIN', $prefix . 'ingrese un precio entre 0 y 999999999.');
-        $lineTotal = round((float) $quantity * (float) $price, 2);
+        $discount = filter_var(($row['discount_rate'] ?? '') === '' ? 0 : $row['discount_rate'], FILTER_VALIDATE_FLOAT);
+        if ($discount === false || !is_finite((float) $discount) || $discount < 0 || $discount > 100) $errors[] = app_field_error($path . '.discount_rate', 'RANGE', $prefix . 'el descuento debe estar entre 0 y 100 por ciento.');
+        try { $dimensions = app_commercial_line_dimensions($row, 'Línea ' . ($index + 1)); }
+        catch (DomainException $error) { $errors[] = app_field_error($path, 'INVALID', $error->getMessage()); $dimensions = app_commercial_line_dimensions([]); }
+        $lineTotal = round((float) $quantity * (float) $price * (1 - (float) $discount / 100), 2);
         $subtotal += $lineTotal;
         if ($product && (string) ($product['tax_affectation_code'] ?? '') === '10') $tax += round($lineTotal * .18, 2);
-        $details[] = [$product, (int) $quantity, (float) $price, $lineTotal];
+        $details[] = [$product, (int) $quantity, (float) $price, (float) $discount, $lineTotal, $dimensions];
     }
     $values = is_array($input['custom_field'] ?? null) ? $input['custom_field'] : [];
     $errors = array_merge($errors, app_custom_field_errors($pdo, 'sales_order', $values));
@@ -87,8 +92,10 @@ function app_validate_sales_order_input(PDO $pdo, array $input): array
 
 function app_write_sales_order_lines(PDO $pdo, int $id, array $details): void
 {
-    $insert = $pdo->prepare('INSERT INTO tbl_sales_order_detail (sales_order_id,item_id,item_code,item_name,item_description,item_quantity,item_unit_price,item_total) VALUES (?,?,?,?,?,?,?,?)');
-    foreach ($details as [$product, $quantity, $price, $total]) $insert->execute([$id, $product['id'], $product['code'], $product['name'], $product['description'], $quantity, $price, $total]);
+    $insert = $pdo->prepare('INSERT INTO tbl_sales_order_detail (sales_order_id,item_id,item_code,item_name,item_description,item_quantity,item_unit_price,item_discount_rate,item_discounted_total,item_total,project_code,cost_center_code,lot_number,serial_number,expiration_date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+    foreach ($details as [$product, $quantity, $price, $discount, $total, $dimensions]) {
+        $insert->execute([$id, $product['id'], $product['code'], $product['name'], $product['description'], $quantity, $price, $discount, $total, $total, $dimensions['project_code'], $dimensions['cost_center_code'], $dimensions['lot_number'], $dimensions['serial_number'], $dimensions['expiration_date']]);
+    }
 }
 
 /** Caller owns the transaction, including numbering, lines, UDFs and history. */
