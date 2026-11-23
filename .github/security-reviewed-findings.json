@@ -8823,7 +8823,7 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-27fbdda3ba939675",
-      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
+      "reviewed_commit": "7e09a653c6edd300b03f659034dbe776030107a7",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8863,7 +8863,7 @@
         },
         {
           "path": "tests/masters-navigation-ui.test.cjs",
-          "sha256": "fa311c5efafc698064dab0845a14f15e7c5ad0153b3c63217aac72901236b6a7",
+          "sha256": "45fa90d1e75e6cd4b7b130aa9f55bd87a25f1b387516135dd2c61f324c9e1f8c",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -8876,7 +8876,7 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-4da990a6dc465971",
-      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
+      "reviewed_commit": "7e09a653c6edd300b03f659034dbe776030107a7",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8916,7 +8916,7 @@
         },
         {
           "path": "tests/masters-navigation-ui.test.cjs",
-          "sha256": "fa311c5efafc698064dab0845a14f15e7c5ad0153b3c63217aac72901236b6a7",
+          "sha256": "45fa90d1e75e6cd4b7b130aa9f55bd87a25f1b387516135dd2c61f324c9e1f8c",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -8929,7 +8929,7 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-e0e46a43aab2ac50",
-      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
+      "reviewed_commit": "7e09a653c6edd300b03f659034dbe776030107a7",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8969,7 +8969,7 @@
         },
         {
           "path": "tests/masters-navigation-ui.test.cjs",
-          "sha256": "fa311c5efafc698064dab0845a14f15e7c5ad0153b3c63217aac72901236b6a7",
+          "sha256": "45fa90d1e75e6cd4b7b130aa9f55bd87a25f1b387516135dd2c61f324c9e1f8c",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -8982,7 +8982,7 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-5a33c029824170dc",
-      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
+      "reviewed_commit": "7e09a653c6edd300b03f659034dbe776030107a7",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9022,7 +9022,7 @@
         },
         {
           "path": "tests/masters-navigation-ui.test.cjs",
-          "sha256": "fa311c5efafc698064dab0845a14f15e7c5ad0153b3c63217aac72901236b6a7",
+          "sha256": "45fa90d1e75e6cd4b7b130aa9f55bd87a25f1b387516135dd2c61f324c9e1f8c",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -9035,7 +9035,7 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-6d4977cb784f3241",
-      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
+      "reviewed_commit": "7e09a653c6edd300b03f659034dbe776030107a7",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9075,7 +9075,7 @@
         },
         {
           "path": "tests/masters-navigation-ui.test.cjs",
-          "sha256": "fa311c5efafc698064dab0845a14f15e7c5ad0153b3c63217aac72901236b6a7",
+          "sha256": "45fa90d1e75e6cd4b7b130aa9f55bd87a25f1b387516135dd2c61f324c9e1f8c",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -9088,7 +9088,7 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-77b40b983b35f2a7",
-      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
+      "reviewed_commit": "7e09a653c6edd300b03f659034dbe776030107a7",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9128,7 +9128,7 @@
         },
         {
           "path": "tests/masters-navigation-ui.test.cjs",
-          "sha256": "fa311c5efafc698064dab0845a14f15e7c5ad0153b3c63217aac72901236b6a7",
+          "sha256": "45fa90d1e75e6cd4b7b130aa9f55bd87a25f1b387516135dd2c61f324c9e1f8c",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -9141,7 +9141,7 @@
       "source_sha256": "70b69dbe431f143e5a676afb80597adb13a91c0faa76e4daf60a462712e9eafe",
       "scanner_version": "1.184.0",
       "id": "js-audit-ad7e138d742a2fd1",
-      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
+      "reviewed_commit": "7e09a653c6edd300b03f659034dbe776030107a7",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9181,7 +9181,7 @@
         },
         {
           "path": "tests/masters-navigation-ui.test.cjs",
-          "sha256": "fa311c5efafc698064dab0845a14f15e7c5ad0153b3c63217aac72901236b6a7",
+          "sha256": "45fa90d1e75e6cd4b7b130aa9f55bd87a25f1b387516135dd2c61f324c9e1f8c",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]

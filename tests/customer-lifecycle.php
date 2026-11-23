@@ -43,6 +43,22 @@ try {
     if ((float) $created['commission'] !== 0.0) throw new RuntimeException('El alta sin comisión debe conservar el valor predeterminado cero.');
     $pdo->prepare('UPDATE tbl_customer SET commission=? WHERE client_id=?')->execute([25, $customerId]);
 
+    $_POST = array_merge($base, [
+        'cliente_id' => (string) $customerId,
+        'cliente_direccion' => '',
+        'cliente_departamento' => '',
+        'cliente_provincia' => '',
+        'cliente_distrito' => '',
+    ]);
+    ob_start(); include 'insert-update-cliente.php'; $optionalLocationResult = trim(ob_get_clean());
+    if ($optionalLocationResult !== 'OK_UPDATE') throw new RuntimeException('El domicilio y ubigeo opcionales bloquearon la edición: ' . $optionalLocationResult);
+    $locationState = $pdo->prepare('SELECT address,department_id,province_id,district_id FROM tbl_customer WHERE client_id=?');
+    $locationState->execute([$customerId]);
+    $emptyLocation = $locationState->fetch();
+    if (!$emptyLocation || $emptyLocation['address'] !== '' || $emptyLocation['department_id'] !== '' || $emptyLocation['province_id'] !== '' || $emptyLocation['district_id'] !== '') {
+        throw new RuntimeException('El cliente no conservó vacío el domicilio opcional.');
+    }
+
     $editedName = $businessName . ' EDITADO';
     $_POST = array_merge($base, ['cliente_id' => (string) $customerId, 'cliente_razsoc' => $editedName, 'cliente_active_status' => '0']);
     ob_start(); include 'insert-update-cliente.php'; $updateResult = trim(ob_get_clean());
