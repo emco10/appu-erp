@@ -66,7 +66,21 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             throw new InvalidArgumentException('La boleta debe contener al menos un producto.');
         }
 
-        $f_cliid = app_validate_customer_reference($pdo, $f_cliid);
+        $postedCustomerId = filter_var($f_cliid, FILTER_VALIDATE_INT);
+        $anonymousCustomer = $postedCustomerId === false || $postedCustomerId <= 0;
+        if ($anonymousCustomer) {
+            if ($f_cli_ruc !== '' || $f_clinom !== '' || $f_clidirecc !== '') {
+                throw new DomainException('Selecciona o registra al cliente, o deja sus datos vacíos para consumidor final no identificado.');
+            }
+            if (!in_array(strtoupper(trim((string) $f_currency)), ['MN', 'PEN'], true)) {
+                throw new DomainException('Para consumidor final no identificado usa moneda nacional. En moneda extranjera selecciona un cliente identificado.');
+            }
+            $anonymousStatement = $pdo->query("SELECT client_id FROM tbl_customer WHERE ruc='' AND active_status=1 LIMIT 1");
+            $f_cliid = (int) $anonymousStatement->fetchColumn();
+            if ($f_cliid <= 0) throw new RuntimeException('No está configurado el consumidor final interno. Ejecuta las migraciones pendientes.');
+        } else {
+            $f_cliid = app_validate_customer_reference($pdo, $postedCustomerId);
+        }
         app_validate_product_rows($pdo, $f_lst_prods);
         $pdo->beginTransaction();
         $requestResult=app_document_request_start($pdo,'receipt_create',$_POST,(int)$f_user_id);

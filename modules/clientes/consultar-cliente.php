@@ -3,7 +3,7 @@ require '../../global/connection.php';
 require_once '../../global/peru-tax-profile.php';
 $FILTER_CLI = trim((string) ($_POST["FILTER"] ?? 'ALL'));
 if ($FILTER_CLI == "ALL") {
-    $sqlStatement = $pdo->prepare("SELECT * FROM tbl_customer
+    $sqlStatement = $pdo->prepare("SELECT * FROM tbl_customer WHERE ruc <> ''
         ORDER BY client_id DESC");
     $sqlStatement->execute();
     $rowsNumber = $sqlStatement->rowCount();
@@ -26,7 +26,7 @@ if ($FILTER_CLI == "ALL") {
 } else {
     $ID_REAL = str_replace("CLI-","",$FILTER_CLI);
     $sqlStatement = $pdo->prepare("SELECT * FROM tbl_customer
-        WHERE client_id=:CLIENT_ID");
+        WHERE client_id=:CLIENT_ID AND ruc <> ''");
     $sqlStatement->bindParam("CLIENT_ID", $ID_REAL, PDO::PARAM_STR);
     $sqlStatement->execute();
     $rowsNumber = $sqlStatement->rowCount();

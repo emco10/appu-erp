@@ -63,6 +63,17 @@ test('Boleta: agregar producto y guardar conserva descripción literal y totales
  }finally{t.dom.window.close();}
 });
 
+test('Boleta: consumidor final limpia el cliente y los datos fiscales son condicionales',async()=>{
+ const t=await setup('facturacion/registro-boleta',['ajax/registro-boleta.js']);try{
+  const {$}=t;['facturacion_cliruc','facturacion_valcliente','facturacion_clidirecc'].forEach(name=>assert.equal($('[name='+name+']').prop('required'),false));
+  $('[name=facturacion_cliente]').val('27');$('[name=facturacion_cliruc]').val('20600000001');$('[name=facturacion_valcliente]').val('CLIENTE QA');$('[name=facturacion_clidirecc]').val('LIMA');const writesBefore=t.requests.filter(r=>r.method==='POST'||r.type==='POST').length;
+  $('#btn-anonymous-receipt-customer').trigger('click');
+  ['facturacion_cliente','facturacion_cliruc','facturacion_valcliente','facturacion_clidirecc'].forEach(name=>assert.equal($('[name='+name+']').val(),''));
+  assert.match(t.notifications.at(-1).message,/consumidor final no identificado/i);
+  assert.equal(t.requests.filter(r=>r.method==='POST'||r.type==='POST').length,writesBefore);
+ }finally{t.dom.window.close();}
+});
+
 for(const format of ['texto','JSON decodificado'])test('Catálogos de boleta y servicio aceptan respuesta '+format,async()=>{
  const encode=value=>format==='texto'?JSON.stringify(value):value;
  for(const spec of [{view:'facturacion/registro-boleta',script:'registro-boleta',product:'facturacion_producto',name:'facturacion_nameprod',description:'facturacion_proddesc'},{view:'ordenes/orden-de-servicio',script:'orden-de-servicio',product:'orden_producto_select',name:'orden_nombre_serv',description:'orden_glosa'}]){

@@ -961,3 +961,27 @@ $( 'select[name="facturacion_series"]' ).change(function() {
   idDoc = $('input[name="id_factura"]').val();
   if (idDoc == "") buscarCorrelativo();
 });
+
+$('#btn-anonymous-receipt-customer').on('click', function () {
+  var form = document.getElementById('FRM_INSERT_FACTURA');
+  if (!form) return;
+
+  [
+    'facturacion_cliente',
+    'facturacion_cliruc',
+    'facturacion_valcliente',
+    'facturacion_clidirecc',
+    'facturacion_clirefer',
+    'facturacion_cliemail',
+    'facturacion_email',
+    'facturacion_clitelefono',
+    'facturacion_telefono',
+    'facturacion_clicelular',
+    'facturacion_celular'
+  ].forEach(function (name) {
+    var control = form.elements.namedItem(name);
+    if (control) control.value = '';
+  });
+
+  toastr.info('La boleta se registrará como consumidor final no identificado.');
+});
