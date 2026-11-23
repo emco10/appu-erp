@@ -980,7 +980,7 @@ $('#btn-anonymous-receipt-customer').on('click', function () {
     'facturacion_celular'
   ].forEach(function (name) {
     var control = form.elements.namedItem(name);
-    if (control) $(control).val('');
+    if (control) control.value = '';
   });
 
   toastr.info('La boleta se registrará como consumidor final no identificado.');
