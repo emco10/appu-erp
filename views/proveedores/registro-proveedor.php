@@ -39,11 +39,11 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>RUC Proveedor</label>
+                                        <label>RUC / DNI del proveedor <small class="text-muted">(opcional)</small></label>
                                         <input type="text" class="form-control" name="proveedor_numero" 
-                                        placeholder="Número de proveedor" required>
+                                        placeholder="Déjalo vacío para generar un código interno">
                                         <button type="button" class="btn btn-sm btn-outline-primary mt-2" data-identity-consult><i class="fas fa-search mr-1"></i>Consultar DNI/RUC</button>
-                                        <small class="form-text text-muted">Consulta solo al pulsar el botón. Los proveedores con otro código se registran manualmente.</small>
+                                        <small class="form-text text-muted">Consulta solo al pulsar el botón. Si no tiene DNI/RUC peruano, el ERP generará un código interno.</small>
                                     </div>
                                 </div>
                                 <div class="col-md-8">

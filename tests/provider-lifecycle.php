@@ -12,6 +12,7 @@ $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
 chdir($root . '/modules/proveedores');
 $code = 'QA-PROV-001';
 $providerId = null;
+$optionalProviderId = null;
 $base = [
     'proveedor_id'=>'','proveedor_numero'=>$code,'proveedor_razsoc'=>'PROVEEDOR PRUEBA APPU',
     'proveedor_pais'=>'','proveedor_ciudad'=>'','proveedor_distrito'=>'','proveedor_direccion'=>'',
@@ -41,7 +42,14 @@ try {
     if(!$foundInactive) throw new RuntimeException('La búsqueda maestra no recuperó el proveedor inactivo.');
     $_GET=[];
     if(!str_contains(file_get_contents($root.'/modules/proveedores/obtener-proveedores.php'),'include_inactive')) throw new RuntimeException('La búsqueda maestra no contempla proveedores inactivos.');
+    $_POST=array_merge($base,['proveedor_id'=>'','proveedor_numero'=>'','proveedor_razsoc'=>'PROVEEDOR SIN DOCUMENTO '.substr(uniqid(),-8),'proveedor_active_status'=>'1']);
+    ob_start(); include 'insert-update-proveedor.php'; $result=trim(ob_get_clean());
+    if($result!=='OK_INSERT') throw new RuntimeException('El alta sin documento tributario falló: '.$result);
+    $findOptional=$pdo->prepare("SELECT id,code FROM tbl_provider WHERE business_name=?");$findOptional->execute([$_POST['proveedor_razsoc']]);$optional=$findOptional->fetch();
+    $optionalProviderId=(int)($optional['id']??0);
+    if(!$optionalProviderId||!preg_match('/^PROV-AUTO-[A-F0-9]{24}$/D',(string)($optional['code']??''))) throw new RuntimeException('El alta sin documento no generó un código interno inequívoco.');
     echo 'PASS provider create-search-edit-state lifecycle'.PHP_EOL;
 } finally {
+    if(isset($pdo)&&$optionalProviderId){$pdo->prepare("DELETE FROM tbl_custom_field_value WHERE entity='provider' AND record_id=?")->execute([$optionalProviderId]);$pdo->prepare('DELETE FROM tbl_provider WHERE id=?')->execute([$optionalProviderId]);}
     if(isset($pdo)&&$providerId){$pdo->prepare("DELETE FROM tbl_custom_field_value WHERE entity='provider' AND record_id=?")->execute([$providerId]);$pdo->prepare('DELETE FROM tbl_provider WHERE id=?')->execute([$providerId]);}
 }
