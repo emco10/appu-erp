@@ -1,6 +1,6 @@
 <?php
 require '../../global/connection.php';
-$sqlStatement = $pdo->prepare("SELECT * FROM tbl_customer ORDER BY business_name ASC");
+$sqlStatement = $pdo->prepare("SELECT * FROM tbl_customer WHERE ruc <> '' ORDER BY business_name ASC");
 $sqlStatement->execute();
 $rowsNumber = $sqlStatement->rowCount();
 $DATA = array();

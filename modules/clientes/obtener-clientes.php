@@ -2,7 +2,7 @@
 require '../../global/connection.php';
 $clientId = filter_var($_GET['client_id'] ?? '', FILTER_VALIDATE_INT);
 if ($clientId !== false && $clientId !== null && $clientId > 0) {
-    $statement = $pdo->prepare('SELECT client_id, business_name, trade_name, ruc, address, email, phone, cellphone, department_id, province_id, district_id, contact1_name, contact1_phone, contact2_name, contact2_phone, commission, default_currency, payment_days, credit_limit, price_list_id, sales_employee_id, (SELECT id FROM tbl_user WHERE employee_id=tbl_customer.sales_employee_id AND active_status=1 LIMIT 1) AS sales_user_id, COALESCE((SELECT factor FROM tbl_price_list WHERE id=tbl_customer.price_list_id AND active_status=1),1) AS price_list_factor FROM tbl_customer WHERE client_id = ? AND active_status = 1 LIMIT 1');
+    $statement = $pdo->prepare('SELECT client_id, business_name, trade_name, ruc, address, email, phone, cellphone, department_id, province_id, district_id, contact1_name, contact1_phone, contact2_name, contact2_phone, commission, default_currency, payment_days, credit_limit, price_list_id, sales_employee_id, (SELECT id FROM tbl_user WHERE employee_id=tbl_customer.sales_employee_id AND active_status=1 LIMIT 1) AS sales_user_id, COALESCE((SELECT factor FROM tbl_price_list WHERE id=tbl_customer.price_list_id AND active_status=1),1) AS price_list_factor FROM tbl_customer WHERE client_id = ? AND active_status = 1 AND ruc <> \'\' LIMIT 1');
     $statement->execute([$clientId]);
     $customer = $statement->fetch();
     header('Content-Type: application/json; charset=utf-8');
@@ -21,7 +21,7 @@ if ($ruc !== '') {
 $searchTerm = trim($_GET['cotiz_nomcliente'] ?? $_GET['q'] ?? '');
 $searchTerm = trim($searchTerm, "* ");
 $includeInactive = (int) ($_GET['include_inactive'] ?? 0) === 1;
-$sqlStatement = $pdo->prepare('SELECT client_id, business_name, trade_name, ruc, active_status FROM tbl_customer WHERE ' . ($includeInactive ? '1=1' : 'active_status = 1') . ' AND (business_name LIKE ? OR trade_name LIKE ? OR ruc LIKE ?) ORDER BY business_name ASC LIMIT 100');
+$sqlStatement = $pdo->prepare('SELECT client_id, business_name, trade_name, ruc, active_status FROM tbl_customer WHERE ruc <> \'\' AND ' . ($includeInactive ? '1=1' : 'active_status = 1') . ' AND (business_name LIKE ? OR trade_name LIKE ? OR ruc LIKE ?) ORDER BY business_name ASC LIMIT 100');
 $sqlStatement->execute(array_fill(0, 3, '%' . $searchTerm . '%'));
 $rows = $sqlStatement->fetchAll();
 $DATA = array();

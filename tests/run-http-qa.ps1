@@ -22,7 +22,7 @@ try {
         if (Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue) { $ready = $true; break }
     }
     if (-not $ready) { throw 'El servidor HTTP QA no inició.' }
-    $tests = if($RealSession){@('session-auth-http.php')}else{@('navigation-http.php','masters-navigation-http.php','product-master-http.php','sales-order-http.php','sales-fulfillment-http.php','purchase-goods-receipt-http.php','purchase-process-http.php','inventory-document-http.php','inventory-transfer-http.php','finance-payment-http.php','management-http.php')}
+    $tests = if($RealSession){@('session-auth-http.php')}else{@('navigation-http.php','masters-navigation-http.php','product-master-http.php','sales-order-http.php','sales-fulfillment-http.php','legacy-sales-http.php','purchase-goods-receipt-http.php','purchase-process-http.php','inventory-document-http.php','inventory-transfer-http.php','finance-payment-http.php','management-http.php')}
     foreach ($test in $tests) {
         & $php (Join-Path $PSScriptRoot $test)
         if ($LASTEXITCODE -ne 0) { throw "Falló $test" }

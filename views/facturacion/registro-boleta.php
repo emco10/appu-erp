@@ -128,14 +128,14 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label>Doc. Identidad</label>
-                                        <input type="text" maxlength="11" class="form-control" name="facturacion_cliruc" placeholder="DNI o RUC" required>
-                                        <small class="form-text text-muted">La boleta es para consumidor final. Si el cliente necesita credito fiscal o sustentar costo/gasto, emita una factura.</small>
+                                        <input type="text" maxlength="11" class="form-control" name="facturacion_cliruc" placeholder="DNI o RUC">
+                                        <small class="form-text text-muted">Opcional hasta S/ 700 en moneda nacional. Para importes mayores o moneda extranjera, identifica al comprador.</small>
                                     </div>
                                 </div>
                                 <div class="col-md-7">
                                     <div class="form-group">
                                         <label>Nombres y Apellidos</label>
-                                        <input type="text" name="facturacion_valcliente" class="form-control" placeholder="Nombre de cliente" required>
+                                        <div class="input-group"><input type="text" name="facturacion_valcliente" class="form-control" placeholder="Nombre de cliente"><div class="input-group-append"><button id="btn-anonymous-receipt-customer" type="button" class="btn btn-outline-secondary" title="Registrar como consumidor final no identificado">Consumidor final</button></div></div>
                                     </div>
                                     <input type="hidden" name="facturacion_cliente">
                                 </div>
@@ -157,7 +157,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Dirección</label>
-                                        <input type="text" class="form-control" name="facturacion_clidirecc" placeholder="Dirección" required>
+                                        <input type="text" class="form-control" name="facturacion_clidirecc" placeholder="Dirección">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
