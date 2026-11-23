@@ -36,7 +36,6 @@ $active = (int) ($_POST['proveedor_active_status'] ?? 1) === 0 ? 0 : 1;
 $customValues = is_array($_POST['custom_field'] ?? null) ? $_POST['custom_field'] : [];
 
 try {
-    if ($code === '') throw new InvalidArgumentException('El RUC o código del proveedor es obligatorio.');
     if ($businessName === '') throw new InvalidArgumentException('La razón social del proveedor es obligatoria.');
     if (strlen($code) > 50) throw new InvalidArgumentException('El código del proveedor es demasiado largo.');
     if (!in_array($defaultCurrency, ['PEN','USD','EUR'], true)) throw new InvalidArgumentException('Moneda predeterminada no valida.');
@@ -53,6 +52,13 @@ try {
     app_validate_custom_fields($pdo, 'provider', $customValues);
 
     $pdo->beginTransaction();
+    if ($code === '') {
+        do {
+            $code = 'PROV-AUTO-' . strtoupper(bin2hex(random_bytes(12)));
+            $generated = $pdo->prepare('SELECT 1 FROM tbl_provider WHERE code=? LIMIT 1');
+            $generated->execute([$code]);
+        } while ($generated->fetchColumn());
+    }
     $duplicate = $pdo->prepare('SELECT id FROM tbl_provider WHERE (code=? OR business_name=?) AND (? IS NULL OR id<>?) LIMIT 1');
     $duplicate->execute([$code, $businessName, $providerId, $providerId]);
     if ($duplicate->fetchColumn()) { $pdo->rollBack(); echo 'EXISTE'; exit; }
