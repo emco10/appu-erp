@@ -104,7 +104,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Departamento</label>
-                                        <select class="form-control select2" style="width: 100%;" name="cliente_departamento" required>
+                                        <select class="form-control select2" style="width: 100%;" name="cliente_departamento">
                                             <option value="">Seleccione un departamento</option>
                                         </select>
                                     </div>
@@ -112,7 +112,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Provincia</label>
-                                        <select class="form-control select2" style="width: 100%;" name="cliente_provincia" required>
+                                        <select class="form-control select2" style="width: 100%;" name="cliente_provincia">
                                             <option value="">Seleccione una provincia</option>
                                         </select>
                                     </div>
@@ -120,7 +120,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Distrito</label>
-                                        <select class="form-control select2" style="width: 100%;" name="cliente_distrito" required>
+                                        <select class="form-control select2" style="width: 100%;" name="cliente_distrito">
                                             <option value="">Seleccione un distrito</option>
                                         </select>
                                     </div>
@@ -136,7 +136,7 @@
                                                     <i class="fas fa-home"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" class="form-control" placeholder="Ingrese una dirección" name="cliente_direccion" required>
+                                            <input type="text" class="form-control" placeholder="Ingrese una dirección" name="cliente_direccion">
                                         </div>
                                     </div>
                                 </div>

@@ -36,7 +36,7 @@ $customValues = is_array($_POST['custom_field'] ?? null) ? $_POST['custom_field'
 
 try {
     if (!preg_match('/^(?:\d{8}|\d{11})$/', $ruc)) throw new InvalidArgumentException('El documento debe ser un DNI de 8 dígitos o un RUC de 11 dígitos.');
-    if ($businessName === '' || $address === '' || $department === '' || $province === '' || $district === '') throw new InvalidArgumentException('Completa los datos obligatorios del cliente.');
+    if ($businessName === '') throw new InvalidArgumentException('Ingresa la razón social o los nombres del cliente.');
     if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) throw new InvalidArgumentException('El correo electrónico no es válido.');
     if (!in_array($defaultCurrency, ['PEN','USD','EUR'], true)) throw new InvalidArgumentException('Moneda predeterminada no valida.');
     if ($paymentDays === false || $paymentDays < 0 || $paymentDays > 3650) throw new InvalidArgumentException('Dias de pago no validos.');
@@ -45,9 +45,15 @@ try {
     if ($salesEmployeeId) { $reference=$pdo->prepare('SELECT id FROM tbl_employee WHERE id=? AND active_status=1');$reference->execute([$salesEmployeeId]);if(!$reference->fetchColumn())throw new InvalidArgumentException('Vendedor no disponible.'); }
     $date = DateTimeImmutable::createFromFormat('!Y-m-d', $registrationDate);
     if (!$date || $date->format('Y-m-d') !== $registrationDate) throw new InvalidArgumentException('La fecha de registro no es válida.');
-    $location = $pdo->prepare('SELECT district.id FROM ubigeo_peru_districts district JOIN ubigeo_peru_provinces province ON province.id=district.province_id JOIN ubigeo_peru_departments department ON department.id=province.department_id WHERE department.id=? AND province.id=? AND district.id=? LIMIT 1');
-    $location->execute([$department, $province, $district]);
-    if (!$location->fetchColumn()) throw new InvalidArgumentException('La ubicación seleccionada no es válida.');
+    $hasAnyLocation = $department !== '' || $province !== '' || $district !== '';
+    if ($hasAnyLocation && ($department === '' || $province === '' || $district === '')) {
+        throw new InvalidArgumentException('Si registras una ubicación, selecciona departamento, provincia y distrito.');
+    }
+    if ($hasAnyLocation) {
+        $location = $pdo->prepare('SELECT district.id FROM ubigeo_peru_districts district JOIN ubigeo_peru_provinces province ON province.id=district.province_id JOIN ubigeo_peru_departments department ON department.id=province.department_id WHERE department.id=? AND province.id=? AND district.id=? LIMIT 1');
+        $location->execute([$department, $province, $district]);
+        if (!$location->fetchColumn()) throw new InvalidArgumentException('La ubicación seleccionada no es válida.');
+    }
     app_validate_custom_fields($pdo, 'customer', $customValues);
 
     $pdo->beginTransaction();
