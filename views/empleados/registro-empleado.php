@@ -40,7 +40,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Apellido Paterno</label>
-                                        <input type="text" class="form-control" placeholder="Ingrese apellido paterno" name="empleado_apepat" required>
+                                        <input type="text" class="form-control" placeholder="Ingrese apellido paterno (opcional)" name="empleado_apepat">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -89,7 +89,7 @@
                                                     <i class="far fa-id-card"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" class="form-control" placeholder="Ingrese número de Doc." name="empleado_numdoc" required>
+                                            <input type="text" class="form-control" placeholder="Ingrese número de Doc. (opcional)" name="empleado_numdoc">
                                         </div>
                                         
                                     </div>
@@ -115,7 +115,7 @@
                                                     <i class="far fa-calendar-alt"></i>
                                                 </span>
                                             </div>
-                                            <input type="date" class="form-control"  name="empleado_fecnac" required>
+                                            <input type="date" class="form-control" name="empleado_fecnac">
                                         </div>
                                     </div>
                                 </div>
@@ -144,7 +144,7 @@
                                                     <i class="far fa-calendar-alt"></i>
                                                 </span>
                                             </div>
-                                            <input type="date" class="form-control" name="empleado_fecing" required>
+                                            <input type="date" class="form-control" name="empleado_fecing">
                                         </div>
                                     </div>
                                 </div>
