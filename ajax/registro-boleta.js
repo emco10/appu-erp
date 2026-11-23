@@ -3,7 +3,6 @@ function appuReceiptRequestKey(){var bytes=new Uint8Array(16);if(window.crypto&&
 var appuReceiptRequestKeyValue=appuReceiptRequestKey();
 $("#col-btn-anular-factura").hide();
 function appuAplicarClienteBoleta(c) { if (!c) return; $('input[name="facturacion_cliente"]').val(c.client_id || ''); $('input[name="facturacion_cliruc"]').val(c.ruc || ''); $('input[name="facturacion_valcliente"]').val(c.business_name || c.trade_name || ''); $('input[name="facturacion_clidirecc"]').val(c.address || ''); $('input[name="facturacion_cliemail"], input[name="facturacion_email"]').val(c.email || ''); $('input[name="facturacion_clitelefono"], input[name="facturacion_telefono"]').val(c.phone || c.cellphone || ''); $('input[name="facturacion_clicelular"], input[name="facturacion_celular"]').val(c.cellphone || ''); }
-$('#btn-anonymous-receipt-customer').on('click',function(){ $('input[name="facturacion_cliente"],input[name="facturacion_cliruc"],input[name="facturacion_valcliente"],input[name="facturacion_clidirecc"],input[name="facturacion_clirefer"],input[name="facturacion_cliemail"],input[name="facturacion_email"],input[name="facturacion_clitelefono"],input[name="facturacion_telefono"],input[name="facturacion_clicelular"],input[name="facturacion_celular"]').val(''); toastr.info('La boleta se registrará como consumidor final no identificado.'); });
 $.getJSON("../../modules/facturacion/series.php", { document_type: "RECEIPT" }).done(function (data) { var $select = $('select[name="facturacion_series"]'); $select.empty(); (data.series || []).forEach(function (series) { $select.append($('<option>').val(series.series).attr('data-sunat',Number(series.sunat_enabled)).text(series.series+(Number(series.sunat_enabled)===1?' · SUNAT':' · INTERNA'))); }); $select.trigger("change"); });
 $.getJSON("../../modules/inventory/warehouses.php").done(function (data) { var $select = $('select[name="facturacion_almacen_id"]'); var selectedWarehouse = $select.data("pending-warehouse") || $select.val() || '1'; $select.empty(); (data.warehouses || []).filter(function (warehouse) { return Number(warehouse.active_status) === 1; }).forEach(function (warehouse) { $select.append($('<option>').val(warehouse.id).text(warehouse.code + ' - ' + warehouse.name)); }); $select.val(String(selectedWarehouse)); });
 function appuCargarClientePorRucBoleta() { var $ruc = $('input[name="facturacion_cliruc"]'); var ruc = ($ruc.val() || '').replace(/\D/g, ''); if (ruc.length !== 11) return; $.getJSON('../../modules/clientes/obtener-clientes.php', { ruc: ruc }).done(function (response) { if (!response.found || !response.customer) { toastr.warning('No se encontró un cliente con ese RUC.'); return; } var c = response.customer; $('input[name="facturacion_cliente"]').val(c.client_id || ''); $('input[name="facturacion_valcliente"]').val(c.business_name || ''); $('input[name="facturacion_clidirecc"]').val(c.address || ''); }); }
@@ -961,4 +960,28 @@ function buscarCorrelativo(){
 $( 'select[name="facturacion_series"]' ).change(function() {
   idDoc = $('input[name="id_factura"]').val();
   if (idDoc == "") buscarCorrelativo();
+});
+
+$('#btn-anonymous-receipt-customer').on('click', function () {
+  var form = document.getElementById('FRM_INSERT_FACTURA');
+  if (!form) return;
+
+  [
+    'facturacion_cliente',
+    'facturacion_cliruc',
+    'facturacion_valcliente',
+    'facturacion_clidirecc',
+    'facturacion_clirefer',
+    'facturacion_cliemail',
+    'facturacion_email',
+    'facturacion_clitelefono',
+    'facturacion_telefono',
+    'facturacion_clicelular',
+    'facturacion_celular'
+  ].forEach(function (name) {
+    var control = form.elements.namedItem(name);
+    if (control) $(control).val('');
+  });
+
+  toastr.info('La boleta se registrará como consumidor final no identificado.');
 });
