@@ -4700,7 +4700,7 @@
       "source_sha256": "b3bf815d9c9cba363fab74760ddfcb5136b3568de51af3c576b2a089cf06a1c8",
       "scanner_version": "1.184.0",
       "id": "js-audit-17392bc6d580903a",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -4724,7 +4724,7 @@
         },
         {
           "path": "tests/legacy-documents-ui.test.cjs",
-          "sha256": "670314b4409e0cea87d23acd106f560b31641371c47bbabea1068b8818fe61e3",
+                "sha256": "a30f72a0c3aa02f19bdba40ca4a4be791564b5bf577159aef86e5d1d5f355666",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -6527,10 +6527,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/registro-boleta.js",
       "fingerprint": "16e240a6b23aa670fbe599ec4646ce8f1766d3485b3da26f96b289df37397492",
-      "source_sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40",
+      "source_sha256": "919a68a654bd0f10ac03e754fad068d0773ff9d4c83e455941f7946c195f2822",
       "scanner_version": "1.184.0",
       "id": "js-audit-16e240a6b23aa670",
-      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
+      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6549,7 +6549,7 @@
       "evidence": [
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40",
+                "sha256": "919a68a654bd0f10ac03e754fad068d0773ff9d4c83e455941f7946c195f2822",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -6559,10 +6559,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/registro-boleta.js",
       "fingerprint": "e7f8d29e32b8ae809bae008f8e6b5920f74e33faccbf2d497ce8b26842e1c091",
-      "source_sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40",
+      "source_sha256": "919a68a654bd0f10ac03e754fad068d0773ff9d4c83e455941f7946c195f2822",
       "scanner_version": "1.184.0",
       "id": "js-audit-e7f8d29e32b8ae80",
-      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
+      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6581,7 +6581,7 @@
       "evidence": [
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40",
+                "sha256": "919a68a654bd0f10ac03e754fad068d0773ff9d4c83e455941f7946c195f2822",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -9477,7 +9477,7 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-3aacacc4a4d4607d",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9513,7 +9513,7 @@
         },
         {
           "path": "tests/legacy-documents-ui.test.cjs",
-          "sha256": "670314b4409e0cea87d23acd106f560b31641371c47bbabea1068b8818fe61e3",
+                "sha256": "a30f72a0c3aa02f19bdba40ca4a4be791564b5bf577159aef86e5d1d5f355666",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -9526,7 +9526,7 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-1381fdd4dc6983e5",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9562,7 +9562,7 @@
         },
         {
           "path": "tests/legacy-documents-ui.test.cjs",
-          "sha256": "670314b4409e0cea87d23acd106f560b31641371c47bbabea1068b8818fe61e3",
+                "sha256": "a30f72a0c3aa02f19bdba40ca4a4be791564b5bf577159aef86e5d1d5f355666",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -9575,7 +9575,7 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-27b517791727a475",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9611,7 +9611,7 @@
         },
         {
           "path": "tests/legacy-documents-ui.test.cjs",
-          "sha256": "670314b4409e0cea87d23acd106f560b31641371c47bbabea1068b8818fe61e3",
+                "sha256": "a30f72a0c3aa02f19bdba40ca4a4be791564b5bf577159aef86e5d1d5f355666",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -9624,7 +9624,7 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-081f273c12c4772d",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9660,7 +9660,7 @@
         },
         {
           "path": "tests/legacy-documents-ui.test.cjs",
-          "sha256": "670314b4409e0cea87d23acd106f560b31641371c47bbabea1068b8818fe61e3",
+                "sha256": "a30f72a0c3aa02f19bdba40ca4a4be791564b5bf577159aef86e5d1d5f355666",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -9673,7 +9673,7 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-3fe9875efb7147b5",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9709,7 +9709,7 @@
         },
         {
           "path": "tests/legacy-documents-ui.test.cjs",
-          "sha256": "670314b4409e0cea87d23acd106f560b31641371c47bbabea1068b8818fe61e3",
+                "sha256": "a30f72a0c3aa02f19bdba40ca4a4be791564b5bf577159aef86e5d1d5f355666",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -9722,7 +9722,7 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-44e6c4c6c993bd45",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9758,7 +9758,7 @@
         },
         {
           "path": "tests/legacy-documents-ui.test.cjs",
-          "sha256": "670314b4409e0cea87d23acd106f560b31641371c47bbabea1068b8818fe61e3",
+                "sha256": "a30f72a0c3aa02f19bdba40ca4a4be791564b5bf577159aef86e5d1d5f355666",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -9771,7 +9771,7 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-c823edb5e428b6fd",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9807,7 +9807,7 @@
         },
         {
           "path": "tests/legacy-documents-ui.test.cjs",
-          "sha256": "670314b4409e0cea87d23acd106f560b31641371c47bbabea1068b8818fe61e3",
+                "sha256": "a30f72a0c3aa02f19bdba40ca4a4be791564b5bf577159aef86e5d1d5f355666",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -9852,7 +9852,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.5",
       "id": "vendor-datatables-db05a596880618c2",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9892,7 +9892,7 @@
         },
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40"
+          "sha256": "919a68a654bd0f10ac03e754fad068d0773ff9d4c83e455941f7946c195f2822"
         },
         {
           "path": "ajax/registro-cotizacion.js",
@@ -9957,7 +9957,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.5",
       "id": "vendor-datatables-7337c1c902ec7342",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9997,7 +9997,7 @@
         },
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40"
+          "sha256": "919a68a654bd0f10ac03e754fad068d0773ff9d4c83e455941f7946c195f2822"
         },
         {
           "path": "ajax/registro-cotizacion.js",
@@ -10062,7 +10062,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.5",
       "id": "vendor-datatables-6ae974eda02be810",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10102,7 +10102,7 @@
         },
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40"
+          "sha256": "919a68a654bd0f10ac03e754fad068d0773ff9d4c83e455941f7946c195f2822"
         },
         {
           "path": "ajax/registro-cotizacion.js",
@@ -10167,7 +10167,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.5",
       "id": "vendor-datatables-4bd2d1d1f8911717",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10207,7 +10207,7 @@
         },
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40"
+          "sha256": "919a68a654bd0f10ac03e754fad068d0773ff9d4c83e455941f7946c195f2822"
         },
         {
           "path": "ajax/registro-cotizacion.js",
@@ -10272,7 +10272,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.5",
       "id": "vendor-datatables-18458a854a6ffdb2",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10312,7 +10312,7 @@
         },
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40"
+          "sha256": "919a68a654bd0f10ac03e754fad068d0773ff9d4c83e455941f7946c195f2822"
         },
         {
           "path": "ajax/registro-cotizacion.js",
@@ -10377,7 +10377,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.5",
       "id": "vendor-datatables-f0685907220c2a2c",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10417,7 +10417,7 @@
         },
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40"
+          "sha256": "919a68a654bd0f10ac03e754fad068d0773ff9d4c83e455941f7946c195f2822"
         },
         {
           "path": "ajax/registro-cotizacion.js",
@@ -10482,7 +10482,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.5",
       "id": "vendor-datatables-483477a8b7141b75",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10522,7 +10522,7 @@
         },
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40"
+          "sha256": "919a68a654bd0f10ac03e754fad068d0773ff9d4c83e455941f7946c195f2822"
         },
         {
           "path": "ajax/registro-cotizacion.js",
@@ -10587,7 +10587,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.5",
       "id": "vendor-datatables-6bcfbb0871daafc8",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10627,7 +10627,7 @@
         },
         {
           "path": "ajax/registro-boleta.js",
-          "sha256": "61fe11938acc10a6a69a323c9521425bc383b3b140dfd7fef142563d2fc78f40"
+          "sha256": "919a68a654bd0f10ac03e754fad068d0773ff9d4c83e455941f7946c195f2822"
         },
         {
           "path": "ajax/registro-cotizacion.js",
