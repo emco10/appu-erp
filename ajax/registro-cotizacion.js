@@ -422,123 +422,95 @@ $('select[name="cotizacion_listado"]').on("change", function() {
   }
 });
 
-$("#btn-select-cotizacion").click(function() {
-  DATA_ID = $('select[name="cotizacion_listado"]').val();
-  if (DATA_ID != "" && DATA_ID != null) {
-    Swal.fire({
-      html: "<h4>Cargando datos de cotización</h4>",
-      allowOutsideClick: false,
-      onBeforeOpen: () => {
-        Swal.showLoading();
-      }
+let quotationLoadRevision = 0;
+let quotationLoading = false;
+let quotationSaving = false;
+let quotationRequestKey = '';
+
+function quotationInputDate(value) {
+  const date = String(value || '');
+  const legacy = /^(\d{2})[/-](\d{2})[/-](\d{4})$/.exec(date);
+  return legacy ? legacy[3] + '-' + legacy[2] + '-' + legacy[1] : date;
+}
+
+$("#btn-select-cotizacion").on('click', function () {
+  if (quotationSaving) return;
+  const id = String($('select[name="cotizacion_listado"]').val() || '');
+  if (!/^[1-9]\d*$/.test(id)) return;
+
+  const revision = ++quotationLoadRevision;
+  quotationLoading = true;
+  Swal.fire({
+    title: 'Cargando cotización',
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    onBeforeOpen: () => Swal.showLoading()
+  });
+
+  const headerRequest = $.post('../../modules/cotizaciones/consultar-cotizacion.php', { FILTER: id, ESTADO: 'ALL' }, undefined, 'json');
+  const detailRequest = $.post('../../modules/cotizaciones/consultar-detalle-cotizacion.php', { IDCOTIZ: id }, undefined, 'json');
+  $.when(headerRequest, detailRequest).done(function ([records], [details]) {
+    if (revision !== quotationLoadRevision) return;
+    const quote = Array.isArray(records) ? records[0] : null;
+    if (!quote || String(quote.CODIGOID) !== id || !Array.isArray(details)) {
+      toastr.warning('La cotización seleccionada no está disponible.');
+      return;
+    }
+
+    const form = document.getElementById('FRM_INSERT_COTIZACION');
+    const fields = form.elements;
+    quotationRequestKey = '';
+    appuClearValidation(form);
+    fields.id_cotizacion.value = id;
+    fields.cotizacion_fecha.value = quotationInputDate(quote.FECREG);
+    fields.cotizacion_nro.value = quote.CODIGO;
+    fields.cotizacion_estado.value = quote.ESTADO;
+    $('select[name="cotizacion_usuario"]').val(quote.USER_ID).trigger('change');
+    fields.cotizacion_usuarioid.value = quote.USER_ID;
+    fields.cotizacion_cliente.value = quote.CLIENTID;
+    fields.cotizacion_valcliente.value = quote.CLIENTNAME;
+    fields.cotizacion_cliruc.value = quote.CLIENTRUC;
+    fields.cotizacion_clidirecc.value = quote.CLIENTADDR;
+    fields.cotizacion_clirefer.value = quote.CLIENTREFER;
+    loadQuotationAddresses(quote.CLIENTID, quote.BILLING_ADDRESS_ID, quote.SHIPPING_ADDRESS_ID);
+
+    const payment = $('select[name="cotizacion_formpagotext"]').val(quote.PAY_DAYS);
+    if (payment.val() === null) payment.val('Otro');
+    payment.trigger('change');
+    fields.cotizacion_formpago.value = quote.PAY_DAYS;
+
+    fields.cotizacion_fecentrega.value = quotationInputDate(quote.DELIV_DATE);
+    $('select[name="cotizacion_almacen_id"]').data('pending-warehouse', quote.WAREHOUSE_ID || 1).val(quote.WAREHOUSE_ID || 1);
+    $('select[name="cotizacion_tipmon"]').val(quote.CURRENCY).trigger('change');
+    fields.cotizacion_porcdesc.value = quote.DESC_RATE;
+    fields.cotizacion_cantdesc.value = quote.DESC_VAL;
+    fields.cotizacion_opergrab.value = Number(quote.TOTAL_SUB).toFixed(2);
+    fields.cotizacion_igv.value = Number(quote.TOTAL_TAX).toFixed(2);
+    fields.cotizacion_total.value = Number(quote.TOTAL_NET).toFixed(2);
+    total_temporal = Number(quote.TOTAL_NET) + Number(quote.DESC_VAL);
+
+    $('select[name="cotizacion_producto"]').val('').trigger('change');
+    const rows = details.map(function (line) {
+      return [line.IDPROD, line.NOMBRE, line.DESCRIP, Number(line.PRECIOUNIT).toFixed(2),
+        line.CANTIDAD, Number(line.DESCUENTO_LINEA || 0).toFixed(2), Number(line.IMPORTE).toFixed(2),
+        line.PROYECTO || '', line.CENTRO_COSTO || '', line.LOTE || '', line.SERIE || '', line.VENCIMIENTO || ''];
     });
-    $.post(
-      "../../modules/cotizaciones/consultar-cotizacion.php",
-      { FILTER: DATA_ID, ESTADO: "ALL" },
-      function(data) {
-        var data_json = (typeof data === "string" ? JSON.parse(data) : data);
+    tbl_prodcotiz.clear().rows.add(rows).draw();
 
-        est_cotiz = data_json[0]["ESTADO"];
-
-        $('input[name="cotizacion_valcliente"]').focus();
-
-        $("#btn-anular-cotizprod").attr("js-id", data_json[0]["CODIGOID"]);
-        $('input[name="id_cotizacion"]').val(data_json[0]["CODIGOID"]);
-        $('input[name="cotizacion_fecha"]').val(data_json[0]["FECREG"]);
-        $('input[name="cotizacion_nro"]').val(data_json[0]["CODIGO"]);
-
-        $('select[name="cotizacion_estado"]').val(data_json[0]["ESTADO"]);
-
-        $('select[name="cotizacion_usuario"]').val(data_json[0]["USER_ID"]);
-        $('select[name="cotizacion_usuario"]').trigger("change");
-        $('input[name="cotizacion_usuarioid"]').val(data_json[0]["USER_ID"]);
-
-        $('input[name="cotizacion_cliente"]').val(data_json[0]["CLIENTID"]);
-        $('input[name="cotizacion_valcliente"]').val(data_json[0]["CLIENTNAME"]);
-        
-        $('input[name="cotizacion_cliruc"]').val(data_json[0]["CLIENTRUC"]);
-        $('input[name="cotizacion_clidirecc"]').val(data_json[0]["CLIENTADDR"]);
-        loadQuotationAddresses(data_json[0]["CLIENTID"], data_json[0]["BILLING_ADDRESS_ID"], data_json[0]["SHIPPING_ADDRESS_ID"]);
-        $('input[name="cotizacion_clirefer"]').val(data_json[0]["CLIENTREFER"]);
-
-        if(est_cotiz == 2){
-          $("#btn-anular-cotizprod").prop("disabled",true);
-        } else {
-          $("#btn-anular-cotizprod").prop("disabled",false);
-        }
-
-        $('select[name="cotizacion_formpagotext"]').val(data_json[0]["PAY_DAYS"]);
-        $('select[name="cotizacion_formpagotext"]').trigger("change");
-
-        if ($('select[name="cotizacion_formpagotext"]').val() == null) {
-          $('select[name="cotizacion_formpagotext"]').val("Otro");
-          $('select[name="cotizacion_formpagotext"]').trigger("change");
-          $('#div_diaspago').show();
-          $('input[name="cotizacion_formpago"]').prop("required",true);
-          $('input[name="cotizacion_formpago"]').val(data_json[0]["PAY_DAYS"] );
-        }
-
-        $('input[name="cotizacion_fecentrega"]').val(data_json[0]["DELIV_DATE"]);
-        $('select[name="cotizacion_almacen_id"]').data("pending-warehouse", data_json[0]["WAREHOUSE_ID"] || 1).val(data_json[0]["WAREHOUSE_ID"] || 1);
-
-        $('select[name="cotizacion_tipmon"]').val(data_json[0]["CURRENCY"]);
-        $('select[name="cotizacion_tipmon"]').trigger("change");
-
-        $('input[name="cotizacion_porcdesc"]').val(data_json[0]["DESC_RATE"]);
-        $('input[name="cotizacion_cantdesc"]').val(data_json[0]["DESC_VAL"]);
-        $('input[name="cotizacion_opergrab"]').val(parseFloat(data_json[0]["TOTAL_SUB"]).toFixed(2));
-        $('input[name="cotizacion_igv"]').val(parseFloat(data_json[0]["TOTAL_TAX"]).toFixed(2));
-        $('input[name="cotizacion_total"]').val(parseFloat(data_json[0]["TOTAL_NET"]).toFixed(2));
-
-        total_temporal = data_json[0]["TOTAL_NET"];
-        codigo_idcotiz = data_json[0]["CODIGOID"];
-
-        $.post("../../modules/cotizaciones/consultar-detalle-cotizacion.php",
-          { IDCOTIZ: codigo_idcotiz }, function(data) {
-            $('select[name="cotizacion_producto"]').val("");
-            $('select[name="cotizacion_producto"]').trigger("change");
-            $('input[name="cotizacion_proddesc"]').val("");
-            $('input[name="cotizacion_prodprecio"]').val("");
-            $('input[name="cotizacion_prodcant"]').val(0);
-            $("#btn-add-prodtocotiz").prop("disabled", true);
-            $("#btn-save-cotizprod").prop("disabled", false);
-
-            tbl_prodcotiz.clear().draw();
-            detacotiz_json = (typeof data === "string" ? JSON.parse(data) : data);
-            for (i = 0; i < detacotiz_json.length; i++) {
-              var precio = parseFloat(detacotiz_json[i]["PRECIOUNIT"]).toFixed(2);
-              var importe = parseFloat(detacotiz_json[i]["IMPORTE"]).toFixed(2);
-
-              tbl_prodcotiz.rows
-                .add([
-                  {
-                    0: detacotiz_json[i]["IDPROD"],
-                    1: detacotiz_json[i]["NOMBRE"],
-                    2: detacotiz_json[i]["DESCRIP"],
-                    3: precio,
-                    4: detacotiz_json[i]["CANTIDAD"],
-                    5: Number(detacotiz_json[i]["DESCUENTO_LINEA"] || 0).toFixed(2),
-                    6: importe,
-                    7: detacotiz_json[i]["PROYECTO"] || '',
-                    8: detacotiz_json[i]["CENTRO_COSTO"] || '',
-                    9: detacotiz_json[i]["LOTE"] || '',
-                    10: detacotiz_json[i]["SERIE"] || '',
-                    11: detacotiz_json[i]["VENCIMIENTO"] || ''
-                  }
-                ])
-                .draw();
-            }
-          }
-        );
-
-        $("#col-btn-save-cotizprod").hide();
-        $("#col-btn-anular-cotizprod").show("fast");
-        $("#col-btn-anular-cotizprod").attr("class", "col-md-12");
-      }
-    ).then(function() {
-      Swal.close();
-    });
-  }
+    const canManage = appuCan('sales.manage') && Number(quote.ESTADO) !== 2;
+    $('#btn-add-prodtocotiz').prop('disabled', true);
+    $('#btn-save-cotizprod').prop('disabled', !canManage || !rows.length);
+    $('#col-btn-save-cotizprod').hide();
+    $('#btn-anular-cotizprod').attr('js-id', id).prop('disabled', !canManage);
+    $('#col-btn-anular-cotizprod').show().attr('class', 'col-md-12');
+    appuMarkSaved();
+  }).fail(function () {
+    if (revision === quotationLoadRevision) toastr.error('No se pudo consultar la cotización. Vuelve a seleccionarla.');
+  }).always(function () {
+    if (revision !== quotationLoadRevision) return;
+    quotationLoading = false;
+    Swal.close();
+  });
 });
 
 $("#table-productscotiz").on("dblclick", "tr", function() {
@@ -607,118 +579,83 @@ $('input[name="cotizacion_porcdesc"]').on("change", function() {
   $('input[name="cotizacion_total"]').val(total_desc.toFixed(2));
 });
 
-$("#FRM_INSERT_COTIZACION").submit(function(e) {
-  e.preventDefault();
-  if (!$('input[name="cotizacion_cliente"]').val()) {
-    $.Notification.notify("warning", "bottom-right", "Cliente requerido", "Selecciona un cliente registrado desde la búsqueda.");
-    $('input[name="cotizacion_valcliente"]').focus();
+$("#FRM_INSERT_COTIZACION").on('submit', function (event) {
+  event.preventDefault();
+  if (quotationSaving || quotationLoading || !appuCan('sales.manage')) return;
+
+  const form = this;
+  if (!form.elements.cotizacion_cliente.value) {
+    appuShowValidation(form, {
+      message: 'Selecciona un cliente registrado.',
+      errors: [{ path: 'cotizacion_valcliente', message: 'Elige el cliente desde la búsqueda.' }]
+    });
     return;
   }
-  var form = $(this);
-  var idform = form.attr("id");
-  var url = form.attr("action");
-  tbl_data = tbl_prodcotiz.rows().data().toArray();
-  var formElement = document.getElementById(idform);
-  var formData_rec = new FormData(formElement);
-  formData_rec.append("cotiz_prods", JSON.stringify(tbl_data));
-  var id_cotizacion = $('input[name="id_cotizacion"]').val();
+
+  const rows = tbl_prodcotiz.rows().data().toArray();
+  if (!rows.length) {
+    toastr.warning('Agrega al menos un artículo a la cotización.');
+    return;
+  }
+
+  const data = new FormData(form);
+  quotationRequestKey ||= appuRequestKey();
+  data.set('cotiz_prods', JSON.stringify(rows));
+  data.set('request_key', quotationRequestKey);
+  data.set('response_format', 'json');
+  appuClearValidation(form);
+
+  const toolbar = document.querySelector('.appu-document-toolbar');
+  const saveButton = form.querySelector('#btn-save-cotizprod');
+  function lock(locked) {
+    quotationSaving = locked;
+    form.inert = locked;
+    if (toolbar) toolbar.inert = locked;
+    form.setAttribute('aria-busy', String(locked));
+    saveButton.disabled = locked;
+  }
+
+  lock(true);
+  Swal.fire({
+    title: 'Guardando cotización',
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    onBeforeOpen: () => Swal.showLoading()
+  });
+
   $.ajax({
-    type: "POST",
-    url: url,
-    data: formData_rec,
+    type: 'POST',
+    url: form.action,
+    data,
+    dataType: 'json',
     contentType: false,
-    cache: false,
-    processData: false,
-    error: function(xhr) { Swal.close(); if (typeof window.appuShowRequestError === 'function') window.appuShowRequestError(form,xhr,'No se pudo guardar la cotización. Revisa los datos e inténtalo nuevamente.'); else toastr.error(xhr.responseJSON && xhr.responseJSON.message || 'No se pudo guardar la cotización. Revisa los datos e inténtalo nuevamente.'); },
-    beforeSend: function() {
-      Swal.fire({
-        html: "<h4>Guardando cotización</h4>",
-        allowOutsideClick: false,
-        onBeforeOpen: () => {
-          Swal.showLoading();
-        }
-      });
-    },
-    success: function(data) {
-      //console.log(data);
-      if (data == "ERROR") {
-        $.Notification.notify(
-          "error",
-          "bottom-right",
-          "Error de guardado",
-          "No se pudo guardar la cotización"
-        );
-        Swal.close();
-      } else if (data == "OK_INSERT") {
-        $('input[name="cotizacion_valcliente"]').val("");
-        $('input[name="cotizacion_fecha"]').focus();
-        $.Notification.notify(
-          "success",
-          "bottom-right",
-          "Cotización guardada",
-          "Datos almacenados"
-        );
-        form.find("input, textarea, select").val("");
-        $('select[name="cotizacion_producto"]').trigger("change");
-        $("#btn-save-cotizprod").prop("disabled", true);
-        $("#btn-add-prodtocotiz").prop("disabled", true);
-        $('select[name="cotizacion_formpagotext"]').prop("disabled",false);
-        $('#div_diaspago').hide();
-        $('input[name="cotizacion_formpago"]').prop("required",false);
-        tbl_prodcotiz.clear().draw();
-        Swal.close();
-
-        $.post("../../modules/cotizaciones/listar-cotizaciones.php", function(
-          data
-        ) {
-          $('select[name="cotizacion_listado"]').empty();
-          $('select[name="cotizacion_listado"]').select2({
-            data: (typeof data === "string" ? JSON.parse(data) : data)
-          });
-        });
-      } else if (data == "OK_UPDATE") {
-        if (id_cotizacion != "" && id_cotizacion != null) {
-          $('input[name="cotizacion_fecha"]').focus();
-          $('input[name="cotizacion_valcliente"]').val("");
-          $('input[name="id_cotizacion"]').val("");
-          $("#btn-save-cotizprod font").html("Guardar cotización");
-          $("#col-btn-save-cotizprod").attr("class", "col-md-12");
-          $("#col-btn-anular-cotizprod").hide();
-          form.find("input, textarea, select").val("");
-          $('select[name="cotizacion_producto"]').trigger("change");
-          $("#btn-save-cotizprod").prop("disabled", true);
-          $("#btn-add-prodtocotiz").prop("disabled", true);
-          $('select[name="cotizacion_formpagotext"]').prop("disabled",false);
-          $('#div_diaspago').hide();
-          $('input[name="cotizacion_formpago"]').prop("required",false);
-        }
-
-        $.Notification.notify(
-          "success",
-          "bottom-right",
-          "Cotización actualizada",
-          "Datos actualizados"
-        );
-        tbl_prodcotiz.clear().draw();
-        
-        $("#btn-save-cotizprod").prop("disabled", true);
-
-        $.post("../../modules/cotizaciones/listar-cotizaciones.php", function(
-          data
-        ) {
-          $('select[name="cotizacion_listado"]').empty();
-          $('select[name="cotizacion_listado"]').select2({
-            data: (typeof data === "string" ? JSON.parse(data) : data)
-          });
-        });
-
-        Swal.close();
-      }
+    processData: false
+  }).done(function (response) {
+    if (!response || response.error !== false || !/^[1-9]\d*$/.test(String(response.quotation_id))) {
+      lock(false);
+      Swal.close();
+      appuShowRequestError(form, { responseJSON: response }, 'No se pudo confirmar el guardado. Reintenta con los mismos datos.');
+      return;
     }
+
+    appuMarkSaved();
+    const savedUrl = new URL(appuNewDocumentUrl());
+    savedUrl.searchParams.delete('mode');
+    savedUrl.searchParams.set('record_id', String(response.quotation_id));
+    window.location.assign(savedUrl.href);
+  }).fail(function (xhr) {
+    lock(false);
+    Swal.close();
+    if (!xhr.status || xhr.status >= 500) {
+      toastr.error('No se pudo confirmar el guardado. Reintenta con los mismos datos para confirmar la operación.');
+      return;
+    }
+    appuShowRequestError(form, xhr, 'No se pudo guardar la cotización. Revisa los datos e inténtalo nuevamente.');
   });
 });
 
 $("#btn-anular-cotizprod").click(function() {
+  if (quotationSaving || quotationLoading || !appuCan('sales.manage')) return;
   element = $(this);
   id_val = element.attr("js-id");
   if (id_val != "" && id_val != null) {

@@ -52,7 +52,50 @@ async function run() {
     await page.context().addCookies([legacyCookie]);
     await page.goto(route);
     await expect(record).toHaveValue(recordId);
-    console.log('PASS Oferta de ventas: Nuevo, descarte, creación limpia y reapertura compatible');
+    await expect(page.locator('[name=cotizacion_fecha]')).toHaveValue(/^\d{4}-\d{2}-\d{2}$/);
+    await expect(page.locator('[name=cotizacion_fecentrega]')).toHaveValue(/^\d{4}-\d{2}-\d{2}$/);
+
+    const submissions = [];
+    const saveEndpoint = '**/modules/cotizaciones/insert-update-cotizacion.php';
+    let firstResponse;
+    await page.route(saveEndpoint, async requestRoute => {
+      const httpResponse = await requestRoute.fetch();
+      const result = await httpResponse.json();
+      submissions.push(result);
+      if (submissions.length === 1) {
+        firstResponse = result;
+        await requestRoute.abort('connectionreset');
+      } else {
+        await requestRoute.fulfill({ response: httpResponse });
+      }
+    });
+    const form = page.locator('#FRM_INSERT_COTIZACION');
+    await reference.fill('Guardado y reintento QA');
+    await form.evaluate(element => {
+      for (let count = 0; count < 2; count++) {
+        element.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+      }
+    });
+    await expect(page.getByText('No se pudo confirmar el guardado.', { exact: false })).toBeVisible();
+    assert.equal(submissions.length, 1, 'Dos envíos inmediatos deben originar una solicitud');
+    assert.equal(firstResponse.quotation_id, Number(recordId));
+    assert.equal(firstResponse.result, 'OK_UPDATE');
+    await expect(reference).toHaveValue('Guardado y reintento QA');
+    await expect(form).toHaveAttribute('aria-busy', 'false');
+
+    const invalidFields = await form.evaluate(element => [...element.elements]
+      .filter(field => field.willValidate && !field.validity.valid)
+      .map(field => ({ name: field.name, message: field.validationMessage })));
+    assert.deepEqual(invalidFields, [], 'La cotización consultada debe conservar los campos requeridos');
+    const saveButton = page.locator('.appu-doc-save');
+    await expect(saveButton).toHaveText(/Guardar/);
+    await saveButton.click({ timeout: 10000 });
+    await expect.poll(() => submissions.length).toBe(2);
+    assert.deepEqual(submissions, [firstResponse, firstResponse], 'El reintento debe devolver la primera confirmación');
+    await page.waitForURL(url => url.pathname === route && url.searchParams.get('record_id') === recordId, { timeout: 10000 });
+    await expect(record).toHaveValue(recordId);
+    await expect(reference).toHaveValue('Guardado y reintento QA');
+    console.log('PASS Oferta de ventas: Nuevo, consulta, doble envío, pérdida de respuesta y reapertura tras guardar');
   } finally {
     await browser.close();
   }

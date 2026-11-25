@@ -3,6 +3,7 @@ if(PHP_SAPI!=='cli'){http_response_code(404);exit;}
 require __DIR__.'/../global/connection.php';require_once __DIR__.'/../modules/inventory/stock.php';require_once __DIR__.'/qa-http-client.php';
 if(!str_ends_with(DB,'_qa'))throw new RuntimeException('Use una base _qa.');
 $http=new AppQaHttpClient(getenv('APPU_QA_URL')?:'http://127.0.0.1:8765',DB);$key='QA-LS-'.bin2hex(random_bytes(4));$customer=$product=$quotation=$order=null;$documents=[];$failed=false;
+$quotationKey = bin2hex(random_bytes(16));
 function legacySalesAssert(bool $ok,string $message):void{if(!$ok)throw new RuntimeException($message);}
 function legacySalesPost(AppQaHttpClient $http,string $path,array $data,int $expected=200):array{[$status,$json,$body]=$http->request($path,$data);legacySalesAssert($status===$expected,$path.' HTTP '.$status.': '.$body);return [$json,$body];}
 try{
@@ -15,7 +16,23 @@ try{
  $quote=['id_cotizacion'=>'','cotizacion_cliente'=>$customer,'cotizacion_cliruc'=>'ALTERADO','cotizacion_valcliente'=>'ALTERADO','cotizacion_clidirecc'=>'ALTERADA','cotizacion_clirefer'=>$key,'cotizacion_tipmon'=>'MN','cotizacion_almacen_id'=>$warehouse,'cotizacion_fecentrega'=>$today,'cotizacion_porcdesc'=>0,'cotizacion_cantdesc'=>999,'cotizacion_formpago'=>0,'cotizacion_fecha'=>$today,'cotizacion_opergrab'=>999,'cotizacion_total'=>999,'cotizacion_igv'=>999,'cotiz_prods'=>json_encode([[$product,'ALTERADO','ALTERADO',10,2,0,20,'PR-HTTP','CC-LIMA','LOT-HTTP','SER-HTTP','2035-12-31']]),'cotizacion_estado'=>1,'cotizacion_usuarioid'=>$user];
  $invalid=$quote;$invalid['cotiz_prods']=json_encode([[$product,'QA','QA',10,1.5,15]]);legacySalesPost($http,'/modules/cotizaciones/insert-update-cotizacion.php',$invalid,422);
  $invalid=$quote;$invalid['cotizacion_fecha']='2026-02-30';legacySalesPost($http,'/modules/cotizaciones/insert-update-cotizacion.php',$invalid,422);
- [, $body]=legacySalesPost($http,'/modules/cotizaciones/insert-update-cotizacion.php',$quote);legacySalesAssert($body==='OK_INSERT','No creó cotización.');$q=$pdo->prepare('SELECT id FROM tbl_quotation WHERE customer_id=? ORDER BY id DESC LIMIT 1');$q->execute([$customer]);$quotation=(int)$q->fetchColumn();
+ $keyedQuote = $quote + ['request_key' => $quotationKey, 'response_format' => 'json'];
+ $invalid = array_replace($keyedQuote, ['cotizacion_fecha' => '2026-02-30']);
+ legacySalesPost($http, '/modules/cotizaciones/insert-update-cotizacion.php', $invalid, 422);
+ [$created] = legacySalesPost($http, '/modules/cotizaciones/insert-update-cotizacion.php', $keyedQuote);
+ $quotation = (int) ($created['quotation_id'] ?? 0);
+ legacySalesAssert($quotation > 0 && $created['result'] === 'OK_INSERT', 'El alta no devolvió la identidad de la cotización.');
+ [$replay] = legacySalesPost($http, '/modules/cotizaciones/insert-update-cotizacion.php', $keyedQuote);
+ legacySalesAssert($replay === $created, 'El reintento no devolvió la cotización original.');
+ $conflict = array_replace($keyedQuote, ['cotizacion_clirefer' => 'Referencia distinta']);
+ [$rejected] = legacySalesPost($http, '/modules/cotizaciones/insert-update-cotizacion.php', $conflict, 409);
+ legacySalesAssert($rejected['code'] === 'CONFLICT', 'La misma clave admitió una solicitud distinta.');
+ $q = $pdo->prepare('SELECT COUNT(*) FROM tbl_quotation WHERE customer_id=?');
+ $q->execute([$customer]);
+ legacySalesAssert((int) $q->fetchColumn() === 1, 'La solicitud repetida creó otra cotización.');
+ $q = $pdo->prepare("SELECT COUNT(*) FROM tbl_document_status_history WHERE document_type='quotation' AND document_id=?");
+ $q->execute([$quotation]);
+ legacySalesAssert((int) $q->fetchColumn() === 1, 'El reintento generó otro evento de historial.');
  [$converted]=legacySalesPost($http,'/modules/ventas/ordenes.php',['action'=>'convert_from_quotation','quotation_id'=>$quotation,'warehouse_id'=>$warehouse]);$order=(int)$converted['order_id'];legacySalesPost($http,'/modules/ventas/ordenes.php',['action'=>'confirm','order_id'=>$order]);
  $series=[];foreach(['INVOICE','RECEIPT','CREDIT_NOTE'] as $type){$q=$pdo->prepare('SELECT series FROM tbl_document_series WHERE document_type=? AND active_status=1 ORDER BY id LIMIT 1');$q->execute([$type]);$series[$type]=$q->fetchColumn();legacySalesAssert((bool)$series[$type],'Falta serie QA '.$type);}
  $sale=['facturacion_series'=>$series['RECEIPT'],'facturacion_nro'=>'999999','facturacion_cliente'=>$customer,'facturacion_cliruc'=>'ALTERADO','facturacion_valcliente'=>'ALTERADO','facturacion_clidirecc'=>'ALTERADA','facturacion_clirefer'=>$key,'facturacion_tipmon'=>'MN','facturacion_fecentrega'=>$today,'facturacion_porcdesc'=>0,'facturacion_cantdesc'=>999,'facturacion_formpago'=>0,'facturacion_fecha'=>$today,'facturacion_opergrab'=>999,'facturacion_total'=>999,'facturacion_igv'=>999,'facturacion_prods'=>json_encode([[$product,'ALTERADO','ALTERADO','ALTERADO',10,2,20,'10',0,'PR-HTTP','CC-LIMA','LOT-HTTP','SER-HTTP','2035-12-31']]),'facturacion_estado'=>1,'facturacion_listadocotiz'=>$quotation,'facturacion_orden_venta'=>$order,'facturacion_almacen_id'=>$warehouse,'facturacion_usuarioid'=>$user];
@@ -47,6 +64,7 @@ try{
 }catch(Throwable $error){fwrite(STDERR,'FAIL legacy sales HTTP: '.$error->getMessage().PHP_EOL);$failed=true;}
 finally{
  if($pdo->inTransaction())$pdo->rollBack();$pdo->beginTransaction();
+ $pdo->prepare("DELETE FROM tbl_document_request WHERE operation='quotation_save' AND request_key=?")->execute([$quotationKey]);
  foreach(array_reverse($documents) as [$type,$id]){if($type!=='credit_note')$pdo->prepare('DELETE FROM tbl_accounts_receivable WHERE document_type=? AND document_id=?')->execute([$type,$id]);$pdo->prepare('DELETE FROM tbl_'.$type.'_detail WHERE '.$type.'_id=?')->execute([$id]);$pdo->prepare('DELETE FROM tbl_'.$type.' WHERE id=?')->execute([$id]);}
  foreach(array_merge($documents,$order?[['sales_order',$order]]:[],$quotation?[['quotation',$quotation]]:[]) as [$type,$id]){foreach(['tbl_document_status_history'=>'document_type','tbl_custom_field_value'=>'entity'] as $table=>$column)$pdo->prepare("DELETE FROM {$table} WHERE {$column}=? AND ".($table==='tbl_custom_field_value'?'record_id':'document_id').'=?')->execute([$type,$id]);$pdo->prepare('DELETE FROM tbl_document_flow WHERE(source_type=? AND source_id=?)OR(target_type=? AND target_id=?)')->execute([$type,$id,$type,$id]);$pdo->prepare('DELETE FROM tbl_document_line_application WHERE(source_type=? AND source_id=?)OR(target_type=? AND target_id=?)')->execute([$type,$id,$type,$id]);}
  if($order){$pdo->prepare('DELETE FROM tbl_sales_order_detail WHERE sales_order_id=?')->execute([$order]);$pdo->prepare('DELETE FROM tbl_sales_order WHERE id=?')->execute([$order]);}if($quotation){$pdo->prepare('DELETE FROM tbl_quotation_detail WHERE quotation_id=?')->execute([$quotation]);$pdo->prepare('DELETE FROM tbl_quotation WHERE id=?')->execute([$quotation]);}if($product){foreach(['tbl_inventory_lot_application','tbl_warehouse_movement','tbl_product_lot','tbl_warehouse_stock'] as $table)$pdo->prepare('DELETE FROM '.$table.' WHERE product_id=?')->execute([$product]);$pdo->prepare('DELETE FROM tbl_product WHERE id=?')->execute([$product]);}if($customer)$pdo->prepare('DELETE FROM tbl_customer WHERE client_id=?')->execute([$customer]);$pdo->commit();
