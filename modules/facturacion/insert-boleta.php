@@ -11,6 +11,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     require_once '../../global/business-partner-details.php';
     require_once '../finanzas/sync.php';
     require_once '../../global/sunat-api.php';
+    require_once '../../global/sales-document-save.php';
+    $asJson = ($_POST['response_format'] ?? '') === 'json';
 
     $f_faccod = "";
     $f_series = $_POST['facturacion_series'];
@@ -59,6 +61,14 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     $cant_prod = 0;
     
     try {
+        $pdo->exec('SET TRANSACTION ISOLATION LEVEL READ COMMITTED');
+        $pdo->beginTransaction();
+        $requestResult = app_document_request_start($pdo, 'receipt_create', $_POST, (int) $f_user_id);
+        if ($requestResult !== null) {
+            $pdo->commit();
+            app_send_sales_creation_result($requestResult, $asJson);
+            return;
+        }
         $totals=app_validate_legacy_sales_input($pdo,$_POST,$f_lst_prods);
         $f_subtotal=$totals['subtotal'];$f_taxigv=$totals['tax'];$f_porcdesc=$totals['discount_rate'];$f_valdesc=$totals['discount'];$f_totalneto=$totals['total'];
         if(!in_array((int)$f_estado,[1,3],true))throw new InvalidArgumentException('La nueva boleta debe estar vigente o pendiente de pago.');
@@ -82,13 +92,6 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             $f_cliid = app_validate_customer_reference($pdo, $postedCustomerId);
         }
         app_validate_product_rows($pdo, $f_lst_prods);
-        $pdo->beginTransaction();
-        $requestResult=app_document_request_start($pdo,'receipt_create',$_POST,(int)$f_user_id);
-        if($requestResult!==null){
-            $pdo->commit();
-            echo 'OK_INSERT';
-            exit;
-        }
         $f_faccod=app_validate_legacy_sales_number($pdo,'RECEIPT',(string)$f_series,(string)$f_faccod);
         $customerStatement=$pdo->prepare('SELECT ruc,business_name FROM tbl_customer WHERE client_id=? AND active_status=1');$customerStatement->execute([$f_cliid]);$customer=$customerStatement->fetch();
         $f_cli_ruc=(string)$customer['ruc'];$f_clinom=(string)$customer['business_name'];
@@ -190,11 +193,12 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         }
 
         finance_sync_receipt($pdo, $id_facturacion);
-        app_document_request_finish($pdo,'receipt_create',$_POST,(int)$f_user_id,'receipt',(int)$id_facturacion,['response'=>'OK_INSERT']);
+        $result = ['error' => false, 'document_id' => $id_facturacion, 'number' => $documentReference];
+        app_document_request_finish($pdo, 'receipt_create', $_POST, (int) $f_user_id, 'receipt', $id_facturacion, $result);
         $pdo->commit();
         try { app_sunat_submit_document($pdo, 'receipt', (int) $id_facturacion); }
         catch (Throwable $sunatException) { error_log('APPU automatic SUNAT receipt submission: ' . $sunatException->getMessage()); }
-        echo 'OK_INSERT';
+        app_send_sales_creation_result($result, $asJson);
     } catch (Throwable $exception) {
         if ($pdo->inTransaction()) {
             $pdo->rollBack();

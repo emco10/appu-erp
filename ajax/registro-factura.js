@@ -1,6 +1,4 @@
 window.appuSunatDocumentType="invoice";
-function appuInvoiceRequestKey(){var bytes=new Uint8Array(16);if(window.crypto&&window.crypto.getRandomValues)window.crypto.getRandomValues(bytes);else for(var i=0;i<bytes.length;i++)bytes[i]=Math.floor(Math.random()*256);return "invoice_"+Array.from(bytes,function(value){return value.toString(16).padStart(2,"0");}).join("");}
-var appuInvoiceRequestKeyValue=appuInvoiceRequestKey();
 $("#col-btn-anular-factura").hide();
 $("#col-btn-pdf-factura").hide();
 function appuAbrirPdfFactura(id){if(!id){toastr.warning('Primero selecciona o guarda una factura.');return;}window.open('../../modules/facturacion/pdf-documento.php?type=invoice&id='+encodeURIComponent(id),'_blank','noopener');}
@@ -745,74 +743,12 @@ $('input[name="facturacion_porcdesc"]').on("change", function() {
   $('input[name="facturacion_total"]').val(total_desc.toFixed(2));
 });
 
-$("#FRM_INSERT_FACTURA").submit(function(e) {
-  e.preventDefault();
-  if(!appuValidarFacturaParaGuardar())return;
-  var form = $(this);
-  var idform = form.attr("id");
-  var url = form.attr("action");
-  tbl_data = tbl_prodfactura.rows().data().toArray();
-  var formElement = document.getElementById(idform);
-  var formData_rec = new FormData(formElement);
-  formData_rec.append("facturacion_prods", JSON.stringify(tbl_data));
-  formData_rec.set("request_key", appuInvoiceRequestKeyValue);
-  $.ajax({
-    type: "POST",
-    url: url,
-    data: formData_rec,
-    contentType: false,
-    cache: false,
-    processData: false,
-    error: function(xhr) { Swal.close(); if (typeof window.appuShowRequestError === 'function') window.appuShowRequestError(form,xhr,'No se pudo guardar la factura. Revisa los datos e inténtalo nuevamente.'); else toastr.error(xhr.responseJSON && xhr.responseJSON.message || 'No se pudo guardar la factura. Revisa los datos e inténtalo nuevamente.'); },
-    beforeSend: function() {
-      Swal.fire({
-        html: "<h4>Guardando factura</h4>",
-        allowOutsideClick: false,
-        onBeforeOpen: () => {
-          Swal.showLoading();
-        }
-      });
-    },
-    success: function(data) {
-      //console.log(data);
-      if (data == "ERROR") {
-        $.Notification.notify(
-          "error",
-          "bottom-right",
-          "Error de guardado",
-          "No se pudo guardar la factura"
-        );
-        Swal.close();
+appuBindSalesCreation(document.getElementById('FRM_INSERT_FACTURA'),
+  () => tbl_prodfactura.rows().data().toArray(), appuValidarFacturaParaGuardar);
 
-      } else if (data == "OK_INSERT") {
-        $('input[name="facturacion_valcliente"]').val("");
-        $('input[name="facturacion_fecha"]').focus();
-        $.Notification.notify(
-          "success",
-          "bottom-right",
-          "Factura guardada",
-          "Datos almacenados"
-        );
-
-        postCambioEstado();
-        appuInvoiceRequestKeyValue=appuInvoiceRequestKey();
-        
-        $.post("../../modules/facturacion/listar-facturas.php", function(data) {
-        $('select[name="facturas_listado"]').empty();
-        $('select[name="facturas_listado"]').select2({
-          data: (typeof data === "string" ? JSON.parse(data) : data)
-          });
-        });
-
-        Swal.close();
-      }
-    }
-  });
-});
-
-$("#btn-nuevafac").click(function (e) {
-    e.preventDefault();
-    location.reload();
+$("#btn-nuevafac").click(function (event) {
+  event.preventDefault();
+  appuConfirmDiscard(function () { window.location.assign(appuNewDocumentUrl()); });
 });
 
 $("#btn-anular-factura").click(function() {

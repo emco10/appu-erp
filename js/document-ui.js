@@ -78,4 +78,60 @@
     if (!xhr || xhr.status === 0) message = 'No hubo conexión con el servidor. Tus datos siguen en el formulario; vuelve a intentarlo.';
     global.toastr.error(message);
   };
+
+  global.appuBindSalesCreation = function (form, getLines, validate) {
+    if (!form) return;
+    const requested = new URLSearchParams(global.location.search).get('record_id');
+    form.dataset.documentMode = /^[1-9]\d*$/.test(requested) ? 'VIEW' : 'CREATE';
+    let saving = false;
+    let requestKey = '';
+
+    $('#btn-select-factura').on('click.salesCreation', function () {
+      if ($('select[name="facturas_listado"]').val()) form.dataset.documentMode = 'VIEW';
+    });
+
+    function lock(locked) {
+      saving = locked;
+      form.inert = locked;
+      form.setAttribute('aria-busy', String(locked));
+      document.querySelectorAll('.appu-document-toolbar, #btn-nuevafac, #btn-select-factura, select[name="facturas_listado"]')
+        .forEach(control => { control.inert = locked; });
+    }
+
+    $(form).on('submit.salesCreation', function (event) {
+      event.preventDefault();
+      if (saving || form.dataset.documentMode !== 'CREATE' || form.elements.id_factura.value || !global.appuCan('sales.manage')) return;
+      if (validate && !validate()) return;
+
+      const data = new FormData(form);
+      requestKey ||= global.appuRequestKey();
+      data.set('request_key', requestKey);
+      data.set('response_format', 'json');
+      data.set('facturacion_prods', JSON.stringify(getLines()));
+      global.appuClearValidation(form);
+      lock(true);
+      Swal.fire({ title: 'Guardando comprobante', allowOutsideClick: false, allowEscapeKey: false, onBeforeOpen: () => Swal.showLoading() });
+
+      $.ajax({ type: 'POST', url: form.action, data, dataType: 'json', contentType: false, processData: false })
+        .done(function (response) {
+          if (response?.error !== false || !/^[1-9]\d*$/.test(String(response.document_id))) {
+            lock(false);
+            Swal.close();
+            global.toastr.error('No se pudo confirmar el guardado. Reintenta con los mismos datos.');
+            return;
+          }
+          form.dataset.documentMode = 'VIEW';
+          form.elements.id_factura.value = response.document_id;
+          global.appuMarkSaved();
+          const url = new URL(global.appuNewDocumentUrl());
+          url.searchParams.delete('mode');
+          url.searchParams.set('record_id', String(response.document_id));
+          global.location.assign(url.href);
+        }).fail(function (xhr) {
+          lock(false);
+          Swal.close();
+          global.appuShowRequestError(form, xhr, 'No se pudo confirmar el guardado. Reintenta con los mismos datos.');
+        });
+    });
+  };
 })(window);

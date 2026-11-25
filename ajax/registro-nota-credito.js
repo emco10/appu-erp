@@ -680,71 +680,12 @@ $('input[name="facturacion_porcdesc"]').on("change", function() {
   $('input[name="facturacion_total"]').val(total_desc.toFixed(2));
 });
 
-$("#FRM_INSERT_FACTURA").submit(function(e) {
-  e.preventDefault();
-  var form = $(this);
-  var idform = form.attr("id");
-  var url = form.attr("action");
-  tbl_data = tbl_prodfactura.rows().data().toArray();
-  var formElement = document.getElementById(idform);
-  var formData_rec = new FormData(formElement);
-  formData_rec.append("facturacion_prods", JSON.stringify(tbl_data));
-  $.ajax({
-    type: "POST",
-    url: url,
-    data: formData_rec,
-    contentType: false,
-    cache: false,
-    processData: false,
-    error: function(xhr) { Swal.close(); if (typeof window.appuShowRequestError === 'function') window.appuShowRequestError(form,xhr,'No se pudo guardar la nota de crédito. Revisa los datos e inténtalo nuevamente.'); else toastr.error(xhr.responseJSON && xhr.responseJSON.message || 'No se pudo guardar la nota de crédito. Revisa los datos e inténtalo nuevamente.'); },
-    beforeSend: function() {
-      Swal.fire({
-        html: "<h4>Guardando nota de crédito</h4>",
-        allowOutsideClick: false,
-        onBeforeOpen: () => {
-          Swal.showLoading();
-        }
-      });
-    },
-    success: function(data) {
-      //console.log(data);
-      if (data == "ERROR") {
-        $.Notification.notify(
-          "error",
-          "bottom-right",
-          "Error de guardado",
-          "No se pudo guardar la nota de crédito"
-        );
-        Swal.close();
+appuBindSalesCreation(document.getElementById('FRM_INSERT_FACTURA'),
+  () => tbl_prodfactura.rows().data().toArray());
 
-      } else if (data == "OK_INSERT") {
-        $('input[name="facturacion_valcliente"]').val("");
-        $('input[name="facturacion_fecha"]').focus();
-        $.Notification.notify(
-          "success",
-          "bottom-right",
-          "Nota de crédito guardada",
-          "Datos almacenados"
-        );
-
-        postCambioEstado();
-        
-        $.post("../../modules/facturacion/listar-notas-credito.php", function(data) {
-          $('select[name="facturas_listado"]').empty();
-          $('select[name="facturas_listado"]').select2({
-            data: (typeof data === "string" ? JSON.parse(data) : data)
-            });
-        });
-
-        Swal.close();
-      }
-    }
-  });
-});
-
-$("#btn-nuevafac").click(function (e) {
-    e.preventDefault();
-    location.reload();
+$("#btn-nuevafac").click(function (event) {
+  event.preventDefault();
+  appuConfirmDiscard(function () { window.location.assign(appuNewDocumentUrl()); });
 });
 
 $("#btn-anular-factura").click(function() {
