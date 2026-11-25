@@ -191,7 +191,7 @@
                                                     <i class="fas fa-calendar-day"></i>
                                                 </span>
                                             </div>
-                                            <input type="number" min="0" max="365" step="1"  class="form-control" value="" placeholder="Núm. de días" name="orden_tipopago">
+                                            <input type="number" min="0" max="3650" step="1"  class="form-control" value="" placeholder="Núm. de días" name="orden_tipopago">
                                         </div>
 	                                </div>
 	                            </div>
@@ -204,7 +204,7 @@
                                                     <i class="fas fa-user-tie"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" class="form-control" name="orden_solicitante" placeholder="Nombre de solicitante" required>
+                                            <input type="text" class="form-control" name="orden_solicitante" placeholder="Nombre de solicitante">
                                         </div>
 	                                </div>
 	                            </div>
