@@ -154,22 +154,35 @@ $(function () {
   }
 
   $("#btn-new-remission-guide").on("click", function () {
+    if (guideSaving || !appuCan('logistics.manage')) return;
     appuConfirmDiscard(function () { resetGuideForm(); loadSources(); loadGuideWarehouses(); });
   });
 
   $("#guide-source").on("change", function () {
     var sourceEpoch = ++guideSourceEpoch, epoch = guideEpoch;
-    var value = $(this).val() || "";
+    var $select = $(this), value = $select.val() || '';
     var parts = value.split(":");
-    $guideForm.find('[name=source_type],[name=source_id],[name=recipient_name],[name=recipient_ruc],[name=recipient_address],[name=destination_address]').val('');
-    $('#guide-items tbody').empty(); guideLoading = false;
-    if (parts.length !== 2) return;
-    $("#remission-guide-form [name='source_type']").val(parts[0]);
-    $("#remission-guide-form [name='source_id']").val(parts[1]);
+    var $type = $guideForm.find('[name=source_type]'), $id = $guideForm.find('[name=source_id]');
+    var previous = $id.val() ? $type.val() + ':' + $id.val() : '';
+    if (parts.length !== 2) {
+      $guideForm.find('[name=source_type],[name=source_id],[name=recipient_name],[name=recipient_ruc],[name=recipient_address],[name=destination_address]').val('');
+      $('#guide-items tbody').empty();
+      guideLoading = false;
+      $guideForm.find('[type=submit]').prop('disabled', false);
+      return;
+    }
+    function showLookupFailure(xhr) {
+      if (epoch !== guideEpoch || sourceEpoch !== guideSourceEpoch) return;
+      $select.val(previous).trigger('change.select2');
+      appuShowValidation($guideForm, { message: guideError(xhr, 'No se pudo cargar el origen. Vuelve a intentarlo.') });
+    }
     guideLoading = true; $guideForm.find('[type=submit]').prop('disabled', true);
     $.getJSON("../../modules/logistica/guias.php", { action: "source", source_type: parts[0], source_id: parts[1] }).done(function (response) {
       if (epoch !== guideEpoch || sourceEpoch !== guideSourceEpoch) return;
-      var source = response.source;
+      var source = response?.source;
+      if (!source || !Array.isArray(response.details)) { showLookupFailure({}); return; }
+      appuClearValidation($guideForm);
+      $type.val(parts[0]); $id.val(parts[1]);
       $("#remission-guide-form [name='recipient_name']").val(source.customer_name || "");
       $("#remission-guide-form [name='recipient_ruc']").val(source.ruc || "");
       $("#remission-guide-form [name='recipient_address']").val(source.shipping_address || source.address || "");
@@ -193,16 +206,15 @@ $(function () {
         $("<input>").attr({type:"date",class:"form-control form-control-sm js-guide-expiration"}).val(detail.expiration_date||"").appendTo($("<td>").appendTo($row));
       });
       if (!(response.details || []).length) $body.html('<tr><td colspan="11" class="text-center text-muted">No hay productos disponibles.</td></tr>');
-    }).fail(function (xhr) {
-      if (epoch !== guideEpoch || sourceEpoch !== guideSourceEpoch) return;
-      $("#guide-items tbody").html('<tr><td colspan="11" class="text-center text-danger">No se pudo cargar el detalle del documento.</td></tr>');
-      appuShowValidation($guideForm, { message: guideError(xhr, 'No se pudo cargar el origen. Selecciona otro documento o vuelve a intentarlo.') });
-    }).always(function () { if (epoch === guideEpoch && sourceEpoch === guideSourceEpoch) { guideLoading = false; $guideForm.find('[type=submit]').prop('disabled', false); } });
+    }).fail(showLookupFailure).always(function () { if (epoch === guideEpoch && sourceEpoch === guideSourceEpoch) { guideLoading = false; $guideForm.find('[type=submit]').prop('disabled', false); } });
   });
+
+  var guideModalReady = false;
+  $guideModal.on('shown.bs.modal', function () { guideModalReady = true; });
 
   $("#remission-guide-form").on("submit", function (event) {
     event.preventDefault();
-    if (guideSaving || guideLoading) return;
+    if (guideSaving || guideLoading || guideState.get() !== 'CREATE' || !appuCan('logistics.manage')) return;
     var items = [];
     $(".js-guide-quantity:not(:disabled)").each(function () {
       var quantity = Number($(this).val() || 0);
@@ -213,12 +225,21 @@ $(function () {
     appuClearValidation($guideForm); guideBusy(true);
     $.ajax({ url: "../../modules/logistica/guias.php", method: "POST", dataType: "json", data: data })
       .done(function (response) {
+        if (response?.error || !/^[1-9]\d*$/.test(String(response?.guide_id))) {
+          guideBusy(false);
+          appuShowValidation($guideForm, { message: 'No se pudo confirmar la entrega. Reintenta con los mismos datos.' });
+          return;
+        }
         toastr.success(response.message || "Guia registrada.");
-        guideBusy(false); appuMarkSaved();
-        $("#remission-guide-modal").modal("hide");
+        function closeAndConsult() {
+          guideBusy(false); appuMarkSaved();
+          $guideModal.one('hidden.bs.modal', function () { readGuide(response.guide_id); }).modal('hide');
+        }
+        if (guideModalReady) closeAndConsult();
+        else $guideModal.one('shown.bs.modal', closeAndConsult);
         loadGuides();
       }).fail(function (xhr) {
-        guideBusy(false); appuShowValidation($guideForm, xhr.responseJSON || { message: 'No se pudo registrar la entrega. Los datos permanecen para corregirlos.' });
+        guideBusy(false); appuShowRequestError($guideForm, xhr, 'No se pudo confirmar la entrega. Reintenta con los mismos datos.');
       });
   });
 
@@ -268,6 +289,7 @@ $(function () {
   $guideModal.on('hide.bs.modal', function (event) {
     if (guideSaving) { event.preventDefault(); return; }
     if (window.appuFormDirty) { event.preventDefault(); appuConfirmDiscard(function () { $guideModal.modal('hide'); }); return; }
+    guideModalReady = false;
     guideEpoch++; guideSourceEpoch++; guideState.set('LIST');
   });
   if (new URLSearchParams(window.location.search).get('source_id')) $('#btn-new-remission-guide').trigger('click');

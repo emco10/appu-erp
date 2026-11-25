@@ -3366,15 +3366,15 @@
       "engine": "semgrep",
       "rule_id": "security-rules.php.lang.security.injection.echoed-request",
       "path": "modules/ventas/ordenes.php",
-      "fingerprint": "2f81e8d2a140ea3fa5a6998e7ad08b4bd4d83b74933ee95884a6aa923ad1a088",
-      "source_sha256": "fb8bc1ce0bd127ea9c60119a3476b2fa05c09ca7aa0e9a6cb13aff7ba51e7ac0",
-      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
+      "fingerprint": "880682fdf3c46f578d7837e4cfed978a089236e67f8ccc19a5dd929b851a5d00",
+      "source_sha256": "00bfdbcec957f42857cced10a396a8332c6a4fd53ffb43a8404fd73f14157fe3",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "scanner_version": "1.184.0",
       "id": "php-final-100",
       "disposition": "false_positive",
-      "reviewer": "Codex /root/audit_erp independent source review; /root/security_finalize verification; /root final approval; /root line-dimension security review 2026-11-22",
-      "reviewed_on": "2026-11-22",
-      "rationale": "The sink emits JSON under Content-Type application/json; the real global connection sends nosniff. The attacker text remains JSON data. Client-side DOM sinks are reviewed separately; json_encode alone is not the XSS safety argument.",
+      "reviewer": "Codex /root/audit_erp independent source review; /root/security_finalize verification; /root final approval; /root line-dimension security review 2026-11-22. Codex reviewed the versioned sales order response.",
+      "reviewed_on": "2026-11-25",
+      "rationale": "The snapshot requires sales.view, validates view_id as a positive integer, and binds it in PDO. Documents, lines and custom values are encoded as application/json with nosniff and no-store. The form presents document values with text and value setters.",
       "dependencies": [
         {
           "path": "global/connection.php",
@@ -3383,6 +3383,10 @@
         {
           "path": "global/security.php",
           "sha256": "f898dda886633cd1bc2124f107dc0becadca3760f93c01af491ae4d38be33d11"
+        },
+        {
+          "path": "global/sales-order-document.php",
+          "sha256": "f0e994109f44e3de95084dc4afb8d939763203ea58272f8997babbc517b8e0a9"
         }
       ],
       "dependency_review": "Critical dependencies were re-hashed from committed source 9bfb43c; source review and frozen-source regression evidence are linked below.",
@@ -3408,9 +3412,9 @@
       "engine": "semgrep",
       "rule_id": "security-rules.php.lang.security.injection.echoed-request",
       "path": "modules/ventas/ordenes.php",
-      "fingerprint": "b860318b3c63c54224d3f056f4cf26b8a2af63e601bcee84038baf6d5bb5f7c6",
-      "source_sha256": "fb8bc1ce0bd127ea9c60119a3476b2fa05c09ca7aa0e9a6cb13aff7ba51e7ac0",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "fingerprint": "18f091cb6ad4fd4267c0befc6601ce03423b739706d84a911f84b5ecd710e5b2",
+      "source_sha256": "00bfdbcec957f42857cced10a396a8332c6a4fd53ffb43a8404fd73f14157fe3",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "scanner_version": "1.184.0",
       "id": "php-final-101",
       "disposition": "false_positive",
@@ -3450,9 +3454,9 @@
       "engine": "semgrep",
       "rule_id": "security-rules.php.lang.security.injection.echoed-request",
       "path": "modules/ventas/ordenes.php",
-      "fingerprint": "6918a9f64903085e33b321fd517ade70b9d541729ad1f16c562ba473576347ef",
-      "source_sha256": "fb8bc1ce0bd127ea9c60119a3476b2fa05c09ca7aa0e9a6cb13aff7ba51e7ac0",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "fingerprint": "45e8d2b601424bf1e87219c5a6e31fb6687fc26ae0ad667a3e9951f091f129a8",
+      "source_sha256": "00bfdbcec957f42857cced10a396a8332c6a4fd53ffb43a8404fd73f14157fe3",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "scanner_version": "1.184.0",
       "id": "php-final-102",
       "disposition": "false_positive",
@@ -4931,10 +4935,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/guias.js",
       "fingerprint": "1d34d558f39134072c52261b21de671c7c7f948a9a52c23c617eac3d11c9c083",
-      "source_sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f",
+      "source_sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723",
       "scanner_version": "1.184.0",
       "id": "js-audit-1d34d558f3913407",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -4953,7 +4957,7 @@
       "evidence": [
         {
           "path": "ajax/guias.js",
-          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f",
+          "sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
@@ -4968,10 +4972,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/guias.js",
       "fingerprint": "fb609cbdca405f6ab81ef667ffd73b565baa215503b63f060bc8dc8a7f63a9c1",
-      "source_sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f",
+      "source_sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723",
       "scanner_version": "1.184.0",
       "id": "js-audit-fb609cbdca405f6a",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -4990,7 +4994,7 @@
       "evidence": [
         {
           "path": "ajax/guias.js",
-          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f",
+          "sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
@@ -5005,10 +5009,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/guias.js",
       "fingerprint": "fa6d0f01486a3f97edbc8648a1407bfc1bdfb34b115606179cf6e4d770153c62",
-      "source_sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f",
+      "source_sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723",
       "scanner_version": "1.184.0",
       "id": "js-audit-fa6d0f01486a3f97",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -5027,7 +5031,7 @@
       "evidence": [
         {
           "path": "ajax/guias.js",
-          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f",
+          "sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
@@ -5042,10 +5046,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/guias.js",
       "fingerprint": "9e806083d6674e6049d431be715a43485a6eb862a8e7b97245e0fed6bd1f241e",
-      "source_sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f",
+      "source_sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723",
       "scanner_version": "1.184.0",
       "id": "js-audit-9e806083d6674e60",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -5064,7 +5068,7 @@
       "evidence": [
         {
           "path": "ajax/guias.js",
-          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f",
+          "sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
@@ -6968,10 +6972,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "ajax/resumen-ordenes-venta.js",
       "fingerprint": "0b431c734473d20ca52995a34f461e8cfc004ee103e00c5409b218c65f4edbc0",
-      "source_sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
+      "source_sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe",
       "scanner_version": "1.184.0",
       "id": "js-audit-0b431c734473d20c",
-      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6990,12 +6994,12 @@
       "evidence": [
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
+          "sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
           "path": "tests/sales-order-ui.test.cjs",
-          "sha256": "d94f9e72cafc3f92cf20e6e116ca9871ef1f6c037c19290b7a1d93e405640cb3",
+          "sha256": "4d339b35844d5210fb5e48ec4598d2136961a47e53c874cb839b674a3f1593f8",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -7004,11 +7008,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/resumen-ordenes-venta.js",
-      "fingerprint": "1ba25889aed62c3a67cccb9a31afb8fe19f4333ca6a315d1efbfd4b7211b371d",
-      "source_sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
+      "fingerprint": "77a312ac23c9195c36f3356c65470c58f0330781029ddbe8c73294ae188f1e11",
+      "source_sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe",
       "scanner_version": "1.184.0",
       "id": "js-audit-bcdafc4100f30d7f",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7027,12 +7031,12 @@
       "evidence": [
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
+          "sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
           "path": "tests/sales-order-ui.test.cjs",
-          "sha256": "d94f9e72cafc3f92cf20e6e116ca9871ef1f6c037c19290b7a1d93e405640cb3",
+          "sha256": "4d339b35844d5210fb5e48ec4598d2136961a47e53c874cb839b674a3f1593f8",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -7041,11 +7045,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "ajax/resumen-ordenes-venta.js",
-      "fingerprint": "b4f3530e2c75006c57b7b6e9a8bfc851e1b2edecd887e81ce9209e9b68eb88e2",
-      "source_sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
+      "fingerprint": "ce16da5aa25a88019e224756d6493f1fcbdef7a3ee3c398f19490d61abcb642a",
+      "source_sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe",
       "scanner_version": "1.184.0",
       "id": "js-audit-abf64ca3983540c9",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7064,12 +7068,12 @@
       "evidence": [
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
+          "sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
           "path": "tests/sales-order-ui.test.cjs",
-          "sha256": "d94f9e72cafc3f92cf20e6e116ca9871ef1f6c037c19290b7a1d93e405640cb3",
+          "sha256": "4d339b35844d5210fb5e48ec4598d2136961a47e53c874cb839b674a3f1593f8",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -7078,11 +7082,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/resumen-ordenes-venta.js",
-      "fingerprint": "6fb10d3aa0dd7c7f022affc1a377256c0778c18904242776dcbd1d0f7cc129db",
-      "source_sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
+      "fingerprint": "e19ff8f9756487464dc2730d789515ff222b5311f5462ed6e6074973e7d3fdce",
+      "source_sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe",
       "scanner_version": "1.184.0",
       "id": "js-audit-7ccd52fe3df0e5c2",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7101,12 +7105,12 @@
       "evidence": [
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
+          "sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
           "path": "tests/sales-order-ui.test.cjs",
-          "sha256": "d94f9e72cafc3f92cf20e6e116ca9871ef1f6c037c19290b7a1d93e405640cb3",
+          "sha256": "4d339b35844d5210fb5e48ec4598d2136961a47e53c874cb839b674a3f1593f8",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -7115,11 +7119,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/resumen-ordenes-venta.js",
-      "fingerprint": "d15c56cf6f8ddfd2af3dcb6bca4d3157438a71262adf6e4cacff6ef1cfd3ba8e",
-      "source_sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
+      "fingerprint": "c29b43c782e08e493bea6cbecb335793a2fc4970aa732f7131efdf712bbba1c6",
+      "source_sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe",
       "scanner_version": "1.184.0",
       "id": "js-audit-ffbfd6cfc6e2cb35",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7138,12 +7142,12 @@
       "evidence": [
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321",
+          "sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         },
         {
           "path": "tests/sales-order-ui.test.cjs",
-          "sha256": "d94f9e72cafc3f92cf20e6e116ca9871ef1f6c037c19290b7a1d93e405640cb3",
+          "sha256": "4d339b35844d5210fb5e48ec4598d2136961a47e53c874cb839b674a3f1593f8",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -9788,7 +9792,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-db05a596880618c2",
-      "reviewed_commit": "40879c41714e9f392d1cb310550b567a1e3e73b7",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9804,7 +9808,7 @@
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
+          "sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723"
         },
         {
           "path": "ajax/historial-movimiento.js",
@@ -9852,7 +9856,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
+          "sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -9893,7 +9897,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-7337c1c902ec7342",
-      "reviewed_commit": "40879c41714e9f392d1cb310550b567a1e3e73b7",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9909,7 +9913,7 @@
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
+          "sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723"
         },
         {
           "path": "ajax/historial-movimiento.js",
@@ -9957,7 +9961,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
+          "sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -9998,7 +10002,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-6ae974eda02be810",
-      "reviewed_commit": "40879c41714e9f392d1cb310550b567a1e3e73b7",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10014,7 +10018,7 @@
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
+          "sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723"
         },
         {
           "path": "ajax/historial-movimiento.js",
@@ -10062,7 +10066,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
+          "sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10103,7 +10107,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-4bd2d1d1f8911717",
-      "reviewed_commit": "40879c41714e9f392d1cb310550b567a1e3e73b7",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10119,7 +10123,7 @@
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
+          "sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723"
         },
         {
           "path": "ajax/historial-movimiento.js",
@@ -10167,7 +10171,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
+          "sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10208,7 +10212,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-18458a854a6ffdb2",
-      "reviewed_commit": "40879c41714e9f392d1cb310550b567a1e3e73b7",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10224,7 +10228,7 @@
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
+          "sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723"
         },
         {
           "path": "ajax/historial-movimiento.js",
@@ -10272,7 +10276,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
+          "sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10313,7 +10317,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-f0685907220c2a2c",
-      "reviewed_commit": "40879c41714e9f392d1cb310550b567a1e3e73b7",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10329,7 +10333,7 @@
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
+          "sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723"
         },
         {
           "path": "ajax/historial-movimiento.js",
@@ -10377,7 +10381,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
+          "sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10418,7 +10422,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-483477a8b7141b75",
-      "reviewed_commit": "40879c41714e9f392d1cb310550b567a1e3e73b7",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10434,7 +10438,7 @@
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
+          "sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723"
         },
         {
           "path": "ajax/historial-movimiento.js",
@@ -10482,7 +10486,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
+          "sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10523,7 +10527,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-6bcfbb0871daafc8",
-      "reviewed_commit": "40879c41714e9f392d1cb310550b567a1e3e73b7",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10539,7 +10543,7 @@
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
+          "sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723"
         },
         {
           "path": "ajax/historial-movimiento.js",
@@ -10587,7 +10591,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
+          "sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10627,7 +10631,7 @@
       "path": "plugins/context-menu/jquery.contextMenu.js",
       "fingerprint": "1895c5c6016f0f492feabff03ac05ed4d0243fff33f4fd1d8f66477106dd09d5",
       "source_sha256": "53040768b35cb59d6af65d42bf663dabeb50e9d5333aa60af19478a1edcb3d6c",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "scanner_version": "2.27.6",
       "reviewer": "Codex /root/independent_js_review source and real DOM review; /root/security_finalize verification; /root final approval; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
       "reviewed_on": "2026-11-22",
@@ -10648,7 +10652,7 @@
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
+          "sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10656,7 +10660,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
+          "sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe"
         },
         {
           "path": "ajax/resumen-cotizaciones.js",
@@ -10687,7 +10691,7 @@
       "path": "plugins/context-menu/jquery.contextMenu.js",
       "fingerprint": "44cfae4f58c8db99310cf0682d47bc8642888476d25f186b66de4cbb20d45e5a",
       "source_sha256": "53040768b35cb59d6af65d42bf663dabeb50e9d5333aa60af19478a1edcb3d6c",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "scanner_version": "2.27.6",
       "reviewer": "Codex /root/independent_js_review source and real DOM review; /root/security_finalize verification; /root final approval; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
       "reviewed_on": "2026-11-22",
@@ -10708,7 +10712,7 @@
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
+          "sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10716,7 +10720,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
+          "sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe"
         },
         {
           "path": "ajax/resumen-cotizaciones.js",
@@ -10747,7 +10751,7 @@
       "path": "plugins/context-menu/jquery.contextMenu.js",
       "fingerprint": "071a40dade5df8fc6390b22a41b3e65552fe5c101462cfc217f9864421172fe3",
       "source_sha256": "53040768b35cb59d6af65d42bf663dabeb50e9d5333aa60af19478a1edcb3d6c",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "scanner_version": "2.27.6",
       "reviewer": "Codex /root/independent_js_review source and real DOM review; /root/security_finalize verification; /root final approval; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
       "reviewed_on": "2026-11-22",
@@ -10768,7 +10772,7 @@
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
+          "sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10776,7 +10780,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
+          "sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe"
         },
         {
           "path": "ajax/resumen-cotizaciones.js",
@@ -10807,7 +10811,7 @@
       "path": "plugins/context-menu/jquery.ui.position.js",
       "fingerprint": "05410685be40c470d713f4eace8eab385a1a9c233964750fa24b30efbb84dda9",
       "source_sha256": "8ec6562621d78da9401c2a9e8711798371f91eb4cbd0a64ac238720175a78705",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "000290d6404116697a07a3b9ccf7630ef7b832ed",
       "scanner_version": "2.27.6",
       "reviewer": "Codex /root/independent_js_review type-guard and real jQuery review; /root/security_finalize source verification; /root final approval; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
       "reviewed_on": "2026-11-22",
@@ -10832,7 +10836,7 @@
         },
         {
           "path": "ajax/guias.js",
-          "sha256": "795ae217e7efa45ee7bf6b4cb1cd9053b704cde4e7a14f0e05c8cdddd0c1d47f"
+          "sha256": "b48f22ae32a6d719d6e0b336b57162e068ee1a919e70785b0fe08789c9dbb723"
         },
         {
           "path": "ajax/resumen-ordenes.js",
@@ -10840,7 +10844,7 @@
         },
         {
           "path": "ajax/resumen-ordenes-venta.js",
-          "sha256": "9a7b2b4fd224923d5bd070db34ba125d288e82fff0c061fe73e47e34fa3e0321"
+          "sha256": "eb434f50489b04d671e288751a341092aa1cadf650dcf17229577578b543cdfe"
         },
         {
           "path": "ajax/resumen-cotizaciones.js",

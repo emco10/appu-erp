@@ -25,8 +25,16 @@ if ($method === 'GET') {
     }
     if (isset($_GET['view_id'])) {
         try {
-            echo json_encode(['error' => false] + app_sales_order_snapshot($pdo, (int) $_GET['view_id']), JSON_UNESCAPED_UNICODE);
+            $id = filter_var($_GET['view_id'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+            if ($id === false) throw new DomainException('Selecciona una orden de venta válida.');
+            $pdo->exec('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ');
+            $pdo->beginTransaction();
+            $snapshot = app_sales_order_snapshot($pdo, $id);
+            $pdo->commit();
+            header('Cache-Control: no-store');
+            echo json_encode(['error' => false] + $snapshot, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
         } catch (Throwable $exception) {
+            if ($pdo->inTransaction()) $pdo->rollBack();
             app_api_error($exception, 'No se pudo consultar la orden.');
         }
         exit;
@@ -89,8 +97,13 @@ try {
     $userId = (int) $_SESSION['loggedInUser']['USERID'];
 
     if (in_array($action, ['create_direct', 'update'], true)) {
-        $id = $action === 'update' ? (int) ($_POST['order_id'] ?? 0) : null;
-        $result = app_save_sales_order_document($pdo, $_POST, $userId, $id);
+        $result = app_document_request_start($pdo, 'sales_order_save', $_POST, $userId);
+        if ($result === null) {
+            $id = $action === 'update' ? filter_var($_POST['order_id'] ?? '', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) : null;
+            if ($id === false) throw new DomainException('Selecciona una orden de venta válida.');
+            $result = app_save_sales_order_document($pdo, $_POST, $userId, $id);
+            app_document_request_finish($pdo, 'sales_order_save', $_POST, $userId, 'sales_order', $result['order_id'], $result);
+        }
         $pdo->commit();
         echo json_encode($result, JSON_UNESCAPED_UNICODE);
         exit;

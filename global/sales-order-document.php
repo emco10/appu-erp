@@ -8,17 +8,18 @@ require_once __DIR__ . '/commercial-line-dimensions.php';
 /** A pending order is editable and has no reservation; confirmation posts it. */
 function app_sales_order_snapshot(PDO $pdo, int $id, bool $lock = false): array
 {
-    $query = $pdo->prepare('SELECT * FROM tbl_sales_order WHERE id = ?' . ($lock ? ' FOR UPDATE' : ''));
+    $lockClause = $lock ? ' FOR UPDATE' : '';
+    $query = $pdo->prepare('SELECT * FROM tbl_sales_order WHERE id = ?' . $lockClause);
     $query->execute([$id]);
     $order = $query->fetch();
     if (!$order) throw new DomainException('La orden de venta no existe.');
-    $query = $pdo->prepare('SELECT * FROM tbl_sales_order_detail WHERE sales_order_id = ? ORDER BY id');
+    $query = $pdo->prepare('SELECT * FROM tbl_sales_order_detail WHERE sales_order_id = ? ORDER BY id' . $lockClause);
     $query->execute([$id]);
     $details = $query->fetchAll();
-    $query = $pdo->prepare("SELECT field_definition_id, field_value FROM tbl_custom_field_value WHERE entity = 'sales_order' AND record_id = ? ORDER BY field_definition_id");
+    $query = $pdo->prepare("SELECT field_definition_id, field_value FROM tbl_custom_field_value WHERE entity = 'sales_order' AND record_id = ? ORDER BY field_definition_id" . $lockClause);
     $query->execute([$id]);
     $custom = $query->fetchAll(PDO::FETCH_KEY_PAIR);
-    $version = hash('sha256', json_encode([$order, $details, $custom]));
+    $version = hash('sha256', json_encode([$order, $details, $custom], JSON_THROW_ON_ERROR));
     $order['domain_status']=app_order_domain_status($order);
     if (app_document_engine_available($pdo)) {
         $open=array_column(app_document_open_lines($pdo,'sales_order',$id,'FULFILLMENT'),null,'id');
@@ -105,7 +106,8 @@ function app_save_sales_order_document(PDO $pdo, array $input, int $userId, ?int
     $previous = null;
     if ($id !== null) {
         $previous = app_sales_order_snapshot($pdo, $id, true);
-        if (!hash_equals($previous['version'], (string) ($input['version'] ?? ''))) throw new DomainException('La orden cambió desde que la abriste. Vuelve a consultarla antes de editar.', 409);
+        $version = $input['version'] ?? '';
+        if (!is_string($version) || !hash_equals($previous['version'], $version)) throw new DomainException('La orden cambió desde que la abriste. Vuelve a consultarla antes de editar.', 409);
         if ($previous['order']['status'] !== 'Pendiente') throw new DomainException('Solo se pueden editar órdenes pendientes.');
         if ($previous['order']['quotation_id']) throw new DomainException('La orden procede de una cotización. Conserva sus importes y modifica el documento origen antes de convertirlo.');
         $derived = $pdo->prepare("SELECT COUNT(*) FROM tbl_document_flow WHERE source_type = 'sales_order' AND source_id = ?");
