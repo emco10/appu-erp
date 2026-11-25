@@ -31,15 +31,14 @@ $('select[name="orden_tipopagotext"]').on("change", function() {
   }
 });
 
-$.post("../../modules/ordenes/listar-ordenes.php", {orden_tipo:"COMPRA"}, function(data) {
+var purchaseRecords = $.post("../../modules/ordenes/listar-ordenes.php", {orden_tipo:"COMPRA"}, function(data) {
   $('select[name="orden_listado"]').empty();
   $('select[name="orden_listado"]').select2({
     data: (typeof data === "string" ? JSON.parse(data) : data)
   });
-  appuOpenRequestedRecord('select[name="orden_listado"]', '#btn-select-orden');
 });
 
-$.post("../../modules/proveedores/listar-proveedores.php", function(data) {
+var purchaseProviders = $.post("../../modules/proveedores/listar-proveedores.php", function(data) {
   $('select[name="orden_proveedor"]').empty();
   $('select[name="orden_proveedor"]').select2({
     data: (typeof data === "string" ? JSON.parse(data) : data)
@@ -90,7 +89,7 @@ $('select[name="orden_producto_select"]').on("change", function() {
   });
 });
 
-$.getJSON("../../modules/compras/solicitudes.php").done(function (response) {
+var purchaseRequests = $.getJSON("../../modules/compras/solicitudes.php").done(function (response) {
   var options = [{ id: "", text: "Sin solicitud" }];
   (response.requests || []).filter(function (request) { return request.status === "Aprobada"; }).forEach(function (request) { options.push({ id: request.id, text: request.number + " · " + request.status + " · " + (request.requester_name || "Sin solicitante") + " · " + request.required_date }); });
   var $requestSelect = $('select[name="orden_solicitud_compra"]').empty().select2({ data: options, language: "es", placeholder: "Sin solicitud" });
@@ -577,9 +576,27 @@ $('input[name="orden_porcigv"]').on("change", function() {
 });
 */
 
+var purchaseForm = document.getElementById("FRM_INSERT_DETA_ORDCOMPRA");
+var purchaseRead = 0;
+$.when(purchaseRecords, purchaseProviders, purchaseRequests.then(null, () => undefined)).done(function () {
+  appuOpenRequestedRecord('select[name="orden_listado"]', '#btn-select-orden');
+}).fail(function () {
+  if (new URLSearchParams(window.location.search).has("record_id")) {
+    toastr.error("No se pudieron cargar los proveedores o documentos. Recarga la página para abrir el documento.");
+  }
+});
 $("#btn-select-orden").click(function() {
-  DATA_ID = $('select[name="orden_listado"]').val();
-  if (DATA_ID != "" && DATA_ID != null) {
+  var selectedId = $('select[name="orden_listado"]').val();
+  if (selectedId && !purchaseForm.inert) {
+    var read = ++purchaseRead;
+    purchaseForm.dataset.documentMode = "VIEW";
+    $("#btn-save-orden").prop("disabled", true);
+    $("#col-btn-delete-orden").hide();
+    function readFailed(xhr) {
+      if (read !== purchaseRead) return;
+      Swal.close();
+      toastr.error((xhr && xhr.responseJSON || {}).message || "No se pudo abrir el documento de compra. Intenta consultarlo de nuevo.");
+    }
     Swal.fire({
       html: "<h4>Cargando datos de orden</h4>",
       allowOutsideClick: false,
@@ -589,9 +606,11 @@ $("#btn-select-orden").click(function() {
     });
     $.post(
       "../../modules/ordenes/consultar-orden.php",
-      { TIPO_ORDEN:"COMPRA", FILTER: DATA_ID, ESTADO: "ALL" },
-      function(data) {
-        var data_json = (typeof data === "string" ? JSON.parse(data) : data);
+      { TIPO_ORDEN:"COMPRA", FILTER: selectedId, ESTADO: "ALL" },
+      function(data_json) {
+        if (read !== purchaseRead) return;
+        if (!Array.isArray(data_json) || String(data_json[0]?.IDORDEN) !== String(selectedId)) return readFailed();
+
         $('input[name="orden_nro"]').focus();
         $('input[name="orden_nro"]').val(data_json[0]["ORDNUMBER"]);
         $("#btn-delete-orden").attr("js-id", data_json[0]["IDORDEN"]);
@@ -610,7 +629,7 @@ $("#btn-select-orden").click(function() {
 
         $('input[name="orden_provruc"]').val();
 
-        $('select[name="orden_tipomoneda"]').val(data_json[0]["TIPOMON"]);
+        appuLoadPurchaseFields(purchaseForm, data_json[0]);
 
         $('input[name="orden_fecemision"]').val(data_json[0]["FECEMIS"]);
         $('input[name="orden_fecentrega"]').val(data_json[0]["FECDEL"]);
@@ -637,12 +656,13 @@ $("#btn-select-orden").click(function() {
         $('input[name="orden_totneto"]').val((data_json[0]["TOTNET"] * 1).toFixed(2));
 
         total_temporal = parseFloat(data_json[0]["TOTCOMP"]);
-        codigo_idorden = data_json[0]["IDORDEN"];
         
         $.post(
           "../../modules/ordenes/consultar-detalle-orden.php",
-          { IDORDEN: codigo_idorden },
-          function(data) {
+          { IDORDEN: selectedId },
+          function(detaorden_json) {
+            if (read !== purchaseRead) return;
+            if (!Array.isArray(detaorden_json)) return readFailed();
 
             $('input[name="orden_codprod"]').val("");
             $('input[name="orden_valunit"]').val("");
@@ -654,11 +674,8 @@ $("#btn-select-orden").click(function() {
             $('input[name="orden_cantidad"]').val(0);
 
             $("#btn-add-prodtporden").prop("disabled", true);
-            $("#btn-save-orden").prop("disabled", false);
-
             tbl_prodordcompra.clear().draw();
-            detaorden_json = (typeof data === "string" ? JSON.parse(data) : data);
-            for (i = 0; i < detaorden_json.length; i++) {
+            for (var i = 0; i < detaorden_json.length; i++) {
               tbl_prodordcompra.rows
                 .add([
                   {
@@ -681,117 +698,27 @@ $("#btn-select-orden").click(function() {
                 ])
                 .draw();
             }
-          }
-        );
-
-        $("#btn-save-orden font").html("Actualizar Orden de Compra");
-        $("#col-btn-save-orden").attr("class", "col-md-6");
-        $("#col-btn-delete-orden").show("fast");
-      }
-    ).then(function() {
-      Swal.close();
-    });
+            var editable = ["Pendiente", "Rechazado"].includes(data_json[0]["ORDESTADO"]) && appuCan("purchases.manage");
+            purchaseForm.dataset.documentMode = editable ? "EDIT" : "VIEW";
+            $("#btn-save-orden").prop("disabled", !editable);
+            $("#btn-save-orden font").text("Actualizar Orden de Compra");
+            $("#col-btn-save-orden").attr("class", "col-md-6");
+            $("#col-btn-delete-orden").show("fast");
+            purchaseForm.dispatchEvent(new Event("appu:document-loaded"));
+            appuMarkSaved();
+            Swal.close();
+          },
+          "json"
+        ).fail(readFailed);
+      },
+      "json"
+    ).fail(readFailed);
   }
 });
 
-$("#FRM_INSERT_DETA_ORDCOMPRA").submit(function (e) {
-  e.preventDefault();
-
-  var form = $(this);
-  if (typeof window.appuClearValidation === "function") window.appuClearValidation(form);
-  var idform = form.attr("id");
-  var url = form.attr('action');
-  var formElement = document.getElementById(idform);
-
-  tbl_data = tbl_prodordcompra.rows().data().toArray();
-
-  var formData_rec = new FormData(formElement);
-  formData_rec.append("orden_tipo","COMPRA");
-  formData_rec.append("orden_lstprods", JSON.stringify(tbl_data));
-  var id_ordcompra = $('input[name="orden_id"]').val();
-
-  $.ajax({
-      type: "POST",
-      url: url,
-      data: formData_rec,
-      contentType: false,
-      cache: false,
-      processData: false,
-      beforeSend: function () {
-          Swal.fire({
-              html: '<h4>Guardando información</h4>',
-              allowOutsideClick: false,
-              onBeforeOpen: () => {
-                  Swal.showLoading();
-              }
-          })
-      },
-      error: function (xhr) {
-          Swal.close();
-          if (typeof window.appuShowRequestError === "function") window.appuShowRequestError(form, xhr, "No se pudo guardar la orden. Revisa los datos e inténtalo nuevamente.");
-          else toastr.error(xhr.responseJSON && xhr.responseJSON.message || "No se pudo guardar la orden. Revisa los datos e inténtalo nuevamente.");
-          $("#btn-save-orden").prop("disabled", tbl_prodordcompra.rows().count() === 0);
-      },
-      success: function (data) {
-          if (data == "ERROR") {
-            toastr.error("El servidor rechazó la orden, pero no indicó el motivo. Verifica los datos e inténtalo nuevamente.");
-            Swal.close();
-          } else if (data == "OK_INSERT") {
-            $('input[name="orden_nro"]').focus();
-            form.find("input, textarea, select").val("");
-
-            $('select[name="orden_estado"]').val("Pendiente");
-            $('select[name="orden_estado"]').trigger("change");
-
-            $('select[name="orden_proveedor"]').trigger("change");
-
-            $('select[name="orden_tipopagotext"]').trigger("change");
-            $('select[name="orden_tipopagotext"]').prop("disabled",false);
-
-            $('#div_diaspago').hide();
-            $('input[name="orden_tipopago"]').prop("required",false);
-
-            $.Notification.notify("success", "bottom-right", "Orden de Compra guardada", "Datos almacenados");
-            tbl_prodordcompra.clear().draw();
-
-            Swal.close();
-            $("#btn-save-orden").prop("disabled", true);
-            $("#btn-add-prodtporden").prop("disabled", true);
-            $.post("../../modules/ordenes/listar-ordenes.php", {orden_tipo:"COMPRA"}, function(data) {
-              $('select[name="orden_listado"]').empty();
-              $('select[name="orden_listado"]').select2({
-                data: (typeof data === "string" ? JSON.parse(data) : data)
-              });
-            });
-            
-          } else if (data == "OK_UPDATE") {
-              if (id_ordcompra != "" && id_ordcompra != null) {
-                $('input[name="orden_nro"]').focus();
-                $('input[name="orden_id"]').val("");
-                $("#btn-save-orden font").html("Guardar orden de compra");
-                $("#btn-save-orden").prop("disabled", true);
-                $("#btn-add-prodtporden").prop("disabled", true);
-                $("#col-btn-save-orden").attr("class", "col-md-12");
-                $("#col-btn-delete-orden").hide();
-                form.find("input, textarea, select").val("");
-
-                $('select[name="orden_estado"]').val("Pendiente");
-                $('select[name="orden_estado"]').trigger("change");
-
-                $('select[name="orden_proveedor"]').trigger("change");
-
-                $('select[name="orden_tipopagotext"]').trigger("change");
-                $('select[name="orden_tipopagotext"]').prop("disabled",false);
-
-                $('#div_diaspago').hide();
-                $('input[name="orden_tipopago"]').prop("required",false);
-                tbl_prodordcompra.clear().draw();
-              }
-              $.Notification.notify("success", "bottom-right", "Orden de compra actualizada", "Datos actualizados");
-              Swal.close();
-          }
-      }
-  });
+appuBindPurchaseSave(purchaseForm, function (data) {
+  data.set("orden_tipo", "COMPRA");
+  data.set("orden_lstprods", JSON.stringify(tbl_prodordcompra.rows().data().toArray()));
 });
 
 $("#btn-delete-orden").click(function() {
@@ -830,6 +757,8 @@ $("#btn-delete-orden").click(function() {
               });
 
               $('input[name="orden_id"]').val("");
+              purchaseForm.dataset.documentMode = "CREATE";
+              purchaseForm.dispatchEvent(new Event("appu:document-loaded"));
               $("#btn-add-prodtporden").prop("disabled", false);
               $("#btn-save-orden").prop("disabled", true);
               $("#btn-save-orden font").html("Guardar Orden de Compra");

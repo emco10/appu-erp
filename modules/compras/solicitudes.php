@@ -4,6 +4,7 @@ require_once '../../global/document-history.php';
 require_once '../../global/master-data-validation.php';
 require_once '../../global/document-numbering.php';
 require_once '../../global/commercial-line-dimensions.php';
+require_once '../../global/document-engine.php';
 
 header('Content-Type: application/json; charset=utf-8');
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
@@ -60,6 +61,14 @@ try {
         $json(200, ['message' => 'Solicitud cancelada correctamente.']);
     }
 
+    $userId = (int) $_SESSION['loggedInUser']['USERID'];
+    $pdo->exec('SET TRANSACTION ISOLATION LEVEL READ COMMITTED');
+    $pdo->beginTransaction();
+    $replay = app_document_request_start($pdo, 'purchase_request_save', $_POST, $userId);
+    if ($replay !== null) {
+        $pdo->commit();
+        $json(200, $replay);
+    }
     $id = filter_var($_POST['id'] ?? null, FILTER_VALIDATE_INT);
     $requesterId = filter_var($_POST['requester_id'] ?? 0, FILTER_VALIDATE_INT);
     $issueDate = trim((string)($_POST['issue_date'] ?? date('Y-m-d')));
@@ -92,7 +101,6 @@ try {
         $line = round($quantity * $price * (1-(float)$discount/100),2); $total += $line;
         $normalized[] = [$productId, (string)$product['code'], (string)$product['name'], (string)$product['description'], $quantity, $price, (float)$discount, $line, $dimensions['project_code'], $dimensions['cost_center_code'], $dimensions['lot_number'], $dimensions['serial_number'], $dimensions['expiration_date']];
     }
-    $pdo->beginTransaction();
     if ($id === false || $id === null || $id < 1) {
         $number = app_next_document_number($pdo, 'PURCHASE_REQUEST', 'SC');
         $statement = $pdo->prepare("INSERT INTO tbl_purchase_request (number,status,requester_id,issue_date,required_date,currency,observation,total_estimate,created_by) VALUES (?, 'Pendiente', ?, ?, ?, ?, ?, ?, ?)");
@@ -101,7 +109,7 @@ try {
         $previous = '';
     } else {
         $lock = $pdo->prepare('SELECT number,status FROM tbl_purchase_request WHERE id = ? FOR UPDATE'); $lock->execute([$id]); $existing = $lock->fetch();
-        if (!$existing) throw new RuntimeException('Solicitud no encontrada.');
+        if (!$existing) throw new DomainException('Solicitud no encontrada.');
         if ($existing['status'] !== 'Pendiente') throw new DomainException('Solo se pueden editar solicitudes pendientes.');
         $number = $existing['number']; $previous = $existing['status'];
         $pdo->prepare('UPDATE tbl_purchase_request SET requester_id=?,issue_date=?,required_date=?,currency=?,observation=?,total_estimate=?,last_update=NOW() WHERE id=?')->execute([$requesterId ?: 0, $issueDate, $requiredDate, $currency, $observation, $total, $id]);
@@ -111,10 +119,15 @@ try {
     foreach ($normalized as $row) $insert->execute(array_merge([$id], $row));
     app_save_custom_fields($pdo, 'purchase_request', (int) $id, is_array($_POST['custom_field'] ?? null) ? $_POST['custom_field'] : []);
     if ($previous === '') app_record_document_status($pdo, 'purchase_request', (int)$id, $number, '', 'Pendiente', 'Creacion', (int)$_SESSION['loggedInUser']['USERID'], 'Solicitud creada.');
+    $result = ['id' => $id, 'number' => $number, 'message' => 'Solicitud de compra guardada correctamente.'];
+    app_document_request_finish($pdo, 'purchase_request_save', $_POST, $userId, 'purchase_request', (int) $id, $result);
     $pdo->commit();
-    $json(200, ['id' => $id, 'number' => $number, 'message' => 'Solicitud de compra guardada correctamente.']);
+    $json(200, $result);
 } catch (Throwable $exception) {
     if ($pdo->inTransaction()) $pdo->rollBack();
     error_log('APPU purchase request error: ' . $exception->getMessage());
-    $json(422, ['error' => $exception->getMessage()]);
+    $message = $exception instanceof DomainException || $exception instanceof InvalidArgumentException || $exception instanceof AppValidationException
+        ? $exception->getMessage()
+        : 'No se pudo procesar la solicitud de compra.';
+    $json($exception->getCode() === 409 ? 409 : 422, ['error' => $message]);
 }
