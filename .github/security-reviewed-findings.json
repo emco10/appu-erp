@@ -4572,7 +4572,7 @@
       "source_sha256": "b3bf815d9c9cba363fab74760ddfcb5136b3568de51af3c576b2a089cf06a1c8",
       "scanner_version": "1.184.0",
       "id": "js-audit-17392bc6d580903a",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -4596,7 +4596,7 @@
         },
         {
           "path": "tests/legacy-documents-ui.test.cjs",
-          "sha256": "ea955d2d77991b9f864ad68b4d1a1d43cfb65684d50d839972492f8704e70bd1",
+          "sha256": "8023f8545c27788e4ed129c768aeead810b4aa46ee0fe96934a612ea50061dfc",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -5970,11 +5970,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/orden-de-servicio.js",
-      "fingerprint": "bc15863818362e0871460724310de3b5eed35d32f6747a750ddb0df810199f7f",
-      "source_sha256": "9afb14302fc85627071ab196160a2e615f16f043a194097995f89df813a4ceb6",
+      "fingerprint": "4638856d0e9df9ddb79f608e372a595a65541962a3206ea706d9f0fd3906c8b8",
+      "source_sha256": "52364b0c4329d7d4ebf8597545ca66bee7ba0d2a88fb23a96722bb349684a5b9",
       "scanner_version": "1.184.0",
       "id": "js-audit-bc15863818362e08",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -5988,44 +5988,12 @@
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
       "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
       "reviewed_on": "2026-11-21",
-      "rationale": "ajax/orden-de-servicio.js:54: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Provider options are literal option nodes with val()/text(), and existing options are compared by this.value. The provider name/ID never becomes an HTML template in these appends.",
+      "rationale": "ajax/orden-de-servicio.js:67: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Provider options are literal option nodes with val()/text(), and existing options are compared by this.value. The provider name/ID never becomes an HTML template in these appends.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/orden-de-servicio.js",
-          "sha256": "9afb14302fc85627071ab196160a2e615f16f043a194097995f89df813a4ceb6",
-          "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
-        }
-      ]
-    },
-    {
-      "engine": "semgrep",
-      "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
-      "path": "ajax/orden-de-servicio.js",
-      "fingerprint": "3579cc27fb3e85d95e5098197081eaf6e20f3fde0ddd3d998e662ea5ab27c580",
-      "source_sha256": "9afb14302fc85627071ab196160a2e615f16f043a194097995f89df813a4ceb6",
-      "scanner_version": "1.184.0",
-      "id": "js-audit-3579cc27fb3e85d9",
-      "reviewed_commit": "dc3b728f2b410b4f077062612f515713fb950cd2",
-      "dependencies": [
-        {
-          "path": "views/template/footer.php",
-          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
-        },
-        {
-          "path": "js/footer-functions.js",
-          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
-        }
-      ],
-      "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review",
-      "reviewed_on": "2026-11-21",
-      "rationale": "ajax/orden-de-servicio.js:495: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Provider options are literal option nodes with val()/text(), and existing options are compared by this.value. The provider name/ID never becomes an HTML template in these appends.",
-      "disposition": "reviewed_audit",
-      "evidence": [
-        {
-          "path": "ajax/orden-de-servicio.js",
-          "sha256": "9afb14302fc85627071ab196160a2e615f16f043a194097995f89df813a4ceb6",
+          "sha256": "52364b0c4329d7d4ebf8597545ca66bee7ba0d2a88fb23a96722bb349684a5b9",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -8059,10 +8027,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "js/document-ui.js",
       "fingerprint": "4039df98023d460eed7eecd5dc1b900ec76b1cda2ee49096ec6ac135976545d4",
-      "source_sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
+      "source_sha256": "006902212d33b5742729f3e0d877c3d22d9379934ff8a15d9657c10a787c4941",
       "scanner_version": "1.184.0",
       "id": "js-audit-4039df98023d460e",
-      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8081,7 +8049,7 @@
       "evidence": [
         {
           "path": "js/document-ui.js",
-          "sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
+          "sha256": "006902212d33b5742729f3e0d877c3d22d9379934ff8a15d9657c10a787c4941",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -8091,10 +8059,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "js/document-ui.js",
       "fingerprint": "d7956a5bbdb1a119dc2eef156bbe2208fc53090146665d163b020db9a033fde8",
-      "source_sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
+      "source_sha256": "006902212d33b5742729f3e0d877c3d22d9379934ff8a15d9657c10a787c4941",
       "scanner_version": "1.184.0",
       "id": "js-audit-d7956a5bbdb1a119",
-      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8113,7 +8081,7 @@
       "evidence": [
         {
           "path": "js/document-ui.js",
-          "sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
+          "sha256": "006902212d33b5742729f3e0d877c3d22d9379934ff8a15d9657c10a787c4941",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -8123,10 +8091,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "js/document-ui.js",
       "fingerprint": "355b70482e490312e06e405b6749f62a76df76310113720b9fcc668c33a4c047",
-      "source_sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
+      "source_sha256": "006902212d33b5742729f3e0d877c3d22d9379934ff8a15d9657c10a787c4941",
       "scanner_version": "1.184.0",
       "id": "js-audit-355b70482e490312",
-      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8145,7 +8113,7 @@
       "evidence": [
         {
           "path": "js/document-ui.js",
-          "sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
+          "sha256": "006902212d33b5742729f3e0d877c3d22d9379934ff8a15d9657c10a787c4941",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -8155,10 +8123,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "js/document-ui.js",
       "fingerprint": "897066da098c375c1ff5026a63a16e512ada67227312fc7b2d875aa3fe1afa63",
-      "source_sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
+      "source_sha256": "006902212d33b5742729f3e0d877c3d22d9379934ff8a15d9657c10a787c4941",
       "scanner_version": "1.184.0",
       "id": "js-audit-897066da098c375c",
-      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8177,7 +8145,7 @@
       "evidence": [
         {
           "path": "js/document-ui.js",
-          "sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
+          "sha256": "006902212d33b5742729f3e0d877c3d22d9379934ff8a15d9657c10a787c4941",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -8187,10 +8155,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "js/document-ui.js",
       "fingerprint": "eac835a31196c8461d54fb8b60f1f7c37e39a230b6ac7bb6332b1b7fa6e536da",
-      "source_sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
+      "source_sha256": "006902212d33b5742729f3e0d877c3d22d9379934ff8a15d9657c10a787c4941",
       "scanner_version": "1.184.0",
       "id": "js-audit-eac835a31196c846",
-      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8209,7 +8177,7 @@
       "evidence": [
         {
           "path": "js/document-ui.js",
-          "sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
+          "sha256": "006902212d33b5742729f3e0d877c3d22d9379934ff8a15d9657c10a787c4941",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -8219,10 +8187,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "js/document-ui.js",
       "fingerprint": "f60f963e07d35dd0d0af8d0daffdfd06ce12967536aca56378ec593eca4cf1a8",
-      "source_sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
+      "source_sha256": "006902212d33b5742729f3e0d877c3d22d9379934ff8a15d9657c10a787c4941",
       "scanner_version": "1.184.0",
       "id": "js-audit-f60f963e07d35dd0",
-      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8241,7 +8209,7 @@
       "evidence": [
         {
           "path": "js/document-ui.js",
-          "sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
+          "sha256": "006902212d33b5742729f3e0d877c3d22d9379934ff8a15d9657c10a787c4941",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -8251,10 +8219,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "js/document-ui.js",
       "fingerprint": "05fd2b0bf540392218eb7cbf43c3451abfeccc66266133ceaaea881ca76a9682",
-      "source_sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
+      "source_sha256": "006902212d33b5742729f3e0d877c3d22d9379934ff8a15d9657c10a787c4941",
       "scanner_version": "1.184.0",
       "id": "js-audit-05fd2b0bf5403922",
-      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8273,7 +8241,7 @@
       "evidence": [
         {
           "path": "js/document-ui.js",
-          "sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
+          "sha256": "006902212d33b5742729f3e0d877c3d22d9379934ff8a15d9657c10a787c4941",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -9285,7 +9253,7 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-3aacacc4a4d4607d",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9321,7 +9289,7 @@
         },
         {
           "path": "tests/legacy-documents-ui.test.cjs",
-          "sha256": "ea955d2d77991b9f864ad68b4d1a1d43cfb65684d50d839972492f8704e70bd1",
+          "sha256": "8023f8545c27788e4ed129c768aeead810b4aa46ee0fe96934a612ea50061dfc",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -9334,7 +9302,7 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-1381fdd4dc6983e5",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9370,7 +9338,7 @@
         },
         {
           "path": "tests/legacy-documents-ui.test.cjs",
-          "sha256": "ea955d2d77991b9f864ad68b4d1a1d43cfb65684d50d839972492f8704e70bd1",
+          "sha256": "8023f8545c27788e4ed129c768aeead810b4aa46ee0fe96934a612ea50061dfc",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -9383,7 +9351,7 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-27b517791727a475",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9419,7 +9387,7 @@
         },
         {
           "path": "tests/legacy-documents-ui.test.cjs",
-          "sha256": "ea955d2d77991b9f864ad68b4d1a1d43cfb65684d50d839972492f8704e70bd1",
+          "sha256": "8023f8545c27788e4ed129c768aeead810b4aa46ee0fe96934a612ea50061dfc",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -9432,7 +9400,7 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-081f273c12c4772d",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9468,7 +9436,7 @@
         },
         {
           "path": "tests/legacy-documents-ui.test.cjs",
-          "sha256": "ea955d2d77991b9f864ad68b4d1a1d43cfb65684d50d839972492f8704e70bd1",
+          "sha256": "8023f8545c27788e4ed129c768aeead810b4aa46ee0fe96934a612ea50061dfc",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -9481,7 +9449,7 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-3fe9875efb7147b5",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9517,7 +9485,7 @@
         },
         {
           "path": "tests/legacy-documents-ui.test.cjs",
-          "sha256": "ea955d2d77991b9f864ad68b4d1a1d43cfb65684d50d839972492f8704e70bd1",
+          "sha256": "8023f8545c27788e4ed129c768aeead810b4aa46ee0fe96934a612ea50061dfc",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -9530,7 +9498,7 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-44e6c4c6c993bd45",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9566,7 +9534,7 @@
         },
         {
           "path": "tests/legacy-documents-ui.test.cjs",
-          "sha256": "ea955d2d77991b9f864ad68b4d1a1d43cfb65684d50d839972492f8704e70bd1",
+          "sha256": "8023f8545c27788e4ed129c768aeead810b4aa46ee0fe96934a612ea50061dfc",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -9579,7 +9547,7 @@
       "source_sha256": "454ebe9e2b89a575b0912bcbd95540eb7106e3b5ba5f54e876a46fa24f7e70e2",
       "scanner_version": "1.184.0",
       "id": "js-audit-c823edb5e428b6fd",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9615,7 +9583,7 @@
         },
         {
           "path": "tests/legacy-documents-ui.test.cjs",
-          "sha256": "ea955d2d77991b9f864ad68b4d1a1d43cfb65684d50d839972492f8704e70bd1",
+          "sha256": "8023f8545c27788e4ed129c768aeead810b4aa46ee0fe96934a612ea50061dfc",
           "description": "Existing functional/UI regression for this component; context-specific source review above remains required."
         }
       ]
@@ -9660,7 +9628,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-db05a596880618c2",
-      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9696,7 +9664,7 @@
         },
         {
           "path": "ajax/orden-de-servicio.js",
-          "sha256": "9afb14302fc85627071ab196160a2e615f16f043a194097995f89df813a4ceb6"
+          "sha256": "52364b0c4329d7d4ebf8597545ca66bee7ba0d2a88fb23a96722bb349684a5b9"
         },
         {
           "path": "ajax/registro-boleta.js",
@@ -9765,7 +9733,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-7337c1c902ec7342",
-      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9801,7 +9769,7 @@
         },
         {
           "path": "ajax/orden-de-servicio.js",
-          "sha256": "9afb14302fc85627071ab196160a2e615f16f043a194097995f89df813a4ceb6"
+          "sha256": "52364b0c4329d7d4ebf8597545ca66bee7ba0d2a88fb23a96722bb349684a5b9"
         },
         {
           "path": "ajax/registro-boleta.js",
@@ -9870,7 +9838,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-6ae974eda02be810",
-      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9906,7 +9874,7 @@
         },
         {
           "path": "ajax/orden-de-servicio.js",
-          "sha256": "9afb14302fc85627071ab196160a2e615f16f043a194097995f89df813a4ceb6"
+          "sha256": "52364b0c4329d7d4ebf8597545ca66bee7ba0d2a88fb23a96722bb349684a5b9"
         },
         {
           "path": "ajax/registro-boleta.js",
@@ -9975,7 +9943,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-4bd2d1d1f8911717",
-      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10011,7 +9979,7 @@
         },
         {
           "path": "ajax/orden-de-servicio.js",
-          "sha256": "9afb14302fc85627071ab196160a2e615f16f043a194097995f89df813a4ceb6"
+          "sha256": "52364b0c4329d7d4ebf8597545ca66bee7ba0d2a88fb23a96722bb349684a5b9"
         },
         {
           "path": "ajax/registro-boleta.js",
@@ -10080,7 +10048,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-18458a854a6ffdb2",
-      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10116,7 +10084,7 @@
         },
         {
           "path": "ajax/orden-de-servicio.js",
-          "sha256": "9afb14302fc85627071ab196160a2e615f16f043a194097995f89df813a4ceb6"
+          "sha256": "52364b0c4329d7d4ebf8597545ca66bee7ba0d2a88fb23a96722bb349684a5b9"
         },
         {
           "path": "ajax/registro-boleta.js",
@@ -10185,7 +10153,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-f0685907220c2a2c",
-      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10221,7 +10189,7 @@
         },
         {
           "path": "ajax/orden-de-servicio.js",
-          "sha256": "9afb14302fc85627071ab196160a2e615f16f043a194097995f89df813a4ceb6"
+          "sha256": "52364b0c4329d7d4ebf8597545ca66bee7ba0d2a88fb23a96722bb349684a5b9"
         },
         {
           "path": "ajax/registro-boleta.js",
@@ -10290,7 +10258,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-483477a8b7141b75",
-      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10326,7 +10294,7 @@
         },
         {
           "path": "ajax/orden-de-servicio.js",
-          "sha256": "9afb14302fc85627071ab196160a2e615f16f043a194097995f89df813a4ceb6"
+          "sha256": "52364b0c4329d7d4ebf8597545ca66bee7ba0d2a88fb23a96722bb349684a5b9"
         },
         {
           "path": "ajax/registro-boleta.js",
@@ -10395,7 +10363,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-6bcfbb0871daafc8",
-      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
+      "reviewed_commit": "a67fea92e65e7f6128e04a54a3b46a382e990340",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10431,7 +10399,7 @@
         },
         {
           "path": "ajax/orden-de-servicio.js",
-          "sha256": "9afb14302fc85627071ab196160a2e615f16f043a194097995f89df813a4ceb6"
+          "sha256": "52364b0c4329d7d4ebf8597545ca66bee7ba0d2a88fb23a96722bb349684a5b9"
         },
         {
           "path": "ajax/registro-boleta.js",
