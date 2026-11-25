@@ -1,4 +1,8 @@
-<?php require_once dirname(__DIR__, 2) . '/global/connection.php'; ?>
+<?php
+require_once dirname(__DIR__, 2) . '/global/connection.php';
+require_once dirname(__DIR__, 2) . '/global/quotation-document.php';
+$quotationCustomFields = app_quotation_custom_fields($pdo);
+?>
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
@@ -17,6 +21,7 @@
             <div style="max-width: 1140px; margin: 0 auto;">
                 <form id="FRM_INSERT_COTIZACION" method="post" action="<?php echo $functions->direct_sistema(); ?>/modules/cotizaciones/insert-update-cotizacion.php" enctype="multipart/form-data">
                     <input type="hidden" name="id_cotizacion">
+                    <input type="hidden" name="version">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -118,9 +123,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <?php $quotationCustomFields = $pdo->query("SELECT id,label,field_type,value_list_code,required_status FROM tbl_custom_field_definition WHERE entity='quotation' AND active_status=1 ORDER BY id")->fetchAll(); if ($quotationCustomFields): ?>
-                            <div class="row"><div class="col-12"><div class="card card-outline card-secondary"><div class="card-header"><h3 class="card-title">Campos adicionales</h3></div><div class="card-body"><div class="form-row"><?php foreach ($quotationCustomFields as $customField): ?><div class="form-group col-md-4"><label><?php echo e($customField['label']); ?></label><?php if ($customField['field_type'] === 'select'): ?><select class="form-control" name="custom_field[<?php echo (int) $customField['id']; ?>]" <?php echo $customField['required_status'] ? 'required' : ''; ?>><option value="">Seleccione</option><?php $options = $pdo->prepare('SELECT label,value_code FROM tbl_app_value_option WHERE list_id=(SELECT id FROM tbl_app_value_list WHERE code=?) AND active_status=1 ORDER BY sort_order,label'); $options->execute([$customField['value_list_code']]); foreach ($options->fetchAll() as $option): ?><option value="<?php echo e($option['value_code']); ?>"><?php echo e($option['label']); ?></option><?php endforeach; ?></select><?php elseif ($customField['field_type'] === 'checkbox'): ?><div class="custom-control custom-checkbox"><input class="custom-control-input" id="custom-field-<?php echo (int) $customField['id']; ?>" type="checkbox" value="1" name="custom_field[<?php echo (int) $customField['id']; ?>]"><label class="custom-control-label" for="custom-field-<?php echo (int) $customField['id']; ?>">Sí / No</label></div><?php else: ?><input class="form-control" type="<?php echo $customField['field_type'] === 'number' ? 'number' : ($customField['field_type'] === 'date' ? 'date' : 'text'); ?>" name="custom_field[<?php echo (int) $customField['id']; ?>]" <?php echo $customField['required_status'] ? 'required' : ''; ?>><?php endif; ?></div><?php endforeach; ?></div></div></div></div></div>
-                            <?php endif; ?>
+                            <section id="quotation-custom-fields-section" class="card card-outline card-secondary" hidden>
+                                <div class="card-header"><h3 class="card-title">Campos adicionales</h3></div>
+                                <div id="quotation-custom-fields" class="card-body" data-definitions="<?php echo e(json_encode($quotationCustomFields, JSON_THROW_ON_ERROR)); ?>"></div>
+                            </section>
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">

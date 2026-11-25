@@ -8,6 +8,7 @@ if ($browserQa && !str_ends_with(DB, '_qa')) {
 }
 $_SESSION['loggedInUser']=['USERID'=>$userId,'ROLE_CODE'=>'admin','PERMISSIONS'=>[]];$_SERVER['REQUEST_METHOD']='POST';$_SERVER['HTTP_X_REQUESTED_WITH']='XMLHttpRequest';
 $ruc='20'.str_pad((string)random_int(1,999999999),9,'0',STR_PAD_LEFT);$customerId=$productId=$quotationId=null;
+$browserFieldIds = [];
 try{
   $pdo->prepare('INSERT INTO tbl_customer(ruc,business_name,trade_name,email,phone,cellphone,address,department_id,province_id,district_id,contact1_name,contact1_phone,contact2_name,contact2_phone,commission) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')->execute([$ruc,'CLIENTE QA COT','QA','','','','Direccion inicial','15','1501','150101','','','','',0]);$customerId=(int)$pdo->lastInsertId();
   $code='QA-COT-'.substr(uniqid(),-7);$pdo->prepare('INSERT INTO tbl_product(code,brand,name,description,stock_quantity,unit_price,unit_value,active_status) VALUES(?,?,?,?,?,?,?,1)')->execute([$code,'APPU','ARTICULO COT QA','Temporal',0,10,'UND']);$productId=(int)$pdo->lastInsertId();
@@ -21,13 +22,30 @@ try{
   $line=$pdo->query("SELECT * FROM tbl_quotation_detail WHERE quotation_id={$quotationId} LIMIT 1")->fetch();if((float)$line['item_discount_rate']!==10.0||$line['project_code']!=='PR-COT'||$line['cost_center_code']!=='CC-LIMA'||$line['expiration_date']!=='2030-12-31')throw new RuntimeException('La cotizacion no conservo dimensiones opcionales de linea.');
   $_POST=['FILTER'=>$quotationId,'ESTADO'=>'ALL'];ob_start();include 'consultar-cotizacion.php';$consult=json_decode(ob_get_clean(),true,512,JSON_THROW_ON_ERROR);if((int)($consult[0]['CODIGOID']??0)!==$quotationId)throw new RuntimeException('La consulta no recupero la cotizacion.');
   if ($browserQa) {
+      $createField = $pdo->prepare("INSERT INTO tbl_custom_field_definition(entity,field_key,label,field_type,visible,default_value) VALUES ('quotation',?,?,?,?,?)");
+      $storeValue = $pdo->prepare("INSERT INTO tbl_custom_field_value(field_definition_id,entity,record_id,field_value) VALUES (?,'quotation',?,?)");
+      foreach (['text' => 'Detalle QA', 'checkbox' => '1'] as $type => $value) {
+          $createField->execute([$code . '-' . $type, 'Campo QA ' . $type, $type, 1, null]);
+          $browserFieldIds[$type] = (int) $pdo->lastInsertId();
+          $storeValue->execute([$browserFieldIds[$type], $quotationId, $value]);
+      }
+      $createField->execute([$code . '-hidden', 'Campo QA oculto', 'text', 0, 'Valor inicial']);
+      $browserFieldIds['hidden'] = (int) $pdo->lastInsertId();
+      $storeValue->execute([$browserFieldIds['hidden'], $quotationId, 'Valor previo']);
       putenv('APPU_QA_QUOTATION_ID=' . $quotationId);
+      putenv('APPU_QA_QUOTATION_TEXT=' . $browserFieldIds['text']);
+      putenv('APPU_QA_QUOTATION_FLAG=' . $browserFieldIds['checkbox']);
+      putenv('APPU_QA_QUOTATION_HIDDEN=' . $browserFieldIds['hidden']);
       passthru('node ' . escapeshellarg($root . '/tests/quotation-new.browser.cjs'), $exitCode);
       if ($exitCode !== 0) throw new RuntimeException('Falló la prueba de Nuevo en Chromium.');
+      $hiddenField = $pdo->prepare("SELECT field_value FROM tbl_custom_field_value WHERE entity='quotation' AND record_id=? AND field_definition_id=?");
+      $hiddenField->execute([$quotationId, $browserFieldIds['hidden']]);
+      if ($hiddenField->fetchColumn() !== 'Valor previo') throw new RuntimeException('La edición sobrescribió el dato de un campo oculto.');
   }
   $_POST=['ID_COTIZ'=>$quotationId,'reason'=>'Cotizacion anulada por prueba automatizada'];ob_start();include 'anular-cotizacion.php';$cancel=trim(ob_get_clean());if($cancel!=='1'||(int)$pdo->query("SELECT status FROM tbl_quotation WHERE id={$quotationId}")->fetchColumn()!==2)throw new RuntimeException('La anulacion no cerro la cotizacion.');
   echo "PASS quotation create canonical totals edit retrieve cancel lifecycle\n";
 }finally{
   if($quotationId){$pdo->prepare("DELETE FROM tbl_document_request WHERE operation='quotation_save' AND result_type='quotation' AND result_id=?")->execute([$quotationId]);$pdo->prepare("DELETE FROM tbl_custom_field_value WHERE entity='quotation' AND record_id=?")->execute([$quotationId]);$pdo->prepare("DELETE FROM tbl_document_status_history WHERE document_type='quotation' AND document_id=?")->execute([$quotationId]);$pdo->prepare('DELETE FROM tbl_quotation_detail WHERE quotation_id=?')->execute([$quotationId]);$pdo->prepare('DELETE FROM tbl_quotation WHERE id=?')->execute([$quotationId]);}
   if($productId)$pdo->prepare('DELETE FROM tbl_product WHERE id=?')->execute([$productId]);if($customerId)$pdo->prepare('DELETE FROM tbl_customer WHERE client_id=?')->execute([$customerId]);
+  foreach ($browserFieldIds as $id) $pdo->prepare('DELETE FROM tbl_custom_field_definition WHERE id=?')->execute([$id]);
 }

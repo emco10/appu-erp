@@ -10,6 +10,7 @@ require_once '../../global/document-history.php';
 require_once '../../global/document-numbering.php';
 require_once '../../global/business-partner-details.php';
 require_once '../../global/sales-document-validation.php';
+require_once '../../global/quotation-document.php';
 
 $userId = (int) $_SESSION['loggedInUser']['USERID'];
 $jsonResponse = ($_POST['response_format'] ?? '') === 'json';
@@ -41,13 +42,18 @@ try {
     }
 
     $previousStatus = null;
+    $previousCustomValues = [];
     if ($quotationId !== null) {
-        $statement = $pdo->prepare('SELECT number, status FROM tbl_quotation WHERE id = ? FOR UPDATE');
-        $statement->execute([$quotationId]);
-        $quotation = $statement->fetch();
-        if (!$quotation) {
+        $snapshot = app_quotation_snapshot($pdo, $quotationId, true);
+        if ($snapshot === null) {
             throw new DomainException('La cotización no existe.');
         }
+        $quotation = $snapshot['quotation'];
+        $version = $_POST['version'] ?? '';
+        if (($jsonResponse || $version !== '') && (!is_string($version) || !hash_equals($snapshot['version'], $version))) {
+            throw new DomainException('La cotización cambió desde que la abriste. Tus cambios siguen en pantalla. Vuelve a consultar la cotización antes de guardar.', 409);
+        }
+        $previousCustomValues = (array) $snapshot['custom_values'];
         $number = $quotation['number'];
         $previousStatus = (int) $quotation['status'];
         if ($previousStatus === 2) {
@@ -120,7 +126,10 @@ try {
     }
 
     $customValues = is_array($_POST['custom_field'] ?? null) ? $_POST['custom_field'] : [];
-    app_save_custom_fields($pdo, 'quotation', $quotationId, $customValues);
+    if ($jsonResponse) {
+        $customValues = array_replace($previousCustomValues, $customValues);
+    }
+    app_save_custom_fields($pdo, 'quotation', $quotationId, $customValues, $jsonResponse);
     app_record_document_status(
         $pdo,
         'quotation',

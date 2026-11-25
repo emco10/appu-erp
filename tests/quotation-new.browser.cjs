@@ -15,6 +15,9 @@ async function run() {
     assert.match(response.headers()['x-appu-qa-database'] || '', /_qa$/);
     const records = await (await catalog).json();
     const recordId = process.env.APPU_QA_QUOTATION_ID || '';
+    const textId = process.env.APPU_QA_QUOTATION_TEXT;
+    const flagId = process.env.APPU_QA_QUOTATION_FLAG;
+    const hiddenId = process.env.APPU_QA_QUOTATION_HIDDEN;
     assert.match(recordId, /^[1-9]\d*$/, 'Ejecuta la prueba mediante quotation-lifecycle.php con APPU_QUOTATION_BROWSER_QA=1');
     assert.ok(records.some(record => String(record.id) === recordId), 'La cotización QA debe aparecer en el catálogo');
 
@@ -24,6 +27,12 @@ async function run() {
     await page.goto(route + '?record_id=' + recordId);
     await expect(record).toHaveValue(recordId);
     await expect(newButton).toHaveCount(1);
+    const version = page.locator('[name=version]');
+    const customText = page.locator(`[name="custom_field[${textId}]"]`);
+    const customFlag = page.locator(`[name="custom_field[${flagId}]"]`);
+    await expect(version).toHaveValue(/^[a-f0-9]{64}$/);
+    await expect(customText).toHaveValue('Detalle QA');
+    await expect(customFlag).toHaveValue('1');
 
     const reference = page.locator('[name=cotizacion_clirefer]');
     await reference.fill('Cambio temporal QA');
@@ -43,6 +52,8 @@ async function run() {
     await expect(record).toHaveValue('');
     await expect(customer).toHaveValue('');
     await expect(reference).toHaveValue('');
+    await expect(version).toHaveValue('');
+    await expect(customText).toHaveValue('');
     assert.equal((await page.context().cookies()).some(cookie => cookie.name === legacyCookie.name), false);
 
     await page.goto(route + '?mode=create&record_id=' + recordId);
@@ -54,6 +65,11 @@ async function run() {
     await expect(record).toHaveValue(recordId);
     await expect(page.locator('[name=cotizacion_fecha]')).toHaveValue(/^\d{4}-\d{2}-\d{2}$/);
     await expect(page.locator('[name=cotizacion_fecentrega]')).toHaveValue(/^\d{4}-\d{2}-\d{2}$/);
+
+    const stalePage = await browser.newPage({ baseURL: baseURL.href });
+    await stalePage.goto(route + '?record_id=' + recordId);
+    const originalVersion = await version.inputValue();
+    await expect(stalePage.locator('[name=version]')).toHaveValue(originalVersion);
 
     const submissions = [];
     const saveEndpoint = '**/modules/cotizaciones/insert-update-cotizacion.php';
@@ -71,6 +87,8 @@ async function run() {
     });
     const form = page.locator('#FRM_INSERT_COTIZACION');
     await reference.fill('Guardado y reintento QA');
+    await customText.fill('');
+    await customFlag.selectOption('0');
     await form.evaluate(element => {
       for (let count = 0; count < 2; count++) {
         element.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
@@ -95,7 +113,29 @@ async function run() {
     await page.waitForURL(url => url.pathname === route && url.searchParams.get('record_id') === recordId, { timeout: 10000 });
     await expect(record).toHaveValue(recordId);
     await expect(reference).toHaveValue('Guardado y reintento QA');
-    console.log('PASS Oferta de ventas: Nuevo, consulta, doble envío, pérdida de respuesta y reapertura tras guardar');
+    await expect(version).not.toHaveValue(originalVersion);
+    await expect(customText).toHaveValue('');
+    await expect(customFlag).toHaveValue('0');
+
+    const staleReference = stalePage.locator('[name=cotizacion_clirefer]');
+    await staleReference.fill('Edición simultánea QA');
+    const staleSave = stalePage.waitForResponse(response => response.url().endsWith('/cotizaciones/insert-update-cotizacion.php'));
+    await stalePage.locator('.appu-doc-save').click();
+    assert.equal((await staleSave).status(), 409);
+    await expect(stalePage.locator('.appu-validation-summary')).toContainText('La cotización cambió');
+    await expect(staleReference).toHaveValue('Edición simultánea QA');
+    const current = await (await page.request.get('/modules/cotizaciones/consultar-documento.php?id=' + recordId)).json();
+    assert.equal(current.quotation.reference, 'Guardado y reintento QA');
+    assert.equal(current.custom_values[textId], '');
+    assert.equal(current.custom_values[flagId], '0');
+    assert.equal(Object.hasOwn(current.custom_values, hiddenId), false);
+
+    await stalePage.locator('#btn-select-cotizacion').click();
+    await stalePage.getByRole('button', { name: 'Descartar y continuar' }).click();
+    await expect(stalePage.locator('[name=version]')).toHaveValue(current.version);
+    await expect(staleReference).toHaveValue('Guardado y reintento QA');
+    await stalePage.close();
+    console.log('PASS Oferta de ventas: Nuevo, UDF, edición en dos pestañas, doble envío, reintento y reapertura');
   } finally {
     await browser.close();
   }
