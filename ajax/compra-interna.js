@@ -14,8 +14,7 @@ $(document).ready(function(){
   $(document).prop('title', 'Factura de proveedor - APPU');
 });
 
-function appuSelectPurchaseReference(selector, id, label) {
-  var $select = $(selector);
+function appuSelectPurchaseReference($select, id, label) {
   if (id && !Array.from($select[0].options).some(option => option.value === String(id))) {
     $select[0].add(new Option(label + " · " + id, String(id)));
   }
@@ -620,8 +619,8 @@ $("#btn-select-orden").click(function() {
         $('input[name="orden_id"]').val(data_json[0]["IDORDEN"]);
         var nature = Number(data_json[0]["TIPOORDEN"]) === 2 ? "SERVICIO" : "COMPRA";
         $('select[name="orden_naturaleza"]').val(nature).trigger("change");
-        appuSelectPurchaseReference("#purchase-order-source", data_json[0]["PURCHASE_ORDER_ID"], "Orden vinculada");
-        appuSelectPurchaseReference('select[name="orden_import_receipt_id"]', data_json[0]["IMPORT_RECEIPT_ID"], "Entrada vinculada");
+        appuSelectPurchaseReference($("#purchase-order-source"), data_json[0]["PURCHASE_ORDER_ID"], "Orden vinculada");
+        appuSelectPurchaseReference($('select[name="orden_import_receipt_id"]'), data_json[0]["IMPORT_RECEIPT_ID"], "Entrada vinculada");
         $('select[name="orden_estado"]').val(data_json[0]["ORDESTADO"]);
         $('select[name="orden_tipo_documento"]').val(data_json[0]["DOCUMENT_SUBTYPE"] || "RESERVE")
           .prop("disabled", nature === "SERVICIO" || !["Pendiente", "Rechazado"].includes(data_json[0]["ORDESTADO"]));
