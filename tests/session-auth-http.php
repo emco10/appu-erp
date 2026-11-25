@@ -17,6 +17,15 @@ try{
  [$status,$login]=$request('/modules/login.php',['txtUsername'=>$key,'txtPassword'=>'Prueba#2026'],false);authHttpAssert($status===200&&($login['error']??true)===false,'Falló inicio de sesión QA.');
  [$status,,$html]=$request('/views/clientes/registro-cliente');authHttpAssert($status===200&&preg_match('/name="csrf-token" content="([^"]+)"/',$html,$match),'No accede a la consulta permitida.');$csrf=$match[1];
  [$status]=$request('/modules/clientes/consultar-cliente.php',['FILTER'=>'ALL'],false);authHttpAssert($status===419,'Una lectura POST sin CSRF no fue rechazada.');[$status]=$request('/modules/clientes/consultar-cliente.php',['FILTER'=>'ALL']);authHttpAssert($status===200,'No consulta con permiso y CSRF válido.');
+ [$status]=$request('/modules/cotizaciones/consultar-documento.php?id=0');
+ authHttpAssert($status===403,'La oferta está accesible sin permiso de ventas.');
+ $pdo->prepare('INSERT INTO tbl_role_permission(role_id,permission_id)SELECT ?,id FROM tbl_permission WHERE code=?')->execute([$role,'sales.view']);
+ [$status]=$request('/modules/cotizaciones/consultar-documento.php?id=0');
+ authHttpAssert($status===422,'El permiso de consulta no llegó a la validación de la oferta.');
+ [$status]=$request('/modules/cotizaciones/insert-update-cotizacion.php',[]);
+ authHttpAssert($status===403,'El permiso de consulta permitió guardar una oferta.');
+ [$status]=$request('/modules/cotizaciones/anular-cotizacion.php',[]);
+ authHttpAssert($status===403,'El permiso de consulta permitió anular una oferta.');
  [$status]=$request('/modules/gestion/configuracion.php');authHttpAssert($status===403,'El perfil accede a Gestión sin permiso.');$pdo->prepare('INSERT INTO tbl_role_permission(role_id,permission_id)SELECT ?,id FROM tbl_permission WHERE code=?')->execute([$role,'management.view']);
  [$status]=$request('/modules/gestion/configuracion.php');authHttpAssert($status===200,'Los permisos nuevos no se aplican a la sesión abierta.');$pdo->prepare('DELETE assignment FROM tbl_role_permission assignment JOIN tbl_permission permission ON permission.id=assignment.permission_id WHERE assignment.role_id=? AND permission.code=?')->execute([$role,'management.view']);
  [$status]=$request('/modules/gestion/configuracion.php');authHttpAssert($status===403,'El permiso revocado sigue activo en la sesión.');$pdo->prepare('UPDATE tbl_user SET active_status=0 WHERE id=?')->execute([$user]);[$status]=$request('/modules/clientes/consultar-cliente.php',['FILTER'=>'ALL']);authHttpAssert($status===401,'La sesión del usuario desactivado mantiene acceso.');

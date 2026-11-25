@@ -6623,10 +6623,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/registro-cotizacion.js",
       "fingerprint": "ae0d521300937763ca01113d8f3b216dedd6b81af56e59a3b1174e20aba7d695",
-      "source_sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945",
+      "source_sha256": "631479b9546b4605289004776ba3b35cef512b542b779a9d6a90fe20977f221f",
       "scanner_version": "1.184.0",
       "id": "js-audit-ae0d521300937763",
-      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
+      "reviewed_commit": "40879c41714e9f392d1cb310550b567a1e3e73b7",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6645,71 +6645,7 @@
       "evidence": [
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945",
-          "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
-        }
-      ]
-    },
-    {
-      "engine": "semgrep",
-      "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
-      "path": "ajax/registro-cotizacion.js",
-      "fingerprint": "feda329dec08609b32c482892ed03d9c571b52ab1a502f9b56588b78a01a0f2e",
-      "source_sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945",
-      "scanner_version": "1.184.0",
-      "id": "js-audit-feda329dec08609b",
-      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
-      "dependencies": [
-        {
-          "path": "views/template/footer.php",
-          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
-        },
-        {
-          "path": "js/footer-functions.js",
-          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
-        }
-      ],
-      "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
-      "reviewed_on": "2026-11-22",
-      "rationale": "ajax/registro-cotizacion.js:101: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Warehouse/address option values and labels use val()/text(), and cloned options remain DOM nodes. Quotation line DataTables values have render.text() without changing submitted data.",
-      "disposition": "reviewed_audit",
-      "evidence": [
-        {
-          "path": "ajax/registro-cotizacion.js",
-          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945",
-          "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
-        }
-      ]
-    },
-    {
-      "engine": "semgrep",
-      "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
-      "path": "ajax/registro-cotizacion.js",
-      "fingerprint": "430f6f11732add4d06235145920983c9adbb9d90221ffefa3118177e07b46092",
-      "source_sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945",
-      "scanner_version": "1.184.0",
-      "id": "js-audit-430f6f11732add4d",
-      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
-      "dependencies": [
-        {
-          "path": "views/template/footer.php",
-          "sha256": "c2e4a88d03bdffd33df4ef150e66878167762e3996d3102383909743f52a87bd"
-        },
-        {
-          "path": "js/footer-functions.js",
-          "sha256": "d1e309551bd1fedbd44f6457543858e4ea04c71c29892a3833f2c905821e43ef"
-        }
-      ],
-      "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
-      "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
-      "reviewed_on": "2026-11-22",
-      "rationale": "ajax/registro-cotizacion.js:101: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Warehouse/address option values and labels use val()/text(), and cloned options remain DOM nodes. Quotation line DataTables values have render.text() without changing submitted data.",
-      "disposition": "reviewed_audit",
-      "evidence": [
-        {
-          "path": "ajax/registro-cotizacion.js",
-          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945",
+          "sha256": "631479b9546b4605289004776ba3b35cef512b542b779a9d6a90fe20977f221f",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -9852,7 +9788,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-db05a596880618c2",
-      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
+      "reviewed_commit": "40879c41714e9f392d1cb310550b567a1e3e73b7",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9896,7 +9832,7 @@
         },
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945"
+          "sha256": "631479b9546b4605289004776ba3b35cef512b542b779a9d6a90fe20977f221f"
         },
         {
           "path": "ajax/registro-factura.js",
@@ -9957,7 +9893,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-7337c1c902ec7342",
-      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
+      "reviewed_commit": "40879c41714e9f392d1cb310550b567a1e3e73b7",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10001,7 +9937,7 @@
         },
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945"
+          "sha256": "631479b9546b4605289004776ba3b35cef512b542b779a9d6a90fe20977f221f"
         },
         {
           "path": "ajax/registro-factura.js",
@@ -10062,7 +9998,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-6ae974eda02be810",
-      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
+      "reviewed_commit": "40879c41714e9f392d1cb310550b567a1e3e73b7",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10106,7 +10042,7 @@
         },
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945"
+          "sha256": "631479b9546b4605289004776ba3b35cef512b542b779a9d6a90fe20977f221f"
         },
         {
           "path": "ajax/registro-factura.js",
@@ -10167,7 +10103,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-4bd2d1d1f8911717",
-      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
+      "reviewed_commit": "40879c41714e9f392d1cb310550b567a1e3e73b7",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10211,7 +10147,7 @@
         },
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945"
+          "sha256": "631479b9546b4605289004776ba3b35cef512b542b779a9d6a90fe20977f221f"
         },
         {
           "path": "ajax/registro-factura.js",
@@ -10272,7 +10208,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-18458a854a6ffdb2",
-      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
+      "reviewed_commit": "40879c41714e9f392d1cb310550b567a1e3e73b7",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10316,7 +10252,7 @@
         },
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945"
+          "sha256": "631479b9546b4605289004776ba3b35cef512b542b779a9d6a90fe20977f221f"
         },
         {
           "path": "ajax/registro-factura.js",
@@ -10377,7 +10313,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-f0685907220c2a2c",
-      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
+      "reviewed_commit": "40879c41714e9f392d1cb310550b567a1e3e73b7",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10421,7 +10357,7 @@
         },
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945"
+          "sha256": "631479b9546b4605289004776ba3b35cef512b542b779a9d6a90fe20977f221f"
         },
         {
           "path": "ajax/registro-factura.js",
@@ -10482,7 +10418,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-483477a8b7141b75",
-      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
+      "reviewed_commit": "40879c41714e9f392d1cb310550b567a1e3e73b7",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10526,7 +10462,7 @@
         },
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945"
+          "sha256": "631479b9546b4605289004776ba3b35cef512b542b779a9d6a90fe20977f221f"
         },
         {
           "path": "ajax/registro-factura.js",
@@ -10587,7 +10523,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-6bcfbb0871daafc8",
-      "reviewed_commit": "b47ee51a48002fcb2f8fc77467cf61ca61c8abb4",
+      "reviewed_commit": "40879c41714e9f392d1cb310550b567a1e3e73b7",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10631,7 +10567,7 @@
         },
         {
           "path": "ajax/registro-cotizacion.js",
-          "sha256": "a19115de8505477c03af23c1bb90361050676dba9fef1b667d567214fc313945"
+          "sha256": "631479b9546b4605289004776ba3b35cef512b542b779a9d6a90fe20977f221f"
         },
         {
           "path": "ajax/registro-factura.js",

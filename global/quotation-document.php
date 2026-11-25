@@ -1,0 +1,49 @@
+<?php
+
+require_once __DIR__ . '/document-history.php';
+require_once __DIR__ . '/sales-document-validation.php';
+
+/** Writers must lock the quotation first, as do the document conversion paths. */
+function app_quotation_has_active_documents(PDO $pdo, int $id, bool $lock = false): bool
+{
+    $orders = $pdo->prepare("SELECT id FROM tbl_sales_order WHERE quotation_id=? AND status<>'Anulada' LIMIT 1" . ($lock ? ' FOR UPDATE' : ''));
+    $orders->execute([$id]);
+    if ($orders->fetchColumn()) return true;
+
+    $links = $pdo->prepare("SELECT sales_order.id FROM tbl_document_flow flow JOIN tbl_sales_order sales_order ON sales_order.id=flow.target_id WHERE flow.source_type='quotation' AND flow.source_id=? AND flow.target_type='sales_order' AND sales_order.status<>'Anulada' LIMIT 1");
+    $links->execute([$id]);
+    return (bool) $links->fetchColumn() || app_quotation_has_active_sale($pdo, $id);
+}
+
+function app_quotation_custom_fields(PDO $pdo): array
+{
+    return array_values(array_filter(
+        app_custom_field_definitions($pdo, 'quotation'),
+        static fn (array $field): bool => (int) ($field['visible'] ?? 1) === 1
+    ));
+}
+
+/** Call in a transaction. Writers lock the quotation before reading or changing its contents. */
+function app_quotation_snapshot(PDO $pdo, int $id, bool $lock = false): ?array
+{
+    $lockClause = $lock ? ' FOR UPDATE' : '';
+    $statement = $pdo->prepare('SELECT * FROM tbl_quotation WHERE id = ?' . $lockClause);
+    $statement->execute([$id]);
+    $quotation = $statement->fetch();
+    if (!$quotation) return null;
+
+    $statement = $pdo->prepare('SELECT * FROM tbl_quotation_detail WHERE quotation_id = ? ORDER BY id' . $lockClause);
+    $statement->execute([$id]);
+    $details = $statement->fetchAll();
+
+    $statement = $pdo->prepare("SELECT field_definition_id, field_value FROM tbl_custom_field_value WHERE entity = 'quotation' AND record_id = ? ORDER BY field_definition_id" . $lockClause);
+    $statement->execute([$id]);
+    $customValues = (object) $statement->fetchAll(PDO::FETCH_KEY_PAIR);
+
+    return [
+        'quotation' => $quotation,
+        'details' => $details,
+        'custom_values' => $customValues,
+        'version' => hash('sha256', json_encode([$quotation, $details, $customValues], JSON_THROW_ON_ERROR)),
+    ];
+}

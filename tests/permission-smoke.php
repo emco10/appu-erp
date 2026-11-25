@@ -12,6 +12,8 @@ $cases = [
     ['POST', '/modules/clientes/consultar-cliente.php', 'customers.view'],
     ['POST', '/modules/productos/insert-update-producto.php', 'inventory.manage'],
     ['GET', '/modules/productos/consultar-maestro.php', 'inventory.view'],
+    ['GET', '/modules/cotizaciones/consultar-documento.php', 'sales.view'],
+    ['POST', '/modules/cotizaciones/insert-update-cotizacion.php', 'sales.manage'],
     ['GET', '/modules/reportes/finanzas.php', 'reports.view'],
     ['POST', '/modules/finanzas/cuentas.php', 'finance.manage'],
     ['POST', '/modules/compras/solicitudes.php', 'purchases.manage'],

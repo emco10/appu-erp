@@ -1,11 +1,15 @@
-<?php require_once dirname(__DIR__, 2) . '/global/connection.php'; ?>
+<?php
+require_once dirname(__DIR__, 2) . '/global/connection.php';
+require_once dirname(__DIR__, 2) . '/global/quotation-document.php';
+$quotationCustomFields = app_quotation_custom_fields($pdo);
+?>
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-0">
                 <div class="col-md-12">
                     <div class="m-0 text-dark text-center text-lg">
-                        <i class="fas fa-file-invoice-dollar"></i>&nbsp;&nbsp;Cotización
+                        <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i>&nbsp;&nbsp;Oferta de ventas
                     </div>
                 </div>
             </div>
@@ -15,12 +19,13 @@
     <div class="content">
         <div class="container-fluid">
             <div style="max-width: 1140px; margin: 0 auto;">
-                <form id="FRM_INSERT_COTIZACION" method="post" action="<?php echo $functions->direct_sistema(); ?>/modules/cotizaciones/insert-update-cotizacion.php" enctype="multipart/form-data">
+                <form id="FRM_INSERT_COTIZACION" data-document-mode="LIST" method="post" action="<?php echo $functions->direct_sistema(); ?>/modules/cotizaciones/insert-update-cotizacion.php" enctype="multipart/form-data">
                     <input type="hidden" name="id_cotizacion">
+                    <input type="hidden" name="version">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-lg-7">
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-group">
@@ -34,18 +39,20 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="btn-group btn-group-sm d-flex" role="group"><button type="button" id="btn-search-cotizacion" class="btn btn-outline-primary"><i class="fas fa-search"></i> Buscar</button><button type="button" id="btn-prev-cotizacion" class="btn btn-outline-primary" title="Documento anterior"><i class="fas fa-chevron-left"></i></button><button type="button" id="btn-next-cotizacion" class="btn btn-outline-primary" title="Documento siguiente"><i class="fas fa-chevron-right"></i></button><button type="button" id="btn-nuevo" class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</button></div>
+                                <div class="col-lg-5 d-flex flex-wrap align-items-start justify-content-lg-end">
+                                    <span id="quotation-mode" class="badge badge-secondary m-2" role="status">Consulta</span>
+                                    <button type="button" id="quotation-edit" class="btn btn-outline-primary btn-sm mr-2" hidden>Editar</button>
+                                    <button type="button" id="quotation-discard" class="btn btn-outline-secondary btn-sm" hidden>Descartar cambios</button>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
+                    <fieldset id="quotation-fields" class="border-0 p-0 m-0" aria-label="Datos de la oferta" disabled>
                     <div class="card card-primary">
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <div class="card-title">Datos de Cotización</div>
+                                    <div class="card-title">Datos de la oferta</div>
                                 </div>
                                 <div class="col-md-10">
                                     <div class="" style="height: 2.2rem;">
@@ -64,7 +71,7 @@
                                                 <label>Estado:</label>
                                             </div>
                                             <div class="col-md-2">
-                                                <select class="form-control" name="cotizacion_estado">
+                                                <select class="form-control" name="cotizacion_estado" disabled>
                                                     <option value="1" selected>Vigente</option>
                                                     <option value="2">Anulada</option>
                                                 </select>
@@ -122,9 +129,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <?php $quotationCustomFields = $pdo->query("SELECT id,label,field_type,value_list_code,required_status FROM tbl_custom_field_definition WHERE entity='quotation' AND active_status=1 ORDER BY id")->fetchAll(); if ($quotationCustomFields): ?>
-                            <div class="row"><div class="col-12"><div class="card card-outline card-secondary"><div class="card-header"><h3 class="card-title">Campos adicionales</h3></div><div class="card-body"><div class="form-row"><?php foreach ($quotationCustomFields as $customField): ?><div class="form-group col-md-4"><label><?php echo e($customField['label']); ?></label><?php if ($customField['field_type'] === 'select'): ?><select class="form-control" name="custom_field[<?php echo (int) $customField['id']; ?>]" <?php echo $customField['required_status'] ? 'required' : ''; ?>><option value="">Seleccione</option><?php $options = $pdo->prepare('SELECT label,value_code FROM tbl_app_value_option WHERE list_id=(SELECT id FROM tbl_app_value_list WHERE code=?) AND active_status=1 ORDER BY sort_order,label'); $options->execute([$customField['value_list_code']]); foreach ($options->fetchAll() as $option): ?><option value="<?php echo e($option['value_code']); ?>"><?php echo e($option['label']); ?></option><?php endforeach; ?></select><?php elseif ($customField['field_type'] === 'checkbox'): ?><div class="custom-control custom-checkbox"><input class="custom-control-input" id="custom-field-<?php echo (int) $customField['id']; ?>" type="checkbox" value="1" name="custom_field[<?php echo (int) $customField['id']; ?>]"><label class="custom-control-label" for="custom-field-<?php echo (int) $customField['id']; ?>">Sí / No</label></div><?php else: ?><input class="form-control" type="<?php echo $customField['field_type'] === 'number' ? 'number' : ($customField['field_type'] === 'date' ? 'date' : 'text'); ?>" name="custom_field[<?php echo (int) $customField['id']; ?>]" <?php echo $customField['required_status'] ? 'required' : ''; ?>><?php endif; ?></div><?php endforeach; ?></div></div></div></div></div>
-                            <?php endif; ?>
+                            <section id="quotation-custom-fields-section" class="card card-outline card-secondary" hidden>
+                                <div class="card-header"><h3 class="card-title">Campos adicionales</h3></div>
+                                <div id="quotation-custom-fields" class="card-body" data-definitions="<?php echo e(json_encode($quotationCustomFields, JSON_THROW_ON_ERROR)); ?>"></div>
+                            </section>
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
@@ -303,17 +311,11 @@
                                 </div>
                             </div>
 
-                            <div class="row mt-3">
-                                <div id="col-btn-save-cotizprod" class="col-md-12">
-                                    <button type="submit" id="btn-save-cotizprod" class="btn btn-success btn-block"><i class="fa fa-save fa-1x"></i>&nbsp;&nbsp;<font>Grabar cotización </font></button>
-                                </div>
-                                <div id="col-btn-anular-cotizprod" class="col-md-6">
-                                    <button type="button" id="btn-anular-cotizprod" class="btn btn-danger btn-block"><i class="fa fa-trash fa-1x"></i>&nbsp;&nbsp;<font>Anular cotización </font></button>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
+                    </fieldset>
+                    <button type="submit" id="btn-save-cotizprod" hidden disabled>Guardar oferta</button>
+                    <button type="button" id="btn-anular-cotizprod" hidden disabled>Anular oferta</button>
                 </form>
             </div>
         </div>
