@@ -152,6 +152,9 @@ if errorlevel 1 exit /b 1
 "%APPU_PHP%" "%~dp0document-totals.php"
 if errorlevel 1 exit /b 1
 
+"%APPU_PHP%" "%~dp0electronic-document-layout.php"
+if errorlevel 1 exit /b 1
+
 "%APPU_PHP%" "%~dp0document-flow-purchases.php"
 if errorlevel 1 exit /b 1
 
