@@ -40,7 +40,7 @@ try {
 
     if ($jsonResponse) {
         header('Content-Type: application/json; charset=utf-8');
-        echo json_encode(['error' => false, 'quotation_id' => $quotationId]);
+        echo json_encode(['error' => false]);
         return;
     }
     echo true;

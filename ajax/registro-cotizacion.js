@@ -746,7 +746,7 @@ $("#btn-anular-cotizprod").on('click', function () {
     $.post('../../modules/cotizaciones/anular-cotizacion.php', {
       ID_COTIZ: id, version, response_format: 'json', reason: result.value.trim()
     }, undefined, 'json').done(function (response) {
-      if (response?.error === false && String(response.quotation_id) === id) {
+      if (response?.error === false) {
         reopenQuotation(id);
         return;
       }
