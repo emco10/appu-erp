@@ -67,6 +67,7 @@ La evidencia inicial se obtuvo de los puntos de entrada, vistas, adaptadores, wo
 | Diagnóstico inicial | `ERP_IMPROVEMENT_PLAN.md` | Referencia leída y contrastada con vistas, rutas, servicios, permisos y suites. Regresión de la línea base completada, con 135 pruebas UI, 43 rutas y 15 historiales. |
 | Catálogo y barra lateral | `global/sidebar-navigation.php`, `views/template/sidebar.php`, `views/template/header.php`, `js/sidebar-navigation.js`, `css/style-appu.css` | Se inventariaron 46 destinos, incluidos los 43 originales. La variante inicial reprodujo el cierre tardío de un grupo. La jerarquía final usa `details/summary` y conserva los IDs que usan los controladores y accesos rápidos. |
 | Pruebas del menú | `tests/document-navigation-contract.php`, `tests/sidebar-navigation.browser.cjs` | Contrato PHP aprobado con HTML real para administración, permisos limitados y ruta heredada. Chromium aprobó búsqueda, teclado, grupos anidados, página activa y acceso móvil. La regresión final aprobó 135 pruebas UI, 46 rutas, 15 historiales, servicios y sesión real. |
+| Seguridad del PR 14 | `.github/security-reviewed-findings.json` | PHP, Node y Semgrep aprobaron. CodeQL pasó de 2.27.5 a 2.27.6. El SARIF de cobertura completa coincide con los 12 resultados previos por huella exacta. Se verificó el informe con el control del repositorio y se actualizó la versión en esas 12 entradas. |
 
 La prueba de navegador se ejecuta con `node tests/sidebar-navigation.browser.cjs`, Playwright instalado y `APPU_QA_URL` apuntando a `tests/document-workbench.php` en loopback.
 
