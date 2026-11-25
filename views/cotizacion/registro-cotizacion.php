@@ -20,7 +20,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-lg-7">
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-group">
@@ -34,10 +34,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="btn-group btn-group-sm d-flex" role="group"><button type="button" id="btn-search-cotizacion" class="btn btn-outline-primary"><i class="fas fa-search"></i> Buscar</button><button type="button" id="btn-prev-cotizacion" class="btn btn-outline-primary" title="Documento anterior"><i class="fas fa-chevron-left"></i></button><button type="button" id="btn-next-cotizacion" class="btn btn-outline-primary" title="Documento siguiente"><i class="fas fa-chevron-right"></i></button><button type="button" id="btn-nuevo" class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</button></div>
-                                </div>
-                                
                             </div>
                         </div>
                     </div>

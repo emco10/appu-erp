@@ -182,12 +182,28 @@ $('select[name="cotizacion_usuario"]').on("change", function(){
   $('input[name="cotizacion_usuarioid"]').val($(this).val());
 });
 
+const quotationEntry = new URLSearchParams(window.location.search);
+const previousQuotationId = leer_cookie('COOKIE_ID_COTIZ');
+if (previousQuotationId) eliminar_cookie('COOKIE_ID_COTIZ');
+
 $.post("../../modules/cotizaciones/listar-cotizaciones.php", function(data) {
-  $('select[name="cotizacion_listado"]').empty();
-  $('select[name="cotizacion_listado"]').select2({
+  const list = $('select[name="cotizacion_listado"]');
+  list.empty().select2({
     data: (typeof data === "string" ? JSON.parse(data) : data)
   });
-  appuOpenRequestedRecord('select[name="cotizacion_listado"]', '#btn-select-cotizacion');
+
+  if (quotationEntry.get('mode') === 'create') {
+    if (document.activeElement === document.body) $('input[name="cotizacion_valcliente"]').trigger('focus');
+    return;
+  }
+  if (quotationEntry.has('record_id')) {
+    appuOpenRequestedRecord('select[name="cotizacion_listado"]', '#btn-select-cotizacion');
+    return;
+  }
+  if (/^[1-9]\d*$/.test(previousQuotationId)) {
+    list.val(previousQuotationId).trigger('change');
+    if (list.val() === previousQuotationId) $('#btn-select-cotizacion').trigger('click');
+  }
 });
 
 $.post(
@@ -759,37 +775,5 @@ $("#btn-anular-cotizprod").click(function() {
         );
       }
     });
-  }
-});
-
-$("#btn-nuevo").click(function (e) {
-    e.preventDefault();
-    location.reload();
-});
-
-$("#btn-search-cotizacion").on("click", function () {
-  $('select[name="cotizacion_listado"]').select2("open");
-});
-function navigateQuotation(direction) {
-  var $select = $('select[name="cotizacion_listado"]');
-  var options = $select.find("option").toArray();
-  var current = $select.prop("selectedIndex");
-  var next = current + direction;
-  if (next < 1 || next >= options.length) return;
-  $select.prop("selectedIndex", next).trigger("change");
-  $("#btn-select-cotizacion").trigger("click");
-}
-$("#btn-prev-cotizacion").on("click", function () { navigateQuotation(-1); });
-$("#btn-next-cotizacion").on("click", function () { navigateQuotation(1); });
-
-$( document ).ready(function() {
-  var cookie_idcotiz = leer_cookie('COOKIE_ID_COTIZ');
-  if (cookie_idcotiz != "") {
-    setTimeout(function(){
-      $('select[name="cotizacion_listado"]').val(cookie_idcotiz);
-      $('select[name="cotizacion_listado"]').trigger("change");
-      $('#btn-select-cotizacion').trigger("click");
-      eliminar_cookie("COOKIE_ID_COTIZ");
-    },500);
   }
 });

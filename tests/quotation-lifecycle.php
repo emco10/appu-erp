@@ -2,6 +2,10 @@
 if(PHP_SAPI!=='cli'){http_response_code(404);exit;}
 $root=dirname(__DIR__);require $root.'/global/config.php';session_set_save_handler(fn()=>true,fn()=>true,fn($id)=>'',fn($id,$data)=>true,fn($id)=>true,fn($max)=>0);app_start_session();
 require $root.'/global/connection.php';$userId=(int)$pdo->query('SELECT id FROM tbl_user ORDER BY id LIMIT 1')->fetchColumn();$warehouseId=(int)$pdo->query('SELECT id FROM tbl_warehouse WHERE active_status=1 ORDER BY id LIMIT 1')->fetchColumn();
+$browserQa = getenv('APPU_QUOTATION_BROWSER_QA') === '1';
+if ($browserQa && !str_ends_with(DB, '_qa')) {
+    throw new RuntimeException('La prueba de navegador requiere una base _qa.');
+}
 $_SESSION['loggedInUser']=['USERID'=>$userId,'ROLE_CODE'=>'admin','PERMISSIONS'=>[]];$_SERVER['REQUEST_METHOD']='POST';$_SERVER['HTTP_X_REQUESTED_WITH']='XMLHttpRequest';
 $ruc='20'.str_pad((string)random_int(1,999999999),9,'0',STR_PAD_LEFT);$customerId=$productId=$quotationId=null;
 try{
@@ -16,6 +20,11 @@ try{
   $find->execute([$customerId]);$quote=$find->fetch();if(abs((float)$quote['total_net']-31.86)>0.01)throw new RuntimeException('La edicion no persistio el total canonico con descuento de linea.');
   $line=$pdo->query("SELECT * FROM tbl_quotation_detail WHERE quotation_id={$quotationId} LIMIT 1")->fetch();if((float)$line['item_discount_rate']!==10.0||$line['project_code']!=='PR-COT'||$line['cost_center_code']!=='CC-LIMA'||$line['expiration_date']!=='2030-12-31')throw new RuntimeException('La cotizacion no conservo dimensiones opcionales de linea.');
   $_POST=['FILTER'=>$quotationId,'ESTADO'=>'ALL'];ob_start();include 'consultar-cotizacion.php';$consult=json_decode(ob_get_clean(),true,512,JSON_THROW_ON_ERROR);if((int)($consult[0]['CODIGOID']??0)!==$quotationId)throw new RuntimeException('La consulta no recupero la cotizacion.');
+  if ($browserQa) {
+      putenv('APPU_QA_QUOTATION_ID=' . $quotationId);
+      passthru('node ' . escapeshellarg($root . '/tests/quotation-new.browser.cjs'), $exitCode);
+      if ($exitCode !== 0) throw new RuntimeException('Falló la prueba de Nuevo en Chromium.');
+  }
   $_POST=['ID_COTIZ'=>$quotationId,'reason'=>'Cotizacion anulada por prueba automatizada'];ob_start();include 'anular-cotizacion.php';$cancel=trim(ob_get_clean());if($cancel!=='1'||(int)$pdo->query("SELECT status FROM tbl_quotation WHERE id={$quotationId}")->fetchColumn()!==2)throw new RuntimeException('La anulacion no cerro la cotizacion.');
   echo "PASS quotation create canonical totals edit retrieve cancel lifecycle\n";
 }finally{
