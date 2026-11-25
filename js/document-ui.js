@@ -98,7 +98,7 @@
         .forEach(control => { control.inert = locked; });
     }
 
-    $(form).on('submit.salesCreation', function (event) {
+    form.addEventListener('submit', function (event) {
       event.preventDefault();
       if (saving || form.dataset.documentMode !== 'CREATE' || form.elements.id_factura.value || !global.appuCan('sales.manage')) return;
       if (validate && !validate()) return;

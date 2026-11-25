@@ -45,7 +45,11 @@ async function run() {
       await expect(page.getByText('No hubo conexión con el servidor.', { exact: false })).toBeVisible();
       await expect(reference).toHaveValue('Conservar referencia QA');
       assert.equal(keys.length, 1);
-      await form.dispatchEvent('submit');
+      await form.evaluate(element => {
+        element.noValidate = true;
+        element.querySelector('#btn-save-facturaprod').disabled = false;
+      });
+      await page.locator('.appu-doc-save').click();
       await page.waitForURL(url => url.pathname === path && url.searchParams.get('record_id') === String(id));
       await expect(form.locator('[name=id_factura]')).toHaveValue(String(id));
       await expect(form).toHaveAttribute('data-document-mode', 'VIEW');

@@ -59,15 +59,15 @@ test('Boleta: agregar producto y guardar conserva descripción literal y totales
   const {$}=t,payload='<img src=x onerror="window.appuXss=true"><svg onload="window.appuXss=true"></svg> & artículo';
   $('[name=facturacion_producto]').append($('<option>').val('42').text('Producto QA')).val('42');$('[name=facturacion_codeprod]').val('QA42');$('[name=facturacion_nameprod],[name=facturacion_proddesc]').val(payload);$('[name=facturacion_prodprecio]').val('10');$('[name=facturacion_prodcant]').val('2');$('#btn-add-prodtofactura').prop('disabled',false).trigger('click');
   const table=$('#table-productsfactura').DataTable();assert.equal(table.rows().count(),1);assert.equal($('#table-productsfactura tbody img,#table-productsfactura tbody svg').length,0);assert.equal($(table.cell(0,2).node()).text(),payload);assert.equal(table.row(0).data()[3],payload);assert.equal($('[name=facturacion_total]').val(),'23.60');
-  const form=$('#FRM_INSERT_FACTURA');form.trigger('submit').trigger('submit');const requests=()=>t.requests.filter(r=>r.data instanceof t.w.FormData&&r.data.has('facturacion_prods'));assert.equal(requests().length,1);const save=requests()[0];const rows=JSON.parse(save.data.get('facturacion_prods'));assert.equal(rows[0][2],payload);assert.equal(rows[0][3],payload);assert.equal(rows[0][5],2);assert.equal(save.data.get('response_format'),'json');assert.match(save.data.get('request_key'),/^[A-Za-z0-9_-]{16,64}$/);
-  save.deferred.reject({status:0});assert.equal(form.attr('aria-busy'),'false');assert.equal(table.rows().count(),1);form.trigger('submit');const retry=requests()[1];assert.equal(retry.data.get('request_key'),save.data.get('request_key'));assert.equal(retry.data.get('facturacion_prods'),save.data.get('facturacion_prods'));
+  const form=$('#FRM_INSERT_FACTURA');const submit=()=>form[0].dispatchEvent(new t.w.Event('submit',{bubbles:true,cancelable:true}));submit();submit();const requests=()=>t.requests.filter(r=>r.data instanceof t.w.FormData&&r.data.has('facturacion_prods'));assert.equal(requests().length,1);const save=requests()[0];const rows=JSON.parse(save.data.get('facturacion_prods'));assert.equal(rows[0][2],payload);assert.equal(rows[0][3],payload);assert.equal(rows[0][5],2);assert.equal(save.data.get('response_format'),'json');assert.match(save.data.get('request_key'),/^[A-Za-z0-9_-]{16,64}$/);
+  save.deferred.reject({status:0});assert.equal(form.attr('aria-busy'),'false');assert.equal(table.rows().count(),1);submit();const retry=requests()[1];assert.equal(retry.data.get('request_key'),save.data.get('request_key'));assert.equal(retry.data.get('facturacion_prods'),save.data.get('facturacion_prods'));
  }finally{t.dom.window.close();}
 });
 
 test('Nota de crédito: el intento de consultar un comprobante bloquea nuevas altas desde esa ficha',async()=>{
  const t=await setup('facturacion/registro-nota-credito',['ajax/registro-nota-credito.js']);try{
   const {$}=t;const form=$('#FRM_INSERT_FACTURA');$('[name=facturas_listado]').append($('<option>').val('18').text('FC-QA')).val('18').trigger('change');$('#btn-select-factura').trigger('click');
-  assert.equal(form.attr('data-document-mode'),'VIEW');form.trigger('submit');assert.equal(t.requests.filter(r=>r.data instanceof t.w.FormData&&r.data.has('facturacion_prods')).length,0);
+  assert.equal(form.attr('data-document-mode'),'VIEW');form[0].dispatchEvent(new t.w.Event('submit',{bubbles:true,cancelable:true}));assert.equal(t.requests.filter(r=>r.data instanceof t.w.FormData&&r.data.has('facturacion_prods')).length,0);
  }finally{t.dom.window.close();}
 });
 
