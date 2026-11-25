@@ -104,7 +104,7 @@
 
     form.addEventListener('submit', function (event) {
       event.preventDefault();
-      if (saving || !global.appuCan(options.permission) || !options.canSave()) return;
+      if (saving || form.inert || !global.appuCan(options.permission) || !options.canSave()) return;
 
       const identity = form.elements[options.idField];
       if (draftIdentity !== identity.value) {
@@ -155,14 +155,14 @@
     });
   };
 
-  global.appuBindPurchaseSave = function (form, populate) {
+  global.appuBindPurchaseSave = function (form, populate, validate) {
     if (!form) return;
     const requested = new URLSearchParams(global.location.search).get('record_id');
     form.dataset.documentMode = /^[1-9]\d*$/.test(requested) ? 'VIEW' : 'CREATE';
     bindDocumentSave(form, {
       idField: 'orden_id', permission: 'purchases.manage', savingTitle: 'Guardando documento de compra',
       controls: document.querySelectorAll('#btn-select-orden, select[name="orden_listado"]'),
-      canSave: () => ['CREATE', 'EDIT'].includes(form.dataset.documentMode),
+      canSave: () => ['CREATE', 'EDIT'].includes(form.dataset.documentMode) && (!validate || validate()),
       populate
     });
   };
@@ -173,7 +173,10 @@
   };
 
   global.appuLoadPurchaseFields = function (form, header) {
-    form.elements.orden_tipomoneda.value = global.appuPurchaseCurrencyValue(header.TIPOMON);
+    const select = form.elements.orden_tipomoneda;
+    const source = String(header.TIPOMON || '').toUpperCase();
+    const alternate = { MN: 'PEN', ME: 'USD', PEN: 'MN', USD: 'ME' }[source];
+    select.value = Array.from(select.options).some(option => option.value === source) ? source : (alternate || '');
     const values = header.CUSTOM_FIELDS || {};
     for (const field of form.elements) {
       const key = /^custom_field\[(\d+)\]$/.exec(field.name);

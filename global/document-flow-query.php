@@ -53,6 +53,10 @@ function app_query_document_flow(PDO $pdo,string $type,int $id,bool $filterPermi
         $party=$header['customer_name']??$header['name']??$header['recipient_name']??$header['provider_name']??'';
         if($party===''&&!empty($header['provider_id'])){$q=$pdo->prepare('SELECT business_name FROM tbl_provider WHERE id=?');$q->execute([$header['provider_id']]);$party=$q->fetchColumn()?:'';}
         if($party===''&&!empty($header['customer_id'])){$q=$pdo->prepare('SELECT business_name FROM tbl_customer WHERE client_id=?');$q->execute([$header['customer_id']]);$party=$q->fetchColumn()?:'';}
+        if ($current === 'order' && (int) $header['type'] === 2) {
+            $config['label'] = 'Orden de servicio';
+            $config['route'] = 'ordenes/orden-de-servicio';
+        }
         $label=$config['label'];if($current==='purchase'&&($header['document_subtype']??'')==='RESERVE')$label='Factura de reserva de proveedor';
         $nodes[$key]=['key'=>$key,'type'=>$current,'id'=>$record,'label'=>$label,'number'=>$number,'date'=>$header['date']??$header['issue_date']??$header['receipt_date']??$header['payment_date']??$header['cost_date']??'','customer'=>$party,'amount'=>$header['total_net']??$header['total_amount']??$header['total_estimate']??$header['total_cost']??null,'currency'=>$header['currency']??'','status'=>$current==='sales_order'?app_order_domain_status($header):(is_numeric($status)?app_sales_status_label((int)$status):$status),'cancelled'=>$cancelled,'url'=>'../'.$config['route'].'?'.($config['parameter']??'record_id').'='.$record];
         $aliases=$current==='order'?['order','purchase_order']:[$current];$placeholders=implode(',',array_fill(0,count($aliases),'?'));

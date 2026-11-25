@@ -1,7 +1,8 @@
 $("#col-btn-delete-orden").hide();
-var serviceSaving=false,serviceProductEpoch=0,serviceCatalogEpoch=0,serviceProviderEpoch=0,serviceOpenEpoch=0,serviceStatus='Pendiente';
-function serviceError(xhr,fallback){if(typeof window.appuShowRequestError==='function')window.appuShowRequestError($('#FRM_INSERT_DETA_ORDSERV'),xhr,fallback);else{var response=xhr.responseJSON||{};toastr.error(response.message||response.error||fallback);}Swal.close();}
-function serviceCanEdit(){return appuCan('purchases.manage')&&['Pendiente','Rechazado'].indexOf(serviceStatus)!==-1;}
+var serviceForm = document.getElementById('FRM_INSERT_DETA_ORDSERV');
+var serviceLoading=false,serviceProductEpoch=0,serviceCatalogEpoch=0,serviceProviderEpoch=0,serviceOpenEpoch=0,serviceStatus='Pendiente';
+function serviceError(xhr,fallback){if(typeof window.appuShowRequestError==='function')window.appuShowRequestError($('#FRM_INSERT_DETA_ORDSERV'),xhr,fallback);else{var response=xhr.responseJSON||{};toastr.error(response.message||response.error||fallback);}}
+function serviceCanEdit(){return !serviceForm.inert && appuCan('purchases.manage') && ['CREATE','EDIT'].includes(serviceForm.dataset.documentMode);}
 $("#btn-save-orden").prop("disabled", true);
 $("#btn-add-prodtporden").prop("disabled", true);
 $("#btn-select-orden").prop("disabled", true);
@@ -43,6 +44,18 @@ $.post("../../modules/ordenes/listar-ordenes.php", {orden_tipo:"SERVICIO"}, func
   $('select[name="orden_listado"]').select2({
     data: (typeof data === "string" ? JSON.parse(data) : data)
   });
+  if (new URLSearchParams(window.location.search).has("record_id")) {
+    appuOpenRequestedRecord('select[name="orden_listado"]', '#btn-select-orden');
+    return;
+  }
+  var legacyOrder = leer_cookie('COOKIE_ID_ORDEN');
+  if (legacyOrder) {
+    eliminar_cookie('COOKIE_ID_ORDEN');
+    $('select[name="orden_listado"]').val(legacyOrder).trigger("change");
+    loadServiceOrder($('select[name="orden_listado"]').val());
+  }
+}).fail(function (xhr) {
+  serviceError(xhr, "No se pudo cargar la lista de órdenes de servicio.");
 });
 
 $.post("../../modules/proveedores/listar-proveedores.php", function(data) {
@@ -257,7 +270,7 @@ var tbl_data = "";
 $("#btn-add-prodtporden").click(function(e) {
 
   e.preventDefault();
-  if(serviceSaving||!serviceCanEdit())return;
+  if(!serviceCanEdit())return;
   
   //code = $('input[name="orden_codprod"]').val();
   name = $('input[name="orden_nombre_serv"]').val();
@@ -365,7 +378,7 @@ $("#btn-add-prodtporden").click(function(e) {
 });
 
 $("#table-ord-servicios").on("dblclick", "tr", function() {
-  if(serviceSaving||!serviceCanEdit())return;
+  if(!serviceCanEdit())return;
   var data_row = tbl_prodordcompra.row(this).data();
 
   if (data_row == null) return;
@@ -462,295 +475,155 @@ $('input[name="orden_porcigv"]').on("change", function() {
 });
 */
 
-$("#btn-select-orden").click(function() {
-  if(serviceSaving)return;
-  var current=++serviceOpenEpoch;
-  DATA_ID = $('select[name="orden_listado"]').val();
-  if (DATA_ID != "" && DATA_ID != null) {
-    Swal.fire({
-      html: "<h4>Cargando datos de orden</h4>",
-      allowOutsideClick: false,
-      onBeforeOpen: () => {
-        Swal.showLoading();
-      }
-    });
-    $.post(
-      "../../modules/ordenes/consultar-orden.php",
-      { TIPO_ORDEN:"SERVICIO", FILTER: DATA_ID, ESTADO: "ALL" },
-      function(data) {
-        if(current!==serviceOpenEpoch)return;
-        var data_json = (typeof data === "string" ? JSON.parse(data) : data);
-        if(!data_json.length){Swal.close();return toastr.warning('No se encontró la orden seleccionada.');}
-        serviceStatus=data_json[0].ORDESTADO;
-        $('#FRM_INSERT_DETA_ORDSERV [name]').filter(function(){return this.name.indexOf('custom_field[')===0;}).each(function(){var match=this.name.match(/\[(\d+)\]/),value=match?(data_json[0].CUSTOM_FIELDS||{})[match[1]]:'';if(this.type==='checkbox')$(this).prop('checked',String(value)==='1');else $(this).val(value==null?'':value).trigger('change.select2');});
-        $('input[name="orden_nro"]').focus();
-        $('input[name="orden_nro"]').val(data_json[0]["ORDNUMBER"]);
-        $("#btn-delete-orden").attr("js-id", data_json[0]["IDORDEN"]);
-        $('input[name="orden_id"]').val(data_json[0]["IDORDEN"]);
-        $('select[name="orden_estado"]').val(data_json[0]["ORDESTADO"]);
-        $('input[name="orden_tcventa"]').val(data_json[0]["EXCVENTA"]);
-        $('input[name="orden_tccompra"]').val(data_json[0]["EXCCOMP"]);
+function renderServiceOrder(header, lines) {
+  serviceProductEpoch++;
+  serviceStatus = header.ORDESTADO;
+  serviceForm.dataset.documentMode = appuCan("purchases.manage") && ["Pendiente", "Rechazado"].includes(serviceStatus) ? "EDIT" : "VIEW";
+  appuLoadPurchaseFields(serviceForm, header);
 
-        var providerId=data_json[0]["PROVID"],$provider=$('select[name="orden_proveedor"]');
-        if(!$provider.find('option').filter(function(){return String(this.value)===String(providerId);}).length)$provider.append($('<option>').val(providerId).text('Proveedor '+providerId));
-        $provider.val(providerId);
-        $('select[name="orden_proveedor"]').trigger("change");
+  $('input[name="orden_nro"]').val(header.ORDNUMBER);
+  $('input[name="orden_id"]').val(header.IDORDEN);
+  $('select[name="orden_estado"]').val(serviceStatus);
+  $('input[name="orden_tcventa"]').val(header.EXCVENTA);
+  $('input[name="orden_tccompra"]').val(header.EXCCOMP);
 
-        $('input[name="orden_provruc"]').val();
-
-        $('select[name="orden_tipomoneda"]').val(data_json[0]["TIPOMON"]);
-
-        $('input[name="orden_fecemision"]').val(data_json[0]["FECEMIS"]);
-        $('input[name="orden_fecentrega"]').val(data_json[0]["FECDEL"]);
-        $('input[name="orden_nrocuenta"]').val(data_json[0]["ACCNUM"]);
-
-        $('select[name="orden_tipopagotext"]').val(data_json[0]["PAYDAYS"] );
-        $('select[name="orden_tipopagotext"]').trigger("change");
-
-        if ($('select[name="orden_tipopagotext"]').val() == null){
-          $('select[name="orden_tipopagotext"]').val("Otro");
-          $('select[name="orden_tipopagotext"]').trigger("change");
-          $('#div_diaspago').show();
-          $('input[name="orden_tipopago"]').prop("required",true);
-          $('input[name="orden_tipopago"]').val(data_json[0]["PAYDAYS"] );
-        }
-        
-        $('input[name="orden_cotizacion"]').val(data_json[0]["COTIZ"]);
-        $('input[name="orden_observ"]').val(data_json[0]["OBSERV"]);
-        $('input[name="orden_solicitante"]').val(data_json[0]["REQUES"]);
-        $('input[name="orden_autorizador"]').val(data_json[0]["APROV"]);
-
-        $('input[name="orden_igv"]').val((data_json[0]["TOTIGV"] * 1).toFixed(2));
-        $('input[name="orden_totcompra"]').val((data_json[0]["TOTCOMP"] * 1).toFixed(2));
-        $('input[name="orden_totneto"]').val((data_json[0]["TOTNET"] * 1).toFixed(2));
-
-        total_temporal = parseFloat(data_json[0]["TOTCOMP"]);
-        codigo_idorden = data_json[0]["IDORDEN"];
-        
-        $.post(
-          "../../modules/ordenes/consultar-detalle-orden.php",
-          { IDORDEN: codigo_idorden },
-          function(data) {
-            if(current!==serviceOpenEpoch)return;
-
-            //$('input[name="orden_codprod"]').val("");
-            //$('input[name="orden_valunit"]').val("");
-            $('input[name="orden_nombre_serv"]').val("");
-            $('input[name="orden_glosa"]').val("");
-            $('input[name="orden_porcdscto"]').val(0);
-            $('input[name="orden_valordscto"]').val("");
-            $('input[name="orden_precunit"]').val("");
-            $('input[name="orden_cantidad"]').val(0);
-
-            $("#btn-add-prodtporden").prop("disabled", true);
-            $("#btn-save-orden").prop("disabled", !serviceCanEdit());
-
-            tbl_prodordcompra.clear().draw();
-            detaorden_json = (typeof data === "string" ? JSON.parse(data) : data);
-            for (i = 0; i < detaorden_json.length; i++) {
-              tbl_prodordcompra.rows
-                .add([
-                  {
-                    0: detaorden_json[i]["ROW_ID"],
-                    //1: detaorden_json[i]["CODE"],
-                    1: detaorden_json[i]["DESCRIPTION"],
-                    2: detaorden_json[i]["GLOSS"],
-                    //4: detaorden_json[i]["UNIT_VALUE"],
-                    3: (detaorden_json[i]["UNIT_PRICE"] * 1).toFixed(2),
-                    4: detaorden_json[i]["QUANTITY"],
-                    5: (detaorden_json[i]["DISCOUNT_RATE"] * 1).toFixed(2),
-                    6: (detaorden_json[i]["DISCOUNTED_TOTAL"] * 1).toFixed(2)
-                  }
-                ])
-                .draw();
-            }
-            $('#FRM_INSERT_DETA_ORDSERV :input').not('[type=hidden]').prop('disabled',!serviceCanEdit());
-            $('[name="orden_estado"]').prop('disabled',true);
-            $('#btn-delete-orden').prop('disabled',!appuCan('purchases.manage')||['Anulado','Anulada','Cancelada'].indexOf(serviceStatus)!==-1);
-            if(window.appuMarkSaved)window.appuMarkSaved();
-          }
-        ).fail(function(xhr){if(current===serviceOpenEpoch)serviceError(xhr,'No se pudo recuperar el detalle de la orden.');});
-
-        $("#btn-save-orden font").html("Actualizar Orden de Servicio");
-        $("#col-btn-save-orden").attr("class", "col-md-6");
-        $("#col-btn-delete-orden").toggle(appuCan('purchases.manage'));
-      }
-    ).fail(function(xhr){if(current===serviceOpenEpoch)serviceError(xhr,'No se pudo recuperar la orden.');}).always(function() {
-      if(current===serviceOpenEpoch)Swal.close();
-    });
+  var $provider = $('select[name="orden_proveedor"]');
+  if (!Array.from($provider[0].options).some(option => option.value === String(header.PROVID))) {
+    $provider[0].add(new Option('Proveedor ' + header.PROVID, String(header.PROVID)));
   }
-});
+  $provider.val(header.PROVID).trigger("change");
+  $('input[name="orden_fecemision"]').val(header.FECEMIS);
+  $('input[name="orden_fecentrega"]').val(header.FECDEL);
+  $('input[name="orden_nrocuenta"]').val(header.ACCNUM);
 
-$("#FRM_INSERT_DETA_ORDSERV").submit(function (e) {
-  e.preventDefault();
-  if(serviceSaving||!serviceCanEdit())return;
+  var $payment = $('select[name="orden_tipopagotext"]');
+  $payment.val(header.PAYDAYS);
+  $payment.val($payment.val() ?? 'Otro').trigger("change");
+  $('input[name="orden_tipopago"]').val(header.PAYDAYS);
 
-  var form = $(this);
-  var idform = form.attr("id");
-  var url = form.attr('action');
-  var formElement = document.getElementById(idform);
+  $('input[name="orden_cotizacion"]').val(header.COTIZ);
+  $('input[name="orden_observ"]').val(header.OBSERV);
+  $('input[name="orden_solicitante"]').val(header.REQUES);
+  $('input[name="orden_autorizador"]').val(header.APROV);
+  $('input[name="orden_igv"]').val(Number(header.TOTIGV).toFixed(2));
+  $('input[name="orden_totcompra"]').val(Number(header.TOTCOMP).toFixed(2));
+  $('input[name="orden_totneto"]').val(Number(header.TOTNET).toFixed(2));
+  total_temporal = Number(header.TOTCOMP);
 
-  tbl_data = tbl_prodordcompra.rows().data().toArray();
-  if(!tbl_data.length)return toastr.warning('Agrega al menos un servicio.');
+  $('input[name="orden_nombre_serv"],input[name="orden_glosa"],input[name="orden_valordscto"],input[name="orden_precunit"]').val("");
+  $('input[name="orden_porcdscto"],input[name="orden_cantidad"]').val(0);
+  tbl_prodordcompra.clear();
+  tbl_prodordcompra.rows.add(lines.map(line => ({
+    0: line.ROW_ID,
+    1: line.DESCRIPTION,
+    2: line.GLOSS,
+    3: Number(line.UNIT_PRICE).toFixed(2),
+    4: line.QUANTITY,
+    5: Number(line.DISCOUNT_RATE).toFixed(2),
+    6: Number(line.DISCOUNTED_TOTAL).toFixed(2)
+  }))).draw();
 
-  var formData_rec = new FormData(formElement);
-  formData_rec.append("orden_tipo","SERVICIO");
-  formData_rec.append("orden_lstservicios", JSON.stringify(tbl_data));
-  var id_ordcompra = $('input[name="orden_id"]').val();
-  serviceSaving=true;$('#btn-save-orden,#btn-add-prodtporden,#btn-select-orden').prop('disabled',true);
+  var editable = serviceCanEdit();
+  $(serviceForm).find(":input").not("[type=hidden]").prop("disabled", !editable);
+  $('[name="orden_estado"],#btn-add-prodtporden').prop("disabled", true);
+  $("#btn-save-orden").prop("disabled", !editable).find("font").text("Actualizar Orden de Servicio");
+  $("#col-btn-save-orden").attr("class", "col-md-6");
+  $("#col-btn-delete-orden").toggle(appuCan("purchases.manage"));
+  $("#btn-delete-orden").prop("disabled", !appuCan("purchases.manage") || serviceIsCancelled());
+  serviceForm.dispatchEvent(new Event("appu:document-loaded"));
+  appuMarkSaved();
+}
 
-  $.ajax({
-      type: "POST",
-      url: url,
-      data: formData_rec,
-      contentType: false,
-      cache: false,
-      processData: false,
-      beforeSend: function () {
-          Swal.fire({
-              html: '<h4>Guardando información</h4>',
-              allowOutsideClick: false,
-              onBeforeOpen: () => {
-                  Swal.showLoading();
-              }
-          })
-      },
-      success: function (data) {
-          if (data == "ERROR") {
-            $.Notification.notify("error", "bottom-right", "Error de guardado", 
-              "No se pudo guardar datos de orden de servicio");
-            Swal.close();
-          } else if (data == "OK_INSERT") {
-            $('input[name="orden_nro"]').focus();
-            form.find("input, textarea, select").val("");
+function serviceIsCancelled() {
+  return ["Anulado", "Anulada", "Cancelado", "Cancelada"].includes(serviceStatus);
+}
 
-            $('select[name="orden_estado"]').val("Pendiente");
-            $('select[name="orden_estado"]').trigger("change");
-
-            $('select[name="orden_proveedor"]').trigger("change");
-
-            $('select[name="orden_tipopagotext"]').trigger("change");
-            $('select[name="orden_tipopagotext"]').prop("disabled",false);
-
-            $('#div_diaspago').hide();
-            $('input[name="orden_tipopago"]').prop("required",false);
-
-            $.Notification.notify("success", "bottom-right", "Orden de Servicio guardada", "Datos almacenados");
-            tbl_prodordcompra.clear().draw();
-
-            Swal.close();
-            $("#btn-save-orden").prop("disabled", true);
-            $("#btn-add-prodtporden").prop("disabled", true);
-
-            $.post("../../modules/ordenes/listar-ordenes.php", {orden_tipo:"SERVICIO"}, function(data) {
-              $('select[name="orden_listado"]').empty();
-              $('select[name="orden_listado"]').select2({
-                data: (typeof data === "string" ? JSON.parse(data) : data)
-              });
-            });
-            
-          } else if (data == "OK_UPDATE") {
-              if (id_ordcompra != "" && id_ordcompra != null) {
-                $('input[name="orden_nro"]').focus();
-                $('input[name="orden_id"]').val("");
-                $("#btn-save-orden font").html("Guardar orden de servicio");
-                $("#btn-save-orden").prop("disabled", true);
-                $("#btn-add-prodtporden").prop("disabled", true);
-                $("#col-btn-save-orden").attr("class", "col-md-12");
-                $("#col-btn-delete-orden").hide();
-                form.find("input, textarea, select").val("");
-
-                $('select[name="orden_estado"]').val("Pendiente");
-                $('select[name="orden_estado"]').trigger("change");
-
-                $('select[name="orden_proveedor"]').trigger("change");
-
-                $('select[name="orden_tipopagotext"]').trigger("change");
-                $('select[name="orden_tipopagotext"]').prop("disabled",false);
-
-                $('#div_diaspago').hide();
-                $('input[name="orden_tipopago"]').prop("required",false);
-                tbl_prodordcompra.clear().draw();
-              }
-              $.Notification.notify("success", "bottom-right", "Orden de servicio actualizada", 
-                "Datos actualizados");
-              Swal.close();
-          }
-      },
-      error:function(xhr){serviceError(xhr,'No se pudo guardar la orden. Los datos se conservan.');},
-      complete:function(){serviceSaving=false;Swal.close();$('#btn-save-orden').prop('disabled',!serviceCanEdit()||!tbl_prodordcompra.rows().count());$('#btn-select-orden').prop('disabled',!$('[name="orden_listado"]').val());}
+function loadServiceOrder(id) {
+  if (!id || (serviceForm.inert && !serviceLoading)) return;
+  var read = ++serviceOpenEpoch;
+  serviceLoading = true;
+  serviceForm.inert = true;
+  serviceForm.setAttribute("aria-busy", "true");
+  Swal.fire({
+    title: "Cargando orden de servicio",
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    onBeforeOpen: () => Swal.showLoading()
   });
+
+  function finish() {
+    serviceLoading = false;
+    serviceForm.inert = false;
+    serviceForm.setAttribute("aria-busy", "false");
+    Swal.close();
+  }
+  function failed(xhr) {
+    if (read !== serviceOpenEpoch) return;
+    finish();
+    serviceError(xhr || {}, "No se pudo abrir la orden de servicio. Intenta consultarla de nuevo.");
+  }
+
+  $.post("../../modules/ordenes/consultar-orden.php", { TIPO_ORDEN: "SERVICIO", FILTER: id, ESTADO: "ALL" }, function (headers) {
+    if (read !== serviceOpenEpoch) return;
+    var header = Array.isArray(headers) && headers[0];
+    if (!header || String(header.IDORDEN) !== String(id)) return failed();
+    $.post("../../modules/ordenes/consultar-detalle-orden.php", { IDORDEN: id }, function (lines) {
+      if (read !== serviceOpenEpoch) return;
+      if (!Array.isArray(lines)) return failed();
+      finish();
+      renderServiceOrder(header, lines);
+    }, "json").fail(failed);
+  }, "json").fail(failed);
+}
+
+$("#btn-select-orden").on("click", function () {
+  loadServiceOrder($('select[name="orden_listado"]').val());
 });
 
-$("#btn-delete-orden").click(function() {
-  if(serviceSaving||!appuCan('purchases.manage'))return;
-  element = $(this);
-  id_val = element.attr("js-id");
-  if (id_val != "" && id_val != null) {
-    Swal.fire({
-      title: "Anular orden de servicio",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Anular",
-      cancelButtonText: "Cancelar"
-    }).then(result => {
-      if (result.value) {
-        var cancellationReason = window.prompt("Motivo de anulacion de la orden (obligatorio):", "");
-        if (cancellationReason === null || cancellationReason.trim().length < 5) { toastr.warning("Indica un motivo de al menos 5 caracteres."); return; }
-        $.post(
-          "../../modules/ordenes/eliminar-orden.php",
-          { ID_ORDEN: id_val, reason: cancellationReason.trim() },
-          function(data) {
-            if (data == true) {
-              $('input[name="orden_nro"]').focus();
-              tbl_prodordcompra.clear().draw();
-              $("#FRM_INSERT_DETA_ORDSERV")
-                .find("input, textarea, select")
-                .val("");
-
-              $('select[name="orden_proveedor"]').trigger("change");     
-              
-              $.post("../../modules/ordenes/listar-ordenes.php", {orden_tipo:"SERVICIO"}, function(data) {
-                $('select[name="orden_listado"]').empty();
-                $('select[name="orden_listado"]').select2({
-                  data: (typeof data === "string" ? JSON.parse(data) : data)
-                });
-              });
-
-              $('input[name="orden_id"]').val("");
-              $("#btn-add-prodtporden").prop("disabled", false);
-              $("#btn-save-orden").prop("disabled", true);
-              $("#btn-save-orden font").html("Guardar Orden de Servicio");
-              $("#col-btn-save-orden").attr("class", "col-md-12");
-              $("#col-btn-delete-orden").hide();
-
-              $('select[name="orden_tipopagotext"]').prop("disabled",false);
-              $('#div_diaspago').hide();
-              $('input[name="orden_tipopago"]').prop("required",false);
-
-              $.Notification.notify(
-                "success",
-                "bottom-right",
-                "Orden de Servicio Eliminada",
-                "Información eliminada correctamente."
-              );
-            }
-          }
-        );
-      }
-    });
-  }
+appuBindPurchaseSave(serviceForm, function (data) {
+  data.set("orden_tipo", "SERVICIO");
+  data.set("orden_lstservicios", JSON.stringify(tbl_prodordcompra.rows().data().toArray()));
+}, function () {
+  if (tbl_prodordcompra.rows().count()) return true;
+  toastr.warning("Agrega al menos un servicio.");
+  return false;
 });
 
-$(document).ready(function() {
-  var cookie_idorden = leer_cookie('COOKIE_ID_ORDEN');
-  if (cookie_idorden != "") {
-    setTimeout(function(){
-      $('select[name="orden_listado"]').val(cookie_idorden);
-      $('select[name="orden_listado"]').trigger("change");
-      $('#btn-select-orden').trigger("click");
-      eliminar_cookie("COOKIE_ID_ORDEN");
-    },500);
+$("#btn-delete-orden").on("click", function () {
+  var id = serviceForm.elements.orden_id.value;
+  if (!id || serviceForm.inert || serviceIsCancelled() || !appuCan("purchases.manage")) return;
+  serviceForm.inert = true;
+  $(".appu-document-toolbar").prop("inert", true);
+
+  function unlock() {
+    serviceForm.inert = false;
+    serviceForm.setAttribute("aria-busy", "false");
+    $(".appu-document-toolbar").prop("inert", false);
   }
+
+  Swal.fire({
+    title: "Anular orden de servicio",
+    input: "text",
+    inputLabel: "Motivo de anulación",
+    inputValidator: value => String(value || "").trim().length >= 5 ? undefined : "Indica un motivo de al menos 5 caracteres.",
+    showCancelButton: true,
+    confirmButtonText: "Anular",
+    cancelButtonText: "Volver"
+  }).then(function (result) {
+    if (typeof result.value !== "string" || result.value.trim().length < 5) return unlock();
+    serviceForm.setAttribute("aria-busy", "true");
+    $.post("../../modules/ordenes/eliminar-orden.php", { ID_ORDEN: id, reason: result.value.trim() })
+      .done(function (response) {
+        if (String(response).trim() !== "1") return serviceError({}, "No se pudo confirmar la anulación.");
+        serviceStatus = "Anulado";
+        serviceForm.dataset.documentMode = "VIEW";
+        $('[name="orden_estado"]').val(serviceStatus);
+        $(serviceForm).find(":input").not("[type=hidden]").prop("disabled", true);
+        appuMarkSaved();
+        window.history.replaceState(null, "", appuDocumentRecordUrl(id));
+        toastr.success("Orden de servicio anulada.");
+      })
+      .fail(function (xhr) { serviceError(xhr, "No se pudo anular la orden. Consulta su estado antes de reintentar."); })
+      .always(unlock);
+  });
 });

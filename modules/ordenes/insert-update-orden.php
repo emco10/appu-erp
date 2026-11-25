@@ -24,7 +24,6 @@ require_once '../../global/commercial-line-dimensions.php';
     if($ord_rventa == "") $ord_rventa = 0;
 
     $ord_nrocuenta = trim($_POST['orden_nrocuenta']);
-    $ord_approver = trim($_POST['orden_autorizador']);
     $ord_tipomon = $_POST['orden_tipomoneda'];
     $ord_emidate = date("Y-m-d", strtotime($_POST['orden_fecemision']));
     $ord_deldate = date("Y-m-d", strtotime($_POST['orden_fecentrega']));
@@ -34,7 +33,7 @@ require_once '../../global/commercial-line-dimensions.php';
     $ord_purchase_request_id = filter_var($_POST['orden_solicitud_compra'] ?? null, FILTER_VALIDATE_INT);
     $ord_purchase_request_id = $ord_purchase_request_id === false || $ord_purchase_request_id < 1 ? null : $ord_purchase_request_id;
     $ord_cotiz = trim($_POST['orden_cotizacion']);
-    $ord_request = trim($_POST['orden_solicitante']);
+    $ord_request = trim((string) ($_POST['orden_solicitante'] ?? ''));
     $ord_estado = 'Pendiente';
     $user_id = (int) $_SESSION['loggedInUser']['USERID'];
     $ord_totneto = $_POST['orden_totneto'];
@@ -91,14 +90,18 @@ require_once '../../global/commercial-line-dimensions.php';
         $previous_status = null;
 
         if ($ord_id !== "" && $ord_id !== null) {
-            $statusStatement = $pdo->prepare('SELECT number, status, purchase_request_id FROM tbl_order WHERE id = ? FOR UPDATE');
+            $statusStatement = $pdo->prepare('SELECT type, number, status, purchase_request_id FROM tbl_order WHERE id = ? FOR UPDATE');
             $statusStatement->execute([$ord_id]);
             $existingOrder = $statusStatement->fetch();
             $previous_status = $existingOrder['status'] ?? false;
             $ord_code = (string) ($existingOrder['number'] ?? $ord_code);
 
-            if ($previous_status === false || !in_array($previous_status, ['Pendiente', 'Rechazado'], true)) {
-                throw new RuntimeException('La orden ya no se puede modificar.');
+            if ($previous_status === false) throw new DomainException('La orden no existe.');
+            if (!in_array($previous_status, ['Pendiente', 'Rechazado'], true)) {
+                throw new DomainException('Solo se pueden modificar órdenes pendientes o rechazadas. Consulta el estado actual.');
+            }
+            if ((int) $existingOrder['type'] !== $ord_tipo) {
+                throw new DomainException('Abre la orden en su formulario de compra o servicio para editarla.');
             }
             $existingRequestId=(int)($existingOrder['purchase_request_id']??0);
             if($existingRequestId>0 && $existingRequestId!==(int)($ord_purchase_request_id??0))throw new DomainException('No se puede cambiar ni retirar la solicitud de origen de una orden existente.');
@@ -116,8 +119,8 @@ require_once '../../global/commercial-line-dimensions.php';
             app_record_document_status($pdo, 'order', $ord_id, $ord_code, '', 'Pendiente', 'Creacion', $user_id);
             $response = 'OK_INSERT';
         } else {
-        $sqlStatement = $pdo->prepare("UPDATE tbl_order SET type=?,status=?,currency=?,issue_date=?,delivery_date=?,provider_id=?,provider_address_id=?,provider_address=?,purchase_request_id=?,payment_days=?,account_number=?,quotation=?,requester=?,approver='',submitted_at=NOW(),approved_by=NULL,approved_at=NULL,rejected_by=NULL,rejected_at=NULL,approval_comment='',observation=?,total_purchase=?,total_tax=?,total_net=?,exchange_rate_sale=?,exchange_rate_purchase=? WHERE id=?");
-            $sqlStatement->execute([$ord_tipo, $ord_estado, $ord_tipomon, $ord_emidate, $ord_deldate, $ord_provider, $providerAddress['id'], $providerAddress['address_line'], $ord_purchase_request_id, $ord_daypay, $ord_nrocuenta, $ord_cotiz, $ord_request, $ord_observ, $ord_totcompra, $ord_totigv, $ord_totneto, $ord_rventa, $ord_rcompra, $ord_id]);
+        $sqlStatement = $pdo->prepare("UPDATE tbl_order SET status=?,currency=?,issue_date=?,delivery_date=?,provider_id=?,provider_address_id=?,provider_address=?,purchase_request_id=?,payment_days=?,account_number=?,quotation=?,requester=?,approver='',submitted_at=NOW(),approved_by=NULL,approved_at=NULL,rejected_by=NULL,rejected_at=NULL,approval_comment='',observation=?,total_purchase=?,total_tax=?,total_net=?,exchange_rate_sale=?,exchange_rate_purchase=? WHERE id=?");
+            $sqlStatement->execute([$ord_estado, $ord_tipomon, $ord_emidate, $ord_deldate, $ord_provider, $providerAddress['id'], $providerAddress['address_line'], $ord_purchase_request_id, $ord_daypay, $ord_nrocuenta, $ord_cotiz, $ord_request, $ord_observ, $ord_totcompra, $ord_totigv, $ord_totneto, $ord_rventa, $ord_rcompra, $ord_id]);
             $response = 'OK_UPDATE';
         $sqlStatement = $pdo->prepare("DELETE FROM tbl_order_detail WHERE order_id=:IDORDER");
         $sqlStatement->bindParam("IDORDER", $ord_id, PDO::PARAM_INT);
