@@ -348,138 +348,6 @@
     {
       "engine": "semgrep",
       "rule_id": "security-rules.php.lang.security.injection.tainted-callable",
-      "path": "modules/compras/consultar-compra.php",
-      "fingerprint": "870330da5fbf261ee82c35ce7652c97735e3701ed20bc3e57a305eab24604a5a",
-      "source_sha256": "2846a083c1e1aae050c9ce31611c51d08c4cf2faf85b155ce0d82068b81704d1",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
-      "scanner_version": "1.184.0",
-      "id": "php-final-012",
-      "disposition": "false_positive",
-      "reviewer": "Codex /root/audit_erp independent source review; /root/security_finalize verification; /root final approval",
-      "reviewed_on": "2026-11-07",
-      "rationale": "Status is ALL or FILTER_VALIDATE_INT before interpolation. Order type becomes a fixed literal through a switch. Document IDs are PDO bound parameters. The reported callable is a fixed PDO method, not a PHP callable selected by input.",
-      "dependencies": [
-        {
-          "path": "global/connection.php",
-          "sha256": "e70825b26dc7cb8a74af89cd238475686617587e65fa9ef843a03a599079420e"
-        }
-      ],
-      "dependency_review": "Critical dependencies were re-hashed from committed source 9bfb43c; source review and frozen-source regression evidence are linked below.",
-      "evidence": [
-        {
-          "path": "tests/security-php-input-boundaries.php",
-          "sha256": "c3df51e81c33ba9b3e9298d85b253a7923b8abfc781fccf7a851086d3f53654c",
-          "description": "Committed loopback/fake-PDO regression validates SQL/array status rejection, raw document-ID parameter binding and JSON MIME/nosniff boundaries (85 assertions across 15 endpoints)."
-        },
-        {
-          "path": "tests/fixtures/security-input-connection.php",
-          "sha256": "2c4727538f188a3ce596fed40beab7d16f97cb2ffbf18cde3578ec1847a91b0d",
-          "description": "Committed fake-PDO fixture records query syntax and bound values so malicious request payloads cannot masquerade as a successful parameterization proof."
-        }
-      ]
-    },
-    {
-      "engine": "semgrep",
-      "rule_id": "security-rules.php.lang.security.injection.tainted-sql-string",
-      "path": "modules/compras/consultar-compra.php",
-      "fingerprint": "54ef6b647b7f1f3a448ca12bb09de173727106cdf3d92167c3b3ccfe537c01d3",
-      "source_sha256": "2846a083c1e1aae050c9ce31611c51d08c4cf2faf85b155ce0d82068b81704d1",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
-      "scanner_version": "1.184.0",
-      "id": "php-final-013",
-      "disposition": "false_positive",
-      "reviewer": "Codex /root/audit_erp independent source review; /root/security_finalize verification; /root final approval",
-      "reviewed_on": "2026-11-07",
-      "rationale": "Status is ALL or FILTER_VALIDATE_INT before interpolation. Order type becomes a fixed literal through a switch. Document IDs are PDO bound parameters. The reported callable is a fixed PDO method, not a PHP callable selected by input.",
-      "dependencies": [
-        {
-          "path": "global/connection.php",
-          "sha256": "e70825b26dc7cb8a74af89cd238475686617587e65fa9ef843a03a599079420e"
-        }
-      ],
-      "dependency_review": "Critical dependencies were re-hashed from committed source 9bfb43c; source review and frozen-source regression evidence are linked below.",
-      "evidence": [
-        {
-          "path": "tests/security-php-input-boundaries.php",
-          "sha256": "c3df51e81c33ba9b3e9298d85b253a7923b8abfc781fccf7a851086d3f53654c",
-          "description": "Committed loopback/fake-PDO regression validates SQL/array status rejection, raw document-ID parameter binding and JSON MIME/nosniff boundaries (85 assertions across 15 endpoints)."
-        },
-        {
-          "path": "tests/fixtures/security-input-connection.php",
-          "sha256": "2c4727538f188a3ce596fed40beab7d16f97cb2ffbf18cde3578ec1847a91b0d",
-          "description": "Committed fake-PDO fixture records query syntax and bound values so malicious request payloads cannot masquerade as a successful parameterization proof."
-        }
-      ]
-    },
-    {
-      "engine": "semgrep",
-      "rule_id": "security-rules.php.lang.security.injection.tainted-callable",
-      "path": "modules/compras/consultar-compra.php",
-      "fingerprint": "ab6652540902763b633048d1f8040b334b76ad5cca6493b8a0179d569d269f3a",
-      "source_sha256": "2846a083c1e1aae050c9ce31611c51d08c4cf2faf85b155ce0d82068b81704d1",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
-      "scanner_version": "1.184.0",
-      "id": "php-final-014",
-      "disposition": "false_positive",
-      "reviewer": "Codex /root/audit_erp independent source review; /root/security_finalize verification; /root final approval",
-      "reviewed_on": "2026-11-07",
-      "rationale": "Status is ALL or FILTER_VALIDATE_INT before interpolation. Order type becomes a fixed literal through a switch. Document IDs are PDO bound parameters. The reported callable is a fixed PDO method, not a PHP callable selected by input.",
-      "dependencies": [
-        {
-          "path": "global/connection.php",
-          "sha256": "e70825b26dc7cb8a74af89cd238475686617587e65fa9ef843a03a599079420e"
-        }
-      ],
-      "dependency_review": "Critical dependencies were re-hashed from committed source 9bfb43c; source review and frozen-source regression evidence are linked below.",
-      "evidence": [
-        {
-          "path": "tests/security-php-input-boundaries.php",
-          "sha256": "c3df51e81c33ba9b3e9298d85b253a7923b8abfc781fccf7a851086d3f53654c",
-          "description": "Committed loopback/fake-PDO regression validates SQL/array status rejection, raw document-ID parameter binding and JSON MIME/nosniff boundaries (85 assertions across 15 endpoints)."
-        },
-        {
-          "path": "tests/fixtures/security-input-connection.php",
-          "sha256": "2c4727538f188a3ce596fed40beab7d16f97cb2ffbf18cde3578ec1847a91b0d",
-          "description": "Committed fake-PDO fixture records query syntax and bound values so malicious request payloads cannot masquerade as a successful parameterization proof."
-        }
-      ]
-    },
-    {
-      "engine": "semgrep",
-      "rule_id": "security-rules.php.lang.security.injection.tainted-sql-string",
-      "path": "modules/compras/consultar-compra.php",
-      "fingerprint": "40e60576a3b53bd2115b5d33dfef6f28e92107464d6543acf1d97e654aa4f5ca",
-      "source_sha256": "2846a083c1e1aae050c9ce31611c51d08c4cf2faf85b155ce0d82068b81704d1",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
-      "scanner_version": "1.184.0",
-      "id": "php-final-015",
-      "disposition": "false_positive",
-      "reviewer": "Codex /root/audit_erp independent source review; /root/security_finalize verification; /root final approval",
-      "reviewed_on": "2026-11-07",
-      "rationale": "Status is ALL or FILTER_VALIDATE_INT before interpolation. Order type becomes a fixed literal through a switch. Document IDs are PDO bound parameters. The reported callable is a fixed PDO method, not a PHP callable selected by input.",
-      "dependencies": [
-        {
-          "path": "global/connection.php",
-          "sha256": "e70825b26dc7cb8a74af89cd238475686617587e65fa9ef843a03a599079420e"
-        }
-      ],
-      "dependency_review": "Critical dependencies were re-hashed from committed source 9bfb43c; source review and frozen-source regression evidence are linked below.",
-      "evidence": [
-        {
-          "path": "tests/security-php-input-boundaries.php",
-          "sha256": "c3df51e81c33ba9b3e9298d85b253a7923b8abfc781fccf7a851086d3f53654c",
-          "description": "Committed loopback/fake-PDO regression validates SQL/array status rejection, raw document-ID parameter binding and JSON MIME/nosniff boundaries (85 assertions across 15 endpoints)."
-        },
-        {
-          "path": "tests/fixtures/security-input-connection.php",
-          "sha256": "2c4727538f188a3ce596fed40beab7d16f97cb2ffbf18cde3578ec1847a91b0d",
-          "description": "Committed fake-PDO fixture records query syntax and bound values so malicious request payloads cannot masquerade as a successful parameterization proof."
-        }
-      ]
-    },
-    {
-      "engine": "semgrep",
-      "rule_id": "security-rules.php.lang.security.injection.tainted-callable",
       "path": "modules/compras/listar-compras.php",
       "fingerprint": "afbe02cb8b84e9eb93004ecc01dece82f2bb18fe18211eea6467bb3a1e504f53",
       "source_sha256": "07c581b4170a62b50b320cbb449e6f487eba23b1239443649c0c4676236d8851",
@@ -1938,8 +1806,8 @@
       "rule_id": "security-rules.php.lang.security.injection.tainted-callable",
       "path": "modules/ordenes/consultar-orden.php",
       "fingerprint": "a049cecfa82ac897c569d5d90293c157538a1e42db7fe39b5032670f8d0f074a",
-      "source_sha256": "df1a40ec6f242d780b111fade1d284e7998765061871aacf081d0c0515d485c3",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "source_sha256": "0f561199804cf1f76a1dfbd55d4e04aab6a56aaf9d7f3025805b2b17f56e7c8e",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "scanner_version": "1.184.0",
       "id": "php-final-061",
       "disposition": "false_positive",
@@ -1971,8 +1839,8 @@
       "rule_id": "security-rules.php.lang.security.injection.tainted-sql-string",
       "path": "modules/ordenes/consultar-orden.php",
       "fingerprint": "68c41483c005fb3f9de5629e02813c9a49cd246f99cf04e9144dc85dfc4357f7",
-      "source_sha256": "df1a40ec6f242d780b111fade1d284e7998765061871aacf081d0c0515d485c3",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "source_sha256": "0f561199804cf1f76a1dfbd55d4e04aab6a56aaf9d7f3025805b2b17f56e7c8e",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "scanner_version": "1.184.0",
       "id": "php-final-062",
       "disposition": "false_positive",
@@ -2004,8 +1872,8 @@
       "rule_id": "security-rules.php.lang.security.injection.tainted-callable",
       "path": "modules/ordenes/consultar-orden.php",
       "fingerprint": "d189844787f07722406b047ad66d7b96151df049ff2182a969bc0d5718adc01e",
-      "source_sha256": "df1a40ec6f242d780b111fade1d284e7998765061871aacf081d0c0515d485c3",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "source_sha256": "0f561199804cf1f76a1dfbd55d4e04aab6a56aaf9d7f3025805b2b17f56e7c8e",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "scanner_version": "1.184.0",
       "id": "php-final-063",
       "disposition": "false_positive",
@@ -2037,8 +1905,8 @@
       "rule_id": "security-rules.php.lang.security.injection.tainted-sql-string",
       "path": "modules/ordenes/consultar-orden.php",
       "fingerprint": "255a1953f965d048f4657d53083a0c95ed4efa419022341169cfc226603af75f",
-      "source_sha256": "df1a40ec6f242d780b111fade1d284e7998765061871aacf081d0c0515d485c3",
-      "reviewed_commit": "4c859d1ec7345f5d699ed23de935e740508fc00a",
+      "source_sha256": "0f561199804cf1f76a1dfbd55d4e04aab6a56aaf9d7f3025805b2b17f56e7c8e",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "scanner_version": "1.184.0",
       "id": "php-final-064",
       "disposition": "false_positive",
@@ -6422,11 +6290,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/recepciones.js",
-      "fingerprint": "be6c6db65da8f7e097af812b3437d1b658da4a6229268668d72be506fa9eb03e",
-      "source_sha256": "cb025df48e0f72c30836068f236d22910ff326c814f2452c434ad1d17fb2e1d4",
+      "fingerprint": "213e3614edf304785f3f7db06e58b466f260fe26cc62227e8fecfdf76570b299",
+      "source_sha256": "ffc5e44545aa8a5eb9e5b797c1fb2a05a743f20baf34ff26461fc0cb16b33718",
       "scanner_version": "1.184.0",
       "id": "js-audit-3a2348517849181a",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6438,7 +6306,7 @@
         },
         {
           "path": "modules/compras/goods-receipts.php",
-          "sha256": "218947654c7354ae0defa61ad81659bd244686eb2522fe920c20db022ef6af32"
+          "sha256": "1a7b6a0655ce892ccfc5005afb35b22b159e5de1a56f2b3f05f0901cabd4df09"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6449,7 +6317,7 @@
       "evidence": [
         {
           "path": "ajax/recepciones.js",
-          "sha256": "cb025df48e0f72c30836068f236d22910ff326c814f2452c434ad1d17fb2e1d4",
+          "sha256": "ffc5e44545aa8a5eb9e5b797c1fb2a05a743f20baf34ff26461fc0cb16b33718",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -6458,11 +6326,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/recepciones.js",
-      "fingerprint": "8724b6b1c333356d125723bec2571082796e9859ea94a3384499b5e9331a1b43",
-      "source_sha256": "cb025df48e0f72c30836068f236d22910ff326c814f2452c434ad1d17fb2e1d4",
+      "fingerprint": "78e8af72f819c2e65dfa661d438322a043ce0255ecd138aad872ec239678ebe1",
+      "source_sha256": "ffc5e44545aa8a5eb9e5b797c1fb2a05a743f20baf34ff26461fc0cb16b33718",
       "scanner_version": "1.184.0",
       "id": "js-audit-b15d5df21f72c0b1",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6474,7 +6342,7 @@
         },
         {
           "path": "modules/compras/goods-receipts.php",
-          "sha256": "218947654c7354ae0defa61ad81659bd244686eb2522fe920c20db022ef6af32"
+          "sha256": "1a7b6a0655ce892ccfc5005afb35b22b159e5de1a56f2b3f05f0901cabd4df09"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6485,7 +6353,7 @@
       "evidence": [
         {
           "path": "ajax/recepciones.js",
-          "sha256": "cb025df48e0f72c30836068f236d22910ff326c814f2452c434ad1d17fb2e1d4",
+          "sha256": "ffc5e44545aa8a5eb9e5b797c1fb2a05a743f20baf34ff26461fc0cb16b33718",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -6494,11 +6362,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.prohibit-jquery-html",
       "path": "ajax/recepciones.js",
-      "fingerprint": "3aee11898de75583f954f4b415650a66d36bcd3e85373b685fdcda921a4252cc",
-      "source_sha256": "cb025df48e0f72c30836068f236d22910ff326c814f2452c434ad1d17fb2e1d4",
+      "fingerprint": "7a8a5563813c3ab1f7e4bd1af04a20909984ef822d8b9985066dcd511456a001",
+      "source_sha256": "ffc5e44545aa8a5eb9e5b797c1fb2a05a743f20baf34ff26461fc0cb16b33718",
       "scanner_version": "1.184.0",
       "id": "js-audit-c15d7c9fd0a147c8",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -6510,7 +6378,7 @@
         },
         {
           "path": "modules/compras/goods-receipts.php",
-          "sha256": "218947654c7354ae0defa61ad81659bd244686eb2522fe920c20db022ef6af32"
+          "sha256": "1a7b6a0655ce892ccfc5005afb35b22b159e5de1a56f2b3f05f0901cabd4df09"
         }
       ],
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
@@ -6521,7 +6389,7 @@
       "evidence": [
         {
           "path": "ajax/recepciones.js",
-          "sha256": "cb025df48e0f72c30836068f236d22910ff326c814f2452c434ad1d17fb2e1d4",
+          "sha256": "ffc5e44545aa8a5eb9e5b797c1fb2a05a743f20baf34ff26461fc0cb16b33718",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -7526,11 +7394,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/solicitudes.js",
-      "fingerprint": "3051f8267897ce8298a21588363a619491a1918946aed46acfda65732b958226",
-      "source_sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
+      "fingerprint": "1318f7fed4df06acc03720322c18a04b13666bd5158344bc1b84a21f5bd42828",
+      "source_sha256": "d93a244d226c704ef2071c07f20d8ae49e2958de9edc921d15d340066f27acf7",
       "scanner_version": "1.184.0",
       "id": "js-audit-3051f8267897ce82",
-      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7544,12 +7412,12 @@
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
       "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
       "reviewed_on": "2026-11-22",
-      "rationale": "ajax/solicitudes.js:17: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Request/item labels are text()/val() nodes and status uses the escaped shared badge helper. Dynamic navigation class suffixes are fixed first/prev/next/last values; appended requester options are literal nodes, not strings.",
+      "rationale": "ajax/solicitudes.js:19: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Request/item labels are text()/val() nodes and status uses the escaped shared badge helper. Dynamic navigation class suffixes are fixed first/prev/next/last values; appended requester options are literal nodes, not strings.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/solicitudes.js",
-          "sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
+          "sha256": "d93a244d226c704ef2071c07f20d8ae49e2958de9edc921d15d340066f27acf7",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -7558,11 +7426,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/solicitudes.js",
-      "fingerprint": "857a291c214d9dbd29fa51580eef276f98388ddf94ac7c57bcd87a965b320bb0",
-      "source_sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
+      "fingerprint": "86d6c1f1693d239f070ede78f95130a4b70f662f1e2141d881598952efb39b7d",
+      "source_sha256": "d93a244d226c704ef2071c07f20d8ae49e2958de9edc921d15d340066f27acf7",
       "scanner_version": "1.184.0",
       "id": "js-audit-857a291c214d9dbd",
-      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7576,12 +7444,12 @@
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
       "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
       "reviewed_on": "2026-11-22",
-      "rationale": "ajax/solicitudes.js:31: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Request/item labels are text()/val() nodes and status uses the escaped shared badge helper. Dynamic navigation class suffixes are fixed first/prev/next/last values; appended requester options are literal nodes, not strings.",
+      "rationale": "ajax/solicitudes.js:33: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Request/item labels are text()/val() nodes and status uses the escaped shared badge helper. Dynamic navigation class suffixes are fixed first/prev/next/last values; appended requester options are literal nodes, not strings.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/solicitudes.js",
-          "sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
+          "sha256": "d93a244d226c704ef2071c07f20d8ae49e2958de9edc921d15d340066f27acf7",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -7590,11 +7458,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/solicitudes.js",
-      "fingerprint": "d9f83e44daec0b5669cba9fe8501ede39cb64440b097ac3395ad28f9c03e893e",
-      "source_sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
+      "fingerprint": "fcf9a5cc7a7f3211d1b9323c9f1583ed60aa3b7ca65e101a10d21be92561d995",
+      "source_sha256": "d93a244d226c704ef2071c07f20d8ae49e2958de9edc921d15d340066f27acf7",
       "scanner_version": "1.184.0",
       "id": "js-audit-d85155bfef7493c3",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7608,12 +7476,12 @@
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
       "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22; /root DOM and line-dimension security review 2026-11-22",
       "reviewed_on": "2026-11-22",
-      "rationale": "ajax/solicitudes.js:31: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Request/item labels are text()/val() nodes and status uses the escaped shared badge helper. Dynamic navigation class suffixes are fixed first/prev/next/last values; appended requester options are literal nodes, not strings.",
+      "rationale": "ajax/solicitudes.js:33: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Request/item labels are text()/val() nodes and status uses the escaped shared badge helper. Dynamic navigation class suffixes are fixed first/prev/next/last values; appended requester options are literal nodes, not strings.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/solicitudes.js",
-          "sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
+          "sha256": "d93a244d226c704ef2071c07f20d8ae49e2958de9edc921d15d340066f27acf7",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -7622,11 +7490,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/solicitudes.js",
-      "fingerprint": "ff7bc21bec5965005269ac2bc95bcb21d2e943c22fb7a74fb1945a3c0575edc9",
-      "source_sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
+      "fingerprint": "cd1bd4282ef22087c7063fe02098a5a97a7903cfe97df53346a450191af5f4ed",
+      "source_sha256": "d93a244d226c704ef2071c07f20d8ae49e2958de9edc921d15d340066f27acf7",
       "scanner_version": "1.184.0",
       "id": "js-audit-ff7bc21bec596500",
-      "reviewed_commit": "341ade1bbc21dbc24d8899662bde1055ddde28ff",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7640,12 +7508,12 @@
       "dependency_review": "The pinned footer fixes the jQuery/helper load order and escaping contract; any adapter/API dependencies listed determine the provenance of selector/template values.",
       "reviewer": "Codex /root/audit_api and /root/independent_js_review source and DOM review; /root final approval; Codex /root context-menu re-review; /root line-dimension security review 2026-11-22",
       "reviewed_on": "2026-11-22",
-      "rationale": "ajax/solicitudes.js:35: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Request/item labels are text()/val() nodes and status uses the escaped shared badge helper. Dynamic navigation class suffixes are fixed first/prev/next/last values; appended requester options are literal nodes, not strings.",
+      "rationale": "ajax/solicitudes.js:37: The flagged insertion uses a constructed DOM/jQuery node, literal markup, or a template whose variable fields are text/attribute encoded; raw user/provider HTML is not passed through this occurrence. Request/item labels are text()/val() nodes and status uses the escaped shared badge helper. Dynamic navigation class suffixes are fixed first/prev/next/last values; appended requester options are literal nodes, not strings.",
       "disposition": "reviewed_audit",
       "evidence": [
         {
           "path": "ajax/solicitudes.js",
-          "sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
+          "sha256": "d93a244d226c704ef2071c07f20d8ae49e2958de9edc921d15d340066f27acf7",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -7654,11 +7522,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/solicitudes.js",
-      "fingerprint": "fc2d6457aeb72c92189087e31a9993f2dedd560644194d294e2b93df4bc1b129",
-      "source_sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
+      "fingerprint": "59ece5a47648e58e774e1395199aea6e4313b3809cac04bd73e2c2a4f6cf1c68",
+      "source_sha256": "d93a244d226c704ef2071c07f20d8ae49e2958de9edc921d15d340066f27acf7",
       "scanner_version": "1.184.0",
       "id": "js-audit-0281890fe6a553d3",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7677,7 +7545,7 @@
       "evidence": [
         {
           "path": "ajax/solicitudes.js",
-          "sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
+          "sha256": "d93a244d226c704ef2071c07f20d8ae49e2958de9edc921d15d340066f27acf7",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -7686,11 +7554,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "ajax/solicitudes.js",
-      "fingerprint": "5100b5ef79220d0dc96c1a92909a27a192478c5a2c98d55398f848e4a7b91c68",
-      "source_sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
+      "fingerprint": "ec8a190b0e940c6fd393552e6043ae1447f2072d0d7ec305f6691516a57eee56",
+      "source_sha256": "d93a244d226c704ef2071c07f20d8ae49e2958de9edc921d15d340066f27acf7",
       "scanner_version": "1.184.0",
       "id": "js-audit-8c71c4b19f65fea2",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7709,7 +7577,7 @@
       "evidence": [
         {
           "path": "ajax/solicitudes.js",
-          "sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
+          "sha256": "d93a244d226c704ef2071c07f20d8ae49e2958de9edc921d15d340066f27acf7",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -7718,11 +7586,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.prohibit-jquery-html",
       "path": "ajax/solicitudes.js",
-      "fingerprint": "5fd2b1445e19a9fe4143dbd382faf22870bdace6f0bacb39c87a244c7aa78f82",
-      "source_sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
+      "fingerprint": "e464a0c22b8f124d79a8ce10fd744f7f563dd4a5162e845e91184643124c5b3a",
+      "source_sha256": "d93a244d226c704ef2071c07f20d8ae49e2958de9edc921d15d340066f27acf7",
       "scanner_version": "1.184.0",
       "id": "js-audit-762aab18fefa11a6",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7741,7 +7609,7 @@
       "evidence": [
         {
           "path": "ajax/solicitudes.js",
-          "sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
+          "sha256": "d93a244d226c704ef2071c07f20d8ae49e2958de9edc921d15d340066f27acf7",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -7750,11 +7618,11 @@
       "engine": "semgrep",
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "ajax/solicitudes.js",
-      "fingerprint": "d5e0086aad7a9c93604480e24f6a265cdfc782eb437e7f351de2c04683f839dd",
-      "source_sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
+      "fingerprint": "44cd9b22822f22d2c1306646c85763316792409ab07d1a9528c541c6e2d9291b",
+      "source_sha256": "d93a244d226c704ef2071c07f20d8ae49e2958de9edc921d15d340066f27acf7",
       "scanner_version": "1.184.0",
       "id": "js-audit-d2ceecd9ea69b03a",
-      "reviewed_commit": "74bd3978002d12041a70c4d68bcd402b17a1ce54",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -7773,7 +7641,7 @@
       "evidence": [
         {
           "path": "ajax/solicitudes.js",
-          "sha256": "3a4f81ff33b840fe4c2489cfdc3621f7688f9e9d54b27dc6a9995f53457331b1",
+          "sha256": "d93a244d226c704ef2071c07f20d8ae49e2958de9edc921d15d340066f27acf7",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -8191,10 +8059,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "js/document-ui.js",
       "fingerprint": "4039df98023d460eed7eecd5dc1b900ec76b1cda2ee49096ec6ac135976545d4",
-      "source_sha256": "d32fc67303c1ce6261651bc194e288075980cd7b8f8e489bfacc2f43b7b4b8e9",
+      "source_sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
       "scanner_version": "1.184.0",
       "id": "js-audit-4039df98023d460e",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8213,7 +8081,7 @@
       "evidence": [
         {
           "path": "js/document-ui.js",
-          "sha256": "d32fc67303c1ce6261651bc194e288075980cd7b8f8e489bfacc2f43b7b4b8e9",
+          "sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -8223,10 +8091,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "js/document-ui.js",
       "fingerprint": "d7956a5bbdb1a119dc2eef156bbe2208fc53090146665d163b020db9a033fde8",
-      "source_sha256": "d32fc67303c1ce6261651bc194e288075980cd7b8f8e489bfacc2f43b7b4b8e9",
+      "source_sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
       "scanner_version": "1.184.0",
       "id": "js-audit-d7956a5bbdb1a119",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8245,7 +8113,7 @@
       "evidence": [
         {
           "path": "js/document-ui.js",
-          "sha256": "d32fc67303c1ce6261651bc194e288075980cd7b8f8e489bfacc2f43b7b4b8e9",
+          "sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -8255,10 +8123,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "js/document-ui.js",
       "fingerprint": "355b70482e490312e06e405b6749f62a76df76310113720b9fcc668c33a4c047",
-      "source_sha256": "d32fc67303c1ce6261651bc194e288075980cd7b8f8e489bfacc2f43b7b4b8e9",
+      "source_sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
       "scanner_version": "1.184.0",
       "id": "js-audit-355b70482e490312",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8277,7 +8145,7 @@
       "evidence": [
         {
           "path": "js/document-ui.js",
-          "sha256": "d32fc67303c1ce6261651bc194e288075980cd7b8f8e489bfacc2f43b7b4b8e9",
+          "sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -8287,10 +8155,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-method",
       "path": "js/document-ui.js",
       "fingerprint": "897066da098c375c1ff5026a63a16e512ada67227312fc7b2d875aa3fe1afa63",
-      "source_sha256": "d32fc67303c1ce6261651bc194e288075980cd7b8f8e489bfacc2f43b7b4b8e9",
+      "source_sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
       "scanner_version": "1.184.0",
       "id": "js-audit-897066da098c375c",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8309,7 +8177,7 @@
       "evidence": [
         {
           "path": "js/document-ui.js",
-          "sha256": "d32fc67303c1ce6261651bc194e288075980cd7b8f8e489bfacc2f43b7b4b8e9",
+          "sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -8319,10 +8187,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "js/document-ui.js",
       "fingerprint": "eac835a31196c8461d54fb8b60f1f7c37e39a230b6ac7bb6332b1b7fa6e536da",
-      "source_sha256": "d32fc67303c1ce6261651bc194e288075980cd7b8f8e489bfacc2f43b7b4b8e9",
+      "source_sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
       "scanner_version": "1.184.0",
       "id": "js-audit-eac835a31196c846",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8341,7 +8209,7 @@
       "evidence": [
         {
           "path": "js/document-ui.js",
-          "sha256": "d32fc67303c1ce6261651bc194e288075980cd7b8f8e489bfacc2f43b7b4b8e9",
+          "sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -8351,10 +8219,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "js/document-ui.js",
       "fingerprint": "f60f963e07d35dd0d0af8d0daffdfd06ce12967536aca56378ec593eca4cf1a8",
-      "source_sha256": "d32fc67303c1ce6261651bc194e288075980cd7b8f8e489bfacc2f43b7b4b8e9",
+      "source_sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
       "scanner_version": "1.184.0",
       "id": "js-audit-f60f963e07d35dd0",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8373,7 +8241,7 @@
       "evidence": [
         {
           "path": "js/document-ui.js",
-          "sha256": "d32fc67303c1ce6261651bc194e288075980cd7b8f8e489bfacc2f43b7b4b8e9",
+          "sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -8383,10 +8251,10 @@
       "rule_id": "security-rules.javascript.jquery.security.audit.jquery-insecure-selector",
       "path": "js/document-ui.js",
       "fingerprint": "05fd2b0bf540392218eb7cbf43c3451abfeccc66266133ceaaea881ca76a9682",
-      "source_sha256": "d32fc67303c1ce6261651bc194e288075980cd7b8f8e489bfacc2f43b7b4b8e9",
+      "source_sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
       "scanner_version": "1.184.0",
       "id": "js-audit-05fd2b0bf5403922",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -8405,7 +8273,7 @@
       "evidence": [
         {
           "path": "js/document-ui.js",
-          "sha256": "d32fc67303c1ce6261651bc194e288075980cd7b8f8e489bfacc2f43b7b4b8e9",
+          "sha256": "92d294b46522e497e3b5f01f410bedd15678af37d9b20ca46d692b54fd176440",
           "description": "Exact source statement and surrounding function reviewed for argument provenance and output context."
         }
       ]
@@ -9792,7 +9660,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-db05a596880618c2",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9804,7 +9672,7 @@
         },
         {
           "path": "ajax/compra-interna.js",
-          "sha256": "05c4c65cf4cd3cbcb0715b8e42d35947c23f256766c4f16943f64dc2f25a6324"
+          "sha256": "c9df701155694cc84960b3169d40d3e96110db5e0e7095f61c29829a61e01307"
         },
         {
           "path": "ajax/guias.js",
@@ -9824,7 +9692,7 @@
         },
         {
           "path": "ajax/orden-de-compra.js",
-          "sha256": "6e390401ee0eedbe972a65bf9d318cd33a90e207b8253d1b14c6b6ef107c89c3"
+          "sha256": "f9f1c5c1dec5e6660a5dd4d74644607fdd71c9d34200142d269d544df84d3ced"
         },
         {
           "path": "ajax/orden-de-servicio.js",
@@ -9897,7 +9765,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-7337c1c902ec7342",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -9909,7 +9777,7 @@
         },
         {
           "path": "ajax/compra-interna.js",
-          "sha256": "05c4c65cf4cd3cbcb0715b8e42d35947c23f256766c4f16943f64dc2f25a6324"
+          "sha256": "c9df701155694cc84960b3169d40d3e96110db5e0e7095f61c29829a61e01307"
         },
         {
           "path": "ajax/guias.js",
@@ -9929,7 +9797,7 @@
         },
         {
           "path": "ajax/orden-de-compra.js",
-          "sha256": "6e390401ee0eedbe972a65bf9d318cd33a90e207b8253d1b14c6b6ef107c89c3"
+          "sha256": "f9f1c5c1dec5e6660a5dd4d74644607fdd71c9d34200142d269d544df84d3ced"
         },
         {
           "path": "ajax/orden-de-servicio.js",
@@ -10002,7 +9870,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-6ae974eda02be810",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10014,7 +9882,7 @@
         },
         {
           "path": "ajax/compra-interna.js",
-          "sha256": "05c4c65cf4cd3cbcb0715b8e42d35947c23f256766c4f16943f64dc2f25a6324"
+          "sha256": "c9df701155694cc84960b3169d40d3e96110db5e0e7095f61c29829a61e01307"
         },
         {
           "path": "ajax/guias.js",
@@ -10034,7 +9902,7 @@
         },
         {
           "path": "ajax/orden-de-compra.js",
-          "sha256": "6e390401ee0eedbe972a65bf9d318cd33a90e207b8253d1b14c6b6ef107c89c3"
+          "sha256": "f9f1c5c1dec5e6660a5dd4d74644607fdd71c9d34200142d269d544df84d3ced"
         },
         {
           "path": "ajax/orden-de-servicio.js",
@@ -10107,7 +9975,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-4bd2d1d1f8911717",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10119,7 +9987,7 @@
         },
         {
           "path": "ajax/compra-interna.js",
-          "sha256": "05c4c65cf4cd3cbcb0715b8e42d35947c23f256766c4f16943f64dc2f25a6324"
+          "sha256": "c9df701155694cc84960b3169d40d3e96110db5e0e7095f61c29829a61e01307"
         },
         {
           "path": "ajax/guias.js",
@@ -10139,7 +10007,7 @@
         },
         {
           "path": "ajax/orden-de-compra.js",
-          "sha256": "6e390401ee0eedbe972a65bf9d318cd33a90e207b8253d1b14c6b6ef107c89c3"
+          "sha256": "f9f1c5c1dec5e6660a5dd4d74644607fdd71c9d34200142d269d544df84d3ced"
         },
         {
           "path": "ajax/orden-de-servicio.js",
@@ -10212,7 +10080,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-18458a854a6ffdb2",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10224,7 +10092,7 @@
         },
         {
           "path": "ajax/compra-interna.js",
-          "sha256": "05c4c65cf4cd3cbcb0715b8e42d35947c23f256766c4f16943f64dc2f25a6324"
+          "sha256": "c9df701155694cc84960b3169d40d3e96110db5e0e7095f61c29829a61e01307"
         },
         {
           "path": "ajax/guias.js",
@@ -10244,7 +10112,7 @@
         },
         {
           "path": "ajax/orden-de-compra.js",
-          "sha256": "6e390401ee0eedbe972a65bf9d318cd33a90e207b8253d1b14c6b6ef107c89c3"
+          "sha256": "f9f1c5c1dec5e6660a5dd4d74644607fdd71c9d34200142d269d544df84d3ced"
         },
         {
           "path": "ajax/orden-de-servicio.js",
@@ -10317,7 +10185,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-f0685907220c2a2c",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10329,7 +10197,7 @@
         },
         {
           "path": "ajax/compra-interna.js",
-          "sha256": "05c4c65cf4cd3cbcb0715b8e42d35947c23f256766c4f16943f64dc2f25a6324"
+          "sha256": "c9df701155694cc84960b3169d40d3e96110db5e0e7095f61c29829a61e01307"
         },
         {
           "path": "ajax/guias.js",
@@ -10349,7 +10217,7 @@
         },
         {
           "path": "ajax/orden-de-compra.js",
-          "sha256": "6e390401ee0eedbe972a65bf9d318cd33a90e207b8253d1b14c6b6ef107c89c3"
+          "sha256": "f9f1c5c1dec5e6660a5dd4d74644607fdd71c9d34200142d269d544df84d3ced"
         },
         {
           "path": "ajax/orden-de-servicio.js",
@@ -10422,7 +10290,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-483477a8b7141b75",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10434,7 +10302,7 @@
         },
         {
           "path": "ajax/compra-interna.js",
-          "sha256": "05c4c65cf4cd3cbcb0715b8e42d35947c23f256766c4f16943f64dc2f25a6324"
+          "sha256": "c9df701155694cc84960b3169d40d3e96110db5e0e7095f61c29829a61e01307"
         },
         {
           "path": "ajax/guias.js",
@@ -10454,7 +10322,7 @@
         },
         {
           "path": "ajax/orden-de-compra.js",
-          "sha256": "6e390401ee0eedbe972a65bf9d318cd33a90e207b8253d1b14c6b6ef107c89c3"
+          "sha256": "f9f1c5c1dec5e6660a5dd4d74644607fdd71c9d34200142d269d544df84d3ced"
         },
         {
           "path": "ajax/orden-de-servicio.js",
@@ -10527,7 +10395,7 @@
       "source_sha256": "ff925c9eb47d6a57c4ed3755ec07456e44b793dfb02e3ce4ee5e59e298aba9c8",
       "scanner_version": "2.27.6",
       "id": "vendor-datatables-6bcfbb0871daafc8",
-      "reviewed_commit": "5fe2d822444b7cc607049556c3430ca076fcae8c",
+      "reviewed_commit": "738fc32df28690a8ecf384e000133dc3f39abf45",
       "dependencies": [
         {
           "path": "views/template/footer.php",
@@ -10539,7 +10407,7 @@
         },
         {
           "path": "ajax/compra-interna.js",
-          "sha256": "05c4c65cf4cd3cbcb0715b8e42d35947c23f256766c4f16943f64dc2f25a6324"
+          "sha256": "c9df701155694cc84960b3169d40d3e96110db5e0e7095f61c29829a61e01307"
         },
         {
           "path": "ajax/guias.js",
@@ -10559,7 +10427,7 @@
         },
         {
           "path": "ajax/orden-de-compra.js",
-          "sha256": "6e390401ee0eedbe972a65bf9d318cd33a90e207b8253d1b14c6b6ef107c89c3"
+          "sha256": "f9f1c5c1dec5e6660a5dd4d74644607fdd71c9d34200142d269d544df84d3ced"
         },
         {
           "path": "ajax/orden-de-servicio.js",
