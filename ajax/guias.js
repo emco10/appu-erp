@@ -209,6 +209,9 @@ $(function () {
     }).fail(showLookupFailure).always(function () { if (epoch === guideEpoch && sourceEpoch === guideSourceEpoch) { guideLoading = false; $guideForm.find('[type=submit]').prop('disabled', false); } });
   });
 
+  var guideModalReady = false;
+  $guideModal.on('shown.bs.modal', function () { guideModalReady = true; });
+
   $("#remission-guide-form").on("submit", function (event) {
     event.preventDefault();
     if (guideSaving || guideLoading || guideState.get() !== 'CREATE' || !appuCan('logistics.manage')) return;
@@ -228,8 +231,12 @@ $(function () {
           return;
         }
         toastr.success(response.message || "Guia registrada.");
-        guideBusy(false); appuMarkSaved();
-        $guideModal.one('hidden.bs.modal', function () { readGuide(response.guide_id); }).modal('hide');
+        function closeAndConsult() {
+          guideBusy(false); appuMarkSaved();
+          $guideModal.one('hidden.bs.modal', function () { readGuide(response.guide_id); }).modal('hide');
+        }
+        if (guideModalReady) closeAndConsult();
+        else $guideModal.one('shown.bs.modal', closeAndConsult);
         loadGuides();
       }).fail(function (xhr) {
         guideBusy(false); appuShowRequestError($guideForm, xhr, 'No se pudo confirmar la entrega. Reintenta con los mismos datos.');
@@ -282,6 +289,7 @@ $(function () {
   $guideModal.on('hide.bs.modal', function (event) {
     if (guideSaving) { event.preventDefault(); return; }
     if (window.appuFormDirty) { event.preventDefault(); appuConfirmDiscard(function () { $guideModal.modal('hide'); }); return; }
+    guideModalReady = false;
     guideEpoch++; guideSourceEpoch++; guideState.set('LIST');
   });
   if (new URLSearchParams(window.location.search).get('source_id')) $('#btn-new-remission-guide').trigger('click');
