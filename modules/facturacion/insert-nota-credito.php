@@ -9,6 +9,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     require_once '../finanzas/sync.php';
     require_once '../../global/sunat-api.php';
     require_once '../../global/sales-document-validation.php';
+    require_once '../../global/sales-document-save.php';
+    $asJson = ($_POST['response_format'] ?? '') === 'json';
 
     $f_faccod = "";
     $f_series = $_POST['facturacion_series'];
@@ -35,8 +37,16 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     $f_lst_prods = json_decode($_POST['facturacion_prods'] ?? '', true);
     $f_estado = $_POST["facturacion_estado"];
 
-    $documentKey = trim((string) ($_POST["facturacion_listadofact"] ?? ''));
-    if (!preg_match('/^([FB]):([1-9][0-9]*)$/', $documentKey, $documentMatch)) { http_response_code(422); echo 'ERROR'; exit; }
+    $documentKey = $_POST['facturacion_listadofact'] ?? '';
+    if (!is_string($documentKey) || !preg_match('/^([FB]):([1-9][0-9]*)$/D', trim($documentKey), $documentMatch)) {
+        if ($asJson) {
+            app_api_error(new AppValidationException([app_field_error('facturacion_listadofact', 'INVALID_REFERENCE', 'Selecciona una factura o boleta válida como documento de origen.')]), 'No se pudo registrar la nota de crédito.');
+        } else {
+            http_response_code(422);
+            echo 'ERROR';
+        }
+        return;
+    }
     $f_selectcotizid = (int) $documentMatch[2];
     $f_warehouse_id = filter_var($_POST['facturacion_almacen_id'] ?? null, FILTER_VALIDATE_INT);
     $f_warehouse_id = $f_warehouse_id === false || $f_warehouse_id <= 0 ? 1 : (int) $f_warehouse_id;
@@ -60,6 +70,14 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     $cant_prod = 0;
     
     try {
+        $pdo->exec('SET TRANSACTION ISOLATION LEVEL READ COMMITTED');
+        $pdo->beginTransaction();
+        $requestResult = app_document_request_start($pdo, 'credit_note_create', $_POST, (int) $f_user_id);
+        if ($requestResult !== null) {
+            $pdo->commit();
+            app_send_sales_creation_result($requestResult, $asJson);
+            return;
+        }
         if(!in_array((int)$f_estado,[1,3],true))throw new DomainException('La nueva nota de crédito debe estar vigente o pendiente.');
         $totals=app_validate_legacy_sales_input($pdo,$_POST,$f_lst_prods);
         $f_subtotal=$totals['subtotal'];$f_taxigv=$totals['tax'];$f_porcdesc=$totals['discount_rate'];$f_valdesc=$totals['discount'];$f_totalneto=$totals['total'];
@@ -69,7 +87,6 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 
         $f_cliid = app_validate_customer_reference($pdo, $f_cliid);
         app_validate_product_rows($pdo, $f_lst_prods);
-        $pdo->beginTransaction();
         $f_faccod=app_validate_legacy_sales_number($pdo,'CREDIT_NOTE',(string)$f_series,(string)$f_faccod);
         $sourceTable = $f_referenced_doc_type === 2 ? 'tbl_receipt' : 'tbl_invoice';
         $sourceDetailTable = $f_referenced_doc_type === 2 ? 'tbl_receipt_detail' : 'tbl_invoice_detail';
@@ -154,10 +171,12 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         if ($f_selectcotizid > 0) { app_record_document_flow($pdo, $f_referenced_doc_type === 2 ? 'receipt' : 'invoice', (int) $f_selectcotizid, 'credit_note', $id_facturacion, (int) $f_user_id, 'CREDIT_NOTE'); }
 
         finance_recalculate_credit_notes($pdo, (int) $f_selectcotizid, (int) $f_referenced_doc_type);
+        $result = ['error' => false, 'document_id' => $id_facturacion, 'number' => $documentReference];
+        app_document_request_finish($pdo, 'credit_note_create', $_POST, (int) $f_user_id, 'credit_note', $id_facturacion, $result);
         $pdo->commit();
         try { app_sunat_submit_document($pdo, 'credit-note', (int) $id_facturacion); }
         catch (Throwable $sunatException) { error_log('APPU automatic SUNAT credit note submission: ' . $sunatException->getMessage()); }
-        echo 'OK_INSERT';
+        app_send_sales_creation_result($result, $asJson);
     } catch (Throwable $exception) {
         if ($pdo->inTransaction()) {
             $pdo->rollBack();

@@ -4,6 +4,7 @@ require __DIR__.'/../global/connection.php';require_once __DIR__.'/../modules/in
 if(!str_ends_with(DB,'_qa'))throw new RuntimeException('Use una base _qa.');
 $http=new AppQaHttpClient(getenv('APPU_QA_URL')?:'http://127.0.0.1:8765',DB);$key='QA-LS-'.bin2hex(random_bytes(4));$customer=$product=$quotation=$order=null;$documents=[];$failed=false;
 $quotationKey = bin2hex(random_bytes(16));
+$saleKeys = ['invoice' => $quotationKey . '-invoice', 'receipt' => $quotationKey . '-receipt', 'credit_note' => $quotationKey . '-credit'];
 function legacySalesAssert(bool $ok,string $message):void{if(!$ok)throw new RuntimeException($message);}
 function legacySalesPost(AppQaHttpClient $http,string $path,array $data,int $expected=200):array{[$status,$json,$body]=$http->request($path,$data);legacySalesAssert($status===$expected,$path.' HTTP '.$status.': '.$body);return [$json,$body];}
 try{
@@ -51,14 +52,29 @@ try{
  legacySalesAssert($blockedSnapshot['has_active_documents'] === true, 'La orden activa no bloqueó las acciones de la cotización.');
  $void = ['ID_COTIZ' => $quotation, 'response_format' => 'json', 'reason' => 'QA cierre cotización'];
  legacySalesPost($http, '/modules/cotizaciones/anular-cotizacion.php', $void + ['version' => $blockedSnapshot['version']], 422);
- $series=[];foreach(['INVOICE','RECEIPT','CREDIT_NOTE'] as $type){$q=$pdo->prepare('SELECT series FROM tbl_document_series WHERE document_type=? AND active_status=1 ORDER BY id LIMIT 1');$q->execute([$type]);$series[$type]=$q->fetchColumn();legacySalesAssert((bool)$series[$type],'Falta serie QA '.$type);}
+ $series=[];foreach(['INVOICE','RECEIPT','CREDIT_NOTE'] as $type){$q=$pdo->prepare('SELECT series FROM tbl_document_series WHERE document_type=? AND active_status=1 AND sunat_enabled=0 ORDER BY id LIMIT 1');$q->execute([$type]);$series[$type]=$q->fetchColumn();legacySalesAssert((bool)$series[$type],'Falta serie interna QA '.$type);}
  $sale=['facturacion_series'=>$series['RECEIPT'],'facturacion_nro'=>'999999','facturacion_cliente'=>$customer,'facturacion_cliruc'=>'ALTERADO','facturacion_valcliente'=>'ALTERADO','facturacion_clidirecc'=>'ALTERADA','facturacion_clirefer'=>$key,'facturacion_tipmon'=>'MN','facturacion_fecentrega'=>$today,'facturacion_porcdesc'=>0,'facturacion_cantdesc'=>999,'facturacion_formpago'=>0,'facturacion_fecha'=>$today,'facturacion_opergrab'=>999,'facturacion_total'=>999,'facturacion_igv'=>999,'facturacion_prods'=>json_encode([[$product,'ALTERADO','ALTERADO','ALTERADO',10,2,20,'10',0,'PR-HTTP','CC-LIMA','LOT-HTTP','SER-HTTP','2035-12-31']]),'facturacion_estado'=>1,'facturacion_listadocotiz'=>$quotation,'facturacion_orden_venta'=>$order,'facturacion_almacen_id'=>$warehouse,'facturacion_usuarioid'=>$user];
  $invalid=$sale;$invalid['facturacion_prods']=json_encode([[$product,$key,'QA','QA',10,1.5,15]]);legacySalesPost($http,'/modules/facturacion/insert-boleta.php',$invalid,422);
  $q=$pdo->prepare('SELECT next_number FROM tbl_document_series WHERE document_type=? AND series=?');$q->execute(['RECEIPT',$series['RECEIPT']]);$next=$q->fetchColumn();legacySalesPost($http,'/modules/facturacion/obtener-correlativo-doc.php',['TIPO_DOC'=>'RECEIPT','SERIE'=>$series['RECEIPT']]);legacySalesPost($http,'/modules/facturacion/obtener-correlativo-doc.php',['TIPO_DOC'=>'RECEIPT','SERIE'=>$series['RECEIPT']]);$q->execute(['RECEIPT',$series['RECEIPT']]);legacySalesAssert($q->fetchColumn()===$next,'La vista previa consume correlativos sin guardar documentos.');
- [, $body]=legacySalesPost($http,'/modules/facturacion/insert-boleta.php',$sale);legacySalesAssert($body==='OK_INSERT','No creó boleta desde orden.');$q=$pdo->prepare('SELECT * FROM tbl_receipt WHERE customer_id=? ORDER BY id DESC LIMIT 1');$q->execute([$customer]);$receipt=$q->fetch();$receiptId=(int)$receipt['id'];$documents[]=['receipt',$receiptId];legacySalesAssert($receipt['ruc']===$ruc&&$receipt['name']===$key&&(float)$receipt['total_net']===23.6&&$receipt['number']!=='999999','La boleta confió en datos o numeración del navegador.');$line=$pdo->query("SELECT * FROM tbl_receipt_detail WHERE receipt_id={$receiptId} LIMIT 1")->fetch();legacySalesAssert($line['project_code']==='PR-HTTP'&&$line['cost_center_code']==='CC-LIMA'&&$line['lot_number']==='LOT-HTTP'&&$line['serial_number']==='SER-HTTP'&&$line['expiration_date']==='2035-12-31','La conversión cotización → orden → boleta perdió dimensiones de línea.');
+ $keyedReceipt = $sale + ['response_format' => 'json', 'request_key' => $saleKeys['receipt']];
+ [$receiptResult] = legacySalesPost($http, '/modules/facturacion/insert-boleta.php', $keyedReceipt);
+ $q=$pdo->prepare('SELECT * FROM tbl_receipt WHERE customer_id=? ORDER BY id DESC LIMIT 1');$q->execute([$customer]);$receipt=$q->fetch();$receiptId=(int)$receipt['id'];$documents[]=['receipt',$receiptId];legacySalesAssert($receipt['ruc']===$ruc&&$receipt['name']===$key&&(float)$receipt['total_net']===23.6&&$receipt['number']!=='999999','La boleta confió en datos o numeración del navegador.');$line=$pdo->query("SELECT * FROM tbl_receipt_detail WHERE receipt_id={$receiptId} LIMIT 1")->fetch();legacySalesAssert($line['project_code']==='PR-HTTP'&&$line['cost_center_code']==='CC-LIMA'&&$line['lot_number']==='LOT-HTTP'&&$line['serial_number']==='SER-HTTP'&&$line['expiration_date']==='2035-12-31','La conversión cotización → orden → boleta perdió dimensiones de línea.');
+ [$receiptReplay] = legacySalesPost($http, '/modules/facturacion/insert-boleta.php', $keyedReceipt);
+ legacySalesAssert($receiptResult['error'] === false && $receiptResult['document_id'] === $receiptId && $receiptReplay === $receiptResult, 'El reintento de boleta perdió el comprobante original.');
  $note=$sale;$note['facturacion_series']=$series['CREDIT_NOTE'];$note['facturacion_listadofact']='B:'.$receiptId;$note['facturacion_motivo_nc']='DEVOLUCION_ITEM';$note['facturacion_prods']=json_encode([[$product,$key,'QA','QA',10,1,10,'10',0,'PR-HTTP','CC-LIMA','LOT-HTTP','SER-HTTP','2035-12-31']]);
  $invalid=$note;$invalid['facturacion_estado']=2;legacySalesPost($http,'/modules/facturacion/insert-nota-credito.php',$invalid,422);
- [, $body]=legacySalesPost($http,'/modules/facturacion/insert-nota-credito.php',$note);legacySalesAssert($body==='OK_INSERT','No creó nota parcial de devolución.');$q=$pdo->prepare('SELECT id FROM tbl_credit_note WHERE customer_id=? ORDER BY id DESC LIMIT 1');$q->execute([$customer]);$noteId=(int)$q->fetchColumn();$documents[]=['credit_note',$noteId];$account=$pdo->query("SELECT balance_amount FROM tbl_accounts_receivable WHERE document_type='receipt' AND document_id={$receiptId}")->fetchColumn();legacySalesAssert(abs((float)$account-11.8)<.001,'La nota parcial no redujo CxC por el importe calculado.');
+ $keyedNote = $note + ['response_format' => 'json', 'request_key' => $saleKeys['credit_note']];
+ [$sourceError] = legacySalesPost($http, '/modules/facturacion/insert-nota-credito.php', array_replace($keyedNote, ['facturacion_listadofact' => '']), 422);
+ legacySalesAssert($sourceError['errors'][0]['path'] === 'facturacion_listadofact', 'La nota no identificó el documento de origen inválido.');
+ [$noteResult] = legacySalesPost($http, '/modules/facturacion/insert-nota-credito.php', $keyedNote);
+ $q=$pdo->prepare('SELECT id FROM tbl_credit_note WHERE customer_id=? ORDER BY id DESC LIMIT 1');$q->execute([$customer]);$noteId=(int)$q->fetchColumn();$documents[]=['credit_note',$noteId];
+ $statusProduct = $pdo->prepare('UPDATE tbl_product SET active_status=? WHERE id=?');
+ $statusProduct->execute([0, $product]);
+ try { [$noteReplay] = legacySalesPost($http, '/modules/facturacion/insert-nota-credito.php', $keyedNote); }
+ finally { $statusProduct->execute([1, $product]); }
+ legacySalesAssert($noteResult['error'] === false && $noteResult['document_id'] === $noteId && $noteReplay === $noteResult, 'El reintento de nota perdió la confirmación tras un cambio de maestro.');
+ legacySalesPost($http, '/modules/facturacion/insert-nota-credito.php', array_replace($keyedNote, ['facturacion_clirefer' => 'Contenido distinto']), 409);
+ $account=$pdo->query("SELECT balance_amount FROM tbl_accounts_receivable WHERE document_type='receipt' AND document_id={$receiptId}")->fetchColumn();legacySalesAssert(abs((float)$account-11.8)<.001,'La nota parcial no redujo CxC por el importe calculado.');
  legacySalesPost($http,'/modules/facturacion/cambiar-estado-doc.php',['TIPO_DOC'=>'RECEIPT','ID_DOC'=>$receiptId,'ESTADO_DOC'=>2,'COMENTARIO'=>'QA dependencia NC'],422);
  legacySalesPost($http,'/modules/facturacion/cambiar-estado-doc.php',['TIPO_DOC'=>'CREDIT_NOTE','ID_DOC'=>$noteId,'ESTADO_DOC'=>2,'COMENTARIO'=>'QA reversión nota']);legacySalesPost($http,'/modules/facturacion/cambiar-estado-doc.php',['TIPO_DOC'=>'RECEIPT','ID_DOC'=>$receiptId,'ESTADO_DOC'=>2,'COMENTARIO'=>'QA reversión boleta']);legacySalesPost($http,'/modules/ventas/ordenes.php',['action'=>'cancel','order_id'=>$order,'cancel_reason'=>'QA fin orden']);
  $anonymousCustomer=(int)$pdo->query("SELECT client_id FROM tbl_customer WHERE ruc='' AND active_status=1 LIMIT 1")->fetchColumn();legacySalesAssert($anonymousCustomer>0,'La migración no creó el consumidor final interno.');
@@ -71,9 +87,22 @@ try{
  legacySalesPost($http,'/modules/facturacion/cambiar-estado-doc.php',['TIPO_DOC'=>'RECEIPT','ID_DOC'=>$anonymousReceiptId,'ESTADO_DOC'=>2,'COMENTARIO'=>'QA reversión consumidor final']);
  $direct=$sale;$direct['facturacion_series']=$series['INVOICE'];$direct['facturacion_orden_venta']='';
  for($attempt=0;$attempt<2;$attempt++){
-  [, $body]=legacySalesPost($http,'/modules/facturacion/insert-factura.php',$direct);legacySalesAssert($body==='OK_INSERT','No permite facturar cotización después de anular el derivado anterior.');$q=$pdo->prepare('SELECT id FROM tbl_invoice WHERE customer_id=? ORDER BY id DESC LIMIT 1');$q->execute([$customer]);$invoice=(int)$q->fetchColumn();$documents[]=['invoice',$invoice];
+  $invoiceInput = $attempt === 0 ? $direct : $direct + ['response_format' => 'json', 'request_key' => $saleKeys['invoice']];
+  [$invoiceResult, $body]=legacySalesPost($http,'/modules/facturacion/insert-factura.php',$invoiceInput);$q=$pdo->prepare('SELECT id FROM tbl_invoice WHERE customer_id=? ORDER BY id DESC LIMIT 1');$q->execute([$customer]);$invoice=(int)$q->fetchColumn();$documents[]=['invoice',$invoice];
+  if ($attempt === 0) legacySalesAssert($body==='OK_INSERT','Cambió la respuesta de la factura histórica.');
+  else {
+      [$invoiceReplay] = legacySalesPost($http, '/modules/facturacion/insert-factura.php', $invoiceInput);
+      legacySalesAssert($invoiceResult['error'] === false && $invoiceResult['document_id'] === $invoice && $invoiceReplay === $invoiceResult, 'El reintento de factura perdió la confirmación.');
+  }
   $edit=$quote;$edit['id_cotizacion']=$quotation;legacySalesPost($http,'/modules/cotizaciones/insert-update-cotizacion.php',$edit,422);legacySalesPost($http,'/modules/cotizaciones/anular-cotizacion.php',['ID_COTIZ'=>$quotation,'reason'=>'QA bloqueo derivado'],422);
   legacySalesPost($http,'/modules/facturacion/cambiar-estado-doc.php',['TIPO_DOC'=>'INVOICE','ID_DOC'=>$invoice,'ESTADO_DOC'=>2,'COMENTARIO'=>'QA reversión factura']);
+ }
+ foreach ([['boleta', 'receipt', $receiptId], ['nota-credito', 'credit_note', $noteId], ['factura', 'invoice', $invoice]] as [$screen, $kind, $id]) {
+  [$lookup] = legacySalesPost($http, '/modules/facturacion/consultar-' . $screen . '.php', ['FILTER' => $id, 'ESTADO' => 'ALL']);
+  legacySalesAssert((int) ($lookup[0]['CODIGOID'] ?? 0) === $id, 'La consulta por identidad no reabrió ' . $screen);
+  $createdEvents = $pdo->prepare("SELECT COUNT(*) FROM tbl_document_status_history WHERE document_type=? AND document_id=? AND action='Creacion'");
+  $createdEvents->execute([$kind, $id]);
+  legacySalesAssert((int) $createdEvents->fetchColumn() === 1, 'El reintento duplicó el historial de ' . $screen);
  }
  legacySalesPost($http, '/modules/cotizaciones/anular-cotizacion.php', $void + ['version' => str_repeat('0', 64)], 409);
  [, $beforeVoid] = $http->request($readQuotation . '?id=' . $quotation);
@@ -85,11 +114,21 @@ try{
  $history->execute([$quotation]);
  legacySalesAssert((int) $history->fetchColumn() === 1, 'La anulación duplicó el historial.');
  $q=$pdo->prepare('SELECT quantity,reserved_quantity,inventory_value FROM tbl_warehouse_stock WHERE product_id=? AND warehouse_id=?');$q->execute([$product,$warehouse]);$stock=array_map('floatval',$q->fetch());legacySalesAssert($stock===['quantity'=>10.0,'reserved_quantity'=>0.0,'inventory_value'=>50.0],'El flujo no restauró cantidad, reserva y valoración inicial.');
+ if (getenv('APPU_SALES_BROWSER_QA') === '1') {
+  putenv('APPU_QA_SALES_DOCUMENTS=' . json_encode([
+      ['screen' => 'factura', 'id' => $invoice, 'series' => $series['INVOICE']],
+      ['screen' => 'boleta', 'id' => $receiptId, 'series' => $series['RECEIPT']],
+      ['screen' => 'nota-credito', 'id' => $noteId, 'series' => $series['CREDIT_NOTE']],
+  ], JSON_THROW_ON_ERROR));
+  passthru('node ' . escapeshellarg(__DIR__ . '/legacy-sales.browser.cjs'), $browserExit);
+  legacySalesAssert($browserExit === 0, 'Falló el recorrido en Chromium.');
+ }
  echo "PASS HTTP master autocomplete quotation order receipt credit return reversal direct invoice retry and authoritative totals/numbering\n";
 }catch(Throwable $error){fwrite(STDERR,'FAIL legacy sales HTTP: '.$error->getMessage().PHP_EOL);$failed=true;}
 finally{
  if($pdo->inTransaction())$pdo->rollBack();$pdo->beginTransaction();
  $pdo->prepare("DELETE FROM tbl_document_request WHERE operation='quotation_save' AND request_key=?")->execute([$quotationKey]);
+ $pdo->prepare('DELETE FROM tbl_document_request WHERE request_key IN (?,?,?)')->execute(array_values($saleKeys));
  foreach(array_reverse($documents) as [$type,$id]){if($type!=='credit_note')$pdo->prepare('DELETE FROM tbl_accounts_receivable WHERE document_type=? AND document_id=?')->execute([$type,$id]);$pdo->prepare('DELETE FROM tbl_'.$type.'_detail WHERE '.$type.'_id=?')->execute([$id]);$pdo->prepare('DELETE FROM tbl_'.$type.' WHERE id=?')->execute([$id]);}
  foreach(array_merge($documents,$order?[['sales_order',$order]]:[],$quotation?[['quotation',$quotation]]:[]) as [$type,$id]){foreach(['tbl_document_status_history'=>'document_type','tbl_custom_field_value'=>'entity'] as $table=>$column)$pdo->prepare("DELETE FROM {$table} WHERE {$column}=? AND ".($table==='tbl_custom_field_value'?'record_id':'document_id').'=?')->execute([$type,$id]);$pdo->prepare('DELETE FROM tbl_document_flow WHERE(source_type=? AND source_id=?)OR(target_type=? AND target_id=?)')->execute([$type,$id,$type,$id]);$pdo->prepare('DELETE FROM tbl_document_line_application WHERE(source_type=? AND source_id=?)OR(target_type=? AND target_id=?)')->execute([$type,$id,$type,$id]);}
  if($order){$pdo->prepare('DELETE FROM tbl_sales_order_detail WHERE sales_order_id=?')->execute([$order]);$pdo->prepare('DELETE FROM tbl_sales_order WHERE id=?')->execute([$order]);}if($quotation){$pdo->prepare('DELETE FROM tbl_quotation_detail WHERE quotation_id=?')->execute([$quotation]);$pdo->prepare('DELETE FROM tbl_quotation WHERE id=?')->execute([$quotation]);}if($product){foreach(['tbl_inventory_lot_application','tbl_warehouse_movement','tbl_product_lot','tbl_warehouse_stock'] as $table)$pdo->prepare('DELETE FROM '.$table.' WHERE product_id=?')->execute([$product]);$pdo->prepare('DELETE FROM tbl_product WHERE id=?')->execute([$product]);}if($customer)$pdo->prepare('DELETE FROM tbl_customer WHERE client_id=?')->execute([$customer]);$pdo->commit();
