@@ -98,6 +98,8 @@ if ($FILTER_COTIZ == "ALL") {
             foreach ($customStatement->fetchAll() as $customValue) $ROWDATA['CUSTOM_FIELDS'][(string) $customValue['field_definition_id']] = $customValue['field_value'];
             $ROWDATA['FECDEL'] = date("Y-m-d", strtotime($ROW["FECDEL"]));
             $ROWDATA['PROVID'] = $ROW["PROVID"];
+            $ROWDATA['PROVIDER_ADDRESS_ID'] = $ROW["PROVIDER_ADDRESS_ID"];
+            $ROWDATA['PROVIDER_ADDRESS'] = $ROW["PROVIDER_ADDRESS"];
             $ROWDATA['REQUESTID'] = $ROW["REQUESTID"];
             $ROWDATA['PAYDAYS'] = $ROW["PAYDAYS"];
             $ROWDATA['ACCNUM'] = $ROW["ACCNUM"];

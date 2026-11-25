@@ -2,18 +2,20 @@ $(function () {
   $("#m_compras").addClass("active").parent().addClass("menu-open");
   $("#m_solicitudes_compra").addClass("active");
   var details = [], selectedProduct = null, requestEpoch=0, saving=false, loadingRequest=false, currentRequest=null, requestRows=[], pendingRequester='';
+  var requestKey = '';
   function setRequestMode(request) {
     var editable=appuCan('purchases.manage')&&!saving&&!loadingRequest&&(!request || request.status==='Pendiente');
     $('#purchase-request-form :input').prop('disabled',!editable);
     $('#btn-save-purchase-request').prop('disabled',!editable);
     $('.card-primary .card-title').first().text(request?(editable?'Editar solicitud '+request.number:'Consultar solicitud '+request.number):'Nueva solicitud');
     $('.appu-doc-save').prop('disabled',!editable);$('.appu-doc-history').prop('disabled',!request);
+    $('.appu-document-toolbar').prop('inert', saving);
     $('#purchase-request-form').attr('data-mode',request?(editable?'EDIT':'VIEW'):'CREATE').attr('aria-busy',saving||loadingRequest?'true':'false');
     updateNavigation();
   }
   function openRequest(id) {
     if(saving)return;var epoch=++requestEpoch;productRequest++;selectedProduct=null;loadingRequest=true;setRequestMode(currentRequest);
-    $.getJSON('../../modules/compras/solicitudes.php',{id:id}).done(function(response){if(epoch!==requestEpoch)return;var request=response.request;if(!request){loadingRequest=false;setRequestMode(currentRequest);return toastr.warning('La solicitud no está disponible.');}currentRequest=request;loadingRequest=false;
+    $.getJSON('../../modules/compras/solicitudes.php',{id:id}).done(function(response){if(epoch!==requestEpoch)return;var request=response.request;if(!request||Number(request.id)!==Number(id)){loadingRequest=false;setRequestMode(currentRequest);return toastr.warning('La solicitud no está disponible.');}currentRequest=request;loadingRequest=false;requestKey='';
       pendingRequester=String(request.requester_id);var $requester=$('#purchase-request-requester');if(!$requester.find('option[value="'+pendingRequester+'"]').length)$requester.append($('<option>').val(pendingRequester).text(request.requester_name||'Empleado '+pendingRequester));
       $('#purchase-request-form input[name="id"]').val(request.id);$requester.val(pendingRequester).trigger('change.select2');
       $('#purchase-request-form [name="issue_date"]').val(request.issue_date);$('#purchase-request-form [name="required_date"]').val(request.required_date);$('#purchase-request-form [name="currency"]').val(request.currency);$('#purchase-request-form [name="observation"]').val(request.observation||'');
@@ -82,9 +84,32 @@ $(function () {
   });
   $("#purchase-request-form").on("submit", function (event) {
     event.preventDefault();if(saving||loadingRequest||!appuCan('purchases.manage')||(currentRequest&&currentRequest.status!=='Pendiente'))return; if (!details.length) return toastr.warning("Agrega al menos un artículo.");
-    var data = $(this).serializeArray(); data.push({ name: "details", value: JSON.stringify(details) });
-    saving=true;setRequestMode(currentRequest);
-    $.post("../../modules/compras/solicitudes.php", data).done(function (response) { toastr.success(response.message);requestEpoch++;currentRequest=null;pendingRequester=''; details = []; $("#purchase-request-form")[0].reset(); $('#purchase-request-form input[name="id"]').val(''); $("#purchase-request-requester").val("").trigger("change.select2"); setRequestMode(null); window.appuMarkSaved(); renderDetails(); load(); }).fail(function (xhr) { toastr.error(xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : "No se pudo guardar la solicitud."); }).always(function(){saving=false;setRequestMode(currentRequest);});
+    var form = this;
+    var data = $(form).serializeArray();
+    requestKey ||= appuRequestKey();
+    data.push({ name: "details", value: JSON.stringify(details) }, { name: "request_key", value: requestKey });
+    appuClearValidation(form);
+    saving = true;
+    setRequestMode(currentRequest);
+    $.post("../../modules/compras/solicitudes.php", data, null, "json").done(function (response) {
+      if (!response || !/^[1-9]\d*$/.test(String(response.id))) {
+        toastr.error("El servidor no confirmó la solicitud. Reintenta con los mismos datos.");
+        return;
+      }
+      currentRequest = { id: response.id, number: response.number, status: "Guardada" };
+      form.elements.id.value = response.id;
+      toastr.success(response.message);
+      appuMarkSaved();
+      window.history.replaceState(null, "", appuDocumentRecordUrl(response.id));
+      saving = false;
+      openRequest(response.id);
+      load();
+    }).fail(function (xhr) {
+      appuShowRequestError(form, xhr, "No se pudo guardar la solicitud. Reintenta con los mismos datos.");
+    }).always(function () {
+      saving = false;
+      setRequestMode(currentRequest);
+    });
   });
   function load() {
     $.getJSON("../../modules/compras/solicitudes.php").done(function (response) {

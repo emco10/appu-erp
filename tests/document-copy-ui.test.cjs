@@ -34,8 +34,11 @@ test('Orden de compra ofrece copiar a entrada y factura según permisos y estado
 test('La acción de copiar una orden preselecciona el origen de la factura',async()=>{
  const t=await setup('views/compras/compra-interna.php',['ajax/compra-interna.js'],'?copy_from=order&source_id=25',{beforeScripts(w){w.leer_cookie=()=>'';w.eliminar_cookie=()=>{};}});try{
   const list=t.pending(r=>String(r.url).includes('listar-ordenes-disponibles.php'))[0];
+  const providers=t.pending(r=>String(r.url).includes('listar-proveedores.php'))[0];
   assert.ok(list);
   list.deferred.resolve([{id:'',text:'Sin orden de compra'},{id:25,text:'OC-25'}]);
+  assert.equal(t.pending(r=>String(r.url).includes('consultar-orden.php')).length,0);
+  providers.deferred.resolve([]);
   await t.flush();
   assert.equal(t.$('#purchase-order-source').val(),'25');
   const source=t.pending(r=>String(r.url).includes('consultar-orden.php'))[0];

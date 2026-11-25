@@ -10,6 +10,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     require_once '../../global/purchase-receipt.php';
     require_once '../../global/validation.php';
     require_once '../../global/commercial-line-dimensions.php';
+    require_once '../../global/document-engine.php';
+    $asJson = ($_POST['response_format'] ?? '') === 'json';
 
     $supplierReference = trim((string) ($_POST['orden_nro'] ?? ''));
     if ($supplierReference === '' || mb_strlen($supplierReference) > 100) {
@@ -78,12 +80,19 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     }
 
     try {
+        $pdo->exec('SET TRANSACTION ISOLATION LEVEL READ COMMITTED');
+        $pdo->beginTransaction();
+        $replay = app_document_request_start($pdo, 'purchase_invoice_save', $_POST, $user_id);
+        if ($replay !== null) {
+            $pdo->commit();
+            app_send_purchase_save_result($replay, $asJson);
+            return;
+        }
         app_validate_purchase_input($_POST,$ord_tipo===1?(is_array($ord_lstprods)?$ord_lstprods:[]):(is_array($ord_lstservicios)?$ord_lstservicios:[]),$ord_tipo===2);
         $ord_provider = app_validate_provider_reference($pdo, $ord_provider);
         if (is_array($ord_lstprods)) {
             app_validate_product_rows($pdo, $ord_lstprods);
         }
-        $pdo->beginTransaction();
         $providerAddress = app_provider_address_snapshot($pdo, (int) $ord_provider, filter_var($_POST['orden_direccion_proveedor_id'] ?? null, FILTER_VALIDATE_INT) ?: null);
         if ($importReceiptId !== null) {
             $importReceipt = $pdo->prepare("SELECT id FROM tbl_goods_receipt WHERE id=? AND status='Registrado' FOR UPDATE");
@@ -286,8 +295,10 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         app_save_custom_fields($pdo, 'purchase', (int) $ord_id, $customValues);
         if($purchaseOrderId!==null)app_sync_purchase_order_receipt_status($pdo,$purchaseOrderId);
 
+        $result = ['error' => false, 'document_id' => (int) $ord_id, 'number' => $ord_code, 'result' => $response];
+        app_document_request_finish($pdo, 'purchase_invoice_save', $_POST, $user_id, 'purchase', (int) $ord_id, $result);
         $pdo->commit();
-        echo $response;
+        app_send_purchase_save_result($result, $asJson);
     } catch (Throwable $exception) {
         if ($pdo->inTransaction()) {
             $pdo->rollBack();

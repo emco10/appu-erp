@@ -53,3 +53,13 @@ function app_validate_purchase_order_document(PDO $pdo, int $orderId, int $provi
     if(abs((float)$order['total_purchase']-$subtotal)>0.01||abs((float)$order['total_tax']-$tax)>0.01||abs((float)$order['total_net']-$total)>0.01)throw new DomainException('Los totales no coinciden con la orden de compra.');
     return $order;
 }
+
+function app_send_purchase_save_result(array $result, bool $asJson): void
+{
+    if ($asJson) {
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+        return;
+    }
+    echo $result['result'];
+}

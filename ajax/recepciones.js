@@ -3,7 +3,16 @@ $(function () {
   $(document).prop("title", "Entrada de mercancías - Compras - APPU");
   var endpoint = "../../modules/compras/goods-receipts.php",
     current = null,
-    mode = "CREATE";
+    mode = "CREATE",
+    documentRead = 0,
+    loading = false,
+    saving = false,
+    requestKey = "";
+  var form = document.getElementById("goods-receipt-form");
+  function updateSaveButton() {
+    form.setAttribute("aria-busy", String(saving || loading));
+    $("#btn-save-goods-receipt").prop("disabled", mode === "VIEW" || saving || loading || !appuCan("purchases.manage"));
+  }
   function key(type, id) {
     return type + ":" + id;
   }
@@ -115,9 +124,10 @@ $(function () {
     mode = next;
     var view = next === "VIEW";
     $("#goods-receipt-form")
-      .find("input[name],select[name],#goods-receipt-base")
+      .find("input[name],select[name],#goods-receipt-base,#goods-receipt-lines input")
       .prop("disabled", view);
-    $("#btn-save-goods-receipt").toggle(!view).prop("disabled", view);
+    $("#btn-save-goods-receipt").toggle(!view);
+    updateSaveButton();
     $("#btn-anular-goods-receipt")
       .toggleClass("d-none", !view)
       .prop(
@@ -130,6 +140,7 @@ $(function () {
   }
   function clearDocument() {
     current = null;
+    requestKey = "";
     $("#goods-receipt-id,#goods-receipt-number").val("");
     $("#goods-receipt-status").val("Nuevo");
     $(
@@ -174,13 +185,20 @@ $(function () {
       );
   }
   function loadBase(type, id) {
+    if (saving) return;
+    var read = ++documentRead;
     if (!type || !id) {
+      loading = false;
       clearDocument();
       return;
     }
+    loading = true;
+    updateSaveButton();
     $.getJSON(endpoint, { base_type: type, base_id: id })
       .done(function (r) {
+        if (read !== documentRead) return;
         current = r;
+        requestKey = "";
         var b = r.base;
         $("#goods-receipt-base-type-label").val(b.base_label);
         $("#goods-receipt-base-status").val(b.status);
@@ -250,11 +268,18 @@ $(function () {
         total();
       })
       .fail(function (x) {
-        clearDocument();
+        if (read !== documentRead) return;
+        var base = current && current.base;
+        $("#goods-receipt-base").val(base ? key(base.base_type, base.id) : "").trigger("change.select2");
         toastr.error(
           (x.responseJSON || {}).message ||
             "No se pudo cargar el documento base.",
         );
+      })
+      .always(function () {
+        if (read !== documentRead) return;
+        loading = false;
+        updateSaveButton();
       });
   }
   function loadRecords(selected) {
@@ -280,11 +305,18 @@ $(function () {
     });
   }
   function loadReceipt(id) {
+    if (saving) return;
     if (!id) return toastr.info("Selecciona una entrada de mercancías.");
+    var read = ++documentRead;
+    loading = true;
+    updateSaveButton();
     $.getJSON(endpoint, { action: "receipt", receipt_id: id })
       .done(function (r) {
+        if (read !== documentRead) return;
         var h = r.receipt;
+        if (!h || String(h.id) !== String(id)) return toastr.error("La entrada solicitada no está disponible.");
         current = r;
+        requestKey = "";
         $("#goods-receipt-id").val(h.id);
         $("#goods-receipt-number").val(h.number);
         $("#goods-receipt-status").val(h.status);
@@ -357,14 +389,22 @@ $(function () {
         setMode("VIEW");
       })
       .fail(function (x) {
+        if (read !== documentRead) return;
         toastr.error(
           (x.responseJSON || {}).message || "No se pudo abrir la entrada.",
         );
+      })
+      .always(function () {
+        if (read !== documentRead) return;
+        loading = false;
+        updateSaveButton();
       });
   }
   function loadEligible(selected) {
+    var read = ++documentRead;
     $.getJSON(endpoint, { action: "eligible" })
       .done(function (r) {
+        if (read !== documentRead) return;
         var $s = $("#goods-receipt-base")
           .empty()
           .append(
@@ -384,13 +424,14 @@ $(function () {
             )
             .appendTo($s);
         });
-        if (selected && $s.find('option[value="' + selected + '"]').length) {
+        if (selected && Array.from($s[0].options).some(option => option.value === selected)) {
           $s.val(selected);
           var p = splitKey(selected);
           loadBase(p.type, p.id);
         } else clearDocument();
       })
       .fail(function () {
+        if (read !== documentRead) return;
         toastr.error("No se pudieron consultar los documentos pendientes.");
       });
   }
@@ -406,8 +447,8 @@ $(function () {
   $("#goods-receipt-valuation-rate").on("input change", total);
   $("#goods-receipt-form").on("submit", function (e) {
     e.preventDefault();
-    if (mode === "VIEW") return;
-    if (!current) return toastr.warning("Selecciona un documento base.");
+    if (mode === "VIEW" || saving || loading || !appuCan("purchases.manage")) return;
+    if (!current || !current.base) return toastr.warning("Selecciona un documento base.");
     var selected = splitKey($("#goods-receipt-base").val()),
       items = [];
     $("#goods-receipt-lines tr[data-line-id]").each(function () {
@@ -426,28 +467,47 @@ $(function () {
     if (!items.length)
       return toastr.warning("Indica al menos una cantidad a recibir.");
     var data = $(this).serializeArray();
+    requestKey ||= appuRequestKey();
     data.push(
       { name: "base_type", value: selected.type },
       { name: "base_id", value: selected.id },
       { name: "items", value: JSON.stringify(items) },
+      { name: "request_key", value: requestKey },
     );
-    $("#btn-save-goods-receipt").prop("disabled", true);
-    $.post(endpoint, $.param(data))
+    saving = true;
+    form.inert = true;
+    $(".appu-document-toolbar,.appu-document-selector").prop("inert", true);
+    updateSaveButton();
+    appuClearValidation(form);
+    $.post(endpoint, $.param(data), null, "json")
       .done(function (r) {
+        if (!r || !/^[1-9]\d*$/.test(String(r.receipt_id))) {
+          return toastr.error("El servidor no confirmó la entrada. Reintenta con los mismos datos.");
+        }
+        $("#goods-receipt-id").val(r.receipt_id);
+        $("#goods-receipt-number").val(r.receipt_number);
+        $("#goods-receipt-status").val("Registrado");
+        setMode("VIEW");
         toastr.success(r.message);
-        loadRecords(r.receipt_id);
-        loadReceipt(r.receipt_id);
+        window.history.replaceState(null, "", appuDocumentRecordUrl(r.receipt_id));
       })
       .fail(function (x) {
-        toastr.error(
-          (x.responseJSON || {}).message || "No se pudo crear la entrada.",
-        );
+        appuShowRequestError(form, x, "No se pudo guardar la entrada. Reintenta con los mismos datos.");
       })
       .always(function () {
-        $("#btn-save-goods-receipt").prop("disabled", false);
+        saving = false;
+        form.inert = false;
+        $(".appu-document-toolbar,.appu-document-selector").prop("inert", false);
+        updateSaveButton();
+        if (mode === "VIEW") {
+          var id = $("#goods-receipt-id").val();
+          loadRecords(id);
+          loadReceipt(id);
+        }
       });
   });
   function cancelReceipt(id) {
+    if (saving || loading) return;
     var reason = window.prompt(
       "Motivo de anulación (mínimo 5 caracteres):",
       "",
@@ -472,7 +532,7 @@ $(function () {
     cancelReceipt($("#goods-receipt-id").val());
   });
   var q = new URLSearchParams(location.search),
-    receiptId = q.get("receipt_id"),
+    receiptId = q.get("record_id") || q.get("receipt_id"),
     initial =
       q.get("base_type") && q.get("base_id")
         ? key(q.get("base_type").toUpperCase(), q.get("base_id"))
@@ -480,6 +540,7 @@ $(function () {
           ? key("PURCHASE", q.get("purchase_id"))
           : "";
   loadRecords(receiptId);
+  setMode(receiptId ? "VIEW" : "CREATE");
   if (receiptId) loadReceipt(receiptId);
   else loadEligible(initial);
 });

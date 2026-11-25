@@ -10,6 +10,8 @@ require_once '../../global/commercial-line-dimensions.php';
     require_once '../../global/purchase-request-validation.php';
     require_once '../../global/purchase-document-validation.php';
     require_once '../../global/validation.php';
+    require_once '../../global/document-engine.php';
+    $asJson = ($_POST['response_format'] ?? '') === 'json';
 
     $ord_code = "";
     $ord_tipo = $_POST['orden_tipo'];
@@ -65,6 +67,14 @@ require_once '../../global/commercial-line-dimensions.php';
     }
 
     try {
+        $pdo->exec('SET TRANSACTION ISOLATION LEVEL READ COMMITTED');
+        $pdo->beginTransaction();
+        $replay = app_document_request_start($pdo, 'purchase_order_save', $_POST, $user_id);
+        if ($replay !== null) {
+            $pdo->commit();
+            app_send_purchase_save_result($replay, $asJson);
+            return;
+        }
         app_validate_purchase_input($_POST,$ord_tipo===1?(is_array($ord_lstprods)?$ord_lstprods:[]):(is_array($ord_lstservicios)?$ord_lstservicios:[]),$ord_tipo===2);
         $ord_provider = app_validate_provider_reference($pdo, $ord_provider);
         if ($ord_tipo === 1) {
@@ -72,7 +82,6 @@ require_once '../../global/commercial-line-dimensions.php';
         } elseif ($ord_tipo === 2 && (!is_array($ord_lstservicios) || count($ord_lstservicios) === 0)) {
             throw new InvalidArgumentException('La orden de servicio debe contener al menos un servicio.');
         }
-        $pdo->beginTransaction();
         $providerAddress = app_provider_address_snapshot($pdo, (int) $ord_provider, filter_var($_POST['orden_direccion_proveedor_id'] ?? null, FILTER_VALIDATE_INT) ?: null);
         if ($ord_purchase_request_id !== null) {
             if ($ord_tipo !== 1) throw new DomainException('Las solicitudes de compra solo pueden originar ordenes de compra.');
@@ -236,8 +245,10 @@ require_once '../../global/commercial-line-dimensions.php';
             app_record_document_status($pdo, 'purchase_request', (int)$ord_purchase_request_id, (string)$purchaseRequest['number'], (string)$purchaseRequest['status'], 'Convertida', 'Conversion', $user_id, 'Solicitud convertida en orden de compra.');
             app_record_document_flow($pdo, 'purchase_request', (int)$ord_purchase_request_id, 'order', (int)$ord_id, $user_id, 'REQUEST_TO_ORDER');
         }
+        $result = ['error' => false, 'document_id' => (int) $ord_id, 'number' => $ord_code, 'result' => $response];
+        app_document_request_finish($pdo, 'purchase_order_save', $_POST, $user_id, 'order', (int) $ord_id, $result);
         $pdo->commit();
-        echo $response;
+        app_send_purchase_save_result($result, $asJson);
     } catch (Throwable $exception) {
         if ($pdo->inTransaction()) {
             $pdo->rollBack();

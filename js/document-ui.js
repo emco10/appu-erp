@@ -79,38 +79,46 @@
     global.toastr.error(message);
   };
 
-  global.appuBindSalesCreation = function (form, getLines, validate) {
+  global.appuDocumentRecordUrl = function (id) {
+    const url = new URL(global.appuNewDocumentUrl());
+    url.searchParams.delete('mode');
+    url.searchParams.delete('copy_from');
+    url.searchParams.set('record_id', String(id));
+    return url.href;
+  };
+
+  function bindDocumentSave(form, options) {
     if (!form) return;
-    const requested = new URLSearchParams(global.location.search).get('record_id');
-    form.dataset.documentMode = /^[1-9]\d*$/.test(requested) ? 'VIEW' : 'CREATE';
     let saving = false;
     let requestKey = '';
-
-    $('#btn-select-factura').on('click.salesCreation', function () {
-      if ($('select[name="facturas_listado"]').val()) form.dataset.documentMode = 'VIEW';
-    });
+    let draftIdentity = '';
+    form.addEventListener('appu:document-loaded', function () { requestKey = ''; });
 
     function lock(locked) {
       saving = locked;
       form.inert = locked;
       form.setAttribute('aria-busy', String(locked));
-      document.querySelectorAll('.appu-document-toolbar, #btn-nuevafac, #btn-select-factura, select[name="facturas_listado"]')
-        .forEach(control => { control.inert = locked; });
+      document.querySelectorAll('.appu-document-toolbar').forEach(control => { control.inert = locked; });
+      options.controls.forEach(control => { control.inert = locked; });
     }
 
     form.addEventListener('submit', function (event) {
       event.preventDefault();
-      if (saving || form.dataset.documentMode !== 'CREATE' || form.elements.id_factura.value || !global.appuCan('sales.manage')) return;
-      if (validate && !validate()) return;
+      if (saving || !global.appuCan(options.permission) || !options.canSave()) return;
 
+      const identity = form.elements[options.idField];
+      if (draftIdentity !== identity.value) {
+        draftIdentity = identity.value;
+        requestKey = '';
+      }
       const data = new FormData(form);
       requestKey ||= global.appuRequestKey();
       data.set('request_key', requestKey);
       data.set('response_format', 'json');
-      data.set('facturacion_prods', JSON.stringify(getLines()));
+      options.populate(data);
       global.appuClearValidation(form);
       lock(true);
-      Swal.fire({ title: 'Guardando comprobante', allowOutsideClick: false, allowEscapeKey: false, onBeforeOpen: () => Swal.showLoading() });
+      Swal.fire({ title: options.savingTitle, allowOutsideClick: false, allowEscapeKey: false, onBeforeOpen: () => Swal.showLoading() });
 
       $.ajax({ type: 'POST', url: form.action, data, dataType: 'json', contentType: false, processData: false })
         .done(function (response) {
@@ -121,17 +129,58 @@
             return;
           }
           form.dataset.documentMode = 'VIEW';
-          form.elements.id_factura.value = response.document_id;
+          identity.value = response.document_id;
           global.appuMarkSaved();
-          const url = new URL(global.appuNewDocumentUrl());
-          url.searchParams.delete('mode');
-          url.searchParams.set('record_id', String(response.document_id));
-          global.location.assign(url.href);
+          global.location.assign(global.appuDocumentRecordUrl(response.document_id));
         }).fail(function (xhr) {
           lock(false);
           Swal.close();
           global.appuShowRequestError(form, xhr, 'No se pudo confirmar el guardado. Reintenta con los mismos datos.');
         });
     });
+  }
+
+  global.appuBindSalesCreation = function (form, getLines, validate) {
+    if (!form) return;
+    const requested = new URLSearchParams(global.location.search).get('record_id');
+    form.dataset.documentMode = /^[1-9]\d*$/.test(requested) ? 'VIEW' : 'CREATE';
+    $('#btn-select-factura').on('click.salesCreation', function () {
+      if ($('select[name="facturas_listado"]').val()) form.dataset.documentMode = 'VIEW';
+    });
+    bindDocumentSave(form, {
+      idField: 'id_factura', permission: 'sales.manage', savingTitle: 'Guardando comprobante',
+      controls: document.querySelectorAll('#btn-nuevafac, #btn-select-factura, select[name="facturas_listado"]'),
+      canSave: () => form.dataset.documentMode === 'CREATE' && !form.elements.id_factura.value && (!validate || validate()),
+      populate: data => data.set('facturacion_prods', JSON.stringify(getLines()))
+    });
+  };
+
+  global.appuBindPurchaseSave = function (form, populate) {
+    if (!form) return;
+    const requested = new URLSearchParams(global.location.search).get('record_id');
+    form.dataset.documentMode = /^[1-9]\d*$/.test(requested) ? 'VIEW' : 'CREATE';
+    bindDocumentSave(form, {
+      idField: 'orden_id', permission: 'purchases.manage', savingTitle: 'Guardando documento de compra',
+      controls: document.querySelectorAll('#btn-select-orden, select[name="orden_listado"]'),
+      canSave: () => ['CREATE', 'EDIT'].includes(form.dataset.documentMode),
+      populate
+    });
+  };
+
+  global.appuPurchaseCurrencyValue = function (code) {
+    const currency = String(code || '').toUpperCase();
+    return { PEN: 'MN', USD: 'ME' }[currency] || currency;
+  };
+
+  global.appuLoadPurchaseFields = function (form, header) {
+    form.elements.orden_tipomoneda.value = global.appuPurchaseCurrencyValue(header.TIPOMON);
+    const values = header.CUSTOM_FIELDS || {};
+    for (const field of form.elements) {
+      const key = /^custom_field\[(\d+)\]$/.exec(field.name);
+      if (!key) continue;
+      const value = values[key[1]] ?? '';
+      if (field.type === 'checkbox') field.checked = String(value) === '1';
+      else field.value = value;
+    }
   };
 })(window);
