@@ -9,7 +9,7 @@ $quotationCustomFields = app_quotation_custom_fields($pdo);
             <div class="row mb-0">
                 <div class="col-md-12">
                     <div class="m-0 text-dark text-center text-lg">
-                        <i class="fas fa-file-invoice-dollar"></i>&nbsp;&nbsp;Cotización
+                        <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i>&nbsp;&nbsp;Oferta de ventas
                     </div>
                 </div>
             </div>
@@ -19,7 +19,7 @@ $quotationCustomFields = app_quotation_custom_fields($pdo);
     <div class="content">
         <div class="container-fluid">
             <div style="max-width: 1140px; margin: 0 auto;">
-                <form id="FRM_INSERT_COTIZACION" method="post" action="<?php echo $functions->direct_sistema(); ?>/modules/cotizaciones/insert-update-cotizacion.php" enctype="multipart/form-data">
+                <form id="FRM_INSERT_COTIZACION" data-document-mode="LIST" method="post" action="<?php echo $functions->direct_sistema(); ?>/modules/cotizaciones/insert-update-cotizacion.php" enctype="multipart/form-data">
                     <input type="hidden" name="id_cotizacion">
                     <input type="hidden" name="version">
                     <div class="card">
@@ -39,14 +39,20 @@ $quotationCustomFields = app_quotation_custom_fields($pdo);
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-lg-5 d-flex flex-wrap align-items-start justify-content-lg-end">
+                                    <span id="quotation-mode" class="badge badge-secondary m-2" role="status">Consulta</span>
+                                    <button type="button" id="quotation-edit" class="btn btn-outline-primary btn-sm mr-2" hidden>Editar</button>
+                                    <button type="button" id="quotation-discard" class="btn btn-outline-secondary btn-sm" hidden>Descartar cambios</button>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <fieldset id="quotation-fields" class="border-0 p-0 m-0" aria-label="Datos de la oferta" disabled>
                     <div class="card card-primary">
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <div class="card-title">Datos de Cotización</div>
+                                    <div class="card-title">Datos de la oferta</div>
                                 </div>
                                 <div class="col-md-10">
                                     <div class="" style="height: 2.2rem;">
@@ -65,7 +71,7 @@ $quotationCustomFields = app_quotation_custom_fields($pdo);
                                                 <label>Estado:</label>
                                             </div>
                                             <div class="col-md-2">
-                                                <select class="form-control" name="cotizacion_estado">
+                                                <select class="form-control" name="cotizacion_estado" disabled>
                                                     <option value="1" selected>Vigente</option>
                                                     <option value="2">Anulada</option>
                                                 </select>
@@ -305,17 +311,11 @@ $quotationCustomFields = app_quotation_custom_fields($pdo);
                                 </div>
                             </div>
 
-                            <div class="row mt-3">
-                                <div id="col-btn-save-cotizprod" class="col-md-12">
-                                    <button type="submit" id="btn-save-cotizprod" class="btn btn-success btn-block"><i class="fa fa-save fa-1x"></i>&nbsp;&nbsp;<font>Grabar cotización </font></button>
-                                </div>
-                                <div id="col-btn-anular-cotizprod" class="col-md-6">
-                                    <button type="button" id="btn-anular-cotizprod" class="btn btn-danger btn-block"><i class="fa fa-trash fa-1x"></i>&nbsp;&nbsp;<font>Anular cotización </font></button>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
+                    </fieldset>
+                    <button type="submit" id="btn-save-cotizprod" hidden disabled>Guardar oferta</button>
+                    <button type="button" id="btn-anular-cotizprod" hidden disabled>Anular oferta</button>
                 </form>
             </div>
         </div>

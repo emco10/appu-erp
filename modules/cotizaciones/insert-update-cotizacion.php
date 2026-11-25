@@ -60,9 +60,7 @@ try {
             throw new DomainException('La cotización anulada no se puede modificar.');
         }
 
-        $derivedOrder = $pdo->prepare("SELECT id FROM tbl_sales_order WHERE quotation_id=? AND status<>'Anulada' LIMIT 1 FOR UPDATE");
-        $derivedOrder->execute([$quotationId]);
-        if ($derivedOrder->fetchColumn() || app_quotation_has_active_sale($pdo, $quotationId)) {
+        if (app_quotation_has_active_documents($pdo, $quotationId, true)) {
             throw new DomainException('La cotización tiene un documento de venta activo y ya no se puede modificar.');
         }
     }

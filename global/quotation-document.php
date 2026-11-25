@@ -1,6 +1,19 @@
 <?php
 
 require_once __DIR__ . '/document-history.php';
+require_once __DIR__ . '/sales-document-validation.php';
+
+/** Writers must lock the quotation first, as do the document conversion paths. */
+function app_quotation_has_active_documents(PDO $pdo, int $id, bool $lock = false): bool
+{
+    $orders = $pdo->prepare("SELECT id FROM tbl_sales_order WHERE quotation_id=? AND status<>'Anulada' LIMIT 1" . ($lock ? ' FOR UPDATE' : ''));
+    $orders->execute([$id]);
+    if ($orders->fetchColumn()) return true;
+
+    $links = $pdo->prepare("SELECT sales_order.id FROM tbl_document_flow flow JOIN tbl_sales_order sales_order ON sales_order.id=flow.target_id WHERE flow.source_type='quotation' AND flow.source_id=? AND flow.target_type='sales_order' AND sales_order.status<>'Anulada' LIMIT 1");
+    $links->execute([$id]);
+    return (bool) $links->fetchColumn() || app_quotation_has_active_sale($pdo, $id);
+}
 
 function app_quotation_custom_fields(PDO $pdo): array
 {

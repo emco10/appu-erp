@@ -13,6 +13,12 @@ try{
   $pdo->prepare('INSERT INTO tbl_customer(ruc,business_name,trade_name,email,phone,cellphone,address,department_id,province_id,district_id,contact1_name,contact1_phone,contact2_name,contact2_phone,commission) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')->execute([$ruc,'CLIENTE QA COT','QA','','','','Direccion inicial','15','1501','150101','','','','',0]);$customerId=(int)$pdo->lastInsertId();
   $code='QA-COT-'.substr(uniqid(),-7);$pdo->prepare('INSERT INTO tbl_product(code,brand,name,description,stock_quantity,unit_price,unit_value,active_status) VALUES(?,?,?,?,?,?,?,1)')->execute([$code,'APPU','ARTICULO COT QA','Temporal',0,10,'UND']);$productId=(int)$pdo->lastInsertId();
   $base=['id_cotizacion'=>'','cotizacion_cliente'=>$customerId,'cotizacion_cliruc'=>'RUC ALTERADO','cotizacion_valcliente'=>'NOMBRE ALTERADO','cotizacion_clidirecc'=>'ALTERADA','cotizacion_direccion_fiscal_id'=>'','cotizacion_direccion_entrega_id'=>'','cotizacion_clirefer'=>'QA','cotizacion_tipmon'=>'MN','cotizacion_almacen_id'=>$warehouseId,'cotizacion_fecentrega'=>date('Y-m-d',strtotime('+2 days')),'cotizacion_porcdesc'=>'10','cotizacion_cantdesc'=>'999','cotizacion_formpago'=>'30','cotizacion_fecha'=>date('Y-m-d'),'cotizacion_opergrab'=>'999','cotizacion_total'=>'999','cotizacion_igv'=>'999','cotiz_prods'=>json_encode([[$productId,'ARTICULO COT QA','Temporal','10','2','20']]),'cotizacion_estado'=>'2','cotizacion_usuarioid'=>$userId,'custom_field'=>[]];
+  if ($browserQa) {
+      require_once $root . '/global/business-partner-details.php';
+      $browserAddress = ['address_type' => 'billing', 'address_code' => $code, 'address_name' => 'Dirección fiscal QA', 'address_line' => 'Dirección guardada en oferta QA'];
+      $browserAddress['id'] = app_partner_save_address($pdo, 'customer', $customerId, $browserAddress);
+      $base['cotizacion_direccion_fiscal_id'] = $browserAddress['id'];
+  }
   chdir($root.'/modules/cotizaciones');$_POST=$base;ob_start();include 'insert-update-cotizacion.php';$result=trim(ob_get_clean());if($result!=='OK_INSERT')throw new RuntimeException('No creo la cotizacion: '.$result);
   $find=$pdo->prepare('SELECT * FROM tbl_quotation WHERE customer_id=? ORDER BY id DESC LIMIT 1');$find->execute([$customerId]);$quote=$find->fetch();if(!$quote)throw new RuntimeException('No recupero la cotizacion creada.');$quotationId=(int)$quote['id'];
   if((int)$quote['status']!==1||$quote['ruc']!==$ruc||$quote['name']!=='CLIENTE QA COT')throw new RuntimeException('La cabecera confio en datos manipulables del navegador.');
@@ -22,6 +28,8 @@ try{
   $line=$pdo->query("SELECT * FROM tbl_quotation_detail WHERE quotation_id={$quotationId} LIMIT 1")->fetch();if((float)$line['item_discount_rate']!==10.0||$line['project_code']!=='PR-COT'||$line['cost_center_code']!=='CC-LIMA'||$line['expiration_date']!=='2030-12-31')throw new RuntimeException('La cotizacion no conservo dimensiones opcionales de linea.');
   $_POST=['FILTER'=>$quotationId,'ESTADO'=>'ALL'];ob_start();include 'consultar-cotizacion.php';$consult=json_decode(ob_get_clean(),true,512,JSON_THROW_ON_ERROR);if((int)($consult[0]['CODIGOID']??0)!==$quotationId)throw new RuntimeException('La consulta no recupero la cotizacion.');
   if ($browserQa) {
+      $browserAddress['address_line'] = 'Dirección actual del maestro QA';
+      app_partner_save_address($pdo, 'customer', $customerId, $browserAddress);
       $createField = $pdo->prepare("INSERT INTO tbl_custom_field_definition(entity,field_key,label,field_type,visible,default_value) VALUES ('quotation',?,?,?,?,?)");
       $storeValue = $pdo->prepare("INSERT INTO tbl_custom_field_value(field_definition_id,entity,record_id,field_value) VALUES (?,'quotation',?,?)");
       foreach (['text' => 'Detalle QA', 'checkbox' => '1'] as $type => $value) {
@@ -46,6 +54,7 @@ try{
   echo "PASS quotation create canonical totals edit retrieve cancel lifecycle\n";
 }finally{
   if($quotationId){$pdo->prepare("DELETE FROM tbl_document_request WHERE operation='quotation_save' AND result_type='quotation' AND result_id=?")->execute([$quotationId]);$pdo->prepare("DELETE FROM tbl_custom_field_value WHERE entity='quotation' AND record_id=?")->execute([$quotationId]);$pdo->prepare("DELETE FROM tbl_document_status_history WHERE document_type='quotation' AND document_id=?")->execute([$quotationId]);$pdo->prepare('DELETE FROM tbl_quotation_detail WHERE quotation_id=?')->execute([$quotationId]);$pdo->prepare('DELETE FROM tbl_quotation WHERE id=?')->execute([$quotationId]);}
+  if(isset($browserAddress['id']))$pdo->prepare('DELETE FROM tbl_business_partner_address WHERE id=?')->execute([$browserAddress['id']]);
   if($productId)$pdo->prepare('DELETE FROM tbl_product WHERE id=?')->execute([$productId]);if($customerId)$pdo->prepare('DELETE FROM tbl_customer WHERE client_id=?')->execute([$customerId]);
   foreach ($browserFieldIds as $id) $pdo->prepare('DELETE FROM tbl_custom_field_definition WHERE id=?')->execute([$id]);
 }

@@ -30,6 +30,7 @@ try {
         return;
     }
 
+    $document['has_active_documents'] = app_quotation_has_active_documents($pdo, $id);
     $document['custom_fields'] = app_quotation_custom_fields($pdo);
     $document['custom_values'] = (object) array_intersect_key(
         (array) $document['custom_values'],

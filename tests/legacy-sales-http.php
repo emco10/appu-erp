@@ -39,7 +39,7 @@ try{
  [$status] = $http->request($readQuotation, ['id' => $quotation]);
  legacySalesAssert($status === 405, 'La consulta admitió un método distinto de GET.');
  [$status, $snapshot] = $http->request($readQuotation . '?id=' . $quotation);
- legacySalesAssert($status === 200 && (int) $snapshot['quotation']['id'] === $quotation
+ legacySalesAssert($status === 200 && (int) $snapshot['quotation']['id'] === $quotation && $snapshot['has_active_documents'] === false
     && $snapshot['details'][0]['project_code'] === 'PR-HTTP' && preg_match('/^[a-f0-9]{64}$/D', $snapshot['version']),
     'La consulta no devolvió cabecera, líneas y versión de la misma cotización.');
  $unversionedEdit = array_replace($quote, ['id_cotizacion' => $quotation, 'response_format' => 'json']);
@@ -47,6 +47,10 @@ try{
  $q->execute([$quotation]);
  legacySalesAssert((int) $q->fetchColumn() === 1, 'La edición sin versión creó un evento de historial.');
  [$converted]=legacySalesPost($http,'/modules/ventas/ordenes.php',['action'=>'convert_from_quotation','quotation_id'=>$quotation,'warehouse_id'=>$warehouse]);$order=(int)$converted['order_id'];legacySalesPost($http,'/modules/ventas/ordenes.php',['action'=>'confirm','order_id'=>$order]);
+ [, $blockedSnapshot] = $http->request($readQuotation . '?id=' . $quotation);
+ legacySalesAssert($blockedSnapshot['has_active_documents'] === true, 'La orden activa no bloqueó las acciones de la cotización.');
+ $void = ['ID_COTIZ' => $quotation, 'response_format' => 'json', 'reason' => 'QA cierre cotización'];
+ legacySalesPost($http, '/modules/cotizaciones/anular-cotizacion.php', $void + ['version' => $blockedSnapshot['version']], 422);
  $series=[];foreach(['INVOICE','RECEIPT','CREDIT_NOTE'] as $type){$q=$pdo->prepare('SELECT series FROM tbl_document_series WHERE document_type=? AND active_status=1 ORDER BY id LIMIT 1');$q->execute([$type]);$series[$type]=$q->fetchColumn();legacySalesAssert((bool)$series[$type],'Falta serie QA '.$type);}
  $sale=['facturacion_series'=>$series['RECEIPT'],'facturacion_nro'=>'999999','facturacion_cliente'=>$customer,'facturacion_cliruc'=>'ALTERADO','facturacion_valcliente'=>'ALTERADO','facturacion_clidirecc'=>'ALTERADA','facturacion_clirefer'=>$key,'facturacion_tipmon'=>'MN','facturacion_fecentrega'=>$today,'facturacion_porcdesc'=>0,'facturacion_cantdesc'=>999,'facturacion_formpago'=>0,'facturacion_fecha'=>$today,'facturacion_opergrab'=>999,'facturacion_total'=>999,'facturacion_igv'=>999,'facturacion_prods'=>json_encode([[$product,'ALTERADO','ALTERADO','ALTERADO',10,2,20,'10',0,'PR-HTTP','CC-LIMA','LOT-HTTP','SER-HTTP','2035-12-31']]),'facturacion_estado'=>1,'facturacion_listadocotiz'=>$quotation,'facturacion_orden_venta'=>$order,'facturacion_almacen_id'=>$warehouse,'facturacion_usuarioid'=>$user];
  $invalid=$sale;$invalid['facturacion_prods']=json_encode([[$product,$key,'QA','QA',10,1.5,15]]);legacySalesPost($http,'/modules/facturacion/insert-boleta.php',$invalid,422);
@@ -71,7 +75,15 @@ try{
   $edit=$quote;$edit['id_cotizacion']=$quotation;legacySalesPost($http,'/modules/cotizaciones/insert-update-cotizacion.php',$edit,422);legacySalesPost($http,'/modules/cotizaciones/anular-cotizacion.php',['ID_COTIZ'=>$quotation,'reason'=>'QA bloqueo derivado'],422);
   legacySalesPost($http,'/modules/facturacion/cambiar-estado-doc.php',['TIPO_DOC'=>'INVOICE','ID_DOC'=>$invoice,'ESTADO_DOC'=>2,'COMENTARIO'=>'QA reversión factura']);
  }
- legacySalesPost($http,'/modules/cotizaciones/anular-cotizacion.php',['ID_COTIZ'=>$quotation,'reason'=>'QA cierre cotización']);
+ legacySalesPost($http, '/modules/cotizaciones/anular-cotizacion.php', $void + ['version' => str_repeat('0', 64)], 409);
+ [, $beforeVoid] = $http->request($readQuotation . '?id=' . $quotation);
+ legacySalesAssert($beforeVoid['has_active_documents'] === false, 'Los documentos anulados bloquearon indebidamente la cotización.');
+ [$voided] = legacySalesPost($http, '/modules/cotizaciones/anular-cotizacion.php', $void + ['version' => $beforeVoid['version']]);
+ [$voidReplay] = legacySalesPost($http, '/modules/cotizaciones/anular-cotizacion.php', $void + ['version' => $beforeVoid['version']]);
+ legacySalesAssert($voided === $voidReplay && $voided['error'] === false, 'El reintento de anulación no recuperó el resultado.');
+ $history = $pdo->prepare("SELECT COUNT(*) FROM tbl_document_status_history WHERE document_type='quotation' AND document_id=? AND action='Anulacion'");
+ $history->execute([$quotation]);
+ legacySalesAssert((int) $history->fetchColumn() === 1, 'La anulación duplicó el historial.');
  $q=$pdo->prepare('SELECT quantity,reserved_quantity,inventory_value FROM tbl_warehouse_stock WHERE product_id=? AND warehouse_id=?');$q->execute([$product,$warehouse]);$stock=array_map('floatval',$q->fetch());legacySalesAssert($stock===['quantity'=>10.0,'reserved_quantity'=>0.0,'inventory_value'=>50.0],'El flujo no restauró cantidad, reserva y valoración inicial.');
  echo "PASS HTTP master autocomplete quotation order receipt credit return reversal direct invoice retry and authoritative totals/numbering\n";
 }catch(Throwable $error){fwrite(STDERR,'FAIL legacy sales HTTP: '.$error->getMessage().PHP_EOL);$failed=true;}
