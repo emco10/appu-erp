@@ -41,7 +41,7 @@ test('Entrega muestra todos los errores y conserva datos/identificador para rein
     assert.equal($('.appu-validation-summary li').length, 2); assert.equal($('.is-invalid').length, 2);
     assert.equal($('.js-guide-quantity').val(), '5'); assert.equal($('#guide-custom-7').val(), 'Conservar'); assert.equal($('#remission-guide-form [name=request_key]').val(), key);
     $('.js-guide-quantity').val('4'); $('#remission-guide-form').trigger('submit');
-    t.pending(r => r.method === 'POST')[0].deferred.resolve({ error: false, guide_id: 99, message: 'Entrega registrada' });
+    t.pending(r => r.method === 'POST')[0].deferred.resolve({ guide_id: 99, number: 'EN-99', delivery_status: 'Parcial', message: 'Entrega registrada' });
     assert.equal($('#remission-guide-form').attr('data-document-mode'), 'LIST'); assert.equal(t.window.appuFormDirty, false);
     $('#remission-guide-modal').trigger('hidden.bs.modal');
     const detail = t.pending(r => r.data?.action === 'detail')[0];

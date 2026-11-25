@@ -15,7 +15,7 @@ function orderHttp(string $path, ?array $data = null, bool $secure = true): arra
     foreach ($http_response_header as $header) if (preg_match('/^Set-Cookie:\s*([^;]+)/i', $header, $match) && !str_contains($header, 'Max-Age=0') && !str_ends_with($match[1], '=deleted')) $cookie = $match[1];
     foreach ($http_response_header as $header) if (preg_match('/^X-APPU-QA-Database:\s*(\S+)/i', $header, $match)) $qaDatabase = $match[1];
     preg_match('/\s(\d{3})\s/', $http_response_header[0], $match);
-    return [(int) ($match[1] ?? 0), json_decode($body, true), $body];
+    return [(int) ($match[1] ?? 0), json_decode($body, true), $body, $http_response_header];
 }
 function httpAssert(bool $valid, string $message): void { if (!$valid) throw new RuntimeException($message); }
 $id = $fieldId = $listId = null;
@@ -49,8 +49,10 @@ try {
     httpAssert($status === 200 && $replayed === $saved, 'El reintento de alta no recuperó la confirmación original.');
     [$status] = orderHttp('/modules/ventas/ordenes.php', array_replace($input, ['reference' => $key . '-different']));
     httpAssert($status === 409, 'La misma clave aceptó otro contenido al crear.');
-    [$status, $snapshot] = orderHttp('/modules/ventas/ordenes.php?view_id=' . $id);
+    [$status, $snapshot, , $headers] = orderHttp('/modules/ventas/ordenes.php?view_id=' . $id);
     httpAssert($status === 200 && $snapshot['custom_fields'][$fieldId] === 'MARKETPLACE' && abs($snapshot['order']['total_net'] - 23.6) < .001, 'No permanecen el campo y el total al consultar.');
+    $headers = strtolower(implode("\n", $headers));
+    httpAssert(str_contains($headers, 'content-type: application/json') && str_contains($headers, 'x-content-type-options: nosniff') && str_contains($headers, 'cache-control: no-store'), 'La consulta debe devolver JSON, impedir la detección alternativa de tipo y evitar almacenamiento en caché.');
     $query = http_build_query(['search'=>1,'custom_field_id'=>$fieldId,'custom_field_value'=>'MARKETPLACE','q'=>$key,'per_page'=>1]);
     [$status, $found] = orderHttp('/modules/ventas/ordenes.php?' . $query);
     httpAssert($status === 200 && count($found['orders']) === 1 && (int) $found['orders'][0]['id'] === $id && $found['pagination']['total'] === 1, 'La búsqueda por UDF no encontró la orden.');

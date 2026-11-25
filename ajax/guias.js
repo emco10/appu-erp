@@ -222,7 +222,7 @@ $(function () {
     appuClearValidation($guideForm); guideBusy(true);
     $.ajax({ url: "../../modules/logistica/guias.php", method: "POST", dataType: "json", data: data })
       .done(function (response) {
-        if (response?.error !== false || !/^[1-9]\d*$/.test(String(response.guide_id))) {
+        if (response?.error || !/^[1-9]\d*$/.test(String(response?.guide_id))) {
           guideBusy(false);
           appuShowValidation($guideForm, { message: 'No se pudo confirmar la entrega. Reintenta con los mismos datos.' });
           return;
