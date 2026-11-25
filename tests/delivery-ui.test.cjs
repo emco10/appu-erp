@@ -41,8 +41,36 @@ test('Entrega muestra todos los errores y conserva datos/identificador para rein
     assert.equal($('.appu-validation-summary li').length, 2); assert.equal($('.is-invalid').length, 2);
     assert.equal($('.js-guide-quantity').val(), '5'); assert.equal($('#guide-custom-7').val(), 'Conservar'); assert.equal($('#remission-guide-form [name=request_key]').val(), key);
     $('.js-guide-quantity').val('4'); $('#remission-guide-form').trigger('submit');
-    t.pending(r => r.method === 'POST')[0].deferred.resolve({ guide_id: 99, message: 'Entrega registrada' });
+    t.pending(r => r.method === 'POST')[0].deferred.resolve({ error: false, guide_id: 99, message: 'Entrega registrada' });
     assert.equal($('#remission-guide-form').attr('data-document-mode'), 'LIST'); assert.equal(t.window.appuFormDirty, false);
+    $('#remission-guide-modal').trigger('hidden.bs.modal');
+    const detail = t.pending(r => r.data?.action === 'detail')[0];
+    assert.equal(detail.data.guide_id, 99);
+    detail.deferred.resolve({ guide: { number: 'EN-99', source_number: 'OV-10' }, details: [] });
+    assert.match($('#guide-preview-header').text(), /EN-99.*OV-10/);
+    $('#remission-guide-form').trigger('submit');
+    assert.equal(t.requests.filter(r => r.method === 'POST').length, 2);
+  } finally { t.dom.window.close(); }
+});
+
+test('Entrega conserva el origen y la preparación si falla la selección siguiente', async () => {
+  const t = await guideSetup(); const { $ } = t;
+  try {
+    $('#guide-source').val('sales_order:10').trigger('change');
+    t.pending(r => r.data?.action === 'source')[0].deferred.resolve(source(10));
+    $('.js-guide-quantity').val('3');
+    $('[name=destination_address]').val('Destino editado');
+    $('#guide-custom-7').val('Motivo anterior');
+    $('#guide-source').val('sales_order:20').trigger('change');
+    $('#remission-guide-form').trigger('submit');
+    assert.equal(t.requests.filter(r => r.method === 'POST').length, 0);
+    t.pending(r => r.data?.action === 'source')[0].deferred.reject({ responseJSON: { message: 'Origen temporalmente inaccesible' } });
+    assert.equal($('#guide-source').val(), 'sales_order:10');
+    assert.equal($('[name=source_id]').val(), '10');
+    assert.equal($('[name=destination_address]').val(), 'Destino editado');
+    assert.equal($('.js-guide-quantity').val(), '3');
+    assert.equal($('#guide-custom-7').val(), 'Motivo anterior');
+    assert.match($('.appu-validation-summary').text(), /Origen temporalmente inaccesible/);
   } finally { t.dom.window.close(); }
 });
 

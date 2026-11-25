@@ -108,6 +108,15 @@ test('Consultar, editar y cancelar restaura cabecera, líneas y UDF', async () =
     $('[name=reference]').val('Modificada').trigger('input');
     $('#sales-order-custom-7').val('');
     $('#sales-order-cancel-edit').trigger('click');
+    t.resolveCatalog(); await t.flush();
+    t.pending(r => r.data?.view_id)[0].deferred.reject({ responseJSON: { message: 'Consulta no disponible' } }); await t.flush();
+    assert.equal(t.window.salesOrderState.get(), 'EDIT');
+    assert.equal($('#sales-order-customer').val(), '1');
+    assert.equal($('.sales-order-quantity').val(), '9');
+    assert.equal($('[name=reference]').val(), 'Modificada');
+    assert.equal(t.window.appuFormDirty, true);
+    $('#sales-order-cancel-edit').trigger('click'); t.resolveCatalog(); await t.flush();
+    t.pending(r => r.data?.view_id)[0].deferred.resolve(structuredClone(snapshot)); await t.flush();
     assert.equal(t.window.salesOrderState.get(), 'VIEW');
     assert.equal($('.sales-order-quantity').val(), '3');
     assert.equal($('[name=reference]').val(), 'Original');
@@ -137,12 +146,21 @@ test('Guardar exitoso y fallo de recarga no permite repetir el alta', async () =
   const t = await setup(); const { $ } = t;
   try {
     $('#btn-new-sales-order').trigger('click'); t.resolveCatalog();
+    $('[name=reference]').val('Orden por confirmar');
+    $('#sales-order-create-form').trigger('submit').trigger('submit');
+    assert.equal(t.requests.filter(r => r.method === 'POST').length, 1);
+    const first = t.pending(r => r.method === 'POST')[0];
+    assert.match(first.data.find(field => field.name === 'request_key').value, /^[A-Za-z0-9_-]{16,64}$/);
+    first.deferred.reject({ status: 0 });
+    assert.equal($('[name=reference]').val(), 'Orden por confirmar');
     $('#sales-order-create-form').trigger('submit');
-    t.pending(r => r.method === 'POST')[0].deferred.resolve({ order_id: 55, number: 'OV-55', message: 'Guardada' });
+    const retry = t.pending(r => r.method === 'POST')[0];
+    assert.deepEqual(retry.data, first.data);
+    retry.deferred.resolve({ error: false, order_id: 55, number: 'OV-55', message: 'Guardada' });
     t.pending(r => r.data?.catalog).at(-1).deferred.reject({}); await t.flush();
     assert.equal(t.window.salesOrderState.get(), 'VIEW');
     $('#sales-order-create-form').trigger('submit');
-    assert.equal(t.requests.filter(r => r.method === 'POST').length, 1);
+    assert.equal(t.requests.filter(r => r.method === 'POST').length, 2);
     assert.match($('#sales-order-identity').text(), /OV-55/);
   } finally { t.dom.window.close(); }
 });

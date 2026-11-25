@@ -40,10 +40,15 @@ try {
         if ((int) $field['id'] === $fieldId || !(int) $field['required_status']) continue;
         $input['custom_field'][$field['id']] = ['text'=>'QA','number'=>'1','date'=>'2026-10-30','checkbox'=>'1','select'=>$field['options'][0]['value_code'] ?? ''][$field['field_type']];
     }
+    $input['request_key'] = $key . '-create';
     [$status, $error] = orderHttp('/modules/ventas/ordenes.php', $input);
     httpAssert($status === 422 && in_array('custom_field[' . $fieldId . ']', array_column($error['errors'], 'path')), 'No se rechazó Canal obligatorio vacío.');
     $input['custom_field'][$fieldId] = 'MARKETPLACE';
     [$status, $saved] = orderHttp('/modules/ventas/ordenes.php', $input); httpAssert($status === 200 && $saved['order_id'] > 0, 'No se guardó la orden.'); $id = (int) $saved['order_id'];
+    [$status, $replayed] = orderHttp('/modules/ventas/ordenes.php', $input);
+    httpAssert($status === 200 && $replayed === $saved, 'El reintento de alta no recuperó la confirmación original.');
+    [$status] = orderHttp('/modules/ventas/ordenes.php', array_replace($input, ['reference' => $key . '-different']));
+    httpAssert($status === 409, 'La misma clave aceptó otro contenido al crear.');
     [$status, $snapshot] = orderHttp('/modules/ventas/ordenes.php?view_id=' . $id);
     httpAssert($status === 200 && $snapshot['custom_fields'][$fieldId] === 'MARKETPLACE' && abs($snapshot['order']['total_net'] - 23.6) < .001, 'No permanecen el campo y el total al consultar.');
     $query = http_build_query(['search'=>1,'custom_field_id'=>$fieldId,'custom_field_value'=>'MARKETPLACE','q'=>$key,'per_page'=>1]);
@@ -51,13 +56,20 @@ try {
     httpAssert($status === 200 && count($found['orders']) === 1 && (int) $found['orders'][0]['id'] === $id && $found['pagination']['total'] === 1, 'La búsqueda por UDF no encontró la orden.');
     [$status, $found] = orderHttp('/modules/ventas/ordenes.php?' . str_replace('MARKETPLACE', 'RETAIL', $query)); httpAssert($status === 200 && !$found['orders'], 'El filtro UDF devuelve resultados ajenos.');
     $input['action'] = 'update'; $input['order_id'] = $id; $input['version'] = $snapshot['version']; $input['reference'] = $key . '_edit';
-    [$status] = orderHttp('/modules/ventas/ordenes.php', $input); httpAssert($status === 200, 'No se editó la orden por HTTP.');
+    $input['request_key'] = $key . '-edit';
+    [$status, $updated] = orderHttp('/modules/ventas/ordenes.php', $input); httpAssert($status === 200, 'No se editó la orden por HTTP.');
+    [$status, $replayed] = orderHttp('/modules/ventas/ordenes.php', $input); httpAssert($status === 200 && $replayed === $updated, 'Se perdió la confirmación original de edición.');
+    $input['request_key'] = $key . '-stale';
     [$status, $conflict] = orderHttp('/modules/ventas/ordenes.php', $input); httpAssert($status === 409 && $conflict['code'] === 'CONFLICT', 'Se aceptó una versión obsoleta.');
     [$status, $snapshot] = orderHttp('/modules/ventas/ordenes.php?view_id=' . $id); httpAssert($snapshot['order']['reference'] === $key . '_edit', 'El conflicto alteró la edición válida.');
-    echo "PASS HTTP CSRF aggregate errors admin UDF configuration required validation persistence exact search edit and version conflict\n";
+    $history = $pdo->prepare("SELECT action FROM tbl_document_status_history WHERE document_type='sales_order' AND document_id=? ORDER BY id");
+    $history->execute([$id]);
+    httpAssert($history->fetchAll(PDO::FETCH_COLUMN) === ['Creacion','Edicion'], 'Los reintentos duplicaron el historial de la orden.');
+    echo "PASS HTTP sales order CSRF, validation, UDF search, retry-safe create and edit, history and version conflict\n";
 } catch (Throwable $error) { fwrite(STDERR, 'FAIL sales order HTTP: ' . $error->getMessage() . PHP_EOL); $failed = true; }
 finally {
     $pdo->beginTransaction();
+    $pdo->prepare("DELETE FROM tbl_document_request WHERE operation='sales_order_save' AND request_key IN (?,?,?)")->execute([$key . '-create', $key . '-edit', $key . '-stale']);
     if ($id) {
         $pdo->prepare("DELETE FROM tbl_custom_field_value WHERE entity='sales_order' AND record_id=?")->execute([$id]);
         $pdo->prepare("DELETE FROM tbl_document_status_history WHERE document_type='sales_order' AND document_id=?")->execute([$id]);

@@ -28,6 +28,7 @@ tbl_sales_orders.columns([0]).visible(false);
 var salesOrderCatalog = { products: [] }, salesOrderPriceFactor = 1;
 var salesOrderPage = 1, salesOrderPages = 1, salesOrderListEpoch = 0;
 var salesOrderCurrent = null, salesOrderEpoch = 0, salesOrderSaving = false;
+var salesOrderLoading = false, salesOrderRequestKey = '';
 var $salesOrderForm = $('#sales-order-create-form'), $salesOrderModal = $('#sales-order-create-modal');
 var salesOrderState = appuDocumentState('LIST', function (mode) {
   $salesOrderForm.attr('data-document-mode', mode);
@@ -44,7 +45,9 @@ var salesOrderState = appuDocumentState('LIST', function (mode) {
 });
 function salesOrderBusy(busy, submitting) {
   salesOrderSaving = busy && !!submitting;
-  $salesOrderForm.find('input,select').prop('disabled', busy || salesOrderState.get() === 'VIEW');
+  salesOrderLoading = busy && !submitting;
+  $salesOrderForm.attr('aria-busy', String(busy));
+  $salesOrderForm.find('input,select').prop('disabled', busy || !['CREATE', 'EDIT'].includes(salesOrderState.get()));
   $salesOrderForm.find('button').prop('disabled', busy);
   $salesOrderModal.find('[data-bs-dismiss]').prop('disabled', salesOrderSaving);
 }
@@ -89,6 +92,7 @@ function salesOrderOption($select, value, label) {
 }
 function salesOrderFill(snapshot) {
   salesOrderCurrent = snapshot;
+  salesOrderRequestKey = '';
   var order = snapshot.order;
   salesOrderOption($('#sales-order-customer'), order.customer_id, order.customer_name);
   salesOrderOption($('#sales-order-warehouse'), order.warehouse_id, 'Almacén ' + order.warehouse_id);
@@ -104,18 +108,25 @@ function salesOrderFill(snapshot) {
   appuClearValidation($salesOrderForm); appuMarkSaved();
 }
 function openSalesOrder(id) {
-  appuConfirmDiscard(function () {
+  if (salesOrderSaving) return;
+  var hadChanges = window.appuFormDirty;
+  appuConfirmDiscard(async function () {
+    if (hadChanges) appuMarkDirty();
     var epoch = ++salesOrderEpoch;
     salesOrderBusy(true);
-    $.getJSON('../../modules/ventas/ordenes.php', { catalog: 1 }).then(function (catalog) {
+    try {
+      const catalog = await $.getJSON('../../modules/ventas/ordenes.php', { catalog: 1 });
       if (epoch !== salesOrderEpoch) return;
+      const snapshot = await $.getJSON('../../modules/ventas/ordenes.php', { view_id: id });
+      if (epoch !== salesOrderEpoch) return;
+      if (Number(snapshot?.order?.id) !== Number(id) || !Array.isArray(snapshot.details)) throw new Error('Respuesta de orden inválida');
       setSalesOrderCatalog(catalog);
-      return $.getJSON('../../modules/ventas/ordenes.php', { view_id: id });
-    }).done(function (snapshot) {
-      if (epoch !== salesOrderEpoch || !snapshot) return;
       salesOrderFill(snapshot); salesOrderState.set('VIEW'); $salesOrderModal.modal('show');
-    }).fail(function (xhr) { if (epoch === salesOrderEpoch) toastr.error(xhr.responseJSON && xhr.responseJSON.message || 'No se pudo consultar la orden.'); })
-      .always(function () { if (epoch === salesOrderEpoch) salesOrderBusy(false); });
+    } catch (error) {
+      if (epoch === salesOrderEpoch) toastr.error(error?.responseJSON?.message || 'No se pudo consultar la orden. Vuelve a intentarlo.');
+    } finally {
+      if (epoch === salesOrderEpoch) salesOrderBusy(false);
+    }
   });
 }
 function setSalesOrderCatalog(catalog) {
@@ -128,9 +139,11 @@ function setSalesOrderCatalog(catalog) {
   });
 }
 function newSalesOrder() {
+  if (salesOrderSaving || !appuCan('sales.manage')) return;
   appuConfirmDiscard(function () {
     var epoch = ++salesOrderEpoch;
     salesOrderCurrent = null; salesOrderPriceFactor = 1;
+    salesOrderRequestKey = '';
     $salesOrderForm[0].reset(); appuClearValidation($salesOrderForm);
     $('#sales-order-lines,#sales-order-custom-fields').empty();
     $('#sales-order-customer,#sales-order-warehouse').val('').trigger('change.select2');
@@ -149,13 +162,22 @@ function newSalesOrder() {
 $('#btn-new-sales-order').on('click', newSalesOrder);
 $('#sales-order-new').on('click', newSalesOrder);
 $('#sales-order-add-line').on('click', function () { addSalesOrderLine(); appuMarkDirty(); });
-$('#sales-order-edit').on('click', function () { salesOrderEpoch++; salesOrderState.set('EDIT'); });
-$('#sales-order-cancel-edit').on('click', function () { appuConfirmDiscard(function () { salesOrderEpoch++; salesOrderFill(salesOrderCurrent); salesOrderState.set('VIEW'); }); });
+$('#sales-order-edit').on('click', function () {
+  if (salesOrderLoading || salesOrderSaving || !appuCan('sales.manage') || salesOrderState.get() !== 'VIEW' ||
+    salesOrderCurrent?.order.status !== 'Pendiente' || salesOrderCurrent?.order.quotation_id) return;
+  salesOrderEpoch++;
+  salesOrderState.set('EDIT');
+  $salesOrderForm.find('[name=reference]').trigger('focus');
+});
+$('#sales-order-cancel-edit').on('click', function () {
+  if (salesOrderState.get() === 'EDIT' && !salesOrderLoading) openSalesOrder(salesOrderCurrent.order.id);
+});
 $salesOrderForm.on('input change', 'input,select', function () { if (['CREATE', 'EDIT'].includes(salesOrderState.get())) appuMarkDirty(); });
 $salesOrderModal.on('hide.bs.modal', function (event) {
   if (salesOrderSaving) { event.preventDefault(); return; }
   if (window.appuFormDirty) { event.preventDefault(); appuConfirmDiscard(function () { $salesOrderModal.modal('hide'); }); return; }
   salesOrderEpoch++; salesOrderState.set('LIST');
+  salesOrderBusy(false);
 });
 $('#sales-order-customer').on('change', function () {
   var customerId = Number($(this).val()), customer = (salesOrderCatalog.customers || []).find(function (item) { return Number(item.id) === customerId; });
@@ -173,21 +195,32 @@ $('#sales-order-customer').on('change', function () {
 });
 $salesOrderForm.on('submit', function (event) {
   event.preventDefault();
-  if (salesOrderSaving || !['CREATE', 'EDIT'].includes(salesOrderState.get())) return;
+  if (salesOrderSaving || salesOrderLoading || !appuCan('sales.manage') || !['CREATE', 'EDIT'].includes(salesOrderState.get())) return;
   var mode = salesOrderState.get(), behavior = event.originalEvent && event.originalEvent.submitter ? event.originalEvent.submitter.value : 'view';
   var details = [];
   $('.sales-order-line').each(function () { details.push({ product_id: $(this).find('.sales-order-product').val(), quantity: $(this).find('.sales-order-quantity').val(), unit_price: $(this).find('.sales-order-price').val(), discount_rate: $(this).find('.sales-order-discount').val(), project_code: $(this).find('.sales-order-project').val(), cost_center_code: $(this).find('.sales-order-cost-center').val(), lot_number: $(this).find('.sales-order-lot').val(), serial_number: $(this).find('.sales-order-serial').val(), expiration_date: $(this).find('.sales-order-expiration').val() }); });
   var data = $salesOrderForm.serializeArray();
-  data.push({ name: 'action', value: mode === 'EDIT' ? 'update' : 'create_direct' }, { name: 'details', value: JSON.stringify(details) });
+  salesOrderRequestKey ||= appuRequestKey();
+  data.push({ name: 'action', value: mode === 'EDIT' ? 'update' : 'create_direct' }, { name: 'details', value: JSON.stringify(details) }, { name: 'request_key', value: salesOrderRequestKey });
   if (mode === 'EDIT') data.push({ name: 'order_id', value: salesOrderCurrent.order.id }, { name: 'version', value: salesOrderCurrent.version });
   salesOrderBusy(true, true); appuClearValidation($salesOrderForm);
   $.ajax({ url: '../../modules/ventas/ordenes.php', method: 'POST', dataType: 'json', data: data }).done(function (response) {
+    if (response?.error !== false || !/^[1-9]\d*$/.test(String(response.order_id))) {
+      salesOrderBusy(false);
+      appuShowValidation($salesOrderForm, { message: 'No se pudo confirmar el guardado. Reintenta con los mismos datos.' });
+      return;
+    }
     appuMarkSaved(); toastr.success(response.message);
+    salesOrderCurrent = null;
+    salesOrderRequestKey = '';
     salesOrderState.set('VIEW');
     $('#sales-order-identity').text(response.number + ' · Guardada');
     salesOrderBusy(false); listarOrdenesVenta();
     if (behavior === 'new') newSalesOrder(); else openSalesOrder(response.order_id);
-  }).fail(function (xhr) { salesOrderBusy(false); appuShowValidation($salesOrderForm, xhr.responseJSON || { message: 'No se pudo guardar la orden. Intenta nuevamente.' }); });
+  }).fail(function (xhr) {
+    salesOrderBusy(false);
+    appuShowRequestError($salesOrderForm, xhr, 'No se pudo confirmar el guardado. Reintenta con los mismos datos.');
+  });
 });
 $(document).on('click', '.js-order-view', function () { openSalesOrder(Number($(this).data('id'))); });
 
