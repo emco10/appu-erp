@@ -31,13 +31,21 @@ final class AppuElectronicDocumentPdf extends FPDF {
   return $lines;
  }
  private function row(array $line):void{
-  $description=trim((string)(($line['item_description']??'')?:($line['item_name']??'')));$height=max(7,$this->wrappedLines($this->widths[3],$description)*4.2);
+  $description=trim((string)(($line['item_description']??'')?:($line['item_name']??'')));
+  $code=(string)($line['item_code']??'');
+  $lineHeight=4.2;
+  $wrapped=[2=>$this->wrappedLines($this->widths[2],$code),3=>$this->wrappedLines($this->widths[3],$description)];
+  $height=max(7,max($wrapped)*$lineHeight);
   if($this->GetY()+$height>248){$this->AddPage();$this->tableHeader();}
-  $x=$this->GetX();$y=$this->GetY();$values=[number_format((float)$line['item_quantity'],2),$line['sunat_unit_code']?:'NIU',$line['item_code'],'',number_format((float)$line['item_unit_price'],2),number_format(appu_electronic_line_total($line),2)];
+  $x=$this->GetX();$y=$this->GetY();$values=[number_format((float)$line['item_quantity'],2),$line['sunat_unit_code']?:'NIU',$code,$description,number_format((float)$line['item_unit_price'],2),number_format(appu_electronic_line_total($line),2)];
   foreach($values as $i=>$value){
    $cellX=$x+array_sum(array_slice($this->widths,0,$i));$this->Rect($cellX,$y,$this->widths[$i],$height);$this->SetXY($cellX,$y);
-   if($i===3)$this->MultiCell($this->widths[$i],4.2,$this->pdfText($description),0,'L');
-   else $this->Cell($this->widths[$i],$height,$this->pdfText($value),0,0,$i===0||$i>3?'R':'C');
+   if(isset($wrapped[$i])){
+    $this->SetXY($cellX,$y+($height-$wrapped[$i]*$lineHeight)/2);
+    $this->MultiCell($this->widths[$i],$lineHeight,$this->pdfText($value),0,$i===2?'C':'L');
+   }else{
+    $this->Cell($this->widths[$i],$height,$this->pdfText($value),0,0,$i===0||$i>3?'R':'C');
+   }
   }
   $this->SetXY($x,$y+$height);
  }
