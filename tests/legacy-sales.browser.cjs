@@ -53,6 +53,8 @@ async function run() {
       await page.waitForURL(url => url.pathname === path && url.searchParams.get('record_id') === String(id));
       await expect(form.locator('[name=id_factura]')).toHaveValue(String(id));
       await expect(form).toHaveAttribute('data-document-mode', 'VIEW');
+      await expect(form.locator('[name=facturacion_fecha]')).toHaveValue(/^\d{4}-\d{2}-\d{2}$/);
+      await expect(page.locator('#table-productsfactura tbody')).toContainText('Artículo ventas HTTP');
       await form.dispatchEvent('submit');
       assert.deepEqual(keys, [keys[0], keys[0]]);
       await page.close();
