@@ -80,7 +80,8 @@
         <button type="button" class="nav-link dropdown-toggle border-0 bg-transparent" aria-haspopup="true" aria-expanded="false"><i class="fas fa-plus mr-1"></i>Crear</button>
         <div class="dropdown-menu">
           <h6 class="dropdown-header">Nuevo documento</h6>
-          <?php if (app_can('customers.manage')): ?><a class="dropdown-item" href="<?php echo $functions->direct_paginas()."clientes/registro-cliente" ?>"><i class="fas fa-user-plus mr-2"></i>Socio de negocio</a><?php endif; ?>
+          <?php if (app_can('customers.manage')): ?><a class="dropdown-item" href="<?php echo $functions->direct_paginas()."clientes/registro-cliente" ?>"><i class="fas fa-user-plus mr-2"></i>Cliente</a><?php endif; ?>
+          <?php if (app_can('providers.manage')): ?><a class="dropdown-item" href="<?php echo $functions->direct_paginas()."proveedores/registro-proveedor" ?>"><i class="fas fa-people-carry mr-2"></i>Proveedor</a><?php endif; ?>
           <?php if (app_can('inventory.manage')): ?>
           <a class="dropdown-item" href="<?php echo $functions->direct_paginas()."productos/registro-producto" ?>"><i class="fas fa-box-open mr-2"></i>Artículo</a>
           <a class="dropdown-item" href="<?php echo $functions->direct_paginas()."productos/entrada-inventario" ?>"><i class="fas fa-arrow-circle-down mr-2"></i>Entrada de mercancías - Inventario</a>
@@ -108,7 +109,8 @@
         <button type="button" class="nav-link dropdown-toggle border-0 bg-transparent" aria-haspopup="true" aria-expanded="false"><i class="fas fa-search mr-1"></i>Buscar</button>
         <div class="dropdown-menu">
           <h6 class="dropdown-header">Consultas</h6>
-          <?php if (app_can('customers.view')): ?><a class="dropdown-item" href="<?php echo $functions->direct_paginas()."clientes/registro-cliente" ?>"><i class="fas fa-users mr-2"></i>Socios de negocio</a><?php endif; ?>
+          <?php if (app_can('customers.view')): ?><a class="dropdown-item" href="<?php echo $functions->direct_paginas()."clientes/registro-cliente" ?>"><i class="fas fa-users mr-2"></i>Clientes</a><?php endif; ?>
+          <?php if (app_can('providers.view')): ?><a class="dropdown-item" href="<?php echo $functions->direct_paginas()."proveedores/registro-proveedor" ?>"><i class="fas fa-people-carry mr-2"></i>Proveedores</a><?php endif; ?>
           <?php if (app_can('inventory.view')): ?><a class="dropdown-item" href="<?php echo $functions->direct_paginas()."productos/listado-producto" ?>"><i class="fas fa-boxes-stacked mr-2"></i>Productos y stock</a><?php endif; ?>
           <?php if (app_can('employees.view')): ?><a class="dropdown-item" href="<?php echo $functions->direct_paginas()."empleados/registro-empleado" ?>"><i class="fas fa-user-tie mr-2"></i>Empleados</a><?php endif; ?>
           <?php if (app_can('users.view')): ?><a class="dropdown-item" href="<?php echo $functions->direct_paginas()."usuarios/registro-usuario" ?>"><i class="fas fa-user-cog mr-2"></i>Usuarios y perfiles</a><?php endif; ?>

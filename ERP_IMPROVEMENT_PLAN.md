@@ -1,0 +1,78 @@
+# Plan de mejora integral de APPU ERP
+
+Línea base auditada: `master` en `e7ab2d7`. Trabajo en `feature/erp-integrated-workspace`, en un árbol separado de los cambios locales de identidad. El alta opcional de proveedores (PR 13) sigue en su rama de origen y requiere su propia revisión.
+
+## Diagnóstico inicial
+
+| Área | Arquitectura actual y hallazgo | Impacto | Prioridad / complejidad |
+|---|---|---|---|
+| Aplicación | Apache, PHP/PDO, MariaDB, páginas Bootstrap/AdminLTE y controladores jQuery. `views/template/main.php` resuelve vistas y carga el controlador por nombre. `modules/` expone endpoints PHP y `global/` combina servicios compartidos con adaptadores de dominio. | Un sistema desplegable con contratos operativos existentes. Las responsabilidades de presentación, HTTP y dominio se mezclan en varios controladores históricos. | P1 / alta |
+| Módulos | `views/template/sidebar.php` mezcla Inventario con Maestros y ubica Gestión después de Finanzas. `footer-functions.js` reordena bloques según su texto y algunos controladores marcan el menú por su cuenta. La cabecera duplica destinos bajo Crear, Buscar y Navegar. | El recorrido depende de la pantalla y del momento de carga. Clientes y Proveedores aparecen separados. | P1 / media |
+| Diseño | `css/style-appu.css` aporta la paleta y estilos comunes. Coexisten formularios de página, modales y barras generadas por JavaScript. Se repiten grillas, títulos, validación de campos, selectores, mensajes y UDF. | Densidades, jerarquía y acciones distintas para tareas equivalentes. | P1 / alta |
+| Estado y API | Orden de venta y maestros modernos tienen modos explícitos. Cotización y varios documentos legados reconstruyen estado con selectores, variables mutables y callbacks. Hay endpoints JSON estructurados y respuestas legadas de texto. | Respuestas tardías, reinicios dispares y manejo desigual de errores. Unificar sin romper consumidores. | P1 / alta |
+| Datos y negocio | `document-engine.php`, `document-history.php`, `document-numbering.php`, `validation.php` y los servicios de inventario/finanzas ya proveen transacciones, relaciones por línea, reversión, numeración y controles. La cobertura de idempotencia y versiones varía: el alta de cotización no usa la clave transaccional que ya emplean factura y boleta. | Conservar reglas por origen, tipo y estado. Verificar reintentos y concurrencia por operación. | P0 / alta |
+| Seguridad | Sesión, CSRF y permisos por endpoint centralizados. La navegación tiene permisos de lectura y las acciones permisos de escritura. Hay límite de acceso por identidad/origen, pruebas de roles y controles Semgrep/CodeQL. | Validar servidor además de visibilidad. El límite de aplicación no establece por sí solo la capacidad de Apache, PHP o MariaDB bajo carga. | P0 / media |
+| Rendimiento | Conviven catálogos completos de Select2, búsqueda remota, listados paginados y consultas de opciones UDF por campo. Múltiples vistas consultan catálogos al abrir. | Medir peticiones y SQL por pantalla con datos QA representativos antes de cambiar paginación, índices o caché. | P2 / media |
+| Integraciones | La API SUNAT sigue separada. Existen CPE, GRE, Identidad y SIRE con contratos y permisos propios. Parte de la documentación anterior aún describe SUNAT como fuera de alcance. | Las pruebas de contrato y disponibilidad deben distinguirse de la validación fiscal externa y de una emisión. | P0 / media |
+
+La evidencia inicial se obtuvo de los puntos de entrada, vistas, adaptadores, workflows y suites. `docs/architecture-v2.md`, `docs/sap-b1-alignment.md`, `docs/ui-action-audit.md` y `docs/peru-integrations.md` aportan contexto histórico. Los resultados de las nuevas ejecuciones se registran abajo.
+
+## Matriz de formularios y procesos
+
+| Documento existente | Entrada y comportamiento actual | Validación o flujo que se debe preservar | Brecha de experiencia |
+|---|---|---|---|
+| Oferta de ventas | `cotizacion/registro-cotizacion`. Selección de cliente, direcciones, catálogo, grilla de líneas, UDF, consulta anterior/siguiente y anulación. El botón local Nuevo recarga la URL y la barra común genera una URL sin contexto de registro. | El servidor recalcula los totales, asigna el correlativo e impide editar si existe un documento dependiente activo. Conversión a orden. | Dos acciones Nuevo, reset manual después de guardar, selectores y cálculos duplicados. Verificar apertura directa, cambios sin guardar, AJAX tardío y doble guardado. |
+| Orden de venta | `ventas/resumen-ordenes-venta`, modal con modos, versión y barra propia. | Una orden pendiente es editable. Confirmación, reserva, entrega parcial, saldo y reversión. | Trasladar cabecera, barra y grilla al estándar, con las reglas del modal y confirmación explícita. |
+| Entrega / guía | `logistica/guias`, modal con origen, saldos por línea, ubicaciones y previsualización. `logistica/gre` controla el trámite fiscal. | Entrega parcial, protección frente a consumo duplicado, reserva y salida, facturación posterior por saldo. | Dar a Nuevo, consulta y copia la misma estructura que a los demás documentos. Mantener separado el estado electrónico. |
+| Factura de cliente, reserva y anticipo | `facturacion/registro-factura` agrupa variantes. Facturar desde entrega usa un adaptador adicional. | Enlace con entrega sin doble salida de stock, reserva física, anticipo financiero, numeración, CPE y reintento. | Unificar barra, lectura de origen y errores. Diferenciar estados por variante. |
+| Boleta de venta | `facturacion/registro-boleta`, página de alta y lista aparte. | Consumidor final e identificación condicional, líneas e impuestos, serie y CPE. | Unificar selectores, grilla, errores y transición Nuevo sin perder validación condicional. |
+| Nota de crédito / devolución de cliente | `facturacion/registro-nota-credito`. Devolución física implementada mediante motivos de nota de crédito. | Límite por cantidades e importes del origen, reversión de inventario si aplica y protección de anticipos. | Distinguir el efecto de cada motivo y reutilizar el selector de origen. |
+| Solicitud de compra | `compras/solicitudes`, lista y modal. | Solicitante, revisión/aprobación y copia a orden. | Unificar formulario, estados, búsqueda y confirmaciones. |
+| Orden de compra y de servicio | `ordenes/orden-de-compra` y `ordenes/orden-de-servicio`, páginas parcialmente duplicadas. | Proveedor, referencia/solicitud, líneas de artículos o servicios, aprobación y acciones de copia. | Extraer bloques compartidos y estados. Conservar reglas específicas por línea. |
+| Entrada de mercancías de proveedor | `compras/recepciones`, formulario basado en orden o factura. | Saldos, valorización, lotes y reversión. | Diferenciar acceso y etiquetas de la entrada independiente de Inventario. |
+| Factura de proveedores y de reserva | `compras/compra-interna`, variantes en la misma página. | Recepción cuando corresponda, CxP, referencia del proveedor, reversión. | Aplicar cabecera, UDF, importes y validación con mensajes del estándar. |
+| Costos de entrega | `compras/costos-entrega`, formulario con vista previa de distribución. | Reparto exacto por valor/cantidad, moneda base y reversión. | Aplicar patrón de búsqueda, confirmación y resultados sin convertirlo en una factura. |
+| Oferta de compra, devolución autónoma de proveedor, anticipo de proveedor y nota de crédito de proveedor | Sin rutas de documento identificadas en la línea base. | Alcance por confirmar contra servicios, persistencia y requisitos contables. | Mantener visibles como brechas del diagnóstico. Cualquier tipo nuevo requiere una especificación transaccional y de integración propia. |
+| Maestros, inventario, finanzas, reportes y trazabilidad | Formularios de maestros, documentos de entrada/salida/transferencia, cobros/pagos y consultas con filtros. El mapa abre desde documentos persistidos y desde su resumen. | Permisos, movimientos, conciliación, exportaciones, URLs y relaciones existentes. | Extender patrones visuales compartidos. Retener diferencias entre registro operativo, configuración y consulta. |
+
+## Arquitectura objetivo
+
+- Mantener PHP/PDO, MariaDB y el esquema por tipo. Usar vistas y componentes PHP para estructura, controladores por tipo para interacción, y casos de uso transaccionales de dominio detrás de los endpoints actuales.
+- Definir un armazón comercial que componga título, estado, barra, socio, fechas/series, moneda, condiciones, detalle, dimensiones, impuestos y totales, observaciones y relaciones. Cada adaptador declara capacidades, campos y acciones. La persistencia, inventario y efectos fiscales siguen en los servicios de cada operación.
+- Reusar `document-ui.js` para modos y errores, y compartir reinicio, foco, descarte, generación de solicitudes y protección de escrituras. Los modos de pantalla son distintos del estado persistido. La habilitación de la UI se deriva de estado y permisos, y cada comando se vuelve a validar en el servidor.
+- Extender los tokens visuales existentes para tipografía, espaciado, color de foco, densidad de tablas y estados. Usar componentes optativos para cambios graduales. Validar escritorio y móvil, teclado, contraste, nombres accesibles, feedback y permanencia de los datos al fallar.
+- Tratar el menú como un catálogo jerárquico con rutas y permisos. Conservar enlaces profundos e IDs de accesos existentes. Los grupos deben poder abrirse por teclado y señalar la página activa.
+
+## Etapas, dependencias y aceptación
+
+| Etapa | Estado | Tareas y subtareas | Dependencia y criterio de aceptación |
+|---|---|---|---|
+| 1. Auditoría | En progreso | Inventariar rutas, controles y documentos. Contrastar persistencia y permisos. Completar la auditoría de Oferta de Ventas y medir las consultas iniciales. | Matriz con evidencia fuente, DOM, HTTP y visual donde corresponda. Separar hallazgos de brechas por verificar. |
+| 2. Arquitectura y diseño | En progreso | Especificar armazón y adaptadores. Definir tokens, densidad, barras, errores, focos, teclas y límites de responsabilidades. | Primera decisión documentada abajo. Validar el estándar con cotización y orden antes de extenderlo. |
+| 3. Navegación principal | Completado | Gestión como primer módulo, Socios de negocio, Ventas, Compras, Inventario, Finanzas, Logística y Reportes. Búsqueda dentro del árbol autorizado, página activa y accesos rápidos de socios. | 43 destinos conservados y 3 accesos añadidos. Los 46 responden en QA. El contrato de roles y los recorridos de escritorio, teclado, búsqueda y móvil aprobaron. |
+| 4. Ventas | Pendiente | Corregir Nuevo en cotización. Adoptar armazón en orden y entrega. Adaptar factura, boleta, reserva, anticipo y nota de crédito. Contrastar impuestos y estados en cada variante. | Etapa 2. Ofertas y órdenes convertibles, entregas parciales y facturación por saldo sin duplicar efectos. |
+| 5. Compras | Pendiente | Adaptar solicitudes, órdenes, servicios, recepciones, facturas y costos de entrega. Evaluar las brechas de tipos tras confirmar alcance. | Etapa 4 valida el armazón. Aprobar y convertir desde solicitud, recibir por saldo, facturar y revertir conservando trazabilidad. |
+| 6. Robustez | Pendiente | Revisar validación condicional, mensajes, idempotencia, conflictos, reglas de redondeo, permisos, consultas e índices por flujo. | Reproducir fallos de negocio en QA, verificar integridad posterior y medir con datos no productivos. Mantener contratos y migraciones aplicadas. |
+| 7. Calidad | Pendiente | Ejecutar lint, pruebas PHP/Node, integración HTTP, sesión real, recorridos de navegador y regresiones fiscales por entorno. Inspeccionar vistas y registrar resultados. | Cada etapa tiene aceptación propia. Preparar publicación con comprobación de compatibilidad, estado del esquema y estabilidad de CPE. |
+
+## Decisiones, cambios y evidencia
+
+- Conservar Inicio como acceso global y situar Gestión como primer módulo. Ubicar almacenes en Gestión y separar las recepciones de compra de los movimientos de inventario.
+- Organizar las entregas comerciales dentro de Ventas. Logística conserva el seguimiento de despachos y el trámite GRE. Gestión concentra Integraciones Perú y la consulta SIRE. Los enlaces quedan filtrados por el permiso de la ruta de destino.
+- Renderizar la jerarquía y la página activa desde el servidor. Usar grupos nativos del navegador para apertura por ratón o teclado. El buscador recorre el mismo menú filtrado por permisos y muestra el contexto de cada coincidencia.
+- Desarrollar desde la línea base desplegada y preservar los demás árboles de trabajo. Las pruebas que escriban deben apuntar a la base QA. El despliegue fiscal y los documentos históricos tienen dependencias fuera de la capa visual.
+
+| Entrega | Archivos | Evidencia |
+|---|---|---|
+| Diagnóstico inicial | `ERP_IMPROVEMENT_PLAN.md` | Referencia leída y contrastada con vistas, rutas, servicios, permisos y suites. Regresión de la línea base completada, con 135 pruebas UI, 43 rutas y 15 historiales. |
+| Catálogo y barra lateral | `global/sidebar-navigation.php`, `views/template/sidebar.php`, `views/template/header.php`, `js/sidebar-navigation.js`, `css/style-appu.css` | Se inventariaron 46 destinos, incluidos los 43 originales. La variante inicial reprodujo el cierre tardío de un grupo. La jerarquía final usa `details/summary` y conserva los IDs que usan los controladores y accesos rápidos. |
+| Pruebas del menú | `tests/document-navigation-contract.php`, `tests/sidebar-navigation.browser.cjs` | Contrato PHP aprobado con HTML real para administración, permisos limitados y ruta heredada. Chromium aprobó búsqueda, teclado, grupos anidados, página activa y acceso móvil. La regresión final aprobó 135 pruebas UI, 46 rutas, 15 historiales, servicios y sesión real. |
+
+La prueba de navegador se ejecuta con `node tests/sidebar-navigation.browser.cjs`, Playwright instalado y `APPU_QA_URL` apuntando a `tests/document-workbench.php` en loopback.
+
+### Riesgos y pendientes
+
+- Hay scripts de pantalla que dependen de IDs de navegación y contratos legados de texto. Revisar selectores, permisos y compatibilidad de cada migración de UI.
+- Los marcadores de menú que aún escriben algunos controladores pueden retirarse por módulo al adoptar el armazón comercial. La selección accesible del nuevo menú se genera a partir de la URL.
+- La URL de una cotización consultada y un callback anterior pueden reabrir el documento después de Nuevo. Corregir con una única transición y probarla en los puntos de entrada principales.
+- El catálogo de integraciones y los módulos subordinados requieren permisos y verificación fiscal independientes. Quedan pendientes la revisión visual por formulario y la medición de rendimiento con volumen representativo.

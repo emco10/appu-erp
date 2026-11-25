@@ -34,13 +34,63 @@ foreach ($routes as $route) {
     if (!is_file($root . '/' . $route)) throw new RuntimeException('Ruta documental inexistente: ' . $route);
 }
 
-$sidebar = file_get_contents($root . '/views/template/sidebar.php');
+require_once $root . '/global/config.php';
+require_once $root . '/global/authorization.php';
+
+function renderSidebar(string $root, array $user, string $route): DOMXPath
+{
+    $_SESSION['loggedInUser'] = $user;
+    $_GET['url'] = $route;
+    $functions = new class {
+        public function direct_paginas(): string { return '/views/'; }
+        public function direct_sistema(): string { return ''; }
+    };
+    ob_start();
+    require $root . '/views/template/sidebar.php';
+    $html = ob_get_clean();
+    $document = new DOMDocument();
+    $document->loadHTML('<meta charset="UTF-8">' . $html, LIBXML_NONET | LIBXML_NOERROR | LIBXML_NOWARNING);
+    return new DOMXPath($document);
+}
+
+$sidebar = renderSidebar($root, ['ROLE_CODE' => 'admin'], 'views/clientes/registro-cliente');
+$mainModules = [];
+foreach ($sidebar->query('//nav/ul/li/a | //nav/ul/li/details/summary') as $link) {
+    $mainModules[] = $link->getAttribute('id');
+}
+if ($mainModules !== ['m_inicio', 'm_gestion', 'm_socios_negocio', 'm_ventas', 'm_modulo_compras', 'm_almacen', 'm_finanzas', 'm_logistica', 'm_reportes']) {
+    throw new RuntimeException('Orden incorrecto de módulos del ERP.');
+}
+$partners = $sidebar->query('//*[@id="m_socios_negocio_items"]/li/a');
+if ($partners->length !== 2 || $partners[0]->getAttribute('id') !== 'm_clientes' || $partners[1]->getAttribute('id') !== 'm_proveedores') {
+    throw new RuntimeException('Socios de negocio no agrupa clientes y proveedores.');
+}
+if ($sidebar->evaluate('count(//a[@aria-current="page" and @id="m_clientes"])') !== 1.0 ||
+    $sidebar->query('//*[@id="m_socios_negocio"]/parent::*[@open]')->length !== 1) {
+    throw new RuntimeException('La ruta activa no abre su módulo o no declara la página actual.');
+}
+$limitedSidebar = renderSidebar($root, ['PERMISSIONS' => ['providers.view', 'finance.view']], 'views/proveedores/registro-proveedor');
+if ($limitedSidebar->query('//nav/ul/li/a | //nav/ul/li/details/summary')->length !== 2 ||
+    $limitedSidebar->query('//*[@id="m_proveedores" or @id="m_cuentas_pagar"]')->length !== 2 ||
+    $limitedSidebar->query('//*[@id="m_clientes" or @id="m_gestion" or @id="m_almacen"]')->length !== 0) {
+    throw new RuntimeException('El menú restringido no respeta los permisos independientes de cada módulo.');
+}
+$alias = renderSidebar($root, ['PERMISSIONS' => ['inventory.view']], 'views/productos/mantenimiento-producto');
+if ($alias->query('//*[@id="m_registro_producto" and @aria-current="page"]')->length !== 1) {
+    throw new RuntimeException('Un enlace heredado perdió el indicador de navegación del maestro de artículos.');
+}
+unset($_SESSION['loggedInUser'], $_GET['url']);
+
 $header = file_get_contents($root . '/views/template/header.php');
 $salesOrderView = file_get_contents($root . '/views/ventas/resumen-ordenes-venta.php');
 $navigationScript = file_get_contents($root . '/js/footer-functions.js');
-if ($sidebar === false || $header === false || $salesOrderView === false || $navigationScript === false) throw new RuntimeException('No se pudo leer la navegación principal.');
-preg_match_all('/id="(m_[A-Za-z0-9_-]+)"/', $sidebar, $menuMatches);
-$menuIds = array_fill_keys($menuMatches[1], true);
+if ($header === false || $salesOrderView === false || $navigationScript === false) throw new RuntimeException('No se pudo leer la navegación principal.');
+$menuIds = [];
+foreach ($sidebar->query('//nav//a[@id] | //nav//summary[@id]') as $link) {
+    $id = $link->getAttribute('id');
+    if (isset($menuIds[$id])) throw new RuntimeException('Identificador repetido en el menú: ' . $id);
+    $menuIds[$id] = true;
+}
 foreach (glob($root . '/ajax/*.js') as $scriptPath) {
     $contents = file_get_contents($scriptPath);
     if ($contents === false) throw new RuntimeException('No se pudo leer ' . $scriptPath);

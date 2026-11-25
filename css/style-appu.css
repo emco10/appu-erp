@@ -62,9 +62,28 @@ label, .control-label { color: #25343c; font-weight: 600; }
 .nav-sidebar .nav-link { color: #e4ebed; }
 .nav-sidebar .nav-treeview > .nav-item > .nav-link { color: #cbd8dc; }
 .nav-sidebar .nav-treeview .nav-icon { color: #9eb1b8 !important; }
-#m_gestion p::after { content: "\f105"; font-family: "Font Awesome 6 Free"; font-weight: 900; float: right; margin-right: .15rem; }
-#m_gestion_general p { font-size: 0; }
-#m_gestion_general p::after { content: "Configuracion general"; font-size: .875rem; }
+.main-sidebar .nav-sidebar .nav-link:focus-visible { outline: 2px solid #a5d4df; outline-offset: -2px; }
+.main-sidebar [data-appu-module] > summary {
+    display: flex;
+    align-items: center;
+    gap: .375rem;
+    list-style: none;
+    cursor: pointer;
+}
+.main-sidebar [data-appu-module] > summary::-webkit-details-marker { display: none; }
+.main-sidebar .appu-module-label { flex: 1; }
+@media (min-width: 992px) {
+    .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover):not(:focus-within) .appu-module-label { display: none; }
+}
+.main-sidebar .appu-module-chevron { float: inline-end; margin-inline-start: .25rem; }
+.main-sidebar [data-appu-module][open] > summary .appu-module-chevron { transform: rotate(-90deg); }
+.main-sidebar .appu-module-links { padding-inline-start: .5rem; }
+.main-sidebar .appu-module-links .nav-link { color: #cbd8dc; }
+.main-sidebar .appu-sidebar-results { margin-top: .375rem; }
+.main-sidebar .appu-sidebar-results[hidden], .main-sidebar nav[hidden] { display: none; }
+.main-sidebar .appu-sidebar-results .nav-link { color: #e4ebed; }
+.main-sidebar .appu-sidebar-search-status { margin: 0; color: #cbd8dc; font-size: .875rem; }
+.main-sidebar .appu-sidebar-search-status:not(:empty) { padding: .375rem .5rem; }
 .navbar-dark .navbar-nav .nav-link { color: #eef3f4; }
 .appu-quick-nav .dropdown-menu { min-width: 245px; border: 1px solid #d9e0e2; box-shadow: 0 .25rem .8rem rgba(23,37,44,.14); }
 .appu-quick-nav .dropdown-item { color: var(--appu-primary-dark); padding: .5rem .85rem; }
