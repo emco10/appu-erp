@@ -3366,7 +3366,7 @@
       "path": "views/template/main.php",
       "fingerprint": "a77a86c658466bfc80645315f07fb38f7f379cd224004561756eb81320cb3265",
       "source_sha256": "f555513499044afd643a4abb38386331ec8d8d7f69f09fcb05d3e14e160fb60a",
-      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
+      "reviewed_commit": "74ca10c4735a41367f3285837165d7987ab3f52f",
       "scanner_version": "1.184.0",
       "id": "php-final-103",
       "disposition": "false_positive",
@@ -3376,14 +3376,14 @@
       "dependencies": [
         {
           "path": "global/config.php",
-          "sha256": "56ae40430a3d62272bcf3c1df12475d12c06fc8159fd9cc5346c1eeb4c00fa75"
+          "sha256": "21591940efb3c5ea2e1b0516b9f6277a129f5090a652d94ea60804c1e76952d2"
         },
         {
           "path": "modules/web_functions.php",
           "sha256": "2329425b4287439aadfacc21510785406d0343fc72d3937c1e0dce54a1c62bae"
         }
       ],
-      "dependency_review": "Critical dependencies were re-hashed from committed source 9bfb43c; source review and frozen-source regression evidence are linked below.",
+      "dependency_review": "The release changes only the cache version constant in global/config.php. Path validation and all other dependencies remain byte-identical.",
       "evidence": [
         {
           "path": "tests/security-php-input-boundaries.php",
@@ -3398,7 +3398,7 @@
       "path": "views/template/main.php",
       "fingerprint": "33d6ef38eb962e9353f9f0568b1f0235aaefb8c6a933eaca6d85e3894b7655f7",
       "source_sha256": "f555513499044afd643a4abb38386331ec8d8d7f69f09fcb05d3e14e160fb60a",
-      "reviewed_commit": "d9629e1870d7df45ebb7b041517a706ee28e5cdb",
+      "reviewed_commit": "74ca10c4735a41367f3285837165d7987ab3f52f",
       "scanner_version": "1.184.0",
       "id": "php-final-104",
       "disposition": "false_positive",
@@ -3408,14 +3408,14 @@
       "dependencies": [
         {
           "path": "global/config.php",
-          "sha256": "56ae40430a3d62272bcf3c1df12475d12c06fc8159fd9cc5346c1eeb4c00fa75"
+          "sha256": "21591940efb3c5ea2e1b0516b9f6277a129f5090a652d94ea60804c1e76952d2"
         },
         {
           "path": "modules/web_functions.php",
           "sha256": "2329425b4287439aadfacc21510785406d0343fc72d3937c1e0dce54a1c62bae"
         }
       ],
-      "dependency_review": "Critical dependencies were re-hashed from committed source 9bfb43c; source review and frozen-source regression evidence are linked below.",
+      "dependency_review": "The release changes only the cache version constant in global/config.php. Path validation and all other dependencies remain byte-identical.",
       "evidence": [
         {
           "path": "tests/security-php-input-boundaries.php",
